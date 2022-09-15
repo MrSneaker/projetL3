@@ -1,0 +1,48 @@
+Lifprojet – Gestion Intelligente de parkings 
+
+Interface Graph : 
+-	Voir véhicules, parks, (si batterie -> interpolation couleur ou affichage batterie ) en F* du temps
+-	Quand clic sur parkings ou voiture, affiche infos ( nb de place dispo, etc…
+-	Fonction pause
+
+Fonctionnalité : 
+-	Plusieurs Parkings (Ville ) place constante, tarif constant dans chaque parks + exceptions ( (centre commerce), réducs, Créneaux Horaires, etc.), taux d’occupation du park , (-> a voir si juste voiture).
+
+-	Profil de l’utilisateur -> Va aller dans tel ou tel parking en fonction du prix et de la raison de venu.
+Nombre de venu (choisit au hasard dès la création )du l’itilsateur dans le parking -> négociations en conséquent
+
+Négociations du prix entre utilisateur et parkings ! 
+
+-	Parkings avec bornes de recharge ? 
+
+-	SYSTEME DE TEMPS ( option modif speed time ) 
+
+
+-	
+
+
+
+-	Labyrinth Solver -> trouver la place la plus proche 
+
+
+
+
+Classe : 
+-	Parking / véhicule / Utilisateur / Place / V2 / Environnement (gestion interactions multiple) /  AffichageGraph/ Image 			/		(Batterie)
+-	
+-	
+-	Communication / msg
+
+
+MSG : 
+E - 
+
+
+R
+
+
+Performatif (requête)
+
+
+Contenue de la demande 
+
