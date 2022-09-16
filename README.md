@@ -1,1 +1,1 @@
-Projet LIFAP7 - Gestion intelligente de parkings
+Lifprojet - Gestion intelligente de parkings
