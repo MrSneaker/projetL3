@@ -11,4 +11,4 @@ int main (void) {
 	
 	printf("La réponse est %d\n", 42);
 }
-/*lol*/
+/*lol, mdr*/
