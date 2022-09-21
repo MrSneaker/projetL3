@@ -1,48 +1,78 @@
-Lifprojet – Gestion Intelligente de parkings 
+Projet LIFPROJET - Gestion intelligente de parkings dans un centre urbain (SA4)
 
-Interface Graph : 
--	Voir véhicules, parks, (si batterie -> interpolation couleur ou affichage batterie ) en F* du temps
--	Quand clic sur parkings ou voiture, affiche infos ( nb de place dispo, etc…
+Interface graphique :
+
+- Styles graphismes et plan de la ville : comme dans la démo SA5, mais avec des parkings
+en plus.
+-	Véhicules, parkings, (si batterie -> interpolation couleur ou affichage batterie)
+en fonction du temps
+-	Quand clic sur parking, place ou voiture, affiche infos (nb de places occupées et dispo, etc.).
+Le nb de places occupées et dispo pourra également être indiqué directement à l'entrée des
+parkings et sur la route à proximité des parkings, comme s'il s'agissait de panneaux
+(réaliste pour les voitures qui passent par là).
 -	Fonction pause
 
-Fonctionnalité : 
--	Plusieurs Parkings (Ville ) place constante, tarif constant dans chaque parks + exceptions ( (centre commerce), réducs, Créneaux Horaires, etc.), taux d’occupation du park , (-> a voir si juste voiture).
-
--	Profil de l’utilisateur -> Va aller dans tel ou tel parking en fonction du prix et de la raison de venu.
-Nombre de venu (choisit au hasard dès la création )du l’itilsateur dans le parking -> négociations en conséquent
-
-Négociations du prix entre utilisateur et parkings ! 
-
--	Parkings avec bornes de recharge ? 
-
--	SYSTEME DE TEMPS ( option modif speed time ) 
 
 
--	
+Fonctionnalités :
+
+- Des voitures intelligentes et des voitures normales.
+
+-	Plusieurs parkings (ville), avec des places constantes, des tarifs constants dans chaque parking
+    mais avec des exceptions ((centre commercial), réducs, créneaux horaires, etc.), taux
+    d’occupation du parking, (-> voir si juste voiture ou autre type de ce genre, voire type dérivé).
+
+-   Des places de type PlacesBleues : une fois le délai universel écoulé
+(par ex 20 min dans la simulation), la police est avertie (ou qqch de ce genre). Nb de voitures
+ayant dépassé délai serait indiqué si on clique sur le parking, et sur les panneaux dont on a parlé plus haut
+(permettrait de s'imaginer que la police qui passe par là pourrait facilement voir les dépassements de temps).
+On programmerait le fait que, de manière aléatoire, certaines voitures restent trop longtemps, d'autres non.
+
+-	Profil de l’utilisateur -> Utilisateur va aller dans tel ou tel parking en fonction du prix
+et de la raison de sa venue.
+Nombre de venues (choisi au hasard dès la création pour simuler le passé) de l’utilisateur dans le parking
+    -> négociations en conséquence
+       Négociations du prix entre utilisateur et parkings !
 
 
 
--	Labyrinth Solver -> trouver la place la plus proche 
+-	Parkings avec bornes de recharge ? Voire même recharge à induction
+(une voiture, si elle est de type Voiture électrique, serait rechargée automatiquement,
+à une vitesse fixe et universelle, si elle va sur une place équipée de ce type de recharge.
+L'utilisateur serait alors débité automatiquement. Mais il faudra donc une donnée membre de l'utilisateur
+pour savoir s'il est abonné à cette fonctionnalité. Pour les non-abonnés à cette fonctionnalité,
+on pourrait programmer de manière aléatoire le fait que certains rechargent de temps en temps
+leur véhicule, donc sur des places équipées d'une simple borne de recharge).
+
+-	SYSTEME DE TEMPS ( option modif speed time ). Dont pour batterie, qui diminuerait de manière
+constante, à une vitesse universelle.
+
+-	Labyrinth Solver -> trouver la place la plus proche.
+Ou bien simuler le comportement humain (un humain ne sait pas où est la place la plus proche,
+donc on peut imaginer que toutes les voitures, dans un même parking, vont faire le même trajet
+ou presque, jusqu'à tomber sur une place libre.
 
 
 
 
-Classe : 
--	Parking / véhicule / Utilisateur / Place / V2 / Environnement (gestion interactions multiple) /  AffichageGraph/ Image 			/		(Batterie)
--	
--	
--	Communication / msg
+Classes : 
+-	Parking / Véhicule / Utilisateur / Place / Vecteur2D
+/ Environnement (gestion des interactions multiples) / AffichageGraph / Image
+/ (Batterie)
 
 
-MSG : 
-E - 
+
+-	Communication / messages
 
 
-R
+MESSAGES :
+
+Emetteur - 
+
+Récepteur - 
 
 
 Performatif (requête)
 
 
-Contenue de la demande 
-
+Contenue de la demande

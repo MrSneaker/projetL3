@@ -1,1 +1,1 @@
-Lifprojet - Gestion intelligente de parkings
+Projet LIFPROJET - Gestion intelligente de parkings dans un centre urbain (SA4)
