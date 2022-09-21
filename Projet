@@ -1,22 +1,42 @@
 Projet LIFPROJET - Gestion intelligente de parkings dans un centre urbain (SA4)
 
-Interface graphique :
+
+----------------------------------------------------------------------------------------------
+
+    INTERFACE GRAPHIQUE :
+
+-   SDL2
 
 - Styles graphismes et plan de la ville : comme dans la démo SA5, mais avec des parkings
-en plus.
+en plus. Mais plutôt que de garder l'intersection et de mettre un parking à chacun des 4 coins,
+on pourrait faire les choses ainsi (à voir) : les voitures sont crées sur une route qui part
+du milieu d'un côté de la map, elles font une boucle rectangulaire, et elles sont détruites en
+repassant par leur point de création. Sur chacun des 3 autres côtés de la boucle rectangulaire,
+il y aurait un parking. La boucle permettrait de faire autant de tours qu'on veut,
+s'il n'y a aucune place de libre par exemple (mais pas que pour ça, cf gestion intelligente de
+la recherche de parking).
+
+
 -	Véhicules, parkings, (si batterie -> interpolation couleur ou affichage batterie)
-en fonction du temps
+en fonction du temps. Et routes
+
 -	Quand clic sur parking, place ou voiture, affiche infos (nb de places occupées et dispo, etc.).
+BEN peut s'occuper de ça, car il l'a fait pour son jeu LIFAP4.
 Le nb de places occupées et dispo pourra également être indiqué directement à l'entrée des
 parkings et sur la route à proximité des parkings, comme s'il s'agissait de panneaux
 (réaliste pour les voitures qui passent par là).
--	Fonction pause
+
+-	Fonction pause : TRES IMPORTANTE pour qu'on puisse justement cliquer sur les différents éléments
+et ainsi voir les évolutions au cours de la simulation.
 
 
+----------------------------------------------------
 
-Fonctionnalités :
+    FONCTIONNALITES :
 
-- Des voitures intelligentes et des voitures normales.
+-   Des voitures intelligentes et des voitures normales [je ne sais plus ce qu'on avait voulu dire par là]
+
+-   Voitures : aléatoire (pas parking) [je ne sais plus ce qu'on avait voulu dire par là]
 
 -	Plusieurs parkings (ville), avec des places constantes, des tarifs constants dans chaque parking
     mais avec des exceptions ((centre commercial), réducs, créneaux horaires, etc.), taux
@@ -32,7 +52,8 @@ On programmerait le fait que, de manière aléatoire, certaines voitures restent
 et de la raison de sa venue.
 Nombre de venues (choisi au hasard dès la création pour simuler le passé) de l’utilisateur dans le parking
     -> négociations en conséquence
-       Négociations du prix entre utilisateur et parkings !
+       Négociations du prix entre utilisateur et parkings, qui mènent à un accord ou un refus de la part
+       de l'utilisateur.
 
 
 
@@ -46,6 +67,8 @@ leur véhicule, donc sur des places équipées d'une simple borne de recharge).
 
 -	SYSTEME DE TEMPS ( option modif speed time ). Dont pour batterie, qui diminuerait de manière
 constante, à une vitesse universelle.
+Un argument de main permettrait de choisir l'échelle d'écoulement du temps,
+pour qu'1 minute dans la simulation dure plus ou moins de temps réel.
 
 -	Labyrinth Solver -> trouver la place la plus proche.
 Ou bien simuler le comportement humain (un humain ne sait pas où est la place la plus proche,
@@ -53,9 +76,10 @@ donc on peut imaginer que toutes les voitures, dans un même parking, vont faire
 ou presque, jusqu'à tomber sur une place libre.
 
 
+----------------------------------------------------
 
+    CLASSES :
 
-Classes : 
 -	Parking / Véhicule / Utilisateur / Place / Vecteur2D
 / Environnement (gestion des interactions multiples) / AffichageGraph / Image
 / (Batterie)
@@ -76,3 +100,14 @@ Performatif (requête)
 
 
 Contenue de la demande
+
+
+
+----------------------------------------------------
+
+    PLAN DE DEVELOPPEMENT :
+
+-   1e phase : 1 véhicule dans parking
+-   2e phase : plusieurs véhicules dans 1 parking
+-   3e phase : duplication des parkings PUIS relation entre les parkings
+-   4e phase : négociation (ce dont nous a parlé prof)
