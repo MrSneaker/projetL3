@@ -18,7 +18,7 @@ class Voiture {
     public:
 
         bool Is_in; // true si la voiture entre dans le parking
-        bool Is_garée; // true si la voiture est garée dans le parking
+        bool Is_garee; // true si la voiture est garée dans le parking
 
 
 

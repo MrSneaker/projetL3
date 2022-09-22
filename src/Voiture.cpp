@@ -1,5 +1,7 @@
 #include "Voiture.h"
 
+#include <iostream>
+
 // Constructeur de la classe Voiture
 Voiture::Voiture() {
 }
@@ -50,19 +52,19 @@ void Voiture::setTargetPosition(Vec2 new_pos) {
 bool Voiture::MoveToTargetPosition() {
 
     // Si la voiture est au dessus du parking
-    if (position.y < TargetPosition.y) {
+    if (position.y > TargetPosition.y) {
 
         MoveDown();
-        if (position.y > TargetPosition.y) {
+        if (position.y < TargetPosition.y) {
 
             position.y = TargetPosition.y;
         }
     }
     // Si la voiture est au dessous du parking
-    else if (position.y > TargetPosition.y) {
+    else if (position.y < TargetPosition.y) {
 
         MoveUp();
-        if (position.y < TargetPosition.y) {
+        if (position.y > TargetPosition.y) {
 
             position.y = TargetPosition.y;
 
