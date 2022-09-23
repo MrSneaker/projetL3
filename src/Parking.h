@@ -12,6 +12,7 @@ class Parking {
     private :
 
         Place* placesTab;
+        // tableau dynamique 1D de Places
 
         int nbPlaces;
 
@@ -82,9 +83,12 @@ class Parking {
 
         // MUTATEURS
 
-        void setPlacesTab (); // !!!!
+        void setPlacesTab ();
+        // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
 
-        void setNbAvailablePlaces (int numberOfAvailablePlaces);
+        void decrementNbAvailablePlaces ();
+
+        void incrementNbAvailablePlaces ();
 
         void setMinPrice (float minimumPrice);
 
@@ -92,13 +96,16 @@ class Parking {
 
         void setIsFull (bool filledToCapacity);
 
-        void setConversationsTab (); // !!!!
+        void setConversationsTab ();
+        // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
 
-        void setUsersTab (); // !!!!
+        void setUsersTab ();
+        // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
 
         void incrementNbVisits ();
 
-        void incrementNbVisitsTab (); // !!!!
+        void incrementNbVisitsTab ();
+        // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
 
 };
 

@@ -1,6 +1,4 @@
 #include "Parking.h"
-#include "vec2.h"
-
 
 
 // CONSTRUCTEUR et DESTRUCTEUR
@@ -66,25 +64,50 @@ Vec2 Parking::getPos () const {
 
 
 
+
 // MUTATEURS
+
+
 
 void Parking::setPlacesTab () {
 
-}
-
-void Parking::setNbAvailablePlaces (int numberOfAvailablePlaces) {
 
 }
+
+
+void Parking::decrementNbAvailablePlaces () {
+
+    nbAvailablePlaces--;
+    if (nbAvailablePlaces == 0) {
+        setIsFull (false);
+    }
+
+}
+
+
+void Parking::incrementNbAvailablePlaces () {
+
+    nbAvailablePlaces++;
+    if (nbAvailablePlaces == 1) {
+        setIsFull (true);
+    }
+
+}
+
 
 void Parking::setMinPrice (float minimumPrice) {
 
+    minPrice = minimumPrice;
+
 }
+
 
 void Parking::setMaxPrice (float maximumPrice) {
 
-    maxPrice = 
+    maxPrice = maximumPrice;
 
 }
+
 
 void Parking::setIsFull (bool filledToCapacity) {
 
@@ -92,17 +115,21 @@ void Parking::setIsFull (bool filledToCapacity) {
 
 }
 
+
 void Parking::setConversationsTab () {
 
 }
+
 
 void Parking::setUsersTab () {
 
 }
 
+
 void Parking::incrementNbVisits () {
 
     nbVisits++;
+
 
 }
 
