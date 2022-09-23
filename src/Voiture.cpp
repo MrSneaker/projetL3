@@ -15,25 +15,25 @@ Voiture::~Voiture()
 // Déplace la voiture vers la droite
 void Voiture::MoveRight()
 {
-    position.x += vitesse;
+    position.x += speed;
 }
 
 // Déplace la voiture vers la gauche
 void Voiture::MoveLeft()
 {
-    position.x -= vitesse;
+    position.x -= speed;
 }
 
 // Déplace la voiture vers le haut
 void Voiture::MoveUp()
 {
-    position.y += vitesse;
+    position.y += speed;
 }
 
 // Déplace la voiture vers le bas
 void Voiture::MoveDown()
 {
-    position.y -= vitesse;
+    position.y -= speed;
 }
 
 // Renvoie la position (x;y) de la voiture
@@ -128,7 +128,7 @@ void Voiture::test_regresion(){
     std::cout << "Test de la fonction MoveRight()" << std::endl;
     position.x = 0;
     position.y = 0;
-    vitesse = 1;
+    speed = 1;
     MoveRight();
     if (position.x == 1 && position.y == 0)
     {
@@ -143,7 +143,7 @@ void Voiture::test_regresion(){
     std::cout << "Test de la fonction MoveLeft()" << std::endl;
     position.x = 0;
     position.y = 0;
-    vitesse = 1;
+    speed = 1;
     MoveLeft();
     if (position.x == -1 && position.y == 0)
     {
@@ -158,7 +158,7 @@ void Voiture::test_regresion(){
     std::cout << "Test de la fonction MoveUp()" << std::endl;
     position.x = 0;
     position.y = 0;
-    vitesse = 1;
+    speed = 1;
     MoveUp();
     if (position.x == 0 && position.y == 1)
     {
@@ -173,7 +173,7 @@ void Voiture::test_regresion(){
     std::cout << "Test de la fonction MoveDown()" << std::endl;
     position.x = 0;
     position.y = 0;
-    vitesse = 1;
+    speed = 1;
     MoveDown();
     if (position.x == 0 && position.y == -1)
     {
@@ -252,7 +252,7 @@ void Voiture::test_regresion(){
     position.y = 0;
     TargetPosition.x = 3;
     TargetPosition.y = 5;
-    vitesse = 1;
+    speed = 1;
     std::cout<<TargetPosition.x<<std::endl;
     std::cout<<TargetPosition.y<<std::endl;
     while(MoveToTargetPosition() == false){
