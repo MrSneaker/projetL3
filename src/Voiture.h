@@ -3,7 +3,8 @@
 
 #include "vec2.h"
 
-class Voiture {
+class Voiture 
+{
 
     private:
 
