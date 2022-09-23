@@ -1,6 +1,8 @@
 #include "Environnement.h"
 
 
+
+
 int random(int min, int max) // fonction permettant de renvoyer un nombre aléatoire
 							 // négatif ou positif en fonction des bornes fournies en paramètres.
 {
@@ -19,5 +21,22 @@ int random(int min, int max) // fonction permettant de renvoyer un nombre aléat
 
 void Environnement::initUser()
 {
+}
+
+using namespace std;
+
+Environnement::Environnement()
+{
+
+}
+
+Environnement::~Environnement()
+{
+}
+
+void InitVoitureInEnvironnement()
+{
+    // Initialisation des voitures avec un conducteur
+
 
 }
