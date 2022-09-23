@@ -9,7 +9,7 @@ class Voiture {
 
         Vec2 position; // Position (x,y) de la voiture
         Vec2 TargetPosition; // Position (x,y) de la cible (parking / place / sortie)
-        float vitesse; // vitesse de la voiture
+        float speed; // speed de la voiture
         //float batterie; // batterie de la voiture
         //Couleur couleur; // Couleur de la voiture
         //Utilisateur conducteur; // Personna qui est dans la voiture
