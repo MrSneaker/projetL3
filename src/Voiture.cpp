@@ -60,7 +60,7 @@ void Voiture::setTargetPosition(Vec2 new_pos)
 bool Voiture::MoveToTargetPosition()
 {
 
-    // Si la voiture est au dessus du parking
+    // Si la voiture est au dessus de la cible
     if (position.y > TargetPosition.y)
     {
 
@@ -71,7 +71,7 @@ bool Voiture::MoveToTargetPosition()
             position.y = TargetPosition.y;
         }
     }
-    // Si la voiture est au dessous du parking
+    // Si la voiture est au dessous de la cible
     else if (position.y < TargetPosition.y)
     {
 
@@ -82,7 +82,7 @@ bool Voiture::MoveToTargetPosition()
             position.y = TargetPosition.y;
         }
     }
-    // Si la voiture est à gauche du parking
+    // Si la voiture est à gauche de la cible
     if (position.x < TargetPosition.x)
     {
 
@@ -93,7 +93,7 @@ bool Voiture::MoveToTargetPosition()
             position.x = TargetPosition.x;
         }
     }
-    // Si la voiture est à droite du parking
+    // Si la voiture est à droite de la cible
     else if (position.x > TargetPosition.x)
     {
 
