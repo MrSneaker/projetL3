@@ -44,6 +44,9 @@ class Voiture {
     //! \brief Modifie la position de la cible (parking / place / sortie)
     void setTargetPosition(Vec2 new_pos);
 
+    //! \brief Renvoie la position de la cible (parking / place / sortie)
+    Vec2 getTargetPosition();
+
     //! \brief Renvoie la position de la voiture
     Vec2 get_position();
 
@@ -51,6 +54,8 @@ class Voiture {
     //! \param new_pos nouvelle position de la voiture
     void set_position(Vec2 new_pos);
 
+    //! \brief Test de regression la classe Voiture
+    void test_regresion();
 
 };
 
