@@ -21,9 +21,9 @@ public:
     //! \brief renvoie un float contenant le prix maximum que l'utilisateur pourrait payer.
     float getMaxPrice() const;
     //! \brief renvoie l'id de l'utilisateur, qui sera unique.
-    unsigned int getId();
+    unsigned int getId() const;
     //! \brief renvoie le nom de l'utilisateur sous forme de string.
-    string getName();
+    string getName() const;
 };
 
 #endif
