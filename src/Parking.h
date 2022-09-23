@@ -17,9 +17,9 @@ class Parking {
 
         int nbAvailablePlaces;
 
-        float MinPrice;
+        float minPrice;
 
-        float MaxPrice;
+        float maxPrice;
 
         bool isFull;
 
@@ -48,7 +48,7 @@ class Parking {
 
         // CONSTRUCTEUR et DESTRUCTEUR
 
-        Parking (Vec2 position, int numberOfPlaces, float MinimumPrice, float maximumPrice);
+        Parking (Vec2 position, int numberOfPlaces, float minimumPrice, float maximumPrice);
         ~Parking ();
 
 
@@ -82,23 +82,23 @@ class Parking {
 
         // MUTATEURS
 
-        void setPlacesTab ();
+        void setPlacesTab (); // !!!!
 
-        void setNbAvailablePlaces ();
+        void setNbAvailablePlaces (int numberOfAvailablePlaces);
 
-        void setMinPrice ();
+        void setMinPrice (float minimumPrice);
 
-        void setMaxPrice ();
+        void setMaxPrice (float maximumPrice);
 
-        void setIsFull ();
+        void setIsFull (bool filledToCapacity);
 
-        void setConversationsTab ();
+        void setConversationsTab (); // !!!!
 
-        void setUsersTab ();
+        void setUsersTab (); // !!!!
 
         void incrementNbVisits ();
 
-        void incrementNbVisitsTab ();
+        void incrementNbVisitsTab (); // !!!!
 
 };
 
