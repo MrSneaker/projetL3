@@ -9,7 +9,7 @@ Place::~Place()
 {
 }
 
-Vec2 Place::getPos()
+Vec2 Place::getPos() const
 {
     return pos;
 }
