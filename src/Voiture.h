@@ -14,7 +14,7 @@ class Voiture
         float speed; // speed de la voiture
         //float batterie; // batterie de la voiture
         //Couleur couleur; // Couleur de la voiture
-        Utilisateur conducteur; // Personna qui est dans la voiture
+        Utilisateur conducteur; // conducteur de la voiture
 
     
     public:
@@ -26,9 +26,9 @@ class Voiture
 
     Voiture();
 
-    //Constructeur voiture avec un utilisateur donnée
-    Voiture(Utilisateur u);
-    
+    //constructeur de voiture avec un utilisateur
+    Voiture(Utilisateur conducteur);
+
     ~Voiture();
 
     //! \brief Déplace la voiture vers la droite

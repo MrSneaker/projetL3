@@ -14,6 +14,7 @@ class Environnement {
     private:
         vector<Voiture> voitures;
         vector<Parking> parkings;
+        vector<Utilisateur> Conducteur;
         Vec2 position;
         float speed;
         float batterie;
@@ -25,7 +26,7 @@ class Environnement {
         //! \brief Ajoute une voiture dans l'environnement
         //! \param v voiture à ajouter
         void addVoiture(Voiture v);
-        
+
 
 
 
