@@ -1,12 +1,13 @@
+all : main
 
-# Voiture.o : Voiture.cpp Voiture.h vec2.h Place.h
-# 	g++ -c Voiture.cpp
+main : main.o Voiture.o 
+	g++ -o main main.o Voiture.o 
 
-# vec2.o : vec2.cpp vec2.h
-# 	g++ -c vec2.cpp
+main.o : src/main.cpp src/Voiture.h 
+	g++ -c src/main.cpp
 
-# Place.o : Place.cpp Place.h vec2.h
-# 	g++ -c Place.cpp
+Voiture.o : src/Voiture.cpp src/Voiture.h 
+	g++ -c src/Voiture.cpp
 
-# clean :
-# 	rm -f *.o main
+clean :
+	rm -f *.o main
