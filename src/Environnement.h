@@ -34,7 +34,9 @@ class Environnement {
         //! \param v voiture à ajouter
         void addVoiture(Voiture v);
         
+        //! \brief Initialisation d'un utilisateur, puis ajout dans le tableau de conducteurs.
         void initUser();
+
         // Initialisation des voitures dans l'environnement en fonction du temps 
         void initVoitureInEnvironnement();
 

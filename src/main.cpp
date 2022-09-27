@@ -10,5 +10,8 @@ int main(){
     Voiture V1;
     V1.test_regresion();
 
+    Utilisateur u;
+    u.testRegression();
+
     return 0;
 }
