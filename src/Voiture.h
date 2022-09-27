@@ -15,20 +15,19 @@ class Voiture
         float speed; // speed de la voiture
         //float batterie; // batterie de la voiture
         //Couleur couleur; // Couleur de la voiture
-        Utilisateur conducteur; // conducteur de la voiture
+        Utilisateur User; // Utilisateur de la voiture
 
     
     public:
-
-        bool Is_in; // true si la voiture entre dans le parking
-        bool Is_parked; // true si la voiture est garée dans le parking
+        bool Is_in = false; // true si la voiture entre dans le parking
+        bool Is_parked = false; // true si la voiture est garée dans le parking
 
 
 
     Voiture();
 
     //constructeur de voiture avec un utilisateur
-    Voiture(Utilisateur conducteur);
+    Voiture(Utilisateur User);
 
     ~Voiture();
 
@@ -62,7 +61,8 @@ class Voiture
     void set_position(Vec2 new_pos);
 
     //! \brief vérifie qu'un prix donné est acceptable ou non, selon un intervalle arbitraire. Renvoie un booléen.
-    bool isPriceOk(double price);
+    //! \param price prix à vérifier
+    bool isPriceOk(double price, Utilisateur User);
 
     //! \brief Test de regression la classe Voiture
     void test_regresion();

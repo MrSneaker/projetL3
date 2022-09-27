@@ -1,6 +1,6 @@
 #include "Environnement.h"
 
-int random(int min, int max) // fonction permettant de renvoyer un nombre aléatoire
+int Environnement::random(int min, int max) // fonction permettant de renvoyer un nombre aléatoire
 							 // négatif ou positif en fonction des bornes fournies en paramètres.
 {
 	int res;

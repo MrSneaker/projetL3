@@ -5,7 +5,6 @@
 #include "Parking.h"
 #include "Utilisateur.h"
 #include "Place.h"
-#include "Utilisateur.h"
 #include "vec2.h"
 #include <vector>
 #include <iostream>
@@ -22,6 +21,11 @@ class Environnement {
         Vec2 position;
         float speed;
         float batterie;
+        
+        //! \brief Fonction revoyant un nombre en deux valeurs
+        //! \param min valeur minimale
+        //! \param max valeur maximale
+        int random(int min, int max); 
     public:
         vector<Voiture> voitures;
         vector<Parking> parkings;

@@ -3,6 +3,7 @@
 
 #include "Place.h"
 #include "vec2.h"
+#include "Voiture.h"
 #include <vector>
 
 using namespace std;
@@ -27,7 +28,9 @@ class Parking {
         vector<int>* conversationsTab;
         // Pas encore sûrs qu'on va l'utiliser
 
-        vector<int>* usersTab;
+        vector<Voiture>* voitures;
+
+        vector<Utilisateur>* usersTab;
         // Pas encore sûrs qu'on "stocke" les utilisateurs de cette manière
 
         int nbVisits;
