@@ -59,7 +59,6 @@ Vec2 Voiture::getTargetPosition()
     return TargetPosition;
 }
 
-
 // Déplace la voiture vers la position de la cible (parking / place / sortie)
 // On changer la position de la cible quand la voiture entre dans le parking
 // Nouvelle position cible = position place de parking etc.
@@ -113,14 +112,24 @@ bool Voiture::MoveToTargetPosition()
     // Si la voiture est à la position cible
     else if (position.x == TargetPosition.x && position.y == TargetPosition.y)
     {
-
         return true;
     }
     return false;
 }
 
+bool Voiture::isPriceOk(double price)
+{
+    double u_price = conducteur.getMaxPrice();
+    bool ok = (price == u_price) || (price <= u_price + 0.5) || (price >= u_price - 0.5);
+    if (ok)
+        return true;
+    else
+        return false;
+}
+
 // Test de regression la classe Voiture
-void Voiture::test_regresion(){
+void Voiture::test_regresion()
+{
 
     std::cout << "Test de regression de la classe Voiture" << std::endl;
 
@@ -184,7 +193,7 @@ void Voiture::test_regresion(){
         std::cout << "Test de la fonction MoveDown() : NOT OK" << std::endl;
     }
 
-    //test de la fonction set_position()
+    // test de la fonction set_position()
     std::cout << "Test de la fonction set_position()" << std::endl;
     position.x = 0;
     position.y = 0;
@@ -203,7 +212,7 @@ void Voiture::test_regresion(){
 
     // Test de la fonction get_position()
     std::cout << "Test de la fonction get_position()" << std::endl;
-    Vec2 new_pos2 = {2,5};
+    Vec2 new_pos2 = {2, 5};
     set_position(new_pos2);
     Vec2 pos = get_position();
     if (pos.x == 2 && pos.y == 5)
@@ -234,7 +243,7 @@ void Voiture::test_regresion(){
 
     // Test de la fonction getTargetPosition()
     std::cout << "Test de la fonction getTargetPosition()" << std::endl;
-    Vec2 new_pos4 = {2,5};
+    Vec2 new_pos4 = {2, 5};
     setTargetPosition(new_pos4);
     Vec2 pos2 = getTargetPosition();
     if (pos2.x == 2 && pos2.y == 5)
@@ -253,16 +262,17 @@ void Voiture::test_regresion(){
     TargetPosition.x = 3;
     TargetPosition.y = 5;
     speed = 1;
-    std::cout<<TargetPosition.x<<std::endl;
-    std::cout<<TargetPosition.y<<std::endl;
-    while(MoveToTargetPosition() == false){
+    std::cout << TargetPosition.x << std::endl;
+    std::cout << TargetPosition.y << std::endl;
+    while (MoveToTargetPosition() == false)
+    {
 
-        std::cout<<"position.x = "<<position.x<<std::endl;
-        std::cout<<"position.y = "<<position.y<<std::endl;
+        std::cout << "position.x = " << position.x << std::endl;
+        std::cout << "position.y = " << position.y << std::endl;
     }
 
-    std::cout<<"fin - position.x = "<<position.x<<std::endl;
-    std::cout<<"fin - position.y = "<<position.y<<std::endl;
+    std::cout << "fin - position.x = " << position.x << std::endl;
+    std::cout << "fin - position.y = " << position.y << std::endl;
 
     if (position.x == TargetPosition.x && position.y == TargetPosition.y)
     {
@@ -273,7 +283,10 @@ void Voiture::test_regresion(){
         std::cout << "Test de la fonction MoveToTargetPosition() : NOT OK" << std::endl;
     }
 
-
-    
-
+    Voiture v2;
+    Utilisateur u(2.54,0,"lol");
+    v2.conducteur = u;
+    bool test = isPriceOk(3);
+    assert(test == true);
+    cout<<"test de la fonction isPriceOk : OK"<<endl;
 }

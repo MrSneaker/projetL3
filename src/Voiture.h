@@ -3,6 +3,7 @@
 
 #include "vec2.h"
 #include "Utilisateur.h"
+#include <assert.h>
 
 class Voiture 
 {
@@ -20,7 +21,7 @@ class Voiture
     public:
 
         bool Is_in; // true si la voiture entre dans le parking
-        bool Is_garee; // true si la voiture est garée dans le parking
+        bool Is_parked; // true si la voiture est garée dans le parking
 
 
 
@@ -59,6 +60,9 @@ class Voiture
     //! \brief Modifie la position de la voiture
     //! \param new_pos nouvelle position de la voiture
     void set_position(Vec2 new_pos);
+
+    //! \brief vérifie qu'un prix donné est acceptable ou non, selon un intervalle arbitraire. Renvoie un booléen.
+    bool isPriceOk(double price);
 
     //! \brief Test de regression la classe Voiture
     void test_regresion();
