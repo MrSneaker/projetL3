@@ -53,9 +53,9 @@ class Parking {
         // CONSTRUCTEUR et DESTRUCTEUR
 
         Parking (Vec2 position, int numberOfPlaces, float minimumPrice, float maximumPrice);
+
+
         ~Parking ();
-
-
 
         // ACCESSEURS
 
@@ -70,17 +70,17 @@ class Parking {
 
         int getMaxPrice () const;
 
-        bool isFull () const;
-
         vector<int>* getConversationsTab () const;
 
-        vector<int>* getUsersTab () const;
+        vector<Utilisateur>* getUsersTab () const;
 
         int getNbVisits () const;
 
         vector<int>* getNbVisitesTab () const;
 
         Vec2 getPos () const;
+
+        bool IsFull() const;
 
 
 

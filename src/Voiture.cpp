@@ -132,6 +132,16 @@ bool Voiture::isPriceOk(double price, Utilisateur User)
         return false;
 }
 
+void Voiture::UserGetInfos(){
+    //Donne les infos du conducteur
+    std::cout << "Nom : " << User.getName() << std::endl;
+    std::cout << "ID : " << User.getId() << std::endl;
+    std::cout << "Temps de stationnement : " << User.getParkTime() << std::endl;
+    std::cout << "Prix max : " << User.getMaxPrice() << std::endl;
+}
+
+
+// -----------------------------------------------------------------------------------------------
 // Test de regression la classe Voiture
 void Voiture::test_regresion()
 {

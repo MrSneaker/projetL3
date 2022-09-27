@@ -17,7 +17,7 @@ public:
     //! \brief procédure de modification de la position de la place.
     void setPos(Vec2 pos);
     //! \brief booléen servant à savoir si la place est occupée ou non.
-    bool isTaken;
+    bool isTaken = false;
 };
 
 

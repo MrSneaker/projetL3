@@ -37,7 +37,7 @@ int Parking::getMaxPrice () const {
     return maxPrice;
 }
 
-bool Parking::isFull () const {
+bool Parking::IsFull () const {
     return isFull;
 }
 
@@ -45,7 +45,7 @@ vector<int>* Parking::getConversationsTab () const {
     return conversationsTab;
 }
 
-vector<int>* Parking::getUsersTab () const {
+vector<Utilisateur>* Parking::getUsersTab () const {
     return usersTab;
 }
 

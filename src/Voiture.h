@@ -15,10 +15,10 @@ class Voiture
         float speed; // speed de la voiture
         //float batterie; // batterie de la voiture
         //Couleur couleur; // Couleur de la voiture
-        Utilisateur User; // Utilisateur de la voiture
 
     
     public:
+        Utilisateur User; // Utilisateur de la voiture
         bool Is_in = false; // true si la voiture entre dans le parking
         bool Is_parked = false; // true si la voiture est garée dans le parking
 
@@ -63,6 +63,9 @@ class Voiture
     //! \brief vérifie qu'un prix donné est acceptable ou non, selon un intervalle arbitraire. Renvoie un booléen.
     //! \param price prix à vérifier
     bool isPriceOk(double price, Utilisateur User);
+
+    //! \brief Affiche les Infos du conducteur
+    void UserGetInfos();
 
     //! \brief Test de regression la classe Voiture
     void test_regresion();
