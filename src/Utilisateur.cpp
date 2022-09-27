@@ -52,14 +52,14 @@ float Utilisateur::randomParkTime()
     // On simule un pourcentage qui définie le temps de stationnement de l'utilisateur.
     float res = rand() % 100;
     
-    // Si le pourcentage est inferieur à 10, on met le temps de stationnement entre 15 minutes et 1 heure
-    if (res < 10)
+    // Si le pourcentage est inferieur à 20, on met le temps de stationnement entre 15 minutes et 1 heure
+    if (res <= 20)
     {
         new_Parktime = (rand() % 45 + 15);
         new_Parktime = new_Parktime / 60;
     }
     // Si le pourcentage est inferieur à 50 et supperieur a 10, on met le temps de stationnement entre 1 et 5 heures
-    else if (res < 50)
+    else if (res <= 50)
     {
         new_Parktime = (rand() % 240 + 60)/60;
     }

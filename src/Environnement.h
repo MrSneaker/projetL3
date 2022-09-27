@@ -10,6 +10,7 @@
 #include <iostream>
 #include <math.h>
 #include <string>
+#include <time.h>
 
 using namespace std;
 
