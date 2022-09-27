@@ -1,10 +1,10 @@
-all : bin/main
+all : bin/test
 
-bin/main : obj/main.o obj/Voiture.o obj/Utilisateur.o
-	g++ -o bin/main obj/main.o obj/Voiture.o obj/Utilisateur.o
+bin/test : obj/maintest.o obj/Voiture.o obj/Utilisateur.o
+	g++ -o bin/test obj/maintest.o obj/Voiture.o obj/Utilisateur.o
 
-obj/main.o : src/main.cpp src/Voiture.h 
-	g++ -c -o obj/main.o src/main.cpp
+obj/maintest.o : src/maintest.cpp src/Voiture.h 
+	g++ -c -o obj/maintest.o src/maintest.cpp
 
 obj/Voiture.o : src/Voiture.cpp src/Voiture.h 
 	g++ -c -o obj/Voiture.o src/Voiture.cpp
