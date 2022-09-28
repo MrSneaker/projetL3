@@ -1,4 +1,5 @@
 #include "Environnement.h"
+
 using namespace std;
 
 int Environnement::random(int min, int max) // fonction permettant de renvoyer un nombre aléatoire
