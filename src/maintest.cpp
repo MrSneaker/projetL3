@@ -42,6 +42,7 @@ int main(){
     Environnement Simulation;
 
     Simulation.Environnement_play();
+    //Simulation.test_regresion();
 
 
     return 0;

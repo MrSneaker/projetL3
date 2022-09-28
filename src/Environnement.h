@@ -38,8 +38,15 @@ class Environnement {
         //! \brief Initialisation d'un utilisateur, puis ajout dans le tableau de conducteurs.
         void initUser();
 
+        //! \brief Initialisation des parkings
+        void initParkings();
+
         //! \brief Ajout d'une voiture avec un conducteur dans le tableau de voitures.
         void AddVoiture();
+
+        //! \brief Enleve une voiture du tableau de voitures.
+        //! \param numVoiture numéro de la voiture à enlever.
+        void RemoveVoiture(int numVoiture);
 
         //! \brief Boucle de jeu
         void Environnement_play();

@@ -27,6 +27,15 @@ void Environnement::initUser()
 
 // TODO : Création d'utilisateur avec nom différent
 
+void initParkings()
+{
+	//Initialisation des parkings
+	Parking p1(Vec2(0, 0), 10, 1, 2);
+	Parking p2(Vec2(0, 0), 10, 2, 2);
+	Parking p3(Vec2(0, 0), 10, 3, 2);
+
+}
+
 
 using namespace std;
 
@@ -49,11 +58,20 @@ void Environnement::AddVoiture()
 	voitures.push_back(V); // Ajout de la voiture dans le tableau de voitures
 }
 
+void Environnement::RemoveVoiture(int numVoiture)
+{
+	voitures.erase(voitures.begin() + numVoiture);
+	voitures[numVoiture].~Voiture();
+}
 
 //Boucle de jeu
 void Environnement::Environnement_play()
 {
-	// Boucle de jeu -- test
+		for(int i = 0; i < 10; i++)
+		{
+			AddVoiture();
+		}
+		
 	while(true)
 	{
 		time_t now = time(NULL); // temps actuel
@@ -62,8 +80,9 @@ void Environnement::Environnement_play()
 		int minute = ltm->tm_min;
 		int seconde = ltm->tm_sec;
 
+		/*
 		// Ajout d'une voiture toutes les 10 secondes
-		if(seconde%10 == 0)
+		if(seconde%1== 0)
 		{
 			cout<<"Faire une action"<<endl;
 			AddVoiture();
@@ -74,7 +93,22 @@ void Environnement::Environnement_play()
 				voitures[i].UserGetInfos();
 				cout<<"----------------------"<<endl;
 			}
+		}*/
+
+
+		cout<<"voiture a enlever : ";
+		int numVoiture;
+		cin>>numVoiture;
+		RemoveVoiture(numVoiture);
+
+		system("clear"); // clear le terminal
+		cout<<"voitures.size : "<<voitures.size()<<endl;
+		for(int i = 0; i < voitures.size(); i++)
+		{
+			voitures[i].UserGetInfos();
+			cout<<"----------------------"<<endl;
 		}
+ 
 		this_thread::sleep_for(chrono::milliseconds(1000));
 	}
 
@@ -82,3 +116,18 @@ void Environnement::Environnement_play()
 }
 
 
+void Environnement::test_regresion(){
+	
+	//test de regression de la classe Environnement
+	Environnement E;
+
+	for(int i = 0; i < 10; i++)
+	{
+		E.AddVoiture();
+	}
+	assert(E.voitures.size() == 10);
+	E.RemoveVoiture(0);
+	assert(E.voitures.size() == 9);
+
+	cout<<"Test de regression de la classe Environnement : OK"<<endl;
+}
