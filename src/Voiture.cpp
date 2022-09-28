@@ -10,6 +10,8 @@ Voiture::Voiture()
 Voiture::Voiture(Utilisateur U)
 {
     User = U;
+    position = Vec2(0,0);
+    speed = 1;
 }
 
 // Destructeur de la classe Voiture

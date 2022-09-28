@@ -11,15 +11,26 @@
 #define DimWindowY 800
 
 class Affichage{
+
     private:
+        Environnement environnement;
         SDL_Window *window;
         SDL_Renderer *renderer;
         SDL_Event event;
         bool quit;
+
+        TTF_Font *font_default;
+
+
+
     public:
         Affichage();
         ~Affichage();
-        void Affichage_play(Environnement &env);
+        void InitAffichage();
+        void AffichagePlateau();
+
+        void AffichageSimulation();
+
 };
 
 

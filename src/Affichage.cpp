@@ -1,9 +1,26 @@
 #include "Affichage.h"
+
 #include <iostream>
 
 using namespace std;
 
-Affichage::Affichage()
+Affichage::Affichage(){
+    Environnement Env;
+    Env.initParkings();
+    environnement = Env;
+}
+
+Affichage::~Affichage(){
+
+    TTF_CloseFont(font_default);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+}
+
+
+
+void Affichage::InitAffichage()
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << std::endl;
@@ -24,34 +41,95 @@ Affichage::Affichage()
         exit(1);
     }
 
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    // FONTS
+    font_default = TTF_OpenFont("font/arial.ttf", 24);
+
+    if (font_default == nullptr) {
+        cout << "Failed to load img/Arial.ttf in 24 SDL_TTF Error: " << TTF_GetError() << endl;
+        SDL_Quit();
+        exit(1);
+    }
+
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, 238, 230, 211, 255);
     SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
-    SDL_Event event;
-    bool quit = false;
-    while (!quit)
+
+    environnement.AddVoiture();
+    environnement.voitures[0].set_position(Vec2(0,0));
+    environnement.voitures[0].setTargetPosition(environnement.parkings[0].getPos());
+    
+
+}
+
+void Affichage::AffichagePlateau()
+{
+    SDL_Rect Voiture1;
+    Voiture1.x = environnement.voitures[0].get_position().x;
+    Voiture1.y = environnement.voitures[0].get_position().y;
+    Voiture1.w = 20;
+    Voiture1.h = 20;
+
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_RenderFillRect(renderer, &Voiture1);
+
+    SDL_Rect P1;
+    P1.x = environnement.parkings[0].getPos().x;
+    P1.y = environnement.parkings[0].getPos().y;
+    P1.w = 100;
+    P1.h = 100;
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    SDL_RenderDrawRect(renderer, &P1);
+    
+
+}
+
+
+void Affichage::AffichageSimulation()
+{
+    bool display = true;
+    bool doit= true;
+ 
+    InitAffichage();
+    while (display)
     {
-        while (SDL_PollEvent(&event))
+        this_thread::sleep_for(chrono::milliseconds(10));
+       
+        AffichagePlateau();
+
+        //environnement.voitures[0].MoveToTargetPosition();
+        while(SDL_PollEvent(&event))
         {
-            if (event.type == SDL_QUIT)
+            switch(event.type)
             {
-                quit = true;
+                case SDL_QUIT:
+                    display = false;
+                    break;
+                case SDL_KEYDOWN:
+                    switch(event.key.keysym.sym)
+                    {
+                        case SDLK_ESCAPE:
+                            display = false;
+                            break;
+                    }
+                    break;
             }
         }
+        
+        if(environnement.voitures[0].MoveToTargetPosition() == false)
+        {
+            
+        }
+        else 
+        {
+            environnement.voitures[0].setTargetPosition(Vec2(10, 10));
+        }
+        
+
+        SDL_SetRenderDrawColor(renderer, 238, 230, 211, 255);
+        SDL_RenderPresent(renderer);
+        SDL_RenderClear(renderer);
+
     }
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
 }
-
-Affichage::~Affichage()
-{
-}
-
-void Affichage::Affichage_play(Environnement &env)
-{
-
-
-}
-

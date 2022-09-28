@@ -48,6 +48,8 @@ int main(){
 
     Affichage Graph;
 
+    Graph.AffichageSimulation();
+
     
 
     return 0;
