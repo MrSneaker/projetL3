@@ -25,9 +25,9 @@ int Parking::getNbPlaces () const {
     return nbPlaces;
 }
 
-int Parking::getNbAvailablePlaces () const {
-    return nbAvailablePlaces;
-}
+// int Parking::getNbAvailablePlaces () const {
+//     return nbAvailablePlaces;
+// }
 
 int Parking::getMinPrice () const {
     return minPrice;
@@ -37,7 +37,13 @@ int Parking::getMaxPrice () const {
     return maxPrice;
 }
 
-bool Parking::IsFull () const {
+bool Parking::IsFull (){
+    if(nbPlaces == 0) {
+        isFull = true;
+    }
+    else {
+        isFull = false;
+    }
     return isFull;
 }
 
@@ -75,24 +81,24 @@ void Parking::setPlacesTab () {
 }
 
 
-void Parking::decrementNbAvailablePlaces () {
+// void Parking::decrementNbAvailablePlaces () {
 
-    nbAvailablePlaces--;
-    if (nbAvailablePlaces == 0) {
-        setIsFull (false);
-    }
+//     nbAvailablePlaces--;
+//     if (nbAvailablePlaces == 0) {
+//         setIsFull (false);
+//     }
 
-}
+// }
 
 
-void Parking::incrementNbAvailablePlaces () {
+// void Parking::incrementNbAvailablePlaces () {
 
-    nbAvailablePlaces++;
-    if (nbAvailablePlaces == 1) {
-        setIsFull (true);
-    }
+//     nbAvailablePlaces++;
+//     if (nbAvailablePlaces == 1) {
+//         setIsFull (true);
+//     }
 
-}
+// }
 
 
 void Parking::setMinPrice (float minimumPrice) {
@@ -129,12 +135,18 @@ void Parking::setUsersTab () {
 void Parking::incrementNbVisits () {
 
     nbVisits++;
-
-
 }
 
 void Parking::incrementNbVisitsTab () {
 
-    
+}
 
+void Parking::incrementNbPlaces () {
+
+    nbPlaces++;
+}
+
+void Parking::decrementNbPlaces () {
+
+    nbPlaces--;
 }

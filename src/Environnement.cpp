@@ -1,4 +1,5 @@
 #include "Environnement.h"
+using namespace std;
 
 int Environnement::random(int min, int max) // fonction permettant de renvoyer un nombre aléatoire
 							 // négatif ou positif en fonction des bornes fournies en paramètres.
@@ -16,6 +17,14 @@ int Environnement::random(int min, int max) // fonction permettant de renvoyer u
 	return res;
 }
 
+Environnement::Environnement()
+{
+}
+
+Environnement::~Environnement()
+{
+}
+
 void Environnement::initUser()
 {
 	float price = random(20, 60) / 10; // on simule des floats en divisants par 10.
@@ -30,22 +39,14 @@ void Environnement::initUser()
 void initParkings()
 {
 	//Initialisation des parkings
-	Parking p1(Vec2(0, 0), 10, 1, 2);
-	Parking p2(Vec2(0, 0), 10, 2, 2);
-	Parking p3(Vec2(0, 0), 10, 3, 2);
+	//Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir 
+	Parking p1(Vec2(0, 0), 100, 1, 2);
+	Parking p2(Vec2(0, 0), 80, 2, 2);
+	Parking p3(Vec2(0, 0), 250, 2.9, 2);
 
 }
 
 
-using namespace std;
-
-Environnement::Environnement()
-{
-}
-
-Environnement::~Environnement()
-{
-}
 
 void Environnement::AddVoiture()
 {
@@ -93,7 +94,7 @@ void Environnement::Environnement_play()
 				voitures[i].UserGetInfos();
 				cout<<"----------------------"<<endl;
 			}
-		}*/
+		}
 
 
 		cout<<"voiture a enlever : ";
@@ -108,6 +109,7 @@ void Environnement::Environnement_play()
 			voitures[i].UserGetInfos();
 			cout<<"----------------------"<<endl;
 		}
+		*/
  
 		this_thread::sleep_for(chrono::milliseconds(1000));
 	}

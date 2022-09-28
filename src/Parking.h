@@ -17,7 +17,7 @@ class Parking {
 
         int nbPlaces;
 
-        int nbAvailablePlaces;
+        //int nbAvailablePlaces;
 
         float minPrice;
 
@@ -52,6 +52,11 @@ class Parking {
 
         // CONSTRUCTEUR et DESTRUCTEUR
 
+        //! \brief Constructeur parametre de la class parking
+        //! \param position position du parking (position du rectangle en haut a gauche)
+        //! \param numberOfPlaces Nombre de palces disponible dans le parking
+        //! \param minimumPrice Prix minimum par minutes que le  parking peut accepté -> A REVOIR
+        //! \param maximumPrice Prix max que le parking propose -> A REVOIR
         Parking (Vec2 position, int numberOfPlaces, float minimumPrice, float maximumPrice);
 
 
@@ -62,6 +67,7 @@ class Parking {
         Place* getPlacesTab () const;
         // Utile ?
 
+        //! \brief Retourne le nombre de places du parking
         int getNbPlaces () const;
 
         int getNbAvailablePlaces () const;
@@ -78,9 +84,11 @@ class Parking {
 
         vector<int>* getNbVisitesTab () const;
 
+        //! \brief Donne la position (x,y) du parking - coin en haut a gauche
         Vec2 getPos () const;
 
-        bool IsFull() const;
+        //! \brief Fonction qui renvoie un entier, permet de savoir si le parking est plein ou non
+        bool IsFull();
 
 
 
@@ -109,6 +117,12 @@ class Parking {
 
         void incrementNbVisitsTab ();
         // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
+
+        //! \brief enleve une place au nombre de places dispo
+        void decrementNbPlaces ();
+
+        //! \brief ajoute une place au nombre de places dispo
+        void incrementNbPlaces ();
 
 };
 
