@@ -37,13 +37,18 @@ void Environnement::initUser()
 
 // TODO : Création d'utilisateur avec nom différent
 
-void initParkings()
+void Environnement::initParkings()
 {
 	//Initialisation des parkings
 	//Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir 
-	Parking p1(Vec2(0, 0), 100, 1, 2);
-	Parking p2(Vec2(0, 0), 80, 2, 2);
-	Parking p3(Vec2(0, 0), 250, 2.9, 2);
+	
+	//Créer 3 parkings et les ajouter dans le tableau de parkings
+	Parking p1(Vec2(0, 0), 100, 0.5, 1.5);
+	Parking p2(Vec2(0, 0), 80, 0.5, 1.5);
+	Parking p3(Vec2(0, 0), 250, 0.5, 1.5);
+	parkings.push_back(p1);
+	parkings.push_back(p2);
+	parkings.push_back(p3);
 
 }
 
@@ -133,5 +138,17 @@ void Environnement::test_regresion(){
 	E.RemoveVoiture(0);
 	assert(E.voitures.size() == 9);
 
-	cout<<"Test de regression de la classe Environnement : OK"<<endl;
+	cout<<"Test de regression de des fonction Add/RemoveVoiture (): OK"<<endl;
+
+	E.initParkings();
+	assert(E.parkings.size() == 3);
+	cout<<"Test de regression de la fonction initParking() : OK"<<endl;
+
+
+	
+
+
+
+
+
 }

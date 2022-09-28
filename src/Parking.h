@@ -55,7 +55,7 @@ class Parking {
         //! \brief Constructeur parametre de la class parking
         //! \param position position du parking (position du rectangle en haut a gauche)
         //! \param numberOfPlaces Nombre de palces disponible dans le parking
-        //! \param minimumPrice Prix minimum par minutes que le  parking peut accepté -> A REVOIR
+        //! \param minimumPrice Prix minimum d'acceptance par minutes que le  parking peut accepté -> A REVOIR
         //! \param maximumPrice Prix max que le parking propose -> A REVOIR
         Parking (Vec2 position, int numberOfPlaces, float minimumPrice, float maximumPrice);
 

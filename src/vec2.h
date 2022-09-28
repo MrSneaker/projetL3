@@ -2,12 +2,10 @@
 #define __VEC2_H__
 
 class Vec2
-{
-    private:
+{    
+    public:
         float x;
         float y;
-    
-    public:
         Vec2();
         Vec2(float x, float y);
         ~Vec2();

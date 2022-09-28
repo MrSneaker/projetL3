@@ -1,5 +1,7 @@
 #include "vec2.h"
 #include "Environnement.h"
+#include "Affichage.h"
+#include "Parking.h"
 
 #include <time.h> 
 #include <iostream> 
@@ -41,9 +43,12 @@ int main(){
 
     Environnement Simulation;
 
-    Simulation.Environnement_play();
+    //Simulation.Environnement_play();
     //Simulation.test_regresion();
 
+    Affichage Graph;
+
+    
 
     return 0;
 }
