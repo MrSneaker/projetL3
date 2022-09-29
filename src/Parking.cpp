@@ -1,27 +1,25 @@
 #include "Parking.h"
 
-
 // CONSTRUCTEUR et DESTRUCTEUR
 
-Parking::Parking (Vec2 position, int numberOfPlaces, float minimumPrice, float maximumPrice) :
-pos (position), nbPlaces (numberOfPlaces), minPrice (minimumPrice), maxPrice (maximumPrice) {}
+Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float maximumPrice) : pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice), maxPrice(maximumPrice) {}
 
-Parking::~Parking () {
+Parking::~Parking()
+{
     nbPlaces = -1;
     minPrice = -2;
     maxPrice = -3;
 }
 
-
-
 // ACCESSEURS
 
-
-Place* Parking::getPlacesTab () const {
+vector<Place> Parking::getPlacesTab() const
+{
     return placesTab;
 }
 
-int Parking::getNbPlaces () const {
+int Parking::getNbPlaces() const
+{
     return nbPlaces;
 }
 
@@ -29,124 +27,104 @@ int Parking::getNbPlaces () const {
 //     return nbAvailablePlaces;
 // }
 
-int Parking::getMinPrice () const {
+int Parking::getMinPrice() const
+{
     return minPrice;
 }
 
-int Parking::getMaxPrice () const {
+int Parking::getMaxPrice() const
+{
     return maxPrice;
 }
 
-bool Parking::IsFull (){
-    if(nbPlaces == 0) {
+bool Parking::IsFull()
+{
+    if (nbAvailablePlaces == 0)
+    {
         isFull = true;
     }
-    else {
+    else
+    {
         isFull = false;
     }
     return isFull;
 }
 
+/*
 vector<int>* Parking::getConversationsTab () const {
     return conversationsTab;
-}
+}*/
 
-vector<Utilisateur>* Parking::getUsersTab () const {
+vector<Utilisateur> *Parking::getUsersTab() const
+{
     return usersTab;
 }
 
-int Parking::getNbVisits () const {
+int Parking::getNbVisits() const
+{
     return nbVisits;
 }
 
-vector<int>* Parking::getNbVisitesTab () const {
+vector<int> Parking::getNbVisitesTab() const
+{
     return nbVisitsTab;
 }
 
-Vec2 Parking::getPos () const {
+Vec2 Parking::getPos() const
+{
     return pos;
 }
 
-
-
-
-
 // MUTATEURS
-
-
-
-void Parking::setPlacesTab () {
-
-
+void Parking::decrementNbAvailablePlaces()
+{
+    nbAvailablePlaces--;
+    IsFull();
 }
 
+void Parking::incrementNbAvailablePlaces()
+{
+    nbAvailablePlaces++;
+    IsFull();
+}
 
-// void Parking::decrementNbAvailablePlaces () {
-
-//     nbAvailablePlaces--;
-//     if (nbAvailablePlaces == 0) {
-//         setIsFull (false);
-//     }
-
-// }
-
-
-// void Parking::incrementNbAvailablePlaces () {
-
-//     nbAvailablePlaces++;
-//     if (nbAvailablePlaces == 1) {
-//         setIsFull (true);
-//     }
-
-// }
-
-
-void Parking::setMinPrice (float minimumPrice) {
-
+void Parking::setMinPrice(float minimumPrice)
+{
     minPrice = minimumPrice;
-
 }
 
-
-void Parking::setMaxPrice (float maximumPrice) {
+void Parking::setMaxPrice(float maximumPrice)
+{
 
     maxPrice = maximumPrice;
-
 }
 
-
-void Parking::setIsFull (bool filledToCapacity) {
-
-    isFull = filledToCapacity;
-
+void Parking::setConversationsTab()
+{
 }
 
-
-void Parking::setConversationsTab () {
-
+void Parking::setUsersTab()
+{
 }
 
-
-void Parking::setUsersTab () {
-
-}
-
-
-void Parking::incrementNbVisits () {
+void Parking::incrementNbVisits()
+{
 
     nbVisits++;
 }
 
-void Parking::incrementNbVisitsTab () {
-
+void Parking::incrementNbVisitsTab()
+{
 }
 
-void Parking::incrementNbPlaces () {
-
-    nbPlaces++;
-}
-
-void Parking::decrementNbPlaces () {
-
-    nbPlaces--;
+void Parking::initPlace()
+{
+    for(int i = 0; i<nbPlaces;i++)
+    {
+        //on  veut dix places par ligne et fuck ben.
+        for(int j = 0; j<10; j++)
+        Vec2 tmp;
+        //tmp.x = pos.x 
+        //Place(Vec2(pos.x,pos.y))
+    }
 }
