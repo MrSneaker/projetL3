@@ -2,13 +2,13 @@
 
 // CONSTRUCTEUR et DESTRUCTEUR
 
-Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float maximumPrice) : pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice), maxPrice(maximumPrice) {}
+Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice) : pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice), startingPrice(startPrice) {}
 
 Parking::~Parking()
 {
     nbPlaces = -1;
     minPrice = -2;
-    maxPrice = -3;
+    startingPrice = -3;
 }
 
 // ACCESSEURS
@@ -32,9 +32,9 @@ int Parking::getMinPrice() const
     return minPrice;
 }
 
-int Parking::getMaxPrice() const
+int Parking::getStartingPrice() const
 {
-    return maxPrice;
+    return startingPrice;
 }
 
 bool Parking::IsFull()
@@ -93,10 +93,10 @@ void Parking::setMinPrice(float minimumPrice)
     minPrice = minimumPrice;
 }
 
-void Parking::setMaxPrice(float maximumPrice)
+void Parking::setStartingPrice(float startPrice)
 {
 
-    maxPrice = maximumPrice;
+    startingPrice = startPrice;
 }
 
 void Parking::setConversationsTab()

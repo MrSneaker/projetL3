@@ -15,22 +15,62 @@ private:
     vector<Place> placesTab;
     // tableau 1D de Places
 
+    vector<Place> placesTab;
+    // Tableau statique 1D de Places
+
     int nbPlaces;
+    // - Nombre total de places (disponibles + occupées) dans le parking
+    // - Valeur fixe du début à la fin de la vie du parking
 
     int nbAvailablePlaces;
+    // Nombre de places disponibles dans le parking
+
+
+
 
     float minPrice;
+    // - Prix minimum accepté par le parking
 
-    float maxPrice;
+    // - C'est le prix au-dessous duquel le parking refusera d'aller au cours d'une négocation
+
+    // - Valeur variable, que le parking peut diminuer ou augmenter
+    // au cours de sa vie, en fonction de si ce prix minimum
+    // a tendance à être trop haut (pour les utilisateurs)
+    // ou trop bas (ie le parking ne gagne pas assez d'argent)
+    // [cf commentaire de la donnée membre "nbVisits" pour plus d'explications]
+
+
+
+
+
+
+
+    float startingPrice;
+    // - Prix proposé par le parking au début de la négociation
+
+    // - C'est un prix toujours supérieur à minPrice
+
+    // - Valeur variable, que le parking peut diminuer ou augmenter
+    // au cours de sa vie, en fonction de si ce prix de départ
+    // a tendance à être trop haut (pour les utilisateurs)
+    // ou trop bas (ie le parking ne gagne pas assez d'argent)
+    // [cf commentaire de la donnée membre "nbVisits" pour plus d'explications]
+
+
+
+
 
     bool isFull;
+    // Vrai si le parking est plein, faux sinon
 
-    vector<int> *conversationsTab;
-    // Pas encore sûrs qu'on va l'utiliser
+    vector<int>* conversationsTab;
+    // - Pas encore sûrs qu'on va l'utiliser
+    // - TO DO : utilité de créer un vector<int>* puis faire le commentaire de cette donnée membre
 
-    vector<Voiture> *voitures;
+    vector<Voiture>* voitures;
+    // !!! [Pas sûr] Pointeur sur un tableau dynamique des Voitures "contenues"
 
-    vector<Utilisateur> *usersTab;
+    vector<Utilisateur>* usersTab;
     // Pas encore sûrs qu'on "stocke" les utilisateurs de cette manière
 
     int nbVisits;
@@ -47,7 +87,15 @@ private:
 
     Vec2 pos;
 
+
+
+
+
+
 public:
+
+
+
     // CONSTRUCTEUR et DESTRUCTEUR
 
     //! \brief Constructeur parametre de la class parking
@@ -59,8 +107,19 @@ public:
 
     ~Parking();
 
+
+
+
     // ACCESSEURS
 
+    //! \brief Constructeur parametre de la class parking
+    //! \param position position du parking (position du rectangle en haut a gauche)
+    //! \param numberOfPlaces Nombre de palces disponible dans le parking
+    //! \param minimumPrice Prix minimum d'acceptance par minutes que le  parking peut accepté -> A REVOIR
+    //! \param startPrice Prix max que le parking propose -> A REVOIR
+    Parking (Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice);
+    
+    
     vector<Place> getPlacesTab() const;
     // Utile ?
 
@@ -79,6 +138,8 @@ public:
 
     int getNbVisits() const;
 
+    int getStartingPrice () const;
+    
     vector<int> getNbVisitesTab() const;
 
     //! \brief Donne la position (x,y) du parking - coin en haut a gauche
@@ -113,6 +174,10 @@ public:
 
     void incrementNbVisitsTab();
     // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
+
+        
+    void setStartingPrice (float startPrice);
+    
 
     //! \brief enleve une place au nombre de places dispo
     void decrementNbPlaces();
