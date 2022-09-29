@@ -17,6 +17,8 @@ class Affichage{
         SDL_Window *window;
         SDL_Renderer *renderer;
         SDL_Event event;
+        SDL_Surface *surface;
+        SDL_Texture *texture;
         bool quit;
 
         TTF_Font *font_default;

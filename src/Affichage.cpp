@@ -50,11 +50,21 @@ void Affichage::InitAffichage()
         exit(1);
     }
 
+    //Fonction qui permet de load des images
+    IMG_Init(IMG_INIT_PNG);
+
+
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(renderer, 238, 230, 211, 255);
     SDL_RenderClear(renderer);
+
+    //Donne au parking une image
+    surface = IMG_Load("img/parking.png");
+    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_FreeSurface(surface);
+
 
     environnement.AddVoiture();
     environnement.voitures[0].set_position(Vec2(0,0));
@@ -65,22 +75,33 @@ void Affichage::InitAffichage()
 
 void Affichage::AffichagePlateau()
 {
-    SDL_Rect Voiture1;
-    Voiture1.x = environnement.voitures[0].get_position().x;
-    Voiture1.y = environnement.voitures[0].get_position().y;
-    Voiture1.w = 20;
-    Voiture1.h = 20;
 
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderFillRect(renderer, &Voiture1);
+    //Test Affichage 
 
+    //Affiche l'image du parking
     SDL_Rect P1;
-    P1.x = environnement.parkings[0].getPos().x;
-    P1.y = environnement.parkings[0].getPos().y;
-    P1.w = 100;
-    P1.h = 100;
+    P1.x = environnement.parkings[0].getPos().x*10;
+    P1.y = environnement.parkings[0].getPos().y*10;
+    P1.w = 430;
+    P1.h = 380;
+    SDL_RenderCopy(renderer, texture, NULL, &P1);
+
+
+    SDL_Rect P2;
+    P2.x = environnement.parkings[1].getPos().x*10;
+    P2.y = environnement.parkings[1].getPos().y*10;
+    P2.w = 430;
+    P2.h = 380;
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-    SDL_RenderDrawRect(renderer, &P1);
+    SDL_RenderFillRect(renderer, &P2);
+
+    SDL_Rect P3;
+    P3.x = environnement.parkings[2].getPos().x*10;
+    P3.y = environnement.parkings[2].getPos().y*10;
+    P3.w = 980;
+    P3.h = 280;
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    SDL_RenderFillRect(renderer, &P3);
 
     SDL_Rect UpRoad;
     UpRoad.x = 450;
@@ -97,6 +118,7 @@ void Affichage::AffichagePlateau()
     SDL_RenderFillRect(renderer, &UpRoad);
     SDL_RenderFillRect(renderer, &DownRoad);
 
+    /*
     for(int i =0; i <DimWindowX; i+=30)
     {
             SDL_Rect Place;
@@ -111,8 +133,10 @@ void Affichage::AffichagePlateau()
             SDL_RenderFillRect(renderer, &Place);
         }
 
-    }
+    }*/
 
+
+    //Quadrillage
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
     for(int i =0; i<DimWindowX; i+=10){
@@ -143,6 +167,16 @@ void Affichage::AffichageSimulation()
         {
             switch(event.type)
             {
+                //Si le bouton gauche de la souris est appuyé
+                case SDL_MOUSEBUTTONDOWN:
+                    if(event.button.button == SDL_BUTTON_LEFT)
+                    {
+                        //On récupère les coordonnées de la souris
+                        int x = event.button.x;
+                        int y = event.button.y;
+                        cout << "x : " << x << " y : " << y << endl;
+                    }
+                    break;
                 case SDL_QUIT:
                     display = false;
                     break;
@@ -169,11 +203,6 @@ void Affichage::AffichageSimulation()
         {
             environnement.voitures[0].setTargetPosition(Vec2(680, 580));
         }*/
-
-        if(!environnement.voitures[0].MoveToTargetPosition())
-        {
-           
-        }
         
 
         SDL_SetRenderDrawColor(renderer, 238, 230, 211, 255);
