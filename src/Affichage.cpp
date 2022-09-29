@@ -81,6 +81,46 @@ void Affichage::AffichagePlateau()
     P1.h = 100;
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
     SDL_RenderDrawRect(renderer, &P1);
+
+    SDL_Rect UpRoad;
+    UpRoad.x = 450;
+    UpRoad.y = 0;
+    UpRoad.w = 100;
+    UpRoad.h = 400;
+
+    SDL_Rect DownRoad;
+    DownRoad.x = 0;
+    DownRoad.y = 400;
+    DownRoad.w = 1000;
+    DownRoad.h = 100;
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_RenderFillRect(renderer, &UpRoad);
+    SDL_RenderFillRect(renderer, &DownRoad);
+
+    for(int i =0; i <DimWindowX; i+=30)
+    {
+            SDL_Rect Place;
+            Place.x = i;
+            Place.y = 0;
+            Place.w = 10;
+            Place.h = 20;
+        //Draw les place tout les 20px sauf en x entre 450 et 550
+        if(i < 450 || i > 550)
+        {
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+            SDL_RenderFillRect(renderer, &Place);
+        }
+
+    }
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+    for(int i =0; i<DimWindowX; i+=10){
+        SDL_RenderDrawLine(renderer, i, 0, i, DimWindowY);
+    }
+    for(int i =0; i<DimWindowY; i+=10){
+        SDL_RenderDrawLine(renderer, 0, i, DimWindowX, i);
+    }
     
 
 }
@@ -112,19 +152,28 @@ void Affichage::AffichageSimulation()
                         case SDLK_ESCAPE:
                             display = false;
                             break;
+
+                        case SDLK_SPACE:
+                        if(!environnement.voitures[0].MoveToTargetPosition()){
+                            
+                        }
+                            break;
                     }
                     break;
             }
         }
+
+
         
+        /*
         if(environnement.voitures[0].MoveToTargetPosition() == false)
         {
             
         }
         else 
         {
-            environnement.voitures[0].setTargetPosition(Vec2(10, 10));
-        }
+            environnement.voitures[0].setTargetPosition(Vec2(680, 580));
+        }*/
         
 
         SDL_SetRenderDrawColor(renderer, 238, 230, 211, 255);
