@@ -12,12 +12,12 @@ class Parking {
 
     private :
 
-        Place* placesTab;
-        // tableau dynamique 1D de Places
+        vector<Place> placesTab;
+        // tableau 1D de Places
 
         int nbPlaces;
 
-        //int nbAvailablePlaces;
+        int nbAvailablePlaces;
 
         float minPrice;
 
@@ -42,7 +42,7 @@ class Parking {
         // cela veut dire que les prix du parking sont trop hauts, et ce dernier va donc baisser
         // ses tarifs en moyenne pour obtenir globalement plus de voitures.
 
-        vector<int>* nbVisitsTab;
+        vector<int> nbVisitsTab;
         // Pas encore sûrs qu'on "stocke" ces données sur les venues des utilisateurs de cette manière
 
         Vec2 pos;
@@ -64,7 +64,7 @@ class Parking {
 
         // ACCESSEURS
 
-        Place* getPlacesTab () const;
+        vector<Place> getPlacesTab () const;
         // Utile ?
 
         //! \brief Retourne le nombre de places du parking
@@ -82,7 +82,7 @@ class Parking {
 
         int getNbVisits () const;
 
-        vector<int>* getNbVisitesTab () const;
+        vector<int> getNbVisitesTab () const;
 
         //! \brief Donne la position (x,y) du parking - coin en haut a gauche
         Vec2 getPos () const;
@@ -94,7 +94,7 @@ class Parking {
 
         // MUTATEURS
 
-        void setPlacesTab ();
+        // void setPlacesTab ();
         // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
 
         void decrementNbAvailablePlaces ();
@@ -112,6 +112,7 @@ class Parking {
 
         void setUsersTab ();
         // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
+        // dans l'idee on stock les iD.
 
         void incrementNbVisits ();
 
