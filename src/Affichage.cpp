@@ -153,11 +153,6 @@ void Affichage::AffichageSimulation()
                             display = false;
                             break;
 
-                        case SDLK_SPACE:
-                        if(!environnement.voitures[0].MoveToTargetPosition()){
-                            
-                        }
-                            break;
                     }
                     break;
             }
@@ -174,6 +169,11 @@ void Affichage::AffichageSimulation()
         {
             environnement.voitures[0].setTargetPosition(Vec2(680, 580));
         }*/
+
+        if(!environnement.voitures[0].MoveToTargetPosition())
+        {
+           
+        }
         
 
         SDL_SetRenderDrawColor(renderer, 238, 230, 211, 255);

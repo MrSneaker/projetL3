@@ -19,14 +19,16 @@ obj/Voiture.o : src/Voiture.cpp src/Voiture.h
 obj/Utilisateur.o : src/Utilisateur.cpp src/Utilisateur.h
 	g++ -c -o obj/Utilisateur.o src/Utilisateur.cpp 
 
-obj/vec2.o : src/vec2.cpp src/vec2.h
-	g++ -c -o obj/vec2.o src/vec2.cpp 
-
 obj/Place.o : src/Place.cpp src/Place.h
 	g++ -c -o obj/Place.o src/Place.cpp
 
+obj/vec2.o : src/vec2.cpp src/vec2.h
+	g++ -c -o obj/vec2.o src/vec2.cpp 
+
 obj/Affichage.o : src/Affichage.cpp src/Affichage.h
 	g++ -c -o obj/Affichage.o src/Affichage.cpp $(SDL2)
+
+
 
 clean: 
 	rm obj/*.o

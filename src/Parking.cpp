@@ -15,7 +15,7 @@ Parking::~Parking()
 
 vector<Place> Parking::getPlacesTab() const
 {
-    return placesTab;
+     return placesTab;
 }
 
 int Parking::getNbPlaces() const
@@ -122,8 +122,8 @@ void Parking::initPlace()
     for(int i = 0; i<nbPlaces;i++)
     {
         //on  veut dix places par ligne et fuck ben.
-        for(int j = 0; j<10; j++)
-        Vec2 tmp;
+        //for(int j = 0; j<10; j++)
+        //Vec2 tmp;
         //tmp.x = pos.x 
         //Place(Vec2(pos.x,pos.y))
     }
