@@ -1,3 +1,9 @@
 .git/*
 
 .vscode/*
+
+bin/test
+
+obj/*.o
+
+UML.dia~
