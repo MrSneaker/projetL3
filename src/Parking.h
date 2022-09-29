@@ -12,11 +12,10 @@ class Parking
 {
 
 private:
-    vector<Place> placesTab;
-    // tableau 1D de Places
+
 
     vector<Place> placesTab;
-    // Tableau statique 1D de Places
+    // Tableau 1D de Places
 
     int nbPlaces;
     // - Nombre total de places (disponibles + occupées) dans le parking
@@ -95,31 +94,23 @@ private:
 public:
 
 
-
     // CONSTRUCTEUR et DESTRUCTEUR
 
     //! \brief Constructeur parametre de la class parking
     //! \param position position du parking (position du rectangle en haut a gauche)
     //! \param numberOfPlaces Nombre de palces disponible dans le parking
     //! \param minimumPrice Prix minimum d'acceptance par minutes que le  parking peut accepté -> A REVOIR
-    //! \param maximumPrice Prix max que le parking propose -> A REVOIR
-    Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float maximumPrice);
+    //! \param startPrice Prix max que le parking propose -> A REVOIR
+    Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice);
 
     ~Parking();
 
 
-
+    
+    
 
     // ACCESSEURS
 
-    //! \brief Constructeur parametre de la class parking
-    //! \param position position du parking (position du rectangle en haut a gauche)
-    //! \param numberOfPlaces Nombre de palces disponible dans le parking
-    //! \param minimumPrice Prix minimum d'acceptance par minutes que le  parking peut accepté -> A REVOIR
-    //! \param startPrice Prix max que le parking propose -> A REVOIR
-    Parking (Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice);
-    
-    
     vector<Place> getPlacesTab() const;
     // Utile ?
 

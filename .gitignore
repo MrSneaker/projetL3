@@ -1,2 +1,7 @@
-obj
-.git
+.git/*
+
+.vscode/*
+
+bin/*
+
+obj/*
