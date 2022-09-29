@@ -76,28 +76,20 @@ Vec2 Parking::getPos() const
 }
 
 // MUTATEURS
+void Parking::decrementNbAvailablePlaces()
+{
+    nbAvailablePlaces--;
+    IsFull();
+}
 
-// void Parking::decrementNbAvailablePlaces () {
-
-//     nbAvailablePlaces--;
-//     if (nbAvailablePlaces == 0) {
-//         setIsFull (false);
-//     }
-
-// }
-
-// void Parking::incrementNbAvailablePlaces () {
-
-//     nbAvailablePlaces++;
-//     if (nbAvailablePlaces == 1) {
-//         setIsFull (true);
-//     }
-
-// }
+void Parking::incrementNbAvailablePlaces()
+{
+    nbAvailablePlaces++;
+    IsFull();
+}
 
 void Parking::setMinPrice(float minimumPrice)
 {
-
     minPrice = minimumPrice;
 }
 
@@ -125,14 +117,14 @@ void Parking::incrementNbVisitsTab()
 {
 }
 
-void Parking::incrementNbPlaces()
+void Parking::initPlace()
 {
-
-    nbPlaces++;
-}
-
-void Parking::decrementNbPlaces()
-{
-
-    nbPlaces--;
+    for(int i = 0; i<nbPlaces;i++)
+    {
+        //on  veut dix places par ligne et fuck ben.
+        for(int j = 0; j<10; j++)
+        Vec2 tmp;
+        //tmp.x = pos.x 
+        //Place(Vec2(pos.x,pos.y))
+    }
 }

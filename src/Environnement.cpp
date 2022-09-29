@@ -88,36 +88,6 @@ void Environnement::Environnement_play()
 		int minute = ltm->tm_min;
 		int seconde = ltm->tm_sec;
 
-		/*
-		// Ajout d'une voiture toutes les 10 secondes
-		if(seconde%1== 0)
-		{
-			cout<<"Faire une action"<<endl;
-			AddVoiture();
-			
-			system("clear"); // clear le terminal
-			for(int i = 0; i < voitures.size(); i++)
-			{
-				voitures[i].UserGetInfos();
-				cout<<"----------------------"<<endl;
-			}
-		}
-
-
-		cout<<"voiture a enlever : ";
-		int numVoiture;
-		cin>>numVoiture;
-		RemoveVoiture(numVoiture);
-
-		system("clear"); // clear le terminal
-		cout<<"voitures.size : "<<voitures.size()<<endl;
-		for(int i = 0; i < voitures.size(); i++)
-		{
-			voitures[i].UserGetInfos();
-			cout<<"----------------------"<<endl;
-		}
-		*/
- 
 		this_thread::sleep_for(chrono::milliseconds(1000));
 	}
 
