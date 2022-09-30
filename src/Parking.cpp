@@ -4,6 +4,11 @@
 
 Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice) : pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice), startingPrice(startPrice) {}
 
+Parking::Parking()
+{
+
+}
+
 Parking::~Parking()
 {
     nbPlaces = -1;
@@ -15,7 +20,7 @@ Parking::~Parking()
 
 vector<Place> Parking::getPlacesTab() const
 {
-     return placesTab;
+    return placesTab;
 }
 
 int Parking::getNbPlaces() const
@@ -117,14 +122,32 @@ void Parking::incrementNbVisitsTab()
 {
 }
 
-void Parking::initPlace()
+void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
 {
-    for(int i = 0; i<nbPlaces;i++)
+    int indPl = 1;
+    for (int i = 0; i < nbPlCol; i++)
     {
-        //on  veut dix places par ligne et fuck ben.
-        //for(int j = 0; j<10; j++)
-        //Vec2 tmp;
-        //tmp.x = pos.x 
-        //Place(Vec2(pos.x,pos.y))
+        // on  veut dix places par ligne et fuck ben.
+        for (int j = 0; j < nbPlLigne; j++)
+        {
+            Place p = Place(Vec2(PcornerX+j,PcornerY+i),indPl,false);
+            placesTab.push_back(p);
+            indPl++;
+        }
     }
+}
+
+void Parking::testRegression()
+{
+    Parking p1(Vec2(1, 1), 200, 0.5, 1.5);
+    p1.initPlace(10,20,10,10);
+    assert(p1.placesTab.size()==200);
+    for(int i = 0;i<p1.nbPlaces;i++)
+    {
+        cout<<p1.placesTab.at(i).getPos().x<<endl;
+        cout<<p1.placesTab.at(i).getPos().y<<endl;
+        cout<<p1.placesTab.at(i).getIndP()<<endl;
+        cout<<endl;
+    }
+
 }
