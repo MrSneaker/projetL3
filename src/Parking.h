@@ -5,6 +5,8 @@
 #include "vec2.h"
 #include "Voiture.h"
 #include <vector>
+#include <math.h>
+#include <iostream>
 
 using namespace std;
 
@@ -111,6 +113,8 @@ public:
     //! \param minimumPrice Prix minimum d'acceptance par minutes que le  parking peut accepté -> A REVOIR
     //! \param startPrice Prix max que le parking propose -> A REVOIR
     Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice);
+    
+    Parking();
 
     ~Parking();
 
@@ -186,7 +190,9 @@ public:
     void incrementNbPlaces();
 
     //! \brief initialisation de toutes les places de parkings (positions, etc..).
-    void initPlace();
+    void initPlace(int nbPlaceLi, int nbPlaceCol, int PcornerX, int PcornerY);
+
+    void testRegression();
 };
 
 #endif

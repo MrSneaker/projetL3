@@ -19,6 +19,7 @@ public:
     //! \brief position de la place.
     Vec2 getPos() const;
     //! \brief procédure de modification de la position de la place.
+    int getIndP() const;
     
 };
 

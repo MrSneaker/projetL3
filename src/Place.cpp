@@ -21,3 +21,7 @@ Vec2 Place::getPos() const
     return pos;
 }
 
+int Place::getIndP() const
+{
+    return indP;
+}
