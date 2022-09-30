@@ -4,7 +4,8 @@
 
 Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice) :
     pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice),
-    startingPrice(startPrice), nbAvailablePlaces (numberOfPlaces), isFull (false) {
+    startingPrice(startPrice), nbAvailablePlaces (numberOfPlaces),
+    isFull (false), nbTotalVisits (0) {
 
         //initPlace();
 
@@ -71,15 +72,11 @@ vector<Utilisateur*> Parking::getUsersTab() const
     return usersTab;
 }
 
-int Parking::getNbVisits() const
+int Parking::getNbTotalVisits() const
 {
-    return nbVisits;
+    return nbTotalVisits;
 }
 
-vector<int> Parking::getNbVisitesTab() const
-{
-    return nbVisitsTab;
-}
 
 Vec2 Parking::getPos() const
 {
@@ -114,19 +111,28 @@ void Parking::setConversationsTab()
 {
 }
 
-void Parking::setUsersTab()
+void Parking::setUsersTab(Utilisateur* unUtilisateur)
 {
 }
 
-void Parking::incrementNbVisits()
+void Parking::incrementNbTotalVisits()
 {
 
-    nbVisits++;
+    nbTotalVisits++;
 }
 
-void Parking::incrementNbVisitsTab()
+
+
+void Parking::incrementNbVisitsTab(Utilisateur* unUtilisateur)
 {
+
+    // Ajouter bout de code pour incrémenter le nombre de visites de l'utilisateur
+
+    incrementNbTotalVisits();
 }
+
+
+
 
 void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
 {
@@ -142,6 +148,11 @@ void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
         }
     }
 }
+
+
+
+
+
 
 void Parking::testRegression()
 {

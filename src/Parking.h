@@ -38,7 +38,7 @@ private:
     // au cours de sa vie, en fonction de si ce prix minimum
     // a tendance à être trop haut (pour les utilisateurs)
     // ou trop bas (ie le parking ne gagne pas assez d'argent)
-    // [cf commentaire de la donnée membre "nbVisits" pour plus d'explications]
+    // [cf commentaire de la donnée membre "nbTotalVisits" pour plus d'explications]
 
 
 
@@ -55,7 +55,7 @@ private:
     // au cours de sa vie, en fonction de si ce prix de départ
     // a tendance à être trop haut (pour les utilisateurs)
     // ou trop bas (ie le parking ne gagne pas assez d'argent)
-    // [cf commentaire de la donnée membre "nbVisits" pour plus d'explications]
+    // [cf commentaire de la donnée membre "nbTotalVisits" pour plus d'explications]
 
 
 
@@ -68,7 +68,7 @@ private:
 
 
     vector<int> conversationsTab;
-    // - Pas encore sûrs qu'on va l'utiliser,
+    // Pas encore sûrs qu'on va l'utiliser,
     // et pas encore sûrs du type que l'on va stocker dans ce vector
     // (car on va peut-être stocker les conversations dans des fichiers TXT,
     // et/ou ne pas garder en mémoire les conversations une fois que ces dernières ont eu lieu)
@@ -76,13 +76,35 @@ private:
 
 
 
+
     vector<Voiture*> voitures;
-    // !!! [Pas sûr] Pointeur sur un tableau dynamique des Voitures "contenues"
+    // - Tableau dynamique 1D de pointeurs sur Voiture
+
+    // - Quand une Voiture pénètre dans le parking,
+    // un pointeur sur cette Voiture est créé et ajouté au tableau.
+    // Quand la Voiture quitte le parking, le pointeur est supprimé du tableau.
+
+
+
 
     vector<Utilisateur*> usersTab;
-    // Pas encore sûrs qu'on "stocke" les utilisateurs de cette manière
+    // - Tableau dynamique 1D de pointeurs sur Utilisateur
 
-    int nbVisits;
+    // - Quand un Utilisateur se gare dans le parking,
+    // un pointeur sur cet Utilisateur est créé et ajouté au tableau.
+    // Ce pointeur existe et est constant durant toute la vie de l'Utilisateur.
+
+    // - Cet accès aux Utilisateurs s'étant garés au moins une fois dans le parking
+    // permettra notamment d'avoir accès au nombre de visites de chacun de ces Utilisateurs
+    // dans le parking. Ce dernier pourra ainsi appliquer une réduction à un Utilisateur
+    // s'étant déjà garé chez lui : plus le nombre de visites de l'Utilisateur est élevé,
+    // plus le pourcentage de réduction le sera également.
+
+
+
+
+
+    int nbTotalVisits;
     // Le parking va, toutes les 2h dans la simulation (par ex), calculer son nombre de
     // réussites par rapport à son nombre de négociations. Si les négociations
     // ont souvent abouti à un refus de l'utilisateur de se garer dans le parking en question,
@@ -91,8 +113,6 @@ private:
     // cela veut dire que les prix du parking sont trop hauts, et ce dernier va donc baisser
     // ses tarifs en moyenne pour obtenir globalement plus de voitures.
 
-    vector<int> nbVisitsTab;
-    // Pas encore sûrs qu'on "stocke" ces données sur les venues des utilisateurs de cette manière
 
     Vec2 pos;
     // Position du coin supérieur gauche du parking
@@ -134,23 +154,24 @@ public:
 
     int getMinPrice() const;
 
-    int getMaxPrice() const;
+    int getStartingPrice () const;
 
     vector<int> getConversationsTab() const;
+    // Pas encore sûrs qu'on va l'utiliser
+    // (cf commentaire de la donnée membre conversationsTab)
 
     vector<Utilisateur*> getUsersTab() const;
 
-    int getNbVisits() const;
-
-    int getStartingPrice () const;
-    
-    vector<int> getNbVisitesTab() const;
+    int getNbTotalVisits() const;
 
     //! \brief Donne la position (x,y) du parking - coin en haut a gauche
     Vec2 getPos() const;
 
     //! \brief Fonction qui renvoie un entier, permet de savoir si le parking est plein ou non
     bool IsFull();
+
+
+
 
     // MUTATEURS
 
@@ -163,24 +184,24 @@ public:
 
     void setMinPrice(float minimumPrice);
 
-    void setMaxPrice(float maximumPrice);
+    void setStartingPrice(float startPrice);
 
     void setIsFull(bool filledToCapacity);
 
     void setConversationsTab();
-    // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
+    // Pas encore sûrs qu'on va l'utiliser
+    // (cf commentaire de la donnée membre conversationsTab)
+    // (TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre)
 
-    void setUsersTab();
-    // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
-    // dans l'idee on stock les iD.
+    void setUsersTab(Utilisateur* unUtilisateur);
+    // !!!
+    // TO DO : Je dois la finir
 
-    void incrementNbVisits();
+    void incrementNbTotalVisits();
 
-    void incrementNbVisitsTab();
-    // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
-
-        
-    void setStartingPrice (float startPrice);
+    void incrementNbVisitsTab(Utilisateur* unUtilisateur);
+    // !!!
+    // TO DO : Je dois la finir
     
 
     //! \brief enleve une place au nombre de places dispo

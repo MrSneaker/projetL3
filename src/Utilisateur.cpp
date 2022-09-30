@@ -1,4 +1,6 @@
 #include "Utilisateur.h"
+#include <stdlib.h>
+#include <time.h>
 
 Utilisateur::Utilisateur()
 {
@@ -23,6 +25,19 @@ Utilisateur::Utilisateur(double u_maxPrice, unsigned int u_id, string u_name)
     id = u_id;
     name = u_name;
     ParkTime = randomParkTime();
+
+    int aleatoire;
+    int min = 0, max = 5;
+    int plage = max - min + 1 ;
+
+    // Initialisation du générateur
+    srand ((unsigned int) time (NULL));
+
+    for (int i = 0; i < NB_PARKING; i++) {
+        // Tirage d'un entier aléatoire compris entre min et max inclus
+        aleatoire = (rand () % plage) + min;
+        nbVisitsTab [i] = aleatoire;
+    }
 }
 
 double Utilisateur::getMaxPrice() const
