@@ -17,9 +17,6 @@ Parking::Parking()
 
 Parking::~Parking()
 {
-    nbPlaces = -1;
-    minPrice = -2;
-    startingPrice = -3;
 }
 
 // ACCESSEURS

@@ -210,10 +210,10 @@ public:
     
 
     //! \brief enleve une place au nombre de places dispo
-    void decrementNbPlaces();
+    void decrementNbAvailablePlaces();
 
     //! \brief ajoute une place au nombre de places dispo
-    void incrementNbPlaces();
+    void incrementNbAvailablePlaces();
 
     //! \brief initialisation de toutes les places de parkings (positions, etc..).
     void initPlace(int nbPlaceLi, int nbPlaceCol, int PcornerX, int PcornerY);
