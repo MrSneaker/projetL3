@@ -113,7 +113,7 @@ public:
     //! \param numberOfPlaces Nombre de palces disponible dans le parking
     //! \param minimumPrice Prix minimum d'acceptance par minutes que le  parking peut accepté -> A REVOIR
     //! \param startPrice Prix max que le parking propose -> A REVOIR
-    Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice );
+    Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice, int DIMX, int DIMY);
     
     Parking();
 

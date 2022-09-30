@@ -43,9 +43,9 @@ void Environnement::initParkings()
 	//Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir 
 	
 	//Créer 3 parkings et les ajouter dans le tableau de parkings
-	Parking p1(Vec2(1, 1), 100, 0.5, 1.5);
-	Parking p2(Vec2(56, 1), 80, 0.5, 1.5);
-	Parking p3(Vec2(1, 51), 250, 0.5, 1.5);
+	Parking p1(Vec2(1, 1), 100, 0.5, 1.5,43,38);
+	Parking p2(Vec2(56, 1), 80, 0.5, 1.5,43,38);
+	Parking p3(Vec2(1, 51), 250, 0.5, 1.5,98,28);
 	parkings.push_back(p1);
 	parkings.push_back(p2);
 	parkings.push_back(p3);
