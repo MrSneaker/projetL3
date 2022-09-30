@@ -30,8 +30,15 @@ void Environnement::initUser()
 {
 	float price = random(20, 60) / 10; // on simule des floats en divisants par 10.
 	unsigned int id = conducteurs.size(); //Marche pas si on supprime un utilisateur du tableau et qu'on en rajoute un.
-	string name = "Paulo - " + to_string(id); 
-	Utilisateur u(price, id, name);
+	string name = "Paulo - " + to_string(id);
+
+	// On attribue à l'utilisateur (que l'on crée juste après) un entier initial aléatoire (entre 0 et 5)
+	// de visites de chaque parking (on simule ainsi le passé)
+	unsigned int nbVisits0 = random(0, 5);
+	unsigned int nbVisits1 = random(0, 5);
+	unsigned int nbVisits2 = random(0, 5);
+
+	Utilisateur u(price, id, name, nbVisits0, nbVisits1, nbVisits2);
 	conducteurs.push_back(u);
 }
 

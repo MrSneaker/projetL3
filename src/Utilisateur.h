@@ -30,7 +30,8 @@ public:
     //! \param u_id identifiant de l'utilisateur
     //! \param u_name nom de l'utilisateur
     //! \param u_Parktime temps de stationnement de l'utilisateur
-    Utilisateur(double maxPrice, unsigned int id, string name);
+    Utilisateur(double maxPrice, unsigned int id, string name,
+        unsigned int nbVisits0, unsigned int nbVisits1, unsigned int nbVisits2);
     //! \brief destructeur.
     ~Utilisateur();
     //! \brief renvoie un float contenant le prix maximum que l'utilisateur pourrait payer.

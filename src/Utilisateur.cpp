@@ -19,26 +19,24 @@ Utilisateur::~Utilisateur()
 {
 }
 
-Utilisateur::Utilisateur(double u_maxPrice, unsigned int u_id, string u_name)
+
+
+Utilisateur::Utilisateur(double u_maxPrice, unsigned int u_id, string u_name,
+    unsigned int nbVisits0, unsigned int nbVisits1, unsigned int nbVisits2)
 {
+
     maxPrice = u_maxPrice;
     id = u_id;
     name = u_name;
     ParkTime = randomParkTime();
 
-    int aleatoire;
-    int min = 0, max = 5;
-    int plage = max - min + 1 ;
+    nbVisitsTab [0] = nbVisits0;
+    nbVisitsTab [1] = nbVisits1;
+    nbVisitsTab [2] = nbVisits2;
 
-    // Initialisation du générateur
-    srand ((unsigned int) time (NULL));
-
-    for (int i = 0; i < NB_PARKING; i++) {
-        // Tirage d'un entier aléatoire compris entre min et max inclus
-        aleatoire = (rand () % plage) + min;
-        nbVisitsTab [i] = aleatoire;
-    }
 }
+
+
 
 double Utilisateur::getMaxPrice() const
 {
@@ -109,7 +107,7 @@ void Utilisateur::testRegression()
     //test constructeur avec parametre
     cout << "Test constructeur avec parametre + setParkTime()" << endl;
     float parktime = randomParkTime();
-    Utilisateur u2(2.54,34,"Zidane");
+    Utilisateur u2(2.54,34,"Zidane", 4, 1, 0);
     u2.setParkTime(parktime);
     assert(u2.id == 34);
     assert(u2.maxPrice == 2.54);
@@ -117,7 +115,7 @@ void Utilisateur::testRegression()
     assert(u2.ParkTime == parktime);
     cout << "Test constructeur avec parametre OK" << endl;
 
-    Utilisateur u3(2,37,"Michel");
+    Utilisateur u3(2,37,"Michel", 0, 0, 2);
     cout<<u3.getParkTime()<<endl;
     
 }

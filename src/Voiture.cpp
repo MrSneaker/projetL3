@@ -152,7 +152,7 @@ void Voiture::test_regresion()
 
     //test constructeur avec parametre
     std::cout << "Test constructeur avec parametre" << std::endl;
-    Utilisateur u1(2.54, 34, "Zidane");
+    Utilisateur u1(2.54, 34, "Zidane", 3, 0, 1);
     Voiture v1(u1);
     v1.User.setParkTime(2);
     assert(v1.User.getId() == 34);
@@ -251,7 +251,7 @@ void Voiture::test_regresion()
 
     // Test de la fonction isPriceOk()
     std::cout << "Test de la fonction isPriceOk()" << std::endl;
-    Utilisateur u(2.54,0,"lol");
+    Utilisateur u(2.54,0,"lol", 0, 0, 1);
     Voiture v2(u);
     bool test = isPriceOk(3, User);
     assert(test == true);
