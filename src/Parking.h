@@ -17,7 +17,7 @@ private:
 
 
     vector<Place> placesTab;
-    // Tableau 1D de Places
+    // Tableau dynamique de Places
 
     int nbPlaces;
     // - Nombre total de places (disponibles + occupées) dans le parking
@@ -26,8 +26,7 @@ private:
     int nbAvailablePlaces;
     // Nombre de places disponibles dans le parking
 
-
-
+    int DIMX,DIMY;
 
     float minPrice;
     // - Prix minimum accepté par le parking
@@ -75,6 +74,8 @@ private:
     // Pas encore sûrs qu'on "stocke" les utilisateurs de cette manière
 
     int nbVisits;
+    // Stocke le nombre de visites du parking.
+
     // Le parking va, toutes les 2h dans la simulation (par ex), calculer son nombre de
     // réussites par rapport à son nombre de négociations. Si les négociations
     // ont souvent abouti à un refus de l'utilisateur de se garer dans le parking en question,
@@ -103,7 +104,7 @@ public:
     //! \param numberOfPlaces Nombre de palces disponible dans le parking
     //! \param minimumPrice Prix minimum d'acceptance par minutes que le  parking peut accepté -> A REVOIR
     //! \param startPrice Prix max que le parking propose -> A REVOIR
-    Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice);
+    Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice );
     
     Parking();
 
