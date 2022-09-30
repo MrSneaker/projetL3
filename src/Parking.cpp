@@ -2,7 +2,13 @@
 
 // CONSTRUCTEUR et DESTRUCTEUR
 
-Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice) : pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice), startingPrice(startPrice) {}
+Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice) :
+    pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice),
+    startingPrice(startPrice), nbAvailablePlaces (numberOfPlaces), isFull (false) {
+
+        //initPlace();
+
+    }
 
 Parking::~Parking()
 {
@@ -50,12 +56,12 @@ bool Parking::IsFull()
     return isFull;
 }
 
-/*
-vector<int>* Parking::getConversationsTab () const {
-    return conversationsTab;
-}*/
 
-vector<Utilisateur> *Parking::getUsersTab() const
+vector<int> Parking::getConversationsTab () const {
+    return conversationsTab;
+}
+
+vector<Utilisateur*> Parking::getUsersTab() const
 {
     return usersTab;
 }

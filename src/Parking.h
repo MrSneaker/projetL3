@@ -62,14 +62,22 @@ private:
     bool isFull;
     // Vrai si le parking est plein, faux sinon
 
-    vector<int>* conversationsTab;
-    // - Pas encore sûrs qu'on va l'utiliser
-    // - TO DO : utilité de créer un vector<int>* puis faire le commentaire de cette donnée membre
 
-    vector<Voiture>* voitures;
+
+
+    vector<int> conversationsTab;
+    // - Pas encore sûrs qu'on va l'utiliser,
+    // et pas encore sûrs du type que l'on va stocker dans ce vector
+    // (car on va peut-être stocker les conversations dans des fichiers TXT,
+    // et/ou ne pas garder en mémoire les conversations une fois que ces dernières ont eu lieu)
+
+
+
+
+    vector<Voiture*> voitures;
     // !!! [Pas sûr] Pointeur sur un tableau dynamique des Voitures "contenues"
 
-    vector<Utilisateur>* usersTab;
+    vector<Utilisateur*> usersTab;
     // Pas encore sûrs qu'on "stocke" les utilisateurs de cette manière
 
     int nbVisits;
@@ -85,6 +93,7 @@ private:
     // Pas encore sûrs qu'on "stocke" ces données sur les venues des utilisateurs de cette manière
 
     Vec2 pos;
+    // Position du coin supérieur gauche du parking
 
 
 
@@ -123,9 +132,9 @@ public:
 
     int getMaxPrice() const;
 
-    vector<int> *getConversationsTab() const;
+    vector<int> getConversationsTab() const;
 
-    vector<Utilisateur> *getUsersTab() const;
+    vector<Utilisateur*> getUsersTab() const;
 
     int getNbVisits() const;
 

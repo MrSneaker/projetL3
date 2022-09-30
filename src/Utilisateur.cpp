@@ -6,6 +6,10 @@ Utilisateur::Utilisateur()
     name = "default";
     maxPrice = 0;
     ParkTime = 0;
+
+    for (int i = 0; i < NB_PARKING; i++) {
+        nbVisitsTab [i] = 0;
+    }
     
 }
 

@@ -7,6 +7,8 @@
 
 using namespace std;
 
+const int NB_PARKING = 3;
+
 class Utilisateur
 {
 private:
@@ -14,6 +16,11 @@ private:
     float ParkTime;
     unsigned int id;
     string name;
+
+    int nbVisitsTab [NB_PARKING];
+    // - Tableau statique 1D contenant le nombre de visites de l'utilisateur dans chaque parking.
+    // - Une visite correspond à une fois où l'utilisateur s'est garé dans le parking.
+    
 
 public:
     //! \brief constructeur
