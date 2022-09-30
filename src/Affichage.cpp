@@ -15,6 +15,7 @@ Affichage::~Affichage(){
     TTF_CloseFont(font_default);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    SDL_FreeSurface(surface);
     SDL_Quit();
 }
 

@@ -25,3 +25,8 @@ int Place::getIndP() const
 {
     return indP;
 }
+
+bool Place::getIsTaken() const
+{
+    return isTaken;
+}

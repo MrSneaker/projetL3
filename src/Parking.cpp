@@ -2,10 +2,10 @@
 
 // CONSTRUCTEUR et DESTRUCTEUR
 
-Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice) :
+Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice, int DIMX, int DIMY) :
     pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice),
     startingPrice(startPrice), nbAvailablePlaces (numberOfPlaces),
-    isFull (false), nbTotalVisits (0) {
+    isFull (false), nbTotalVisits (0), DIMX (DIMX), DIMY(DIMY) {
 
         //initPlace();
 
@@ -13,7 +13,6 @@ Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float st
 
 Parking::Parking()
 {
-
 }
 
 Parking::~Parking()
@@ -35,9 +34,10 @@ int Parking::getNbPlaces() const
     return nbPlaces;
 }
 
-// int Parking::getNbAvailablePlaces () const {
-//     return nbAvailablePlaces;
-// }
+ int Parking::getNbAvailablePlaces () const 
+ {
+    return nbAvailablePlaces;
+ }
 
 int Parking::getMinPrice() const
 {
@@ -137,12 +137,13 @@ void Parking::incrementNbVisitsTab(Utilisateur* unUtilisateur)
 void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
 {
     int indPl = 1;
-    for (int i = 0; i < nbPlCol; i++)
+    nbPlCol = (DIMX-2)*(DIMY-2) / nbPlaces;
+    nbPlLigne = nbPlCol / 2;
+    for (int i = 0; i < nbPlLigne; i++)
     {
-        // on  veut dix places par ligne et fuck ben.
-        for (int j = 0; j < nbPlLigne; j++)
+        for (int j = 0; j < nbPlCol; j++)
         {
-            Place p = Place(Vec2(PcornerX+j,PcornerY+i),indPl,false);
+            Place p = Place(Vec2(PcornerX + j, PcornerY + i), indPl, false);
             placesTab.push_back(p);
             indPl++;
         }
@@ -156,15 +157,15 @@ void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
 
 void Parking::testRegression()
 {
-    Parking p1(Vec2(1, 1), 200, 0.5, 1.5);
-    p1.initPlace(10,20,10,10);
-    assert(p1.placesTab.size()==200);
-    for(int i = 0;i<p1.nbPlaces;i++)
+    Parking p1(Vec2(1, 1), 100, 0.5, 1.5,43,38);
+    p1.initPlace(14, 7, 2, 2);
+    cout<<p1.placesTab.size()<<endl;
+    assert(p1.placesTab.size() == 98);
+    for (int i = 0; i < p1.placesTab.size(); i++)
     {
-        cout<<p1.placesTab.at(i).getPos().x<<endl;
-        cout<<p1.placesTab.at(i).getPos().y<<endl;
-        cout<<p1.placesTab.at(i).getIndP()<<endl;
-        cout<<endl;
+        cout << p1.placesTab.at(i).getPos().x << endl;
+        cout << p1.placesTab.at(i).getPos().y << endl;
+        cout << p1.placesTab.at(i).getIndP() << endl;
+        cout << endl;
     }
-
 }

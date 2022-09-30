@@ -20,6 +20,8 @@ public:
     Vec2 getPos() const;
     //! \brief procédure de modification de la position de la place.
     int getIndP() const;
+
+    bool getIsTaken() const;
     
 };
 
