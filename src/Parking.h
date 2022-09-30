@@ -183,15 +183,10 @@ public:
     // void setPlacesTab ();
     // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
 
-    void decrementNbAvailablePlaces();
-
-    void incrementNbAvailablePlaces();
 
     void setMinPrice(float minimumPrice);
 
     void setStartingPrice(float startPrice);
-
-    void setIsFull(bool filledToCapacity);
 
     void setConversationsTab();
     // Pas encore sûrs qu'on va l'utiliser
