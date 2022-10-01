@@ -8,7 +8,7 @@
 #include <iostream>
 
 #define DimWindowX 1000
-#define DimWindowY 800
+#define DimWindowY 850
 
 class Affichage{
 
@@ -17,12 +17,25 @@ class Affichage{
         SDL_Window *window;
         SDL_Renderer *renderer;
         SDL_Event event;
-        SDL_Surface *surface;
+        
+        SDL_Surface *P1;
+        SDL_Texture *P1Texture;
+        SDL_Surface *P2;
+        SDL_Texture *P2Texture;
+        SDL_Surface *P3;
+        SDL_Texture *P3Texture;
+
+
         SDL_Surface *UpRoad;
-        SDL_Surface *DownRoad; 
-        SDL_Texture *texture;
         SDL_Texture *textureUpRoad;
+
+        SDL_Surface *DownRoad; 
         SDL_Texture *textureDownRoad;
+
+        SDL_Surface *Voiture;
+        SDL_Texture *textureVoiture;
+
+
         bool quit;
 
         TTF_Font *font_default;

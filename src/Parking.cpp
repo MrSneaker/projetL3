@@ -6,8 +6,8 @@ Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float st
     pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice),
     startingPrice(startPrice), nbAvailablePlaces (numberOfPlaces),
     isFull (false), nbTotalVisits (0), DIMX (DIMX), DIMY(DIMY) {
-
-        //initPlace();
+    
+        initPlace(1, 1, position.x+1, position.y+1);
 
     }
 
@@ -44,6 +44,16 @@ int Parking::getMinPrice() const
 int Parking::getStartingPrice() const
 {
     return startingPrice;
+}
+
+int Parking::getDIMX() const
+{
+    return DIMX;
+}
+
+int Parking::getDIMY() const
+{
+    return DIMY;
 }
 
 bool Parking::IsFull()
@@ -134,23 +144,24 @@ void Parking::incrementNbVisitsTab(Utilisateur* unUtilisateur)
 void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
 {
     int indPl = 1;
-    nbPlCol = (DIMX-2)*(DIMY-2) / nbPlaces;
-    nbPlLigne = nbPlCol / 2;
+
+    nbPlCol = DIMX/2;//(DIMX-2)*(DIMY-2) / nbPlaces;
+    nbPlLigne = DIMY/4; //On divise par 4 car les places font 2 de hauteur et qu'il y'en a 1 toutes les 2 lignes 
+    //On en repalera dans la semaine Mateo mais dcp la les places sont constuite en fonction de la taille du parking pour le remplir en entier 
+    //Et non pas du nombre de place
+ 
+
     for (int i = 0; i < nbPlLigne; i++)
     {
         for (int j = 0; j < nbPlCol; j++)
         {
-            Place p = Place(Vec2(PcornerX + j, PcornerY + i), indPl, false);
+            Place p = Place(Vec2(PcornerX + j*2, PcornerY + i*3+i), indPl, false);
             placesTab.push_back(p);
             indPl++;
         }
     }
+    
 }
-
-
-
-
-
 
 void Parking::testRegression()
 {

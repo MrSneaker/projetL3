@@ -172,6 +172,12 @@ public:
     //! \brief Donne la position (x,y) du parking - coin en haut a gauche
     Vec2 getPos() const;
 
+    //! \brief Donne la largeur du parking
+    int getDIMX() const;
+
+    //! \brief Donne la hauteur du parking
+    int getDIMY() const;
+
     //! \brief Fonction qui renvoie un entier, permet de savoir si le parking est plein ou non
     bool IsFull();
 

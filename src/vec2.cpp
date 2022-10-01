@@ -12,3 +12,10 @@ Vec2::Vec2(float x, float y){
 
 Vec2::~Vec2(){
 }
+
+Vec2 Vec2::operator+(Vec2 New_vec){
+    Vec2 result;
+    result.x = this->x + New_vec.x;
+    result.y = this->y + New_vec.y;
+    return result;
+}

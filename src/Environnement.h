@@ -28,7 +28,7 @@ class Environnement {
         vector<Voiture> voitures;
         vector<Parking> parkings;
         vector<Utilisateur> conducteurs;
-        unsigned int Time;
+    
         bool display;
 
 
@@ -50,6 +50,7 @@ class Environnement {
 
         //! \brief Boucle de jeu
         void Environnement_play();
+
 
         //! \brief Test de regression de la classe Environnement
         void test_regresion();

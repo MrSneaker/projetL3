@@ -13,6 +13,7 @@ class Voiture
         Vec2 position; // Position (x,y) de la voiture
         Vec2 TargetPosition; // Position (x,y) de la cible (parking / place / sortie)
         float speed; // speed de la voiture
+        int angle; // angle de la voiture
         //float batterie; // batterie de la voiture
         //Couleur couleur; // Couleur de la voiture
 
@@ -50,11 +51,18 @@ class Voiture
     //! \brief Modifie la position de la cible (parking / place / sortie)
     void setTargetPosition(Vec2 new_pos);
 
+    //! \brief Modifie l'angle de la voiture
+    //! \param new_angle : nouvel angle de la voiture
+    void setAngle(int new_angle);
+
     //! \brief Renvoie la position de la cible (parking / place / sortie)
     Vec2 getTargetPosition();
 
     //! \brief Renvoie la position de la voiture
     Vec2 get_position();
+
+    //! \brief Renvoie l'angle de la voiture
+    int getAngle();
 
     //! \brief Modifie la position de la voiture
     //! \param new_pos nouvelle position de la voiture
@@ -66,6 +74,13 @@ class Voiture
 
     //! \brief Affiche les Infos du conducteur
     void UserGetInfos();
+
+    //! \brief renvoie la vitesse de la voiture
+    float getSpeed();
+
+    //! \brief Modifie la vitesse de la voiture
+    void setSpeed(float new_speed);
+
 
     //! \brief Test de regression la classe Voiture
     void test_regresion();

@@ -50,12 +50,14 @@ void Environnement::initParkings()
 	//Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir 
 	
 	//Créer 3 parkings et les ajouter dans le tableau de parkings
-	Parking p1(Vec2(1, 1), 100, 0.5, 1.5,43,38);
-	Parking p2(Vec2(56, 1), 80, 0.5, 1.5,43,38);
-	Parking p3(Vec2(1, 51), 250, 0.5, 1.5,98,28);
+	Parking p1(Vec2(1, 1), 180, 0.5, 1.5,40,36);
+	
+	Parking p2(Vec2(57, 1), 180, 0.5, 1.5,40,36);
+	Parking p3(Vec2(1, 53), 288, 0.5, 1.5,96,27);
 	parkings.push_back(p1);
 	parkings.push_back(p2);
 	parkings.push_back(p3);
+
 
 }
 
@@ -66,7 +68,7 @@ void Environnement::AddVoiture()
 {
 	initUser();
 	Voiture V(conducteurs[conducteurs.size() - 1]);
-	Vec2 pos = {0, 0};
+	Vec2 pos = {460, 0};
 	V.set_position(pos); //TODO : Set la position aléatoire dans le terrain parmis les 3 entrées possibles -> cf :Schema de la map
 	Vec2 targetPos = { 0, 0 }; 
 	V.setTargetPosition(targetPos); //TODO : Set la position de la target : soit un parking, soit une sortie.
@@ -79,14 +81,11 @@ void Environnement::RemoveVoiture(int numVoiture)
 	voitures[numVoiture].~Voiture();
 }
 
+
 //Boucle de jeu
 void Environnement::Environnement_play()
 {
-		for(int i = 0; i < 10; i++)
-		{
-			AddVoiture();
-		}
-		
+	/*	
 	while(true)
 	{
 		time_t now = time(NULL); // temps actuel
@@ -96,8 +95,11 @@ void Environnement::Environnement_play()
 		int seconde = ltm->tm_sec;
 
 		this_thread::sleep_for(chrono::milliseconds(1000));
-	}
+	}*/
 
+	
+	if(voitures[0].MoveToTargetPosition())
+	{}
 	
 }
 

@@ -11,7 +11,7 @@ Voiture::Voiture(Utilisateur U)
 {
     User = U;
     position = Vec2(0,0);
-    speed = 1;
+    speed = 2;
 }
 
 // Destructeur de la classe Voiture
@@ -23,24 +23,38 @@ Voiture::~Voiture()
 void Voiture::MoveRight()
 {
     position.x += speed;
+    setAngle(270);
 }
 
 // Déplace la voiture vers la gauche
 void Voiture::MoveLeft()
 {
     position.x -= speed;
+    setAngle(90);
 }
 
 // Déplace la voiture vers le haut
 void Voiture::MoveUp()
 {
     position.y += speed;
+    setAngle(0);
 }
 
 // Déplace la voiture vers le bas
 void Voiture::MoveDown()
 {
     position.y -= speed;
+    setAngle(180);
+}
+
+void Voiture::setAngle(int new_angle)
+{
+    angle = new_angle;
+}
+
+int Voiture::getAngle()
+{
+    return angle;
 }
 
 // Renvoie la position (x;y) de la voiture
@@ -66,9 +80,9 @@ Vec2 Voiture::getTargetPosition()
     return TargetPosition;
 }
 
-// Déplace la voiture vers la position de la cible (parking / place / sortie)
-// On changer la position de la cible quand la voiture entre dans le parking
-// Nouvelle position cible = position place de parking etc.
+// // Déplace la voiture vers la position de la cible (parking / place / sortie)
+// // On changer la position de la cible quand la voiture entre dans le parking
+// // Nouvelle position cible = position place de parking etc.
 bool Voiture::MoveToTargetPosition()
 {
 
@@ -77,6 +91,7 @@ bool Voiture::MoveToTargetPosition()
     {
 
         MoveDown();
+    
         if (position.y < TargetPosition.y)
         {
 
@@ -88,6 +103,7 @@ bool Voiture::MoveToTargetPosition()
     {
 
         MoveUp();
+       
         if (position.y > TargetPosition.y)
         {
 
@@ -99,6 +115,7 @@ bool Voiture::MoveToTargetPosition()
     {
 
         MoveRight();
+      
         if (position.x > TargetPosition.x)
         {
 
@@ -110,6 +127,7 @@ bool Voiture::MoveToTargetPosition()
     {
 
         MoveLeft();
+ 
         if (position.x < TargetPosition.x)
         {
 
@@ -123,6 +141,96 @@ bool Voiture::MoveToTargetPosition()
     }
     return false;
 }
+
+// // Fonction MoveToTargetPosition() qui change l'orientation de la voiture in clock wise
+// bool Voiture::MoveToTargetPosition()
+// {
+//     // Si la voiture est au dessus de la cible
+//     if (position.y > TargetPosition.y)
+//     {
+//         // Si la voiture est à gauche de la cible
+//         if (position.x < TargetPosition.x)
+//         {
+//             // Si la voiture est à 0°
+//             if (angle == 0)
+//             {
+//                 MoveRight();
+//                 setAngle(90);
+//             }
+//             // Si la voiture est à 90°
+//             else if (angle == 90)
+//             {
+//                 MoveDown();
+//                 setAngle(180);
+//             }
+//             // Si la voiture est à 180°
+//             else if (angle == 180)
+//             {
+//                 MoveLeft();
+//                 setAngle(270);
+//             }
+//             // Si la voiture est à 270°
+//             else if (angle == 270)
+//             {
+//                 MoveUp();
+//                 setAngle(0);
+//             }
+//         }
+//         // Si la voiture est à droite de la cible
+//         else if (position.x > TargetPosition.x)
+//         {
+//             // Si la voiture est à 0°
+//             if (angle == 0)
+//             {
+//                 MoveLeft();
+//                 setAngle(270);
+//             }
+//             // Si la voiture est à 90°
+//             else if (angle == 90)
+//             {
+//                 MoveUp();
+//                 setAngle(0);
+//             }
+//             // Si la voiture est à 180°
+//             else if (angle == 180)
+//             {
+//                 MoveRight();
+//                 setAngle(90);
+//             }
+//             // Si la voiture est à 270°
+//             else if (angle == 270)
+//             {
+//                 MoveDown();
+//                 setAngle(180);
+//             }
+//         }
+//     }
+//     // Si la voiture est au dessous de la cible
+//     else if (position.y < TargetPosition.y)
+//     {
+//         // Si la voiture est à gauche de la cible
+//         if (position.x < TargetPosition.x)
+//         {
+//             // Si la voiture est à 0°
+//             if (angle == 0)
+//             {
+//                 MoveDown();
+//                 setAngle(180);
+//             }
+//             // Si la voiture est à 90°
+//             else if (angle == 90)
+//             {
+//                 MoveLeft();
+//                 setAngle(270);
+//             }
+//             // Si la voiture est à 180°
+//             else if (angle == 180)
+//             {
+//                 MoveUp();
+//             }
+//         }
+//     }
+// }
 
 bool Voiture::isPriceOk(double price, Utilisateur User)
 {
@@ -140,6 +248,16 @@ void Voiture::UserGetInfos(){
     std::cout << "ID : " << User.getId() << std::endl;
     std::cout << "Temps de stationnement : " << User.getParkTime() << std::endl;
     std::cout << "Prix max : " << User.getMaxPrice() << std::endl;
+}
+
+float Voiture::getSpeed()
+{
+    return speed;
+}
+
+void Voiture::setSpeed(float new_speed)
+{
+    speed = new_speed;
 }
 
 
