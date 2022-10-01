@@ -66,6 +66,14 @@ void Affichage::InitAffichage()
     texture = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_FreeSurface(surface);
 
+    UpRoad = IMG_Load("img/UpRoad.png");
+    textureUpRoad = SDL_CreateTextureFromSurface(renderer, UpRoad);
+    SDL_FreeSurface(UpRoad);
+
+    DownRoad = IMG_Load("img/DownRoad.png");
+    textureDownRoad = SDL_CreateTextureFromSurface(renderer, DownRoad);
+    SDL_FreeSurface(DownRoad);
+
 
     environnement.AddVoiture();
     environnement.voitures[0].set_position(Vec2(0,0));
@@ -83,41 +91,41 @@ void Affichage::AffichagePlateau()
     SDL_Rect P1;
     P1.x = environnement.parkings[0].getPos().x*10;
     P1.y = environnement.parkings[0].getPos().y*10;
-    P1.w = 430;
-    P1.h = 380;
+    P1.w = 420;
+    P1.h = 370;
     SDL_RenderCopy(renderer, texture, NULL, &P1);
 
 
     SDL_Rect P2;
-    P2.x = environnement.parkings[1].getPos().x*10;
+    P2.x = environnement.parkings[1].getPos().x*10+10;
     P2.y = environnement.parkings[1].getPos().y*10;
-    P2.w = 430;
-    P2.h = 380;
+    P2.w = 420;
+    P2.h = 370;
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
     SDL_RenderFillRect(renderer, &P2);
 
     SDL_Rect P3;
     P3.x = environnement.parkings[2].getPos().x*10;
-    P3.y = environnement.parkings[2].getPos().y*10;
+    P3.y = environnement.parkings[2].getPos().y*10+10;
     P3.w = 980;
-    P3.h = 280;
+    P3.h = 270;
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
     SDL_RenderFillRect(renderer, &P3);
 
     SDL_Rect UpRoad;
-    UpRoad.x = 450;
+    UpRoad.x = 440;
     UpRoad.y = 0;
-    UpRoad.w = 100;
+    UpRoad.w = 120;
     UpRoad.h = 400;
+    SDL_RenderCopy(renderer, textureUpRoad, NULL, &UpRoad);
 
     SDL_Rect DownRoad;
     DownRoad.x = 0;
-    DownRoad.y = 400;
+    DownRoad.y = 390;
     DownRoad.w = 1000;
-    DownRoad.h = 100;
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderFillRect(renderer, &UpRoad);
-    SDL_RenderFillRect(renderer, &DownRoad);
+    DownRoad.h = 120;
+    SDL_RenderCopy(renderer, textureDownRoad, NULL, &DownRoad);
+ 
 
     /*
     for(int i =0; i <DimWindowX; i+=30)

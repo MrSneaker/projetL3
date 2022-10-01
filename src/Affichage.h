@@ -18,7 +18,11 @@ class Affichage{
         SDL_Renderer *renderer;
         SDL_Event event;
         SDL_Surface *surface;
+        SDL_Surface *UpRoad;
+        SDL_Surface *DownRoad; 
         SDL_Texture *texture;
+        SDL_Texture *textureUpRoad;
+        SDL_Texture *textureDownRoad;
         bool quit;
 
         TTF_Font *font_default;
