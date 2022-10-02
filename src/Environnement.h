@@ -48,6 +48,9 @@ class Environnement {
         //! \param numVoiture numéro de la voiture à enlever.
         void RemoveVoiture(int numVoiture);
 
+        //! \brief regarde si la voiture est dans un parking
+        int GetStateVoiture();
+
         //! \brief Boucle de jeu
         void Environnement_play();
 

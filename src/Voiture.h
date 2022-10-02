@@ -14,14 +14,14 @@ class Voiture
         Vec2 TargetPosition; // Position (x,y) de la cible (parking / place / sortie)
         float speed; // speed de la voiture
         int angle; // angle de la voiture
+        bool Is_in; // true si la voiture entre dans le parking
         //float batterie; // batterie de la voiture
         //Couleur couleur; // Couleur de la voiture
 
     
     public:
         Utilisateur User; // Utilisateur de la voiture
-        bool Is_in = false; // true si la voiture entre dans le parking
-        bool Is_parked = false; // true si la voiture est garée dans le parking
+        bool Is_parked; // true si la voiture est garée dans le parking
 
 
 
@@ -80,6 +80,10 @@ class Voiture
 
     //! \brief Modifie la vitesse de la voiture
     void setSpeed(float new_speed);
+
+    bool getIs_in();
+
+    void setIs_in(bool new_Is_in);
 
 
     //! \brief Test de regression la classe Voiture

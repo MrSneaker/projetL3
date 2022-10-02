@@ -82,6 +82,43 @@ void Environnement::RemoveVoiture(int numVoiture)
 }
 
 
+int Environnement::GetStateVoiture()
+{
+	for(int i = 0; i < voitures.size(); i++)
+	{
+
+		for(int j = 0; j < parkings.size(); j++)
+		{
+			
+			int VoiturePosX = voitures[i].get_position().x;
+			int VoiturePosY = voitures[i].get_position().y;
+			int TargetPosX = parkings[j].getPos().x*10;
+			int TargetPosY = parkings[j].getPos().y*10;
+
+			//Si la voiture est dans l'enceinte du parking
+			if (VoiturePosX >= TargetPosX && VoiturePosX <= TargetPosX + parkings[j].getDIMX()*10 
+			&& VoiturePosY >= TargetPosY && VoiturePosY <= TargetPosY + parkings[j].getDIMY()*10)
+			{
+				//Met la valeur Is_in à true
+				voitures[i].setIs_in(true);
+				if(voitures[i].getIs_in())
+				{
+					cout<<"Voiture "<<i<<" est dans le parking "<<j<<endl;
+				}
+
+			}
+			else{
+				voitures[i].setIs_in(false);
+				if(!voitures[i].getIs_in())
+				{
+					cout<<"Voiture "<<i<<" n'est pas dans le parking "<<j<<endl;
+				}
+			}
+		}
+		
+	}
+	
+}
 //Boucle de jeu
 void Environnement::Environnement_play()
 {
@@ -98,8 +135,10 @@ void Environnement::Environnement_play()
 	}*/
 
 	
-	if(voitures[0].MoveToTargetPosition())
-	{}
+	if(!voitures[0].MoveToTargetPosition())
+	{
+	}
+		GetStateVoiture();
 	
 }
 
@@ -122,6 +161,7 @@ void Environnement::test_regresion(){
 	E.initParkings();
 	assert(E.parkings.size() == 3);
 	cout<<"Test de regression de la fonction initParking() : OK"<<endl;
+    
 
 
 	

@@ -21,7 +21,7 @@ Parking::~Parking()
 
 // ACCESSEURS
 
-vector<Place> Parking::getPlacesTab() const
+vector<Place> &Parking::getPlacesTab() 
 {
     return placesTab;
 }
@@ -165,15 +165,25 @@ void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
 
 void Parking::testRegression()
 {
-    Parking p1(Vec2(1, 1), 100, 0.5, 1.5,43,38);
-    p1.initPlace(14, 7, 2, 2);
-    cout<<p1.placesTab.size()<<endl;
-    assert(p1.placesTab.size() == 98);
-    for (int i = 0; i < p1.placesTab.size(); i++)
-    {
-        cout << p1.placesTab.at(i).getPos().x << endl;
-        cout << p1.placesTab.at(i).getPos().y << endl;
-        cout << p1.placesTab.at(i).getIndP() << endl;
-        cout << endl;
-    }
+    Parking p1(Vec2(1, 1), 180, 0.4, 0.4, 40,36);
+
+    //test de la focntion getPlacesTab
+    assert(p1.getPlacesTab().size() == p1.placesTab.size());
+    assert(p1.getPlacesTab()[0].getPos().x == p1.placesTab[0].getPos().x);
+    assert(p1.getPlacesTab()[0].getPos().y == p1.placesTab[0].getPos().y);
+    assert(p1.getPlacesTab()[0].getIndP() == p1.placesTab[0].getIndP());
+    assert(p1.getPlacesTab()[0].getIsTaken() == p1.placesTab[0].getIsTaken());
+
+    p1.getPlacesTab()[0].setIsTaken(false);
+    cout<<"Etat de la place 1 : "<<p1.getPlacesTab()[0].getIsTaken()<<endl;
+    cout<<"Etat de la place 1 : "<<p1.placesTab[0].getIsTaken()<<endl;
+
+    p1.placesTab[0].setIsTaken(true);
+    cout<<"Etat de la place 1 : "<<p1.placesTab[0].getIsTaken()<<endl;
+    cout<<"Etat de la place 1 : "<<p1.getPlacesTab()[0].getIsTaken()<<endl;
+    assert(p1.getPlacesTab()[0].getIsTaken() == p1.placesTab[0].getIsTaken());
+    
+
+
+    
 }

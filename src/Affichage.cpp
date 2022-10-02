@@ -9,6 +9,7 @@ Affichage::Affichage()
     Environnement Env;
     Env.initParkings();
     environnement = Env;
+    
 }
 
 Affichage::~Affichage()
@@ -87,6 +88,10 @@ void Affichage::InitAffichage()
     SDL_FreeSurface(Voiture);
 
     environnement.AddVoiture();
+
+    environnement.parkings[0].getPlacesTab()[21].setIsTaken(true);
+
+   
 }
 
 void Affichage::AffichagePlateau()
@@ -131,12 +136,13 @@ void Affichage::AffichagePlateau()
     DownRoad.h = 120;
     SDL_RenderCopy(renderer, textureDownRoad, NULL, &DownRoad);
 
+  
     // Affiche les voitures
     SDL_Rect Voiture;
     Voiture.x = environnement.voitures[0].get_position().x;
     Voiture.y = environnement.voitures[0].get_position().y;
-    Voiture.w = 20;
-    Voiture.h = 30;
+    Voiture.w = VoitureSizeW;
+    Voiture.h = VoitureSizeH;
     SDL_RenderCopyEx(renderer, textureVoiture, NULL, &Voiture, environnement.voitures[0].getAngle(), NULL, SDL_FLIP_NONE);
 
     // Quadrillage
@@ -155,14 +161,22 @@ void Affichage::AffichagePlateau()
 
         for (int i = 0; i < environnement.parkings[j].getNbPlaces(); i++)
         {
-            SDL_Rect Place;
+            
             Place.x = environnement.parkings[j].getPlacesTab()[i].getPos().x * 10;
             Place.y = environnement.parkings[j].getPlacesTab()[i].getPos().y * 10;
             Place.w = 10;
             Place.h = 20;
 
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-            SDL_RenderDrawRect(renderer, &Place);
+            // Si la place est prise, on affiche une place rouge
+            if(environnement.parkings[j].getPlacesTab()[i].getIsTaken() == true){
+                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+                SDL_RenderFillRect(renderer, &Place);
+            }
+            else
+            {
+                SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+                SDL_RenderDrawRect(renderer, &Place);
+            }
         }
 
         //Affiche le centre de chaque parking (pour reglages + test)
@@ -173,9 +187,24 @@ void Affichage::AffichagePlateau()
         Center.h = 10;
 
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
         SDL_RenderFillRect(renderer, &Center);
+
     }
+
+    //Affiche la taille de detection du parking
+    for(int i=0; i<environnement.parkings.size(); i++)
+    {
+        SDL_Rect Park;
+        Park.x = environnement.parkings[i].getPos().x * 10;
+        Park.y = environnement.parkings[i].getPos().y * 10;
+        Park.w = environnement.parkings[i].getDIMX() * 10;
+        Park.h = environnement.parkings[i].getDIMY() * 10;
+        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+        SDL_RenderDrawRect(renderer, &Park);
+    }
+        
+
 
     //Affiche une barre de menu en bas de l'écran
     SDL_Rect Menu;
@@ -193,6 +222,7 @@ void Affichage::AffichageSimulation()
     bool display = true;
     bool doit = true;
 
+    
     InitAffichage();
     while (display)
     {
@@ -224,7 +254,10 @@ void Affichage::AffichageSimulation()
                     display = false;
                     break;
                 case SDLK_SPACE:
-                    environnement.voitures[0].setSpeed(environnement.voitures[0].getSpeed() + 1); //test
+                    //environnement.voitures[0].setSpeed(environnement.voitures[0].getSpeed() + 1); //test
+                    
+               
+              
                     break;
                 }
                 break;
@@ -233,6 +266,23 @@ void Affichage::AffichageSimulation()
 
         //Met la target sur la souris (pour test)
         environnement.voitures[0].setTargetPosition(Vec2(X, Y));
+
+        //Si la valeur Is_in de la voiture est true on modifie la taille de la voiture
+        //TODO : Marche pas bien je ne sais pas trop pk  
+        //En gros elle boucle nrlm sur tout les parkings mais la elle change que sur le parking 3 alors qu'ont detecte bien si elle est dans les autres parkings ou non
+        if(environnement.voitures[0].getIs_in())
+        {
+            VoitureSizeW = 10;
+            VoitureSizeH = 20;
+        }
+        else
+        {
+            VoitureSizeW = 20;
+            VoitureSizeH = 30;
+        }
+
+
+
 
         SDL_SetRenderDrawColor(renderer, 238, 230, 211, 255);
         SDL_RenderPresent(renderer);

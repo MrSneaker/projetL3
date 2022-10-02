@@ -21,7 +21,11 @@ public:
     //! \brief procédure de modification de la position de la place.
     int getIndP() const;
 
+    bool setIsTaken(bool new_isTaken);
+
     bool getIsTaken() const;
+
+    void test_regresion();
     
 };
 

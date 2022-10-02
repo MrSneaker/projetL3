@@ -149,7 +149,7 @@ public:
 
     // ACCESSEURS
 
-    vector<Place> getPlacesTab() const;
+    vector<Place> &getPlacesTab();
     // Utile ?
 
     //! \brief Retourne le nombre de places du parking

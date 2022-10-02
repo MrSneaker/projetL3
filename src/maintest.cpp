@@ -41,7 +41,7 @@ int main(){
         }
     }
 
-    //Environnement Simulation;
+    Environnement Simulation;
 
     //Simulation.Environnement_play();
     //Simulation.test_regresion();
@@ -52,6 +52,9 @@ int main(){
 
     Parking p1;
     //p1.testRegression();
+
+    Place P1;
+    //P1.test_regresion();
 
 
     return 0;

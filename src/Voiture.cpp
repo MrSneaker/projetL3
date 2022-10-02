@@ -12,6 +12,8 @@ Voiture::Voiture(Utilisateur U)
     User = U;
     position = Vec2(0,0);
     speed = 2;
+    Is_in = false;
+    Is_parked = false;
 }
 
 // Destructeur de la classe Voiture
@@ -260,6 +262,16 @@ void Voiture::setSpeed(float new_speed)
     speed = new_speed;
 }
 
+void Voiture::setIs_in(bool new_is_in)
+{
+    Is_in = new_is_in;
+}
+
+bool Voiture::getIs_in()
+{
+    return Is_in;
+}
+
 
 // -----------------------------------------------------------------------------------------------
 // Test de regression la classe Voiture
@@ -374,4 +386,16 @@ void Voiture::test_regresion()
     bool test = isPriceOk(3, User);
     assert(test == true);
     std::cout << "Test de la fonction isPriceOk() OK" << std::endl;
+
+    //test de la fonction setIs_in()
+    std::cout << "Test de la fonction setIs_in()" << std::endl;
+    setIs_in(true);
+    assert(getIs_in() == true);
+    std::cout << "Test de la fonction setIs_in() OK" << std::endl;
+
+    //test de la fonction getIs_in()
+    std::cout << "Test de la fonction getIs_in()" << std::endl;
+    setIs_in(false);
+    assert(getIs_in() == false);
+    std::cout << "Test de la fonction getIs_in() OK" << std::endl;
 }

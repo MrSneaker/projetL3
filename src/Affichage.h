@@ -35,6 +35,8 @@ class Affichage{
         SDL_Surface *Voiture;
         SDL_Texture *textureVoiture;
 
+        SDL_Rect Place;
+
 
         bool quit;
 
@@ -43,6 +45,8 @@ class Affichage{
 
 
     public:
+        unsigned int  VoitureSizeW=20;
+        unsigned int VoitureSizeH=30;
         Affichage();
         ~Affichage();
         void InitAffichage();
