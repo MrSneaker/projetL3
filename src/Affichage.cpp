@@ -245,8 +245,8 @@ void Affichage::AffichageSimulation()
                 case SDLK_SPACE:
                     environnement.AddVoiture();
                     // Juste pour tester et pour fun xD
-                    // int indice = environnement.random(0, 3);
-                    // environnement.voitures[environnement.voitures.size() - 1].setTargetPosition(environnement.parkings[indice].getPlacesTab()[environnement.random(0, environnement.parkings[indice].getPlacesTab().size())].getPos()*Vec2(10, 10));
+                    int indice = environnement.random(0, 3);
+                    environnement.voitures[environnement.voitures.size() - 1].setTargetPosition(environnement.parkings[indice].getPlacesTab()[environnement.random(0, environnement.parkings[indice].getPlacesTab().size())].getPos()*Vec2(10, 10));
                     break;
                 }
                 break;
