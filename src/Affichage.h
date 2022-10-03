@@ -2,6 +2,7 @@
 #define _Affichage_H_
 
 #include "Environnement.h"
+#include "Image.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -18,6 +19,7 @@ class Affichage{
         SDL_Renderer *renderer;
         SDL_Event event;
         
+        //------------------------------- IMAGE -----------------------------------
         SDL_Surface *P1;
         SDL_Texture *P1Texture;
         SDL_Surface *P2;
@@ -32,19 +34,22 @@ class Affichage{
         SDL_Surface *DownRoad; 
         SDL_Texture *textureDownRoad;
 
-        SDL_Surface *Voiture;
-        SDL_Texture *textureVoiture;
+        Image Voiture;
 
         SDL_Rect Place;
 
 
         bool quit;
 
+        //------------------------------- TEXT -----------------------------------
         TTF_Font *font_default;
 
 
 
+
     public:
+    
+        vector<SDL_Rect> VoituresRect; // Tableau des rectangles des voitures (Pour plus tard)
         unsigned int  VoitureSizeW=20;
         unsigned int VoitureSizeH=30;
         Affichage();

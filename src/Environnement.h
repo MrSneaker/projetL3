@@ -11,7 +11,6 @@
 #include <math.h>
 #include <string>
 #include <thread>
-#include <time.h>
 
 using namespace std;
 
@@ -23,8 +22,8 @@ class Environnement {
         //! \brief Fonction revoyant un nombre en deux valeurs
         //! \param min valeur minimale
         //! \param max valeur maximale
-        int random(int min, int max); 
     public:
+        int random(int min, int max); 
         vector<Voiture> voitures;
         vector<Parking> parkings;
         vector<Utilisateur> conducteurs;

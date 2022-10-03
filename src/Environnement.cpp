@@ -50,10 +50,10 @@ void Environnement::initParkings()
 	// Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir
 
 	// Créer 3 parkings et les ajouter dans le tableau de parkings
-	Parking p1(Vec2(1, 1), 180, 0.5, 1.5, 42, 37);
+	Parking p1(Vec2(1, 1), 189, 0.5, 1.5, 42, 37);
 
-	Parking p2(Vec2(57, 1), 180, 0.5, 1.5, 42, 37);
-	Parking p3(Vec2(1, 52), 288, 0.5, 1.5, 98, 27);
+	Parking p2(Vec2(57, 1), 189, 0.5, 1.5, 42, 37);
+	Parking p3(Vec2(1, 52), 294, 0.5, 1.5, 98, 27);
 	parkings.push_back(p1);
 	parkings.push_back(p2);
 	parkings.push_back(p3);
@@ -65,7 +65,7 @@ void Environnement::AddVoiture()
 	Voiture V(conducteurs[conducteurs.size() - 1]);
 	Vec2 pos = {460, 0};
 	V.set_position(pos); // TODO : Set la position aléatoire dans le terrain parmis les 3 entrées possibles -> cf :Schema de la map
-	Vec2 targetPos = {0, 0};
+	Vec2 targetPos = {0,0};
 	V.setTargetPosition(targetPos); // TODO : Set la position de la target : soit un parking, soit une sortie.
 	voitures.push_back(V);			// Ajout de la voiture dans le tableau de voitures
 }
@@ -78,38 +78,43 @@ void Environnement::RemoveVoiture(int numVoiture)
 
 void Environnement::updateStateVoiture()
 {
+	// On parcours le tableau de voitures
 	for (int i = 0; i < voitures.size(); i++)
 	{
+		// On met à jour l'état de la place ou la voiture se trouve -> pour que quand elle passe sur une place et ne reste pas considere comme non libre
 		parkings[voitures[i].getParking()].getPlacesTab()[voitures[i].getPlace()].setIsTaken(false);
-		bool inParking = false;
-		bool isInPlace = false;
+		bool inParking = false; // booléen qui permet de savoir si la voiture est dans un parking ou non
+		bool isInPlace = false; // booléen qui permet de savoir si la voiture est dans une place ou non
 		for (int j = 0; j < parkings.size(); j++)
 		{
 
-			int VoiturePosX = voitures[i].get_position().x;
-			int VoiturePosY = voitures[i].get_position().y;
-			int TargetPosX = parkings[j].getPos().x * 10;
-			int TargetPosY = parkings[j].getPos().y * 10;
+			int VoiturePosX = voitures[i].get_position().x;	  // Position de la voiture en x
+			int VoiturePosY = voitures[i].get_position().y;	  // Position de la voiture en y
+			int TargetParkPosX = parkings[j].getPos().x * 10; // Position de la parking en x
+			int TargetParkPosY = parkings[j].getPos().y * 10; // Position du parking en y
 
 			// Si la voiture est dans l'enceinte du parking
-			if (VoiturePosX >= TargetPosX && VoiturePosX <= TargetPosX + parkings[j].getDIMX() * 10 && VoiturePosY >= TargetPosY && VoiturePosY <= TargetPosY + parkings[j].getDIMY() * 10)
+			if (VoiturePosX >= TargetParkPosX && VoiturePosX <= TargetParkPosX + parkings[j].getDIMX() * 10 && VoiturePosY >= TargetParkPosY && VoiturePosY <= TargetParkPosY + parkings[j].getDIMY() * 10)
 			{
 
 				// cout << "Voiture " << i << " est dans le parking " << j << endl;
-				inParking = true;
-				voitures[i].setParking(j);
+				inParking = true;		   // La voiture est dans un parking
+				voitures[i].setParking(j); // on stock le numero du parking
 
+				// On parcours le tableau de places du parking
 				for (int k = 0; k < parkings[j].getPlacesTab().size(); k++)
 				{
-					int TargetPlacePosX = parkings[j].getPlacesTab()[k].getPos().x * 10;
-					int TargetPlacePosY = parkings[j].getPlacesTab()[k].getPos().y * 10;
+					int TargetPlacePosX = parkings[j].getPlacesTab()[k].getPos().x * 10; // Position de la place en x
+					int TargetPlacePosY = parkings[j].getPlacesTab()[k].getPos().y * 10; // Position de la place en y
+
+					// Si la voiture est dans l'enceinte de la place
 					if (VoiturePosX >= TargetPlacePosX && VoiturePosX <= TargetPlacePosX + 10 && VoiturePosY >= TargetPlacePosY && VoiturePosY <= TargetPlacePosY + 20)
 					{
-						voitures[i].setPlace(k);
-						parkings[j].getPlacesTab()[k].setIsTaken(true);
+						voitures[i].setPlace(k); // on stock le numero de la place
+						parkings[j].getPlacesTab()[k].setIsTaken(true); // on met à jour l'état de la place
 
-						cout << "Voiture " << i << " est dans la place " << k << " du parking " << j << endl;
-						isInPlace = true;
+						// cout << "Voiture " << i << " est dans la place " << k << " du parking " << j << endl;
+						isInPlace = true; // La voiture est dans une place
 					}
 				}
 			}
@@ -133,20 +138,11 @@ void Environnement::updateStateVoiture()
 // Boucle de jeu
 void Environnement::Environnement_play()
 {
-	/*
-	while(true)
-	{
-		time_t now = time(NULL); // temps actuel
-		tm *ltm = localtime(&now); // temps local
-		int heure = ltm->tm_hour;
-		int minute = ltm->tm_min;
-		int seconde = ltm->tm_sec;
+	
 
-		this_thread::sleep_for(chrono::milliseconds(1000));
-	}*/
-
-	if (!voitures[0].MoveToTargetPosition())
+	for (int i = 0; i < voitures.size(); i++)
 	{
+		voitures[i].MoveToTargetPosition();
 	}
 	updateStateVoiture();
 }
