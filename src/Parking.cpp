@@ -145,7 +145,7 @@ void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
 {
     int indPl = 1;
 
-    nbPlCol = DIMX/2;//(DIMX-2)*(DIMY-2) / nbPlaces;
+    nbPlCol = DIMX/2-1;//(DIMX-2)*(DIMY-2) / nbPlaces;
     nbPlLigne = DIMY/4; //On divise par 4 car les places font 2 de hauteur et qu'il y'en a 1 toutes les 2 lignes 
     //On en repalera dans la semaine Mateo mais dcp la les places sont constuite en fonction de la taille du parking pour le remplir en entier 
     //Et non pas du nombre de place

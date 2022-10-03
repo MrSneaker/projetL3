@@ -14,6 +14,8 @@ Voiture::Voiture(Utilisateur U)
     speed = 2;
     Is_in = false;
     Is_parked = false;
+    parking = 0;
+    place = 0;
 }
 
 // Destructeur de la classe Voiture
@@ -270,6 +272,38 @@ void Voiture::setIs_in(bool new_is_in)
 bool Voiture::getIs_in()
 {
     return Is_in;
+}
+
+void Voiture::setIs_parked(bool new_is_parked)
+{
+    Is_parked = new_is_parked;
+}
+
+bool Voiture::getIs_parked()
+{
+    return Is_parked;
+}
+
+void Voiture::setParking(int new_parking)
+{
+    parking = new_parking;
+}
+
+int Voiture::getParking()
+{
+    return parking;
+}
+
+// set place
+void Voiture::setPlace(int new_place)
+{
+    place = new_place;
+}
+
+// get place
+int Voiture::getPlace()
+{
+    return place;
 }
 
 

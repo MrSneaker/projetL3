@@ -116,7 +116,7 @@ void Affichage::AffichagePlateau()
 
     SDL_Rect P3;
     P3.x = environnement.parkings[2].getPos().x * 10 - 10;
-    P3.y = environnement.parkings[2].getPos().y * 10 - 20;
+    P3.y = environnement.parkings[2].getPos().y * 10 - 10;
     P3.w = 1000;
     P3.h = 290;
     SDL_RenderCopy(renderer, P3Texture, NULL, &P3);
@@ -145,15 +145,15 @@ void Affichage::AffichagePlateau()
     Voiture.h = VoitureSizeH;
     SDL_RenderCopyEx(renderer, textureVoiture, NULL, &Voiture, environnement.voitures[0].getAngle(), NULL, SDL_FLIP_NONE);
 
-    // Quadrillage
-    //  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    //Quadrillage
+     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
-    // for(int i =0; i<DimWindowX; i+=10){
-    //     SDL_RenderDrawLine(renderer, i, 0, i, DimWindowY);
-    // }
-    // for(int i =0; i<DimWindowY; i+=10){
-    //     SDL_RenderDrawLine(renderer, 0, i, DimWindowX, i);
-    // }
+    for(int i =0; i<DimWindowX; i+=10){
+        SDL_RenderDrawLine(renderer, i, 0, i, DimWindowY);
+    }
+    for(int i =0; i<DimWindowY; i+=10){
+        SDL_RenderDrawLine(renderer, 0, i, DimWindowX, i);
+    }
 
     // Affiche les places de chaque parking
     for (int j = 0; j < environnement.parkings.size(); j++)
@@ -168,7 +168,7 @@ void Affichage::AffichagePlateau()
             Place.h = 20;
 
             // Si la place est prise, on affiche une place rouge
-            if(environnement.parkings[j].getPlacesTab()[i].getIsTaken() == true){
+            if(environnement.parkings[j].getPlacesTab()[i].getIsTaken()){
                 SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
                 SDL_RenderFillRect(renderer, &Place);
             }
@@ -254,7 +254,7 @@ void Affichage::AffichageSimulation()
                     display = false;
                     break;
                 case SDLK_SPACE:
-                    //environnement.voitures[0].setSpeed(environnement.voitures[0].getSpeed() + 1); //test
+                    environnement.voitures[0].setSpeed(environnement.voitures[0].getSpeed() + 1); //test
                     
                
               

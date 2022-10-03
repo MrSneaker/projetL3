@@ -15,13 +15,15 @@ class Voiture
         float speed; // speed de la voiture
         int angle; // angle de la voiture
         bool Is_in; // true si la voiture entre dans le parking
+        bool Is_parked; // true si la voiture est garée dans le parking
+        int parking; // numéro du parking dans lequel la voiture est garée
+        int place; // numéro de la place dans lequel la voiture est garée
         //float batterie; // batterie de la voiture
         //Couleur couleur; // Couleur de la voiture
 
     
     public:
         Utilisateur User; // Utilisateur de la voiture
-        bool Is_parked; // true si la voiture est garée dans le parking
 
 
 
@@ -84,6 +86,18 @@ class Voiture
     bool getIs_in();
 
     void setIs_in(bool new_Is_in);
+
+    void setIs_parked(bool new_Is_parked);
+
+    bool getIs_parked();
+
+    void setParking(int new_parking);
+
+    int getParking();
+
+    void setPlace(int new_place);
+
+    int getPlace();
 
 
     //! \brief Test de regression la classe Voiture
