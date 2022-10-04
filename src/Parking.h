@@ -86,7 +86,7 @@ private:
 
 
 
-    vector<Utilisateur*> usersTab;
+    vector<pair<int,Utilisateur*>> usersTab;
     // - Tableau dynamique 1D de pointeurs sur Utilisateur
 
     // - Quand un Utilisateur se gare dans le parking,
@@ -150,7 +150,6 @@ public:
     // ACCESSEURS
 
     vector<Place> &getPlacesTab();
-    // Utile ?
 
     //! \brief Retourne le nombre de places du parking
     int getNbPlaces() const;
@@ -165,7 +164,7 @@ public:
     // Pas encore sûrs qu'on va l'utiliser
     // (cf commentaire de la donnée membre conversationsTab)
 
-    vector<Utilisateur*> getUsersTab() const;
+    vector<pair<int,Utilisateur*>> getUsersTab() const;
 
     int getNbTotalVisits() const;
 
@@ -199,15 +198,16 @@ public:
     // (cf commentaire de la donnée membre conversationsTab)
     // (TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre)
 
-    void setUsersTab(Utilisateur* unUtilisateur);
-    // !!!
-    // TO DO : Je dois la finir
+    //! \brief ajoute un utilisateur au tableau userTab en vérifiant que celui-ci n'existe pas déjà dans le tableau.
+    //! \param unUtilisateur pointeur sur un utilisateur.
+    void addUsersTab(Utilisateur* unUtilisateur);
+    
 
     void incrementNbTotalVisits();
 
+    //! \brief incrémente le nombre de visites de l'utilisateur en paramètre de 1 à chaque appel.
+    //! \param unUtilisateur pointeur sur un utilisateur.
     void incrementNbVisitsTab(Utilisateur* unUtilisateur);
-    // !!!
-    // TO DO : Je dois la finir
     
 
     //! \brief enleve une place au nombre de places dispo

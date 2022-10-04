@@ -16,10 +16,6 @@ private:
     float ParkTime;
     unsigned int id;
     string name;
-
-    int nbVisitsTab [NB_PARKING];
-    // - Tableau statique 1D contenant le nombre de visites de l'utilisateur dans chaque parking.
-    // - Une visite correspond à une fois où l'utilisateur s'est garé dans le parking.
     
 
 public:
@@ -30,8 +26,7 @@ public:
     //! \param u_id identifiant de l'utilisateur
     //! \param u_name nom de l'utilisateur
     //! \param u_Parktime temps de stationnement de l'utilisateur
-    Utilisateur(double maxPrice, unsigned int id, string name,
-        unsigned int nbVisits0, unsigned int nbVisits1, unsigned int nbVisits2);
+    Utilisateur(double maxPrice, unsigned int id, string name);
     //! \brief destructeur.
     ~Utilisateur();
     //! \brief renvoie un float contenant le prix maximum que l'utilisateur pourrait payer.
@@ -49,6 +44,7 @@ public:
     void testRegression();
     //! \brief Renvoie un temps de stationnement aléatoire en fonction de pourcentage de temps de stationnement.
     float randomParkTime();
+    //! 
 };
 
 #endif

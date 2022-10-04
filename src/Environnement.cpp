@@ -38,7 +38,7 @@ void Environnement::initUser()
 	unsigned int nbVisits1 = random(0, 5);
 	unsigned int nbVisits2 = random(0, 5);
 
-	Utilisateur u(price, id, name, nbVisits0, nbVisits1, nbVisits2);
+	Utilisateur u(price, id, name);
 	conducteurs.push_back(u);
 }
 

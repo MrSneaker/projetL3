@@ -146,96 +146,6 @@ bool Voiture::MoveToTargetPosition()
     return false;
 }
 
-// // Fonction MoveToTargetPosition() qui change l'orientation de la voiture in clock wise
-// bool Voiture::MoveToTargetPosition()
-// {
-//     // Si la voiture est au dessus de la cible
-//     if (position.y > TargetPosition.y)
-//     {
-//         // Si la voiture est à gauche de la cible
-//         if (position.x < TargetPosition.x)
-//         {
-//             // Si la voiture est à 0°
-//             if (angle == 0)
-//             {
-//                 MoveRight();
-//                 setAngle(90);
-//             }
-//             // Si la voiture est à 90°
-//             else if (angle == 90)
-//             {
-//                 MoveDown();
-//                 setAngle(180);
-//             }
-//             // Si la voiture est à 180°
-//             else if (angle == 180)
-//             {
-//                 MoveLeft();
-//                 setAngle(270);
-//             }
-//             // Si la voiture est à 270°
-//             else if (angle == 270)
-//             {
-//                 MoveUp();
-//                 setAngle(0);
-//             }
-//         }
-//         // Si la voiture est à droite de la cible
-//         else if (position.x > TargetPosition.x)
-//         {
-//             // Si la voiture est à 0°
-//             if (angle == 0)
-//             {
-//                 MoveLeft();
-//                 setAngle(270);
-//             }
-//             // Si la voiture est à 90°
-//             else if (angle == 90)
-//             {
-//                 MoveUp();
-//                 setAngle(0);
-//             }
-//             // Si la voiture est à 180°
-//             else if (angle == 180)
-//             {
-//                 MoveRight();
-//                 setAngle(90);
-//             }
-//             // Si la voiture est à 270°
-//             else if (angle == 270)
-//             {
-//                 MoveDown();
-//                 setAngle(180);
-//             }
-//         }
-//     }
-//     // Si la voiture est au dessous de la cible
-//     else if (position.y < TargetPosition.y)
-//     {
-//         // Si la voiture est à gauche de la cible
-//         if (position.x < TargetPosition.x)
-//         {
-//             // Si la voiture est à 0°
-//             if (angle == 0)
-//             {
-//                 MoveDown();
-//                 setAngle(180);
-//             }
-//             // Si la voiture est à 90°
-//             else if (angle == 90)
-//             {
-//                 MoveLeft();
-//                 setAngle(270);
-//             }
-//             // Si la voiture est à 180°
-//             else if (angle == 180)
-//             {
-//                 MoveUp();
-//             }
-//         }
-//     }
-// }
-
 bool Voiture::isPriceOk(double price, Utilisateur User)
 {
     double u_price = User.getMaxPrice();
@@ -316,7 +226,7 @@ void Voiture::test_regresion()
 
     //test constructeur avec parametre
     std::cout << "Test constructeur avec parametre" << std::endl;
-    Utilisateur u1(2.54, 34, "Zidane", 3, 0, 1);
+    Utilisateur u1(2.54, 34, "Zidane");
     Voiture v1(u1);
     v1.User.setParkTime(2);
     assert(v1.User.getId() == 34);
@@ -415,7 +325,7 @@ void Voiture::test_regresion()
 
     // Test de la fonction isPriceOk()
     std::cout << "Test de la fonction isPriceOk()" << std::endl;
-    Utilisateur u(2.54,0,"lol", 0, 0, 1);
+    Utilisateur u(2.54,0,"lol");
     Voiture v2(u);
     bool test = isPriceOk(3, User);
     assert(test == true);
