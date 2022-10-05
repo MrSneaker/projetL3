@@ -10,12 +10,14 @@ Voiture::Voiture()
 Voiture::Voiture(Utilisateur U)
 {
     User = U;
-    position = Vec2(0,0);
     speed = 2;
     Is_in = false;
     Is_parked = false;
     parking = 0;
     place = 0;
+    width = 1;
+    height = 2;
+    position = Vec2(0, 0);
 }
 
 // Destructeur de la classe Voiture
@@ -95,7 +97,7 @@ bool Voiture::MoveToTargetPosition()
     {
 
         MoveDown();
-    
+
         if (position.y < TargetPosition.y)
         {
 
@@ -107,7 +109,7 @@ bool Voiture::MoveToTargetPosition()
     {
 
         MoveUp();
-       
+
         if (position.y > TargetPosition.y)
         {
 
@@ -119,7 +121,7 @@ bool Voiture::MoveToTargetPosition()
     {
 
         MoveRight();
-      
+
         if (position.x > TargetPosition.x)
         {
 
@@ -131,7 +133,7 @@ bool Voiture::MoveToTargetPosition()
     {
 
         MoveLeft();
- 
+
         if (position.x < TargetPosition.x)
         {
 
@@ -156,8 +158,9 @@ bool Voiture::isPriceOk(double price, Utilisateur User)
         return false;
 }
 
-void Voiture::UserGetInfos(){
-    //Donne les infos du conducteur
+void Voiture::UserGetInfos()
+{
+    // Donne les infos du conducteur
     std::cout << "Nom : " << User.getName() << std::endl;
     std::cout << "ID : " << User.getId() << std::endl;
     std::cout << "Temps de stationnement : " << User.getParkTime() << std::endl;
@@ -216,6 +219,29 @@ int Voiture::getPlace()
     return place;
 }
 
+// set Width
+void Voiture::setwidth(int new_width)
+{
+    width = new_width;
+}
+
+// get Width
+int Voiture::getwidth()
+{
+    return width;
+}
+
+// set Height
+void Voiture::setheight(int new_height)
+{
+    height = new_height;
+}
+
+// get Height
+int Voiture::getheight()
+{
+    return height;
+}
 
 // -----------------------------------------------------------------------------------------------
 // Test de regression la classe Voiture
@@ -224,7 +250,7 @@ void Voiture::test_regresion()
 
     std::cout << "Test de regression de la classe Voiture" << std::endl;
 
-    //test constructeur avec parametre
+    // test constructeur avec parametre
     std::cout << "Test constructeur avec parametre" << std::endl;
     Utilisateur u1(2.54, 34, "Zidane");
     Voiture v1(u1);
@@ -325,19 +351,19 @@ void Voiture::test_regresion()
 
     // Test de la fonction isPriceOk()
     std::cout << "Test de la fonction isPriceOk()" << std::endl;
-    Utilisateur u(2.54,0,"lol");
+    Utilisateur u(2.54, 0, "lol");
     Voiture v2(u);
     bool test = isPriceOk(3, User);
     assert(test == true);
     std::cout << "Test de la fonction isPriceOk() OK" << std::endl;
 
-    //test de la fonction setIs_in()
+    // test de la fonction setIs_in()
     std::cout << "Test de la fonction setIs_in()" << std::endl;
     setIs_in(true);
     assert(getIs_in() == true);
     std::cout << "Test de la fonction setIs_in() OK" << std::endl;
 
-    //test de la fonction getIs_in()
+    // test de la fonction getIs_in()
     std::cout << "Test de la fonction getIs_in()" << std::endl;
     setIs_in(false);
     assert(getIs_in() == false);

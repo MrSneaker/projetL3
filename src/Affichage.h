@@ -50,8 +50,6 @@ class Affichage{
     public:
     
         vector<SDL_Rect> VoituresRect; // Tableau des rectangles des voitures (Pour plus tard)
-        unsigned int  VoitureSizeW=20;
-        unsigned int VoitureSizeH=30;
         Affichage();
         ~Affichage();
         void InitAffichage();

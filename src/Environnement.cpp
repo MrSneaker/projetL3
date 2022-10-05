@@ -65,9 +65,35 @@ void Environnement::AddVoiture()
 	Voiture V(conducteurs[conducteurs.size() - 1]);
 	Vec2 pos = {460, 0};
 	V.set_position(pos); // TODO : Set la position aléatoire dans le terrain parmis les 3 entrées possibles -> cf :Schema de la map
-	Vec2 targetPos = {0,0};
+
+	//la position de la target est aléatoire entre l'entrée parkings
+	unsigned int TargetPosX;
+	unsigned int TargetPosY;
+	int target = random(0, 3);
+	switch (target)
+	{
+	case 0:
+		TargetPosX = parkings[0].getPos().x+parkings[0].getDIMX()/2; //on prend la position de l'entrée du parking
+		TargetPosY = parkings[0].getPos().y+parkings[0].getDIMY();
+		break;
+	case 1:
+		TargetPosX = parkings[1].getPos().x; //on prend la position de l'entrée du parking
+		TargetPosY = parkings[1].getPos().y+parkings[1].getDIMY()/2;
+		break;
+	case 2:
+		TargetPosX = parkings[2].getPos().x+parkings[2].getDIMX()/2-1; //on prend la position de l'entrée du parking
+		TargetPosY = parkings[2].getPos().y;
+		break;
+	default:
+		break;
+	}
+
+	Vec2 targetPos = {TargetPosX*10+5, TargetPosY*10+5};
 	V.setTargetPosition(targetPos); // TODO : Set la position de la target : soit un parking, soit une sortie.
 	voitures.push_back(V);			// Ajout de la voiture dans le tableau de voitures
+	for(int i = 0; i<parkings.size(); i++){
+		parkings[i].addUsersTab(&conducteurs[conducteurs.size() - 1]);
+	}
 }
 
 void Environnement::RemoveVoiture(int numVoiture)
@@ -100,7 +126,7 @@ void Environnement::updateStateVoiture()
 				// cout << "Voiture " << i << " est dans le parking " << j << endl;
 				inParking = true;		   // La voiture est dans un parking
 				voitures[i].setParking(j); // on stock le numero du parking
-
+			
 				// On parcours le tableau de places du parking
 				for (int k = 0; k < parkings[j].getPlacesTab().size(); k++)
 				{
@@ -138,8 +164,8 @@ void Environnement::updateStateVoiture()
 // Boucle de jeu
 void Environnement::Environnement_play()
 {
-	
 
+	
 	for (int i = 0; i < voitures.size(); i++)
 	{
 		voitures[i].MoveToTargetPosition();

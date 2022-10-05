@@ -18,6 +18,8 @@ class Voiture
         bool Is_parked; // true si la voiture est garée dans le parking
         int parking; // numéro du parking dans lequel la voiture est garée
         int place; // numéro de la place dans lequel la voiture est garée
+        float width; // largeur de la voiture 
+        float height; // hauteur de la voiture
         //float batterie; // batterie de la voiture
         //Couleur couleur; // Couleur de la voiture
 
@@ -83,6 +85,7 @@ class Voiture
     //! \brief Modifie la vitesse de la voiture
     void setSpeed(float new_speed);
 
+    
     bool getIs_in();
 
     void setIs_in(bool new_Is_in);
@@ -99,6 +102,13 @@ class Voiture
 
     int getPlace();
 
+    void setwidth(int new_width);
+
+    int getwidth();
+
+    void setheight(int new_height);
+
+    int getheight();
 
     //! \brief Test de regression la classe Voiture
     void test_regresion();

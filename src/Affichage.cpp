@@ -132,20 +132,25 @@ void Affichage::AffichagePlateau()
     //------------------ Affiche les voitures ------------------
     for (int i = 0; i < environnement.voitures.size(); i++)
     {
-        Voiture.draw(renderer, environnement.voitures[i].get_position().x, environnement.voitures[i].get_position().y, VoitureSizeW, VoitureSizeH);
+        unsigned int w = environnement.voitures[i].getwidth();
+        unsigned int h = environnement.voitures[i].getheight();
+        unsigned int x = environnement.voitures[i].get_position().x - w / 2;
+        unsigned int y = environnement.voitures[i].get_position().y - h / 2;
+
+        Voiture.draw(renderer, x, y, w, h);
     }
 
     //------------------ Affiche le Quadrillage pour test ------------------
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    // SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
-    for (int i = 0; i < DimWindowX; i += 10)
-    {
-        SDL_RenderDrawLine(renderer, i, 0, i, DimWindowY);
-    }
-    for (int i = 0; i < DimWindowY; i += 10)
-    {
-        SDL_RenderDrawLine(renderer, 0, i, DimWindowX, i);
-    }
+    // for (int i = 0; i < DimWindowX; i += 10)
+    // {
+    //     SDL_RenderDrawLine(renderer, i, 0, i, DimWindowY);
+    // }
+    // for (int i = 0; i < DimWindowY; i += 10)
+    // {
+    //     SDL_RenderDrawLine(renderer, 0, i, DimWindowX, i);
+    // }
 
     //------------------ Affiche les places de chaques parkings ------------------
     for (int j = 0; j < environnement.parkings.size(); j++)
@@ -245,8 +250,8 @@ void Affichage::AffichageSimulation()
                 case SDLK_SPACE:
                     environnement.AddVoiture();
                     // Juste pour tester et pour fun xD
-                    int indice = environnement.random(0, 3);
-                    environnement.voitures[environnement.voitures.size() - 1].setTargetPosition(environnement.parkings[indice].getPlacesTab()[environnement.random(0, environnement.parkings[indice].getPlacesTab().size())].getPos()*Vec2(10, 10));
+                    // int indice = environnement.random(0, 3);
+                    // environnement.voitures[environnement.voitures.size() - 1].setTargetPosition(environnement.parkings[indice].getPlacesTab()[environnement.random(0, environnement.parkings[indice].getPlacesTab().size())].getPos()*Vec2(10, 10));
                     break;
                 }
                 break;
@@ -259,13 +264,13 @@ void Affichage::AffichageSimulation()
         {
             if (environnement.voitures[i].getIs_in())
             {
-                VoitureSizeH = 20;
-                VoitureSizeW = 10;
+                environnement.voitures[i].setwidth(10);
+                environnement.voitures[i].setheight(20);
             }
             else
             {
-                VoitureSizeH = 30;
-                VoitureSizeW = 20;
+                environnement.voitures[i].setwidth(20);
+                environnement.voitures[i].setheight(30);
             }
         }
 
