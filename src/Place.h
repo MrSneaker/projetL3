@@ -18,7 +18,7 @@ public:
     ~Place();
     //! \brief position de la place.
     Vec2 getPos() const;
-    //! \brief procédure de modification de la position de la place.
+    //! \brief procédure de récupération de l'indice de la position de la place.
     int getIndP() const;
 
     bool setIsTaken(bool new_isTaken);

@@ -6,6 +6,7 @@
         "*.tcc": "cpp",
         "unordered_map": "cpp",
         "vector": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "string": "cpp"
     }
 }
