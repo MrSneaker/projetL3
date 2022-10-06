@@ -172,6 +172,11 @@ void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
     }
 }
 
+void Parking::negoPlace()
+{
+    
+}
+
 void Parking::testRegression()
 {
     Parking p1(Vec2(1, 1), 180, 0.4, 0.4, 40, 36);
@@ -200,6 +205,6 @@ void Parking::testRegression()
     assert(p1.usersTab.size() == 2);
     p1.incrementNbVisitsTab(&u1);
     p1.incrementNbVisitsTab(&u1);
-    assert(p1.usersTab.at(0).first == 2);
+    assert(p1.getUsersTab().at(0).first == 2);
     assert(p1.nbTotalVisits == 2);
 }

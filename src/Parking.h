@@ -219,6 +219,8 @@ public:
     //! \brief initialisation de toutes les places de parkings (positions, etc..).
     void initPlace(int nbPlaceLi, int nbPlaceCol, int PcornerX, int PcornerY);
 
+    void negoPlace();
+
     void testRegression();
 };
 

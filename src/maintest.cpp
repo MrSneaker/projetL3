@@ -50,8 +50,8 @@ int main(){
 
     Graph.AffichageSimulation();
 
-    //Parking p1;
-    //p1.testRegression();
+    Parking p1;
+    p1.testRegression();
 
     Place P1;
     //P1.test_regresion();

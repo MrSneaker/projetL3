@@ -34,9 +34,7 @@ void Environnement::initUser()
 
 	// On attribue à l'utilisateur (que l'on crée juste après) un entier initial aléatoire (entre 0 et 5)
 	// de visites de chaque parking (on simule ainsi le passé)
-	unsigned int nbVisits0 = random(0, 5);
-	unsigned int nbVisits1 = random(0, 5);
-	unsigned int nbVisits2 = random(0, 5);
+	// avec les changements cela doit être fait avec les procédures dans parkings.. mais à ce moment là uniquement au premiere ajout de l'utilisateur.
 
 	Utilisateur u(price, id, name);
 	conducteurs.push_back(u);
@@ -99,7 +97,7 @@ void Environnement::AddVoiture()
 void Environnement::RemoveVoiture(int numVoiture)
 {
 	voitures.erase(voitures.begin() + numVoiture);
-	voitures[numVoiture].~Voiture();
+	voitures[numVoiture].~Voiture(); // inutile, vector utilise déjà le destructeur de la classe à l'appel de erase..
 }
 
 void Environnement::updateStateVoiture()
