@@ -2,9 +2,10 @@
 
 // CONSTRUCTEUR et DESTRUCTEUR
 
-Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice, int DIMX, int DIMY) : pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice),
-                                                                                                                startingPrice(startPrice), nbAvailablePlaces(numberOfPlaces),
-                                                                                                                isFull(false), nbTotalVisits(0), DIMX(DIMX), DIMY(DIMY)
+Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice, int DIMX, int DIMY, int id)
+    : pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice),
+      startingPrice(startPrice), nbAvailablePlaces(numberOfPlaces),
+      isFull(false), nbTotalVisits(0), DIMX(DIMX), DIMY(DIMY), idP(id)
 {
 
     initPlace(1, 1, position.x + 1, position.y + 1);
@@ -55,6 +56,11 @@ int Parking::getDIMY() const
     return DIMY;
 }
 
+int Parking::getId() const
+{
+    return idP;
+}
+
 bool Parking::IsFull()
 {
     if (nbAvailablePlaces == 0)
@@ -73,7 +79,7 @@ vector<int> Parking::getConversationsTab() const
     return conversationsTab;
 }
 
-vector<pair<int, Utilisateur *>> Parking::getUsersTab() const 
+vector<pair<int, Utilisateur *>> Parking::getUsersTab() const
 {
     return usersTab;
 }
@@ -174,12 +180,11 @@ void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
 
 void Parking::negoPlace()
 {
-    
 }
 
 void Parking::testRegression()
 {
-    Parking p1(Vec2(1, 1), 180, 0.4, 0.4, 40, 36);
+    Parking p1(Vec2(1, 1), 180, 0.4, 0.4, 40, 36,1);
 
     // test de la focntion getPlacesTab
     assert(p1.getPlacesTab().size() == p1.placesTab.size());

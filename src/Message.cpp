@@ -5,8 +5,8 @@ using namespace std;
 
 Message::Message () : date (clock ()) {}
 
-Message::Message (string & aSubject, float aPrice, string & aTypeOfMessage) :
-    subject (aSubject), date (clock ()), price (aPrice), typeOfMessage (aTypeOfMessage) {}
+Message::Message (string & aSubject, float aPrice, string & aSender, string & aRecipient ) :
+    subject (aSubject), date (clock ()), price (aPrice), sender (aSender), recipient (aRecipient) {}
 
 Message::~Message () {}
 
@@ -19,10 +19,6 @@ clock_t Message::getDate() const {
 
 clock_t Message::getPrice() const {
     return price;
-}
-
-string Message::getTypeOfMessage() const {
-    return typeOfMessage;
 }
 
 

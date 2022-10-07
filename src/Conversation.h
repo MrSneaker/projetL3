@@ -3,19 +3,29 @@
 
 #include <vector>
 #include <string>
+#include <thread>
 #include "Message.h"
+#include "Voiture.h"
+#include "Parking.h"
 
 class Conversation
 {
 private:
-    vector<pair<Message,Message>> conv;
+    thread parking;
+    thread voiture;
+    vector<Message> conv;
     string stockConvP;
     string stockConvV;
     
 public:
     Conversation();
     ~Conversation();
-
+    vector<Message> getConv() const;
+    //! \brief démarre une conversation entre deux entités en paramètres.
+    //! \param p un parking,
+    //! \param v une voiture.
+    void startConv(Parking p, Voiture v);
+    void sendMessage(string & subject, float price, string & sender, string & recipient);
     //! \brief stock la conversation, afin de laisser une trace et permettre au conversants de connaître leur actions passé.
     void stockConv();
 };

@@ -57,7 +57,7 @@ private:
     // [cf commentaire de la donnée membre "nbTotalVisits" pour plus d'explications]
 
 
-
+    int idP;
 
 
     bool isFull;
@@ -137,7 +137,7 @@ public:
     //! \param numberOfPlaces Nombre de palces disponible dans le parking
     //! \param minimumPrice Prix minimum d'acceptance par minutes que le  parking peut accepté -> A REVOIR
     //! \param startPrice Prix max que le parking propose -> A REVOIR
-    Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice, int DIMX, int DIMY);
+    Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice, int DIMX, int DIMY, int id);
     
     Parking();
 
@@ -159,6 +159,8 @@ public:
     int getMinPrice() const;
 
     int getStartingPrice () const;
+
+    int getId() const;
 
     vector<int> getConversationsTab() const;
     // Pas encore sûrs qu'on va l'utiliser

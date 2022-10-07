@@ -13,14 +13,13 @@ private:
     string subject; // Pas forcément nécessaire
     clock_t date;
     float price;
-    string typeOfMessage;
     string sender; // expéditeur du message
     string recipient; // destinataire du message
 public:
     //! \brief constructeur du message.
     Message();
     //! \brief constructeur à paramètre de Message.
-    Message(string & aSubject, float aPrice, string & aTypeOfMessage);
+    Message(string & aSubject, float aPrice, string & aSender, string & aRecipient );
     //! \brief destructeur du message.
     ~Message();
     //! \brief objet du message.
@@ -29,8 +28,6 @@ public:
     clock_t getDate() const;
     //! \brief procédure de récupération du tarif indiqué dans le message
     clock_t getPrice() const;
-    //! \brief procédure de récupération du type du message
-    string getTypeOfMessage() const;
 
 
     void test_regresion();
