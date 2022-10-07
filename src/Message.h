@@ -10,10 +10,12 @@ using namespace std;
 class Message
 {
 private:
-    string subject;
+    string subject; // Pas forcément nécessaire
     clock_t date;
     float price;
     string typeOfMessage;
+    string sender; // expéditeur du message
+    string recipient; // destinataire du message
 public:
     //! \brief constructeur du message.
     Message();

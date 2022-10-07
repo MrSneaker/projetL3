@@ -26,6 +26,6 @@ string Message::getTypeOfMessage() const {
 }
 
 
-void test_regresion() {
+void Message::test_regresion() {
     
 }
