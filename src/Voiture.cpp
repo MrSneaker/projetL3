@@ -251,10 +251,6 @@ Message Voiture::managingConversation (Message * aMessage) const {
         // et le message est de type "CALL" (cf constructeur par défaut)
         // car la voiture ne fait qu'avertir le parking qu'elle veut démarrer une négociation avec lui.
 
-        cout << newMessage.getPrice () << endl;
-        cout << newMessage.getSubject () << endl;
-        cout << newMessage.getTypeOfMessage () << endl;
-
         return newMessage;
 
     }
