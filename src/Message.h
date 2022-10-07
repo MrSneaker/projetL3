@@ -23,7 +23,6 @@ private:
 
 
 
-
     string typeOfMessage;
 
     // - Type du message : par exemple : "appel", "offre", "acceptation", "refus", "contre-offre"...
@@ -68,8 +67,10 @@ private:
 
 
 public:
+
+
     //! \brief constructeur de Message
-    Message(float aPrice = 1, string aTypeOfMessage = "CALL", string aSubject = "Message sans objet");
+    Message(float aPrice = 1, string aTypeOfMessage = "CALL", string aSubject = "Message sans objet", string aSender = "VIDE", string aRecipient = "VIDE");
     //! \brief destructeur du message
     ~Message();
     //! \brief procédure de récupération de l'objet du message
@@ -78,8 +79,6 @@ public:
     clock_t getDate() const;
     //! \brief procédure de récupération du tarif indiqué dans le message
     clock_t getPrice() const;
-    //! \brief procédure de récupération du type du message
-    string getTypeOfMessage() const;
 
 
     void test_regresion();
