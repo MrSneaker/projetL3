@@ -15,10 +15,6 @@ class Message
 private:
 
 
-    string subject;
-    // - Pas forcément nécessaire
-    // - Objet du message (comme l'objet d'un mail)
-
     clock_t date;
     // "Date-heure" courante du message
 
@@ -45,8 +41,7 @@ private:
 
     // - Expéditeur du message
 
-    // - De la forme "Utilisateur_" + id_utilisateur,
-    // ou "Parking_" + id_parking (l'identifiant du parking sera 0, 1 ou 2)
+    // - De la forme "Utilisateur_" + id_utilisateur, ou "Parking_" + id_parking
 
 
 
@@ -57,23 +52,27 @@ private:
 
     // - Destinataire du message
 
-    // - De la forme "Utilisateur_" + id_utilisateur,
-    // ou "Parking_" + id_parking (l'identifiant du parking sera 0, 1 ou 2)
+    // - De la forme "Utilisateur_" + id_utilisateur, ou "Parking_" + id_parking
 
 
+
+    string subject;
+
+    // - Pas forcément nécessaire. Cette donnée pourrait nous permettre de stocker
+    // des informations plus détaillées sur le message.
+
+    // - Objet du message (comme l'objet d'un mail)
 
 
 
 
 
 public:
-    //! \brief constructeur du message.
-    Message();
-    //! \brief constructeur à paramètres de Message.
-    Message(string & aSubject, float aPrice, string & aTypeOfMessage);
-    //! \brief destructeur du message.
+    //! \brief constructeur de Message
+    Message(float aPrice = 1, string aTypeOfMessage = "CALL", string aSubject = "Message sans objet");
+    //! \brief destructeur du message
     ~Message();
-    //! \brief procédure de récupération de l'objet du message.
+    //! \brief procédure de récupération de l'objet du message
     string getSubject() const;
     //! \brief procédure de récupération de la date du message
     clock_t getDate() const;

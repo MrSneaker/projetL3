@@ -4,6 +4,8 @@
 #include "vec2.h"
 #include "Utilisateur.h"
 #include <assert.h>
+#include <vector>
+#include "Message.h"
 
 class Voiture 
 {
@@ -52,6 +54,21 @@ class Voiture
     //! \return true si la voiture est arrivée à la position de la cible (parking / place / sortie)
     bool MoveToTargetPosition();
 
+
+
+
+
+    //! \brief TO DO [Raphaël] : fonction pas encore finie !!!
+
+    //! \brief La voiture lit le message reçu (donné en paramètre) s'il y en a un
+    //! \brief (s'il n'y en a pas, le pointeur est nul),
+    //! \brief et en crée un nouveau (s'il s'agit d'une réponse, les données du nouveau
+    //! \brief message sont initialisées en fonction des données contenues dans le message reçu).
+    Message managingConversation (Message * aMessage) const;
+
+
+
+
     //! \brief Modifie la position de la cible (parking / place / sortie)
     void setTargetPosition(Vec2 new_pos);
 
@@ -74,7 +91,7 @@ class Voiture
 
     //! \brief vérifie qu'un prix donné est acceptable ou non, selon un intervalle arbitraire. Renvoie un booléen.
     //! \param price prix à vérifier
-    bool isPriceOk(double price, Utilisateur User);
+    bool isPriceOk(double price, Utilisateur User) const;
 
     //! \brief Affiche les Infos du conducteur
     void UserGetInfos();

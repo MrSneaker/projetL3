@@ -3,10 +3,8 @@
 
 using namespace std;
 
-Message::Message () : date (clock ()) {}
-
-Message::Message (string & aSubject, float aPrice, string & aTypeOfMessage) :
-    subject (aSubject), date (clock ()), price (aPrice), typeOfMessage (aTypeOfMessage) {}
+Message::Message (float aPrice, string aTypeOfMessage, string aSubject) :
+    date (clock ()), price (aPrice), typeOfMessage (aTypeOfMessage), subject (aSubject) {}
 
 Message::~Message () {}
 

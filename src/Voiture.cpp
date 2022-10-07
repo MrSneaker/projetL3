@@ -1,6 +1,9 @@
 #include "Voiture.h"
 
 #include <iostream>
+#include <string.h>
+
+const int REDUCTION_FACTOR = 0.5;
 
 // Constructeur de la classe Voiture
 Voiture::Voiture()
@@ -148,10 +151,133 @@ bool Voiture::MoveToTargetPosition()
     return false;
 }
 
-bool Voiture::isPriceOk(double price, Utilisateur User)
+
+
+
+
+
+
+//! \brief TO DO [Raphaël] : fonction pas encore finie !!!
+//! \brief peut-être modifier certains calculs, et ajouter cas où on répond
+//! \brief à une "COUNTER_OFFER".
+Message Voiture::managingConversation (Message * aMessage) const {
+
+    if (aMessage != nullptr) {
+
+        float chosenPrice = -2; // Initialisation avec une valeur arbitraire absurde
+        string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
+
+        double proposedParkPrice = aMessage -> getPrice ();
+        string sentType = aMessage -> getTypeOfMessage ();
+
+
+        if (sentType == "OFFER") {
+
+            float userMaxPrice = User.getMaxPrice ();
+
+            float absDeltaPrice = abs (userMaxPrice - proposedParkPrice);
+
+
+            if (proposedParkPrice > userMaxPrice) {
+
+                chosenPrice = userMaxPrice + absDeltaPrice / 100 * userMaxPrice;
+                // TO DO [Raphaël] : il faudra peut-être que je modifie ce calcul en revoyant sa cohérence
+                // avec le calcul du cas proposedParkPrice < userMaxPrice.
+
+                responseType = "COUNTER_OFFER";
+
+            }
+
+            if (proposedParkPrice < userMaxPrice) {
+
+                /* L'utilisateur reçoit une proposition de tarif strictement inférieur au tarif max qu'il accepte,
+                mais il essaie quand même de faire baisser le prix (en effet, dans la vie, quand on négocie le prix
+                au marché dans les pays où il est d'usage de négocier, on essaie de faire baisser le prix même
+                si on a "les moyens" de payer plus cher). La donnée membre maxPrice de l'Utilisateur
+                n'est pas un tarif idéal pour ce dernier : l'idée est plutôt qu'on s'imagine que l'utilisateur ne peut
+                pas se permettre de payer plus que maxPrice, sinon il ne respecte plus son budget. */
+
+                chosenPrice = (proposedParkPrice - 1 / absDeltaPrice * proposedParkPrice * REDUCTION_FACTOR);
+                /* L'utilisateur propose un prix légèrement inférieur au prix proposé :
+                il applique à ce dernier une réduction de absDeltaPrice * 100 * REDUCTION_FACTOR %.
+                REDUCTION_FACTOR est un facteur arbitraire qui est là pour que la réduction demandée
+                ne soit pas trop exagérée, sachant que proposedParkPrice est déjà strictement inférieur
+                à la donnée membre maxPrice de l'Utilisateur. */
+
+                responseType = "COUNTER_OFFER";
+
+            }
+
+            else { // Cas où proposedParkPrice == userMaxPrice, pas encore fait [TO DO Raphaël]
+
+
+
+            }
+            
+        }
+
+        if (sentType == "LAST_OFFER") {
+
+            if (isPriceOk(proposedParkPrice, User)) {
+                chosenPrice = proposedParkPrice;
+
+                responseType = "ACCEPT";
+                // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A")
+                // (ce n'est pas une acceptation engageante). En effet, si par la suite, dans une conversation parallèle,
+                // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
+            }
+
+            else {
+                chosenPrice = -1;
+                responseType = "REJECT";
+            }
+
+        }
+
+        Message newMessage (chosenPrice, responseType, "Message sans objet");
+        return newMessage;
+
+    }
+
+
+
+
+
+    else {
+
+        Message newMessage;
+        // S'il s'agit du 1er message de la conversation, la voiture ne propose
+        // pas de prix (donc on met ce dernier à -1 en appelant le constructeur par défaut),
+        // et le message est de type "CALL" (cf constructeur par défaut)
+        // car la voiture ne fait qu'avertir le parking qu'elle veut démarrer une négociation avec lui.
+
+        cout << newMessage.getPrice () << endl;
+        cout << newMessage.getSubject () << endl;
+        cout << newMessage.getTypeOfMessage () << endl;
+
+        return newMessage;
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+bool Voiture::isPriceOk(double price, Utilisateur User) const
 {
     double u_price = User.getMaxPrice();
-    bool ok = (price == u_price) || (price <= u_price + 0.5) || (price >= u_price - 0.5);
+
+    bool ok = (price <= u_price + 0.05 * u_price);
+    // On considère que le prix est acceptable s'il est au plus 5 % trop cher.
+
     if (ok)
         return true;
     else
@@ -242,6 +368,8 @@ int Voiture::getheight()
 {
     return height;
 }
+
+
 
 // -----------------------------------------------------------------------------------------------
 // Test de regression la classe Voiture
