@@ -23,15 +23,15 @@ private:
 
 
 
-    string typeOfMessage;
+    string subject;
 
     // - Type du message : par exemple : "appel", "offre", "acceptation", "refus", "contre-offre"...
 
     // - L'idée est que la négociation devra être parfaitement normée, comme l'est un échange de messages
     // automatiques dans le cadre d'un protocol internet. A chaque type de message, le receveur doit savoir
     // exactement quels types de message il peut envoyer en réponse. Il faut avoir en tête qu'il y a une sorte
-    // d'arbre des possibilités, par exemple : après un "appel" vient une "offre", puis soit un "acceptation", soit un "refus",
-    // soit une "contre-offre"...
+    // d'arbre des possibilités, par exemple : après un "appel" vient une "offre", puis soit un "acceptation",
+    // soit un "refus", soit une "contre-offre"...
 
 
 
@@ -55,22 +55,20 @@ private:
 
 
 
-    string subject;
-
-    // - Pas forcément nécessaire. Cette donnée pourrait nous permettre de stocker
-    // des informations plus détaillées sur le message.
-
-    // - Objet du message (comme l'objet d'un mail)
-
-
 
 
 
 public:
 
-
-    //! \brief constructeur de Message
-    Message(float aPrice = 1, string aTypeOfMessage = "CALL", string aSubject = "Message sans objet", string aSender = "VIDE", string aRecipient = "VIDE");
+    //! \brief constructeur par défaut du message
+    Message();
+    //! \brief 1er constructeur à paramètres du message
+    //! \brief Utilisé pour créer le 1er message d'une conversation
+    Message(string aSender, string aRecipient);
+    //! \brief 2e constructeur à paramètres du message
+    //! \brief Utilisé pour créer tout les messages qui ne sont pas
+    //! \brief le 1er message d'une conversation
+    Message(float aPrice, string aSubject, string aSender, string aRecipient);
     //! \brief destructeur du message
     ~Message();
     //! \brief procédure de récupération de l'objet du message
@@ -78,7 +76,11 @@ public:
     //! \brief procédure de récupération de la date du message
     clock_t getDate() const;
     //! \brief procédure de récupération du tarif indiqué dans le message
-    clock_t getPrice() const;
+    float getPrice() const;
+    //! \brief procédure de récupération de l'expéditeur du message
+    string getSender() const;
+    //! \brief procédure de récupération du destinataire du message
+    string getRecipient() const;
 
 
     void test_regresion();

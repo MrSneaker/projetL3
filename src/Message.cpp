@@ -3,8 +3,18 @@
 
 using namespace std;
 
-Message::Message (float aPrice, string aTypeOfMessage, string aSubject, string & aSender, string & aRecipient) :
-    date (clock ()), price (aPrice), typeOfMessage (aTypeOfMessage), subject (aSubject), sender (aSender), recipient (aRecipient) {}
+Message::Message (string aSender, string aRecipient) :
+    date (clock ()), price (-1), subject ("CALL"),
+    sender (aSender), recipient (aRecipient) {}
+
+Message::Message (float aPrice, string aSubject, string aSender, string aRecipient) :
+    date (clock ()), price (aPrice), subject (aSubject),
+    sender (aSender), recipient (aRecipient) {}
+
+Message::Message () : date (clock ()), price (-21),
+                      subject ("UNKNOWN SUBJECT"),
+                      sender ("UNKNOWN SENDER"),
+                      recipient ("UNKNOWN RECIPIENT") {}
 
 Message::~Message () {}
 
@@ -15,8 +25,16 @@ clock_t Message::getDate() const {
     return date;
 }
 
-clock_t Message::getPrice() const {
+float Message::getPrice() const {
     return price;
+}
+
+string Message::getSender() const {
+    return sender;
+}
+
+string Message::getRecipient() const {
+    return recipient;
 }
 
 

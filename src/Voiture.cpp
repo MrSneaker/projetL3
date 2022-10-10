@@ -160,7 +160,10 @@ bool Voiture::MoveToTargetPosition()
 //! \brief TO DO [Raphaël] : fonction pas encore finie !!!
 //! \brief peut-être modifier certains calculs, et ajouter cas où on répond
 //! \brief à une "COUNTER_OFFER".
-Message Voiture::managingConversation (Message * aMessage) const {
+Message Voiture::managingConversation (Message* aMessage) const {
+
+    string senderString = "User_" + to_string (User.getId ());
+    string recipientString = "Car_park_" + aMessage -> getSender ();
 
     if (aMessage != nullptr) {
 
@@ -168,7 +171,7 @@ Message Voiture::managingConversation (Message * aMessage) const {
         string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
 
         double proposedParkPrice = aMessage -> getPrice ();
-        string sentType = aMessage -> getTypeOfMessage ();
+        string sentType = aMessage -> getSubject ();
 
 
         if (sentType == "OFFER") {
@@ -234,7 +237,7 @@ Message Voiture::managingConversation (Message * aMessage) const {
 
         }
 
-        Message newMessage (chosenPrice, responseType, "Message sans objet");
+        Message newMessage (chosenPrice, responseType, senderString, recipientString);
         return newMessage;
 
     }
@@ -245,10 +248,10 @@ Message Voiture::managingConversation (Message * aMessage) const {
 
     else {
 
-        Message newMessage;
+        Message newMessage (senderString, recipientString);
         // S'il s'agit du 1er message de la conversation, la voiture ne propose
-        // pas de prix (donc on met ce dernier à -1 en appelant le constructeur par défaut),
-        // et le message est de type "CALL" (cf constructeur par défaut)
+        // pas de prix (donc on met ce dernier à -1 en appelant le constructeur à 2 paramètres),
+        // et le message est de type "CALL" (cf constructeur à 2 paramètres)
         // car la voiture ne fait qu'avertir le parking qu'elle veut démarrer une négociation avec lui.
 
         return newMessage;
