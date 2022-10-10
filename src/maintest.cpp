@@ -2,6 +2,7 @@
 #include "Environnement.h"
 #include "Affichage.h"
 #include "Parking.h"
+#include "Conversation.h"
 
 #include <time.h> 
 #include <iostream> 
@@ -51,11 +52,13 @@ int main(){
     Graph.AffichageSimulation();
 
     Parking p1;
-    p1.testRegression();
+    //p1.testRegression();
 
     Place P1;
     //P1.test_regresion();
 
+    Conversation c;
+    c.testRegression();
 
     return 0;
 }

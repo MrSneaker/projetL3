@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <thread>
+#include <iostream>
 #include "Message.h"
 #include "Voiture.h"
 #include "Parking.h"
@@ -25,9 +26,10 @@ public:
     //! \param p un parking,
     //! \param v une voiture.
     void startConv(Parking p, Voiture v);
-    void sendMessage(string & subject, float price, string & sender, string & recipient);
+    void sendMessage(const string & subject, float price, const string & sender, const string & recipient);
     //! \brief stock la conversation, afin de laisser une trace et permettre au conversants de connaître leur actions passé.
     void stockConv();
+    void testRegression();
 };
 
 
