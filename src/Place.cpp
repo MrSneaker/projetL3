@@ -26,7 +26,7 @@ int Place::getIndP() const
     return indP;
 }
 
-bool Place::setIsTaken(bool new_isTaken)
+void Place::setIsTaken(bool new_isTaken)
 {
     isTaken = new_isTaken;
 }

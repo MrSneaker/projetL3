@@ -21,7 +21,7 @@ public:
     //! \brief procédure de récupération de l'indice de la position de la place.
     int getIndP() const;
 
-    bool setIsTaken(bool new_isTaken);
+    void setIsTaken(bool new_isTaken);
 
     bool getIsTaken() const;
 

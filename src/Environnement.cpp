@@ -48,10 +48,10 @@ void Environnement::initParkings()
 	// Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir
 
 	// Créer 3 parkings et les ajouter dans le tableau de parkings
-	Parking p1(Vec2(1, 1), 189, 0.5, 1.5, 42, 37);
+	Parking p1(Vec2(1, 1), 189, 0.5, 1.5, 42, 37, 0);
 
-	Parking p2(Vec2(57, 1), 189, 0.5, 1.5, 42, 37);
-	Parking p3(Vec2(1, 52), 294, 0.5, 1.5, 98, 27);
+	Parking p2(Vec2(57, 1), 189, 0.5, 1.5, 42, 37, 1);
+	Parking p3(Vec2(1, 52), 294, 0.5, 1.5, 98, 27, 2);
 	parkings.push_back(p1);
 	parkings.push_back(p2);
 	parkings.push_back(p3);
@@ -65,8 +65,8 @@ void Environnement::AddVoiture()
 	V.set_position(pos); // TODO : Set la position aléatoire dans le terrain parmis les 3 entrées possibles -> cf :Schema de la map
 
 	//la position de la target est aléatoire entre l'entrée parkings
-	unsigned int TargetPosX;
-	unsigned int TargetPosY;
+	float TargetPosX;
+	float  TargetPosY;
 	int target = random(0, 3);
 	switch (target)
 	{
