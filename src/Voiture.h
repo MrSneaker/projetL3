@@ -58,8 +58,6 @@ class Voiture
 
 
 
-    //! \brief TO DO [Raphaël] : fonction pas encore finie !!!
-
     //! \brief La voiture lit le message reçu (donné en paramètre) s'il y en a un
     //! \brief (s'il n'y en a pas, le pointeur est nul),
     //! \brief et en crée un nouveau (s'il s'agit d'une réponse, les données du nouveau

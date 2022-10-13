@@ -157,9 +157,7 @@ bool Voiture::MoveToTargetPosition()
 
 
 
-//! \brief TO DO [Raphaël] : fonction pas encore finie !!!
-//! \brief peut-être modifier certains calculs, et ajouter cas où on répond
-//! \brief à une "COUNTER_OFFER".
+
 Message Voiture::managingConversation (Message* aMessage) const {
 
     string senderString = "User_" + to_string (User.getId ());
@@ -174,54 +172,88 @@ Message Voiture::managingConversation (Message* aMessage) const {
         string sentType = aMessage -> getSubject ();
 
 
-        if (sentType == "OFFER") {
+        if (sentType == "OFFER" || sentType == "COUNTER_OFFER") {
 
             float userMaxPrice = User.getMaxPrice ();
-
-            float absDeltaPrice = abs (userMaxPrice - proposedParkPrice);
 
 
             if (proposedParkPrice > userMaxPrice) {
 
-                chosenPrice = userMaxPrice + absDeltaPrice / 100 * userMaxPrice;
-                // TO DO [Raphaël] : il faudra peut-être que je modifie ce calcul en revoyant sa cohérence
-                // avec le calcul du cas proposedParkPrice < userMaxPrice.
-
-                responseType = "COUNTER_OFFER";
+                chosenPrice = userMaxPrice;
+                responseType = "LAST_OFFER";
 
             }
 
-            if (proposedParkPrice < userMaxPrice) {
 
-                /* L'utilisateur reçoit une proposition de tarif strictement inférieur au tarif max qu'il accepte,
+            float halfUserMaxPrice = userMaxPrice / 2;
+            // !!!!! On pourra tester avec d'autres variantes (plus avantageuses pour la voiture
+            // [ou pour le parking ?]) de cette affectation, comme par exemple userMaxPrice / 3
+            // (on nommerait alors la variable thirdOfUserMaxPrice ["third" pour "tiers" et non "troisième"]
+            // au lieu de halfUserMaxPrice).
+
+            if (halfUserMaxPrice < proposedParkPrice <= userMaxPrice) {
+
+                /*
+                    L'utilisateur reçoit une proposition de tarif inférieur au tarif max qu'il accepte,
                 mais il essaie quand même de faire baisser le prix (en effet, dans la vie, quand on négocie le prix
                 au marché dans les pays où il est d'usage de négocier, on essaie de faire baisser le prix même
                 si on a "les moyens" de payer plus cher). La donnée membre maxPrice de l'Utilisateur
                 n'est pas un tarif idéal pour ce dernier : l'idée est plutôt qu'on s'imagine que l'utilisateur ne peut
-                pas se permettre de payer plus que maxPrice, sinon il ne respecte plus son budget. */
+                pas se permettre de payer plus que maxPrice, sinon il ne respecte plus son budget.
 
-                chosenPrice = (proposedParkPrice - 1 / absDeltaPrice * proposedParkPrice * REDUCTION_FACTOR);
-                /* L'utilisateur propose un prix légèrement inférieur au prix proposé :
-                il applique à ce dernier une réduction de absDeltaPrice * 100 * REDUCTION_FACTOR %.
-                REDUCTION_FACTOR est un facteur arbitraire qui est là pour que la réduction demandée
-                ne soit pas trop exagérée, sachant que proposedParkPrice est déjà strictement inférieur
-                à la donnée membre maxPrice de l'Utilisateur. */
+                    On met quand même une borne inférieure halfUserMaxPrice. Non pas que l'utilisateur ne veut pas payer
+                moins cher que halfUserMaxPrice, mais il faut bien mettre un point de départ de la négociation
+                du côté utilisateur, tout comme il y en a un du côté Parking (donnée membre startingPrice).
+                Si proposedParkPrice n'est pas suffisament proche de halfUserMaxPrice, la voiture fera un "pas" vers
+                le Parking en proposant un prix légèrement supérieur strictement à halfUserMaxPrice (mais strictement inférieur
+                à proposedParkPrice).
 
-                responseType = "COUNTER_OFFER";
+                */
+
+                float deltaInf = abs (halfUserMaxPrice - proposedParkPrice);
+                float deltaSup = abs (proposedParkPrice - userMaxPrice);
+                
+                if (deltaInf < deltaSup) {
+                    // !!!!! On pourra tester avec d'autres variantes (plus avantageuses pour la voiture
+                    // [ou pour le parking ?]) de cette condition
+
+                    chosenPrice = proposedParkPrice;
+
+                    responseType = "ACCEPT";
+                    // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A")
+                    // (ce n'est pas une acceptation engageante). En effet, si par la suite, dans une conversation parallèle,
+                    // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
+
+                }
+
+                else {
+
+                    chosenPrice = halfUserMaxPrice + deltaInf / 3;
+                    responseType = "COUNTER_OFFER";
+
+                }
 
             }
 
-            else { // Cas où proposedParkPrice == userMaxPrice, pas encore fait [TO DO Raphaël]
+            else { // Cas où  proposedParkPrice <= halfUserMaxPrice
 
+                chosenPrice = proposedParkPrice;
+                responseType = "ACCEPT";
 
 
             }
             
         }
 
+
+
+
+
+
         if (sentType == "LAST_OFFER") {
 
-            if (isPriceOk(proposedParkPrice, User)) {
+            if (isPriceOk (proposedParkPrice, User)) {
+
                 chosenPrice = proposedParkPrice;
 
                 responseType = "ACCEPT";
@@ -241,6 +273,10 @@ Message Voiture::managingConversation (Message* aMessage) const {
         return newMessage;
 
     }
+
+
+
+
 
 
 
