@@ -218,25 +218,34 @@ Message Parking::managingConversation (Message* aMessage) const {
     }
 
 
+
+
     if (sentType == "COUNTER_OFFER") {
 
+        if (proposedCarPrice < minPrice) {
 
-        if (minPrice < proposedCarPrice <= startingPrice) {
+            chosenPrice = minPrice;
+            responseType = "LAST_OFFER";
+
+        }
+
+
+        if (minPrice <= proposedCarPrice < startingPrice) {
 
             /*
-                L'utilisateur reçoit une proposition de tarif inférieur au tarif max qu'il accepte,
-            mais il essaie quand même de faire baisser le prix (en effet, dans la vie, quand on négocie le prix
-            au marché dans les pays où il est d'usage de négocier, on essaie de faire baisser le prix même
-            si on a "les moyens" de payer plus cher). La donnée membre maxPrice de l'Utilisateur
-            n'est pas un tarif idéal pour ce dernier : l'idée est plutôt qu'on s'imagine que l'utilisateur ne peut
-            pas se permettre de payer plus que maxPrice, sinon il ne respecte plus son budget.
+                Le parking reçoit une proposition de tarif supérieur au tarif minimum qu'il accepte,
+            mais il essaie quand même de faire monter le prix (en effet, dans la vie, quand on est vendeur et qu'on négocie le prix
+            au marché dans les pays où il est d'usage de négocier, on essaie de faire monter le prix même
+            si on a "les moyens" de vendre moins cher). La donnée membre minPrice du Parking
+            n'est pas un tarif idéal pour ce dernier : l'idée est plutôt qu'on s'imagine que le parking ne peut
+            pas se permettre de vendre moins cher que minPrice, sinon il ne respecte plus ses objectifs financiers.
 
-                On met quand même une borne inférieure halfUserMaxPrice. Non pas que l'utilisateur ne veut pas payer
-            moins cher que halfUserMaxPrice, mais il faut bien mettre un point de départ de la négociation
-            du côté utilisateur, tout comme il y en a un du côté Parking (donnée membre startingPrice).
-            Si proposedParkPrice n'est pas suffisament proche de halfUserMaxPrice, la voiture fera un "pas" vers
-            le Parking en proposant un prix légèrement supérieur strictement à halfUserMaxPrice (mais strictement inférieur
-            à proposedParkPrice).
+                On met quand même une borne supérieure startingPrice. Non pas que le parking ne veut pas vendre
+            plus cher que startingPrice, mais il faut bien mettre un point de départ de la négociation
+            du côté parking, tout comme il y en a un du côté Utilisateur (variable halfUserMaxPrice locale à la fonction membre managingConversation de Voiture).
+            Si proposedCarPrice n'est pas suffisament proche de startingPrice, le parking fera un "pas" vers
+            la Voiture en proposant un prix légèrement inférieur strictement à startingPrice (mais strictement supérieur
+            à proposedCarPrice).
 
             */
 
@@ -310,6 +319,9 @@ Message Parking::managingConversation (Message* aMessage) const {
 
     }
 
+
+
+
     if (sentType == "ACCEPT") {
 
         chosenPrice = proposedCarPrice;
@@ -327,6 +339,7 @@ Message Parking::managingConversation (Message* aMessage) const {
         //         décidé.
 
     }
+
 
 
     if (sentType == "REJECT") {

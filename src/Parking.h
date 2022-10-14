@@ -231,12 +231,16 @@ public:
     //! \param price prix à vérifier
     bool isPriceOk(double price) const;
 
+
+
+
     //! \brief Le parking lit le message reçu (donné en paramètre)
     //! \brief et en crée un nouveau (comme il s'agit forcément d'une réponse, les données du nouveau
     //! \brief message sont initialisées en fonction des données contenues dans le message reçu).
     //! \brief Types de message générable :
     //! \brief  - OFFER
     //! \brief  - COUNTER_OFFER
+    //! \brief  - LAST_OFFER
     //! \brief  - ACCEPT
     //! \brief  - REJECT
     //! \brief Types de message reçu pris en compte :
