@@ -6,22 +6,15 @@
 
 using namespace std;
 
-
 class Message
 {
 
-
-
 private:
-
-
     clock_t date;
     // "Date-heure" courante du message
 
     float price;
     // Tarif horaire proposé dans le message
-
-
 
     string subject;
 
@@ -33,19 +26,11 @@ private:
     // d'arbre des possibilités, par exemple : après un "appel" vient une "offre", puis soit un "acceptation",
     // soit un "refus", soit une "contre-offre"...
 
-
-
-
     string sender;
 
     // - Expéditeur du message
 
     // - De la forme "Utilisateur_" + id_utilisateur, ou "Parking_" + id_parking
-
-
-
-
-
 
     string recipient;
 
@@ -53,13 +38,7 @@ private:
 
     // - De la forme "Utilisateur_" + id_utilisateur, ou "Parking_" + id_parking
 
-
-
-
-
-
 public:
-
     //! \brief constructeur par défaut du message
     Message();
     //! \brief 1er constructeur à paramètres du message
@@ -72,20 +51,17 @@ public:
     //! \brief destructeur du message
     ~Message();
     //! \brief procédure de récupération de l'objet du message
-    string getSubject() const;
+    const string& getSubject() const;
     //! \brief procédure de récupération de la date du message
     clock_t getDate() const;
     //! \brief procédure de récupération du tarif indiqué dans le message
     float getPrice() const;
     //! \brief procédure de récupération de l'expéditeur du message
-    string getSender() const;
+    const string &getSender() const;
     //! \brief procédure de récupération du destinataire du message
-    string getRecipient() const;
-
+    const string &getRecipient() const;
 
     void test_regresion();
-    
 };
-
 
 #endif

@@ -4,6 +4,9 @@
 #include <vector>
 #include <string>
 #include <thread>
+#include <mutex>
+#include <iostream>
+#include <fstream>
 #include "Message.h"
 #include "Voiture.h"
 #include "Parking.h"
@@ -11,12 +14,14 @@
 class Conversation
 {
 private:
-    thread parking;
-    thread voiture;
+    thread conversation;
     vector<Message> conv;
     string stockConvP;
     string stockConvV;
-    
+    bool convOK;
+    mutex conv_mutex;
+    mutex convOK_mutex;
+
 public:
     Conversation();
     ~Conversation();
@@ -25,10 +30,12 @@ public:
     //! \param p un parking,
     //! \param v une voiture.
     void startConv(Parking p, Voiture v);
-    void sendMessage(string & subject, float price, string & sender, string & recipient);
-    //! \brief stock la conversation, afin de laisser une trace et permettre au conversants de connaître leur actions passé.
-    void stockConv();
+    void sendMessageVoiture (Voiture v);
+    void sendMessageParking (Parking p);
+    void manageConversation(Voiture v, Parking p);
+    //! \brief stock la conversation, afin de laisser une trace.
+    bool stockConv(const string& fileName);
+    void testRegression();
 };
-
 
 #endif

@@ -151,47 +151,41 @@ bool Voiture::MoveToTargetPosition()
     return false;
 }
 
+Message Voiture::managingConversation(Message *aMessage) const
+{
 
+    string senderString = "User_" + to_string(User.getId());
 
+    if (aMessage != nullptr)
+    {
 
+        string recipientString = "Car_park_" + aMessage->getSender();
 
-
-
-
-Message Voiture::managingConversation (Message* aMessage) const {
-
-    string senderString = "User_" + to_string (User.getId ());
-    string recipientString = "Car_park_" + aMessage -> getSender ();
-
-    if (aMessage != nullptr) {
-
-        float chosenPrice = -2; // Initialisation avec une valeur arbitraire absurde
+        double chosenPrice = -2;               // Initialisation avec une valeur arbitraire absurde
         string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
 
-        double proposedParkPrice = aMessage -> getPrice ();
-        string sentType = aMessage -> getSubject ();
+        double proposedParkPrice = aMessage->getPrice();
+        string sentType = aMessage->getSubject();
 
+        if (sentType == "OFFER" || sentType == "COUNTER_OFFER")
+        {
+            float userMaxPrice = User.getMaxPrice();
 
-        if (sentType == "OFFER" || sentType == "COUNTER_OFFER") {
-
-            float userMaxPrice = User.getMaxPrice ();
-
-
-            if (proposedParkPrice > userMaxPrice) {
+            if (proposedParkPrice > userMaxPrice)
+            {
 
                 chosenPrice = userMaxPrice;
                 responseType = "LAST_OFFER";
-
             }
 
-
-            float halfUserMaxPrice = userMaxPrice / 2;
+            double reducedUserMaxPrice = userMaxPrice / 2;
             // !!!!! On pourra tester avec d'autres variantes (plus avantageuses pour la voiture
             // [ou pour le parking ?]) de cette affectation, comme par exemple userMaxPrice / 3
             // (on nommerait alors la variable thirdOfUserMaxPrice ["third" pour "tiers" et non "troisième"]
             // au lieu de halfUserMaxPrice).
 
-            if (halfUserMaxPrice < proposedParkPrice <= userMaxPrice) {
+            if (reducedUserMaxPrice < proposedParkPrice <= userMaxPrice)
+            {
 
                 /*
                     L'utilisateur reçoit une proposition de tarif inférieur au tarif max qu'il accepte,
@@ -210,49 +204,48 @@ Message Voiture::managingConversation (Message* aMessage) const {
 
                 */
 
-                float deltaInf = abs (halfUserMaxPrice - proposedParkPrice);
-                float deltaSup = abs (proposedParkPrice - userMaxPrice);
-                
-                if (deltaInf < deltaSup) {
+                double deltaInf = abs(reducedUserMaxPrice - proposedParkPrice);
+                double deltaSup = abs(proposedParkPrice - userMaxPrice);
+
+                if (deltaInf < deltaSup)
+                {
                     // !!!!! On pourra tester avec d'autres variantes (plus avantageuses pour la voiture
                     // [ou pour le parking ?]) de cette condition
 
                     chosenPrice = proposedParkPrice;
 
                     responseType = "ACCEPT";
-                    // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A")
-                    // (ce n'est pas une acceptation engageante). En effet, si par la suite, dans une conversation parallèle,
+                    // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A").
+                    // Ce n'est pas une acceptation engageante. En effet, si par la suite, dans une conversation parallèle,
                     // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
-
                 }
 
-                else {
+                else
+                {
 
-                    chosenPrice = halfUserMaxPrice + deltaInf / 3;
+                    chosenPrice = reducedUserMaxPrice + deltaInf / 3;
+                    cout<<"priceV : "<<chosenPrice<<endl;
                     responseType = "COUNTER_OFFER";
-
                 }
-
             }
 
-            else { // Cas où  proposedParkPrice <= halfUserMaxPrice
+            else
+            {
 
-                chosenPrice = proposedParkPrice;
-                responseType = "ACCEPT";
+                if (proposedParkPrice <= reducedUserMaxPrice)
+                {
 
-
+                    chosenPrice = proposedParkPrice;
+                    responseType = "ACCEPT";
+                }
             }
-            
         }
 
+        if (sentType == "LAST_OFFER")
+        {
 
-
-
-
-
-        if (sentType == "LAST_OFFER") {
-
-            if (isPriceOk (proposedParkPrice, User)) {
+            if (isPriceOk(proposedParkPrice, User))
+            {
 
                 chosenPrice = proposedParkPrice;
 
@@ -262,49 +255,55 @@ Message Voiture::managingConversation (Message* aMessage) const {
                 // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
             }
 
-            else {
+            else
+            {
                 chosenPrice = -1;
                 responseType = "REJECT";
             }
-
         }
 
-        Message newMessage (chosenPrice, responseType, senderString, recipientString);
-        return newMessage;
+        if (sentType == "ACCEPT")
+        {
 
+            chosenPrice = proposedParkPrice;
+
+            responseType = "ACCEPT";
+            // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A")
+            // (ce n'est pas une acceptation engageante). En effet, si par la suite, dans une conversation parallèle,
+            // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
+
+            // TO DO : il faudra appeler une fonction qui fait que la voiture stocke l'adresse ou l'id (ou je ne sais quoi
+            //         qui lui permet d'identifier le parking) du parking, ainsi que le prix accepté, pour que la voiture
+            //         puisse ensuite comparer les prix acceptés dans les différentes conversations, et ainsi se diriger
+            //         vers le parking lui ayant proposé le meilleur prix.
+        }
+
+        if (sentType == "REJECT")
+        {
+
+            chosenPrice = -1;
+
+            responseType = "REJECT";
+        }
+
+        Message newMessage(chosenPrice, responseType, senderString, recipientString);
+        return newMessage;
     }
 
+    else
+    {
 
+        string recipientString = "Unknown car park";
 
-
-
-
-
-
-
-    else {
-
-        Message newMessage (senderString, recipientString);
+        Message newMessage(senderString, recipientString);
         // S'il s'agit du 1er message de la conversation, la voiture ne propose
         // pas de prix (donc on met ce dernier à -1 en appelant le constructeur à 2 paramètres),
         // et le message est de type "CALL" (cf constructeur à 2 paramètres)
         // car la voiture ne fait qu'avertir le parking qu'elle veut démarrer une négociation avec lui.
 
         return newMessage;
-
     }
-
 }
-
-
-
-
-
-
-
-
-
-
 
 bool Voiture::isPriceOk(double price, Utilisateur User) const
 {
@@ -403,8 +402,6 @@ int Voiture::getheight()
 {
     return height;
 }
-
-
 
 // -----------------------------------------------------------------------------------------------
 // Test de regression la classe Voiture
