@@ -221,7 +221,7 @@ public:
     //! \brief initialisation de toutes les places de parkings (positions, etc..).
     void initPlace(int nbPlaceLi, int nbPlaceCol, int PcornerX, int PcornerY);
 
-    void negoPlace();
+    Message managingConversation (Message * aMessage) const;
 
     void testRegression();
 };

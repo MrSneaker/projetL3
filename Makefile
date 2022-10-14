@@ -11,10 +11,10 @@ obj/Environnement.o : src/Environnement.cpp src/Environnement.h
 	g++ -c -o obj/Environnement.o src/Environnement.cpp 
 
 obj/Parking.o : src/Parking.cpp src/Parking.h
-	g++ -c -o obj/Parking.o src/Parking.cpp 
+	g++ -c -g -o obj/Parking.o src/Parking.cpp 
 
 obj/Voiture.o : src/Voiture.cpp src/Voiture.h 
-	g++ -c -o obj/Voiture.o src/Voiture.cpp 
+	g++ -c -g -o obj/Voiture.o src/Voiture.cpp 
 
 obj/Utilisateur.o : src/Utilisateur.cpp src/Utilisateur.h
 	g++ -c -o obj/Utilisateur.o src/Utilisateur.cpp 
@@ -23,7 +23,7 @@ obj/Place.o : src/Place.cpp src/Place.h
 	g++ -c -o obj/Place.o src/Place.cpp
 
 obj/Message.o : src/Message.cpp src/Message.h
-	g++ -c -o obj/Message.o src/Message.cpp
+	g++ -c -g -o obj/Message.o src/Message.cpp
 
 obj/vec2.o : src/vec2.cpp src/vec2.h
 	g++ -c -o obj/vec2.o src/vec2.cpp 
@@ -35,7 +35,7 @@ obj/Image.o : src/Image.cpp src/Image.h
 	g++ -c -o obj/Image.o src/Image.cpp $(SDL2)
 
 obj/Conversation.o : src/Conversation.cpp src/Conversation.h
-	g++ -c -o obj/Conversation.o src/Conversation.cpp 
+	g++ -c -g -o obj/Conversation.o src/Conversation.cpp -pthread
 
 
 

@@ -18,7 +18,7 @@ Message::Message () : date (clock ()), price (-21),
 
 Message::~Message () {}
 
-string Message::getSubject() const {
+const string& Message::getSubject() const {
     return subject;
 }
 clock_t Message::getDate() const {
@@ -29,11 +29,11 @@ float Message::getPrice() const {
     return price;
 }
 
-string Message::getSender() const {
+const string& Message::getSender() const {
     return sender;
 }
 
-string Message::getRecipient() const {
+const string& Message::getRecipient() const {
     return recipient;
 }
 

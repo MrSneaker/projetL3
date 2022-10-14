@@ -151,47 +151,49 @@ bool Voiture::MoveToTargetPosition()
     return false;
 }
 
-
-
-
-
-
-
 //! \brief TO DO [Raphaël] : fonction pas encore finie !!!
 //! \brief peut-être modifier certains calculs, et ajouter cas où on répond
 //! \brief à une "COUNTER_OFFER".
-Message Voiture::managingConversation (Message* aMessage) const {
+Message Voiture::managingConversation(Message *aMessage) const
+{
 
-    string senderString = "User_" + to_string (User.getId ());
-    string recipientString = "Car_park_" + aMessage -> getSender ();
+    string recipientString;
+    string senderString = "User_" + to_string(User.getId());
+    if (aMessage == nullptr)
+    {
+        recipientString = "UNKNOWN";
+    }
+    else
+        recipientString = "Car_park_" + aMessage->getSender();
 
-    if (aMessage != nullptr) {
+    if (aMessage != nullptr)
+    {
 
-        float chosenPrice = -2; // Initialisation avec une valeur arbitraire absurde
+        float chosenPrice = -2;               // Initialisation avec une valeur arbitraire absurde
         string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
 
-        double proposedParkPrice = aMessage -> getPrice ();
-        string sentType = aMessage -> getSubject ();
+        double proposedParkPrice = aMessage->getPrice();
+        string sentType = aMessage->getSubject();
 
+        if (sentType == "OFFER")
+        {
 
-        if (sentType == "OFFER") {
+            float userMaxPrice = User.getMaxPrice();
 
-            float userMaxPrice = User.getMaxPrice ();
+            float absDeltaPrice = abs(userMaxPrice - proposedParkPrice);
 
-            float absDeltaPrice = abs (userMaxPrice - proposedParkPrice);
-
-
-            if (proposedParkPrice > userMaxPrice) {
+            if (proposedParkPrice > userMaxPrice)
+            {
 
                 chosenPrice = userMaxPrice + absDeltaPrice / 100 * userMaxPrice;
                 // TO DO [Raphaël] : il faudra peut-être que je modifie ce calcul en revoyant sa cohérence
                 // avec le calcul du cas proposedParkPrice < userMaxPrice.
 
                 responseType = "COUNTER_OFFER";
-
             }
 
-            if (proposedParkPrice < userMaxPrice) {
+            if (proposedParkPrice < userMaxPrice)
+            {
 
                 /* L'utilisateur reçoit une proposition de tarif strictement inférieur au tarif max qu'il accepte,
                 mais il essaie quand même de faire baisser le prix (en effet, dans la vie, quand on négocie le prix
@@ -208,20 +210,18 @@ Message Voiture::managingConversation (Message* aMessage) const {
                 à la donnée membre maxPrice de l'Utilisateur. */
 
                 responseType = "COUNTER_OFFER";
-
             }
 
-            else { // Cas où proposedParkPrice == userMaxPrice, pas encore fait [TO DO Raphaël]
-
-
-
+            else
+            { // Cas où proposedParkPrice == userMaxPrice, pas encore fait [TO DO Raphaël]
             }
-            
         }
 
-        if (sentType == "LAST_OFFER") {
+        if (sentType == "LAST_OFFER")
+        {
 
-            if (isPriceOk(proposedParkPrice, User)) {
+            if (isPriceOk(proposedParkPrice, User))
+            {
                 chosenPrice = proposedParkPrice;
 
                 responseType = "ACCEPT";
@@ -230,45 +230,30 @@ Message Voiture::managingConversation (Message* aMessage) const {
                 // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
             }
 
-            else {
+            else
+            {
                 chosenPrice = -1;
                 responseType = "REJECT";
             }
-
         }
 
-        Message newMessage (chosenPrice, responseType, senderString, recipientString);
+        Message newMessage(chosenPrice, responseType, senderString, recipientString);
         return newMessage;
-
     }
 
+    else
+    {
+        cout << "alo ?" << endl;
 
-
-
-
-    else {
-
-        Message newMessage (senderString, recipientString);
+        Message newMessage(senderString, recipientString);
         // S'il s'agit du 1er message de la conversation, la voiture ne propose
         // pas de prix (donc on met ce dernier à -1 en appelant le constructeur à 2 paramètres),
         // et le message est de type "CALL" (cf constructeur à 2 paramètres)
         // car la voiture ne fait qu'avertir le parking qu'elle veut démarrer une négociation avec lui.
 
         return newMessage;
-
     }
-
 }
-
-
-
-
-
-
-
-
-
-
 
 bool Voiture::isPriceOk(double price, Utilisateur User) const
 {
@@ -367,8 +352,6 @@ int Voiture::getheight()
 {
     return height;
 }
-
-
 
 // -----------------------------------------------------------------------------------------------
 // Test de regression la classe Voiture

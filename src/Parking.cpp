@@ -178,8 +178,10 @@ void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
     }
 }
 
-void Parking::negoPlace()
+Message Parking::managingConversation(Message* aMessage) const
 {
+    return Message();
+  //TODO : raph si t possible de dev comme pour voiture, pour garder de la cohérence sur les deux fonctions.
 }
 
 void Parking::testRegression()
