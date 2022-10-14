@@ -160,21 +160,29 @@ bool Voiture::MoveToTargetPosition()
 
 Message Voiture::managingConversation (Message* aMessage) const {
 
-    string senderString = "User_" + to_string (User.getId ());
-    string recipientString = "Car_park_" + aMessage -> getSender ();
+    string recipientString;
+    string senderString = "User_" + to_string(User.getId());
+    if (aMessage == nullptr)
+    {
+        recipientString = "UNKNOWN";
+    }
+    else
+        recipientString = "Car_park_" + aMessage->getSender();
 
-    if (aMessage != nullptr) {
+    if (aMessage != nullptr)
+    {
 
-        float chosenPrice = -2; // Initialisation avec une valeur arbitraire absurde
+        float chosenPrice = -2;               // Initialisation avec une valeur arbitraire absurde
         string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
 
-        double proposedParkPrice = aMessage -> getPrice ();
-        string sentType = aMessage -> getSubject ();
+        double proposedParkPrice = aMessage->getPrice();
+        string sentType = aMessage->getSubject();
 
+        if (sentType == "OFFER" || sentType == "COUNTER_OFFER") 
+        {
+            float userMaxPrice = User.getMaxPrice();
 
-        if (sentType == "OFFER" || sentType == "COUNTER_OFFER") {
-
-            float userMaxPrice = User.getMaxPrice ();
+            float absDeltaPrice = abs(userMaxPrice - proposedParkPrice);
 
 
             if (proposedParkPrice > userMaxPrice) {
@@ -246,7 +254,6 @@ Message Voiture::managingConversation (Message* aMessage) const {
 
 
             }
-            
         }
 
 
@@ -268,11 +275,11 @@ Message Voiture::managingConversation (Message* aMessage) const {
                 // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
             }
 
-            else {
+            else
+            {
                 chosenPrice = -1;
                 responseType = "REJECT";
             }
-
         }
 
         if (sentType == "ACCEPT") {
@@ -294,12 +301,9 @@ Message Voiture::managingConversation (Message* aMessage) const {
 
         }
 
-        Message newMessage (chosenPrice, responseType, senderString, recipientString);
+        Message newMessage(chosenPrice, responseType, senderString, recipientString);
         return newMessage;
-
     }
-
-
 
 
 
@@ -316,20 +320,8 @@ Message Voiture::managingConversation (Message* aMessage) const {
         // car la voiture ne fait qu'avertir le parking qu'elle veut démarrer une négociation avec lui.
 
         return newMessage;
-
     }
-
 }
-
-
-
-
-
-
-
-
-
-
 
 bool Voiture::isPriceOk(double price, Utilisateur User) const
 {
@@ -428,8 +420,6 @@ int Voiture::getheight()
 {
     return height;
 }
-
-
 
 // -----------------------------------------------------------------------------------------------
 // Test de regression la classe Voiture
