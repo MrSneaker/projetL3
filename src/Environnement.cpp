@@ -20,10 +20,35 @@ int Environnement::random(int min, int max) // fonction permettant de renvoyer u
 
 Environnement::Environnement()
 {
+	initNode();
 }
 
 Environnement::~Environnement()
 {
+}
+
+void Environnement::initNode()
+{
+	nodes = new Node[DimWindowX/tailleCase * DimWindowY/tailleCase];
+
+	int n = 0;
+	cout << "Initialisation des noeuds" << endl;
+	for(int x = 0; x < DimWindowX/tailleCase; x++)
+	{
+		for(int y = 0; y < DimWindowY/tailleCase; y++)
+		{
+			nodes[x + y * DimWindowX/tailleCase].Nodepos.x = x;
+			nodes[x + y * DimWindowX/tailleCase].Nodepos.y = y;
+			nodes[x + y * DimWindowX/tailleCase].isVisited = false;
+			nodes[x + y * DimWindowX/tailleCase].isObstacle = false;
+			nodes[x + y * DimWindowX/tailleCase].fcost = 0;
+			nodes[x + y * DimWindowX/tailleCase].gcost = 0;
+			nodes[x + y * DimWindowX/tailleCase].hcost = 0;
+			nodes[x + y * DimWindowX/tailleCase].parent = nullptr;
+			n++;
+		}
+	}
+	cout<<"Nombre de noeuds : "<<n<<endl;
 }
 
 void Environnement::initUser()
@@ -177,17 +202,19 @@ void Environnement::test_regresion()
 	// test de regression de la classe Environnement
 	Environnement E;
 
-	for (int i = 0; i < 10; i++)
-	{
-		E.AddVoiture();
-	}
-	assert(E.voitures.size() == 10);
-	E.RemoveVoiture(0);
-	assert(E.voitures.size() == 9);
+	// for (int i = 0; i < 10; i++)
+	// {
+	// 	E.AddVoiture();
+	// }
+	// assert(E.voitures.size() == 10);
+	// E.RemoveVoiture(0);
+	// assert(E.voitures.size() == 9);
 
-	cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
+	// cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
 
-	E.initParkings();
-	assert(E.parkings.size() == 3);
-	cout << "Test de regression de la fonction initParking() : OK" << endl;
+	// E.initParkings();
+	// assert(E.parkings.size() == 3);
+	// cout << "Test de regression de la fonction initParking() : OK" << endl;
+
+	E.initNode();
 }

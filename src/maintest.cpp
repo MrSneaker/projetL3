@@ -41,7 +41,7 @@ int main(){
         }
     }
 
-    //Environnement Simulation;
+    Environnement Simulation;
 
     //Simulation.Environnement_play();
     //Simulation.test_regresion();
@@ -50,10 +50,10 @@ int main(){
 
     Graph.AffichageSimulation();
 
-    Parking p1;
-    p1.testRegression();
+    //Parking p1;
+    //p1.testRegression();
 
-    Place P1;
+    //Place P1;
     //P1.test_regresion();
 
 

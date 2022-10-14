@@ -201,6 +201,21 @@ void Affichage::AffichagePlateau()
         SDL_RenderDrawRect(renderer, &Park);
     }
 
+    for(int x = 0; x < DimWindowX/tailleCase; x++)
+    {
+        for(int y = 0; y < DimWindowY/tailleCase; y++)
+        {
+            SDL_Rect rect;
+            rect.x = environnement.nodes[x+DimWindowX/tailleCase*y].Nodepos.x*10;
+            rect.y = environnement.nodes[x+DimWindowX/tailleCase*y].Nodepos.y*10;
+            rect.w = 10;
+            rect.h = 10;
+            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
+            SDL_RenderDrawRect(renderer, &rect);
+        }
+    }
+
     //------------------ Affiche menu ------------------
     SDL_Rect Menu;
     Menu.x = 0;

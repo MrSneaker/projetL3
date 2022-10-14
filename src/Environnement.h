@@ -12,23 +12,44 @@
 #include <string>
 #include <thread>
 
+#define DimWindowX 1000
+#define DimWindowY 800
+#define tailleCase 10
+
 using namespace std;
 
 class Environnement {
     private:
         Vec2 position;
         float speed;
-        
+        //Struct noeud
+        struct Node{
+            Vec2 Nodepos;
+            bool isVisited=false;
+            bool isObstacle=false;
+
+            float fcost;
+            float gcost;
+            float hcost;
+
+            Node* parent;
+            vector<Node*> VecNeighbours;
+            
+        };
+
+    public:
+        Node *nodes = nullptr;
         //! \brief Fonction revoyant un nombre en deux valeurs
         //! \param min valeur minimale
         //! \param max valeur maximale
-    public:
         int random(int min, int max); 
         vector<Voiture> voitures;
         vector<Parking> parkings;
         vector<Utilisateur> conducteurs;
     
         bool display;
+
+        void initNode();
 
 
         Environnement();
