@@ -12,7 +12,7 @@ Conversation::~Conversation()
 
 void Conversation::sendMessage(string & subject, float price, string & sender, string & recipient)
 {
-    conv.push_back(Message(subject,price,sender,recipient));
+    conv.push_back(Message(price, subject,sender,recipient));
 }
 
 void Conversation::startConv(Parking p, Voiture v)

@@ -218,10 +218,38 @@ public:
     //! \brief ajoute une place au nombre de places dispo
     void incrementNbAvailablePlaces();
 
+
+
+
+
+    // AUTRES FONCTIONS
+
     //! \brief initialisation de toutes les places de parkings (positions, etc..).
     void initPlace(int nbPlaceLi, int nbPlaceCol, int PcornerX, int PcornerY);
 
-    void negoPlace();
+    //! \brief vérifie qu'un prix donné est acceptable ou non, avec une marge arbitraire. Renvoie un booléen.
+    //! \param price prix à vérifier
+    bool isPriceOk(double price) const;
+
+    //! \brief Le parking lit le message reçu (donné en paramètre)
+    //! \brief et en crée un nouveau (comme il s'agit forcément d'une réponse, les données du nouveau
+    //! \brief message sont initialisées en fonction des données contenues dans le message reçu).
+    //! \brief Types de message générable :
+    //! \brief  - OFFER
+    //! \brief  - COUNTER_OFFER
+    //! \brief  - ACCEPT
+    //! \brief  - REJECT
+    //! \brief Types de message reçu pris en compte :
+    //! \brief  - CALL
+    //! \brief  - COUNTER_OFFER
+    //! \brief  - LAST_OFFER
+    //! \brief  - ACCEPT
+    //! \brief  - REJECT
+    Message managingConversation (Message * aMessage) const;
+
+
+
+    // TEST DE REGRESSION
 
     void testRegression();
 };

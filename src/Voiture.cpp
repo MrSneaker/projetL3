@@ -220,8 +220,8 @@ Message Voiture::managingConversation (Message* aMessage) const {
                     chosenPrice = proposedParkPrice;
 
                     responseType = "ACCEPT";
-                    // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A")
-                    // (ce n'est pas une acceptation engageante). En effet, si par la suite, dans une conversation parallèle,
+                    // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A").
+                    // Ce n'est pas une acceptation engageante. En effet, si par la suite, dans une conversation parallèle,
                     // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
 
                 }
@@ -235,15 +235,21 @@ Message Voiture::managingConversation (Message* aMessage) const {
 
             }
 
-            else { // Cas où  proposedParkPrice <= halfUserMaxPrice
+            else {
 
-                chosenPrice = proposedParkPrice;
-                responseType = "ACCEPT";
+                if (proposedParkPrice <= halfUserMaxPrice) {
+
+                    chosenPrice = proposedParkPrice;
+                    responseType = "ACCEPT";
+
+                }
 
 
             }
             
         }
+
+
 
 
 
@@ -266,6 +272,25 @@ Message Voiture::managingConversation (Message* aMessage) const {
                 chosenPrice = -1;
                 responseType = "REJECT";
             }
+
+        }
+
+        if (sentType == "ACCEPT") {
+
+            chosenPrice = proposedParkPrice;
+
+            responseType = "ACCEPT";
+            // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A")
+            // (ce n'est pas une acceptation engageante). En effet, si par la suite, dans une conversation parallèle,
+            // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
+
+        }
+
+        if (sentType == "REJECT") {
+
+            chosenPrice = -1;
+
+            responseType = "REJECT";
 
         }
 

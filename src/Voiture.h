@@ -62,6 +62,18 @@ class Voiture
     //! \brief (s'il n'y en a pas, le pointeur est nul),
     //! \brief et en crée un nouveau (s'il s'agit d'une réponse, les données du nouveau
     //! \brief message sont initialisées en fonction des données contenues dans le message reçu).
+    //! \brief Types de message générable :
+    //! \brief  - CALL
+    //! \brief  - COUNTER_OFFER
+    //! \brief  - LAST_OFFER
+    //! \brief  - ACCEPT
+    //! \brief  - REJECT
+    //! \brief Types de message reçu pris en compte :
+    //! \brief  - OFFER
+    //! \brief  - COUNTER_OFFER
+    //! \brief  - LAST_OFFER
+    //! \brief  - ACCEPT
+    //! \brief  - REJECT
     Message managingConversation (Message * aMessage) const;
 
 
@@ -87,7 +99,7 @@ class Voiture
     //! \param new_pos nouvelle position de la voiture
     void set_position(Vec2 new_pos);
 
-    //! \brief vérifie qu'un prix donné est acceptable ou non, selon un intervalle arbitraire. Renvoie un booléen.
+    //! \brief vérifie qu'un prix donné est acceptable ou non, avec une marge arbitraire. Renvoie un booléen.
     //! \param price prix à vérifier
     bool isPriceOk(double price, Utilisateur User) const;
 
