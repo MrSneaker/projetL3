@@ -7,7 +7,6 @@ Conversation::Conversation()
 
 Conversation::~Conversation()
 {
-    
 }
 
 vector<Message> Conversation::getConv() const
@@ -35,12 +34,16 @@ void Conversation::sendMessage(bool isACar, Voiture v, Parking p)
     else
     {
         if (conv.size() == 0)
-            toSend = p.managingConversation(NULL);
+        {
+            toSend = p.managingConversation(nullptr);
+        }
         else
+        {
             toSend = p.managingConversation(&conv.at(conv.size() - 1));
+        }
     }
     sub = toSend.getSubject();
-    if (sub == "ACCEPT" || sub == "REFUSE" || sub == "UNKNOWN SUBJECT" || sub == "INVALID_TYPE")
+    if (sub == "ACCEPT" || sub == "REJECT" || sub == "UNKNOWN SUBJECT" || sub == "INVALID_TYPE")
     {
         convOK = false;
     }
@@ -54,36 +57,48 @@ void Conversation::startConv(Parking p, Voiture v)
     {
         conv_mutex.unlock();
         // lancement de la conv
-        //TODO: on doit tout faire dans un thread et pas deux, et gérer le sens de la conversation dans sendMessage (à renommer).
+        // TODO: on doit tout faire dans un thread et pas deux, et gérer le sens de la conversation dans sendMessage (à renommer).
         // pour éviter les problèmes de sens de conversation.
         voiture = thread(&Conversation::sendMessage, this, true, v, p);
         parking = thread(&Conversation::sendMessage, this, false, v, p);
         if (voiture.joinable())
             voiture.join();
-        else 
-            cout<<"pb de join V"<<endl;
+        else
+            cout << "pb de join V" << endl;
         if (parking.joinable())
             parking.join();
         else
-            cout<<"pb de join P"<<endl;
+            cout << "pb de join P" << endl;
         conv_mutex.lock();
     }
+}
+
+bool Conversation::stockConv(const string &fileName)
+{
+    string newName = "data/"+fileName + ".txt";
+    ofstream stockFile(newName.c_str());
+    if (stockFile.is_open())
+    {
+        for (int i = 0; i < conv.size(); i++)
+        {
+            stockFile << "sender : " << conv.at(i).getSender() << endl;
+            stockFile << "recipient : " << conv.at(i).getRecipient() << endl;
+            stockFile << "date : " << conv.at(i).getDate() << endl;
+            stockFile << "subject : " << conv.at(i).getSubject() << endl;
+            stockFile << "price : " << conv.at(i).getPrice() << endl;
+            stockFile <<"-----------------------------------------------------"<< endl;
+        }
+        return true;
+    }
+    else return false;
 }
 
 void Conversation::testRegression()
 {
     Conversation c;
-    Utilisateur u(6, 14, "paulo-test");
+    Utilisateur u(2.5, 14, "paulo-test");
     Parking p({10, 10}, 100, 3, 4, 10, 10, 4);
     Voiture v(u);
     c.startConv(p, v);
-    for (int i = 0; i < c.conv.size(); i++)
-    {
-        cout << "sender : " << c.getConv().at(i).getSender() << endl;
-        cout << "recipient : " << c.getConv().at(i).getRecipient() << endl;
-        cout << "date : " << c.getConv().at(i).getDate() << endl;
-        cout << "subject : " << c.getConv().at(i).getSubject() << endl;
-        cout << "price : " << c.getConv().at(i).getPrice() << endl;
-        cout << endl;
-    }
+    c.stockConv("convTest");
 }

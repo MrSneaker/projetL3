@@ -6,7 +6,7 @@
 #include <thread>
 #include <mutex>
 #include <iostream>
-#include <functional>
+#include <fstream>
 #include "Message.h"
 #include "Voiture.h"
 #include "Parking.h"
@@ -32,8 +32,8 @@ public:
     //! \param v une voiture.
     void startConv(Parking p, Voiture v);
     void sendMessage(bool isACar, Voiture v, Parking p);
-    //! \brief stock la conversation, afin de laisser une trace et permettre au conversants de connaître leur actions passé.
-    void stockConv();
+    //! \brief stock la conversation, afin de laisser une trace.
+    bool stockConv(const string& fileName);
     void testRegression();
 };
 

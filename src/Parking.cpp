@@ -178,9 +178,6 @@ void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
     }
 }
 
-
-
-
 bool Parking::isPriceOk(double price) const
 {
 
@@ -193,68 +190,101 @@ bool Parking::isPriceOk(double price) const
         return false;
 }
 
+Message Parking::managingConversation(Message *aMessage) const
+{
 
+    string senderString = "Car_park_" + to_string(getId());
 
+    if (aMessage != nullptr)
+    {
+        string recipientString = "User_" + aMessage->getSender();
 
+        float chosenPrice = -2;               // Initialisation avec une valeur arbitraire absurde
+        string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
 
+        double proposedCarPrice = aMessage->getPrice();
+        string sentType = aMessage->getSubject();
 
-
-Message Parking::managingConversation (Message* aMessage) const {
-
-    string senderString = "Car_park_" + to_string (getId ());
-    string recipientString = "User_" + aMessage -> getSender ();
-
-    float chosenPrice = -2; // Initialisation avec une valeur arbitraire absurde
-    string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
-
-    double proposedCarPrice = aMessage ->getPrice ();
-    string sentType = aMessage -> getSubject ();
-
-
-
-    if (sentType == "CALL") {
-        chosenPrice = startingPrice;
-        responseType = "OFFER";
-    }
-
-
-
-
-    if (sentType == "COUNTER_OFFER") {
-
-        if (proposedCarPrice < minPrice) {
-
-            chosenPrice = minPrice;
-            responseType = "LAST_OFFER";
-
+        if (sentType == "CALL")
+        {
+            chosenPrice = startingPrice;
+            responseType = "OFFER";
         }
 
+        if (sentType == "COUNTER_OFFER")
+        {
 
-        if (minPrice <= proposedCarPrice < startingPrice) {
+            if (proposedCarPrice < minPrice)
+            {
 
-            /*
-                Le parking reçoit une proposition de tarif supérieur au tarif minimum qu'il accepte,
-            mais il essaie quand même de faire monter le prix (en effet, dans la vie, quand on est vendeur et qu'on négocie le prix
-            au marché dans les pays où il est d'usage de négocier, on essaie de faire monter le prix même
-            si on a "les moyens" de vendre moins cher). La donnée membre minPrice du Parking
-            n'est pas un tarif idéal pour ce dernier : l'idée est plutôt qu'on s'imagine que le parking ne peut
-            pas se permettre de vendre moins cher que minPrice, sinon il ne respecte plus ses objectifs financiers.
+                chosenPrice = minPrice;
+                responseType = "LAST_OFFER";
+            }
 
-                On met quand même une borne supérieure startingPrice. Non pas que le parking ne veut pas vendre
-            plus cher que startingPrice, mais il faut bien mettre un point de départ de la négociation
-            du côté parking, tout comme il y en a un du côté Utilisateur (variable halfUserMaxPrice locale à la fonction membre managingConversation de Voiture).
-            Si proposedCarPrice n'est pas suffisament proche de startingPrice, le parking fera un "pas" vers
-            la Voiture en proposant un prix légèrement inférieur strictement à startingPrice (mais strictement supérieur
-            à proposedCarPrice).
+            if (minPrice <= proposedCarPrice < startingPrice)
+            {
 
-            */
+                /*
+                    Le parking reçoit une proposition de tarif supérieur au tarif minimum qu'il accepte,
+                mais il essaie quand même de faire monter le prix (en effet, dans la vie, quand on est vendeur et qu'on négocie le prix
+                au marché dans les pays où il est d'usage de négocier, on essaie de faire monter le prix même
+                si on a "les moyens" de vendre moins cher). La donnée membre minPrice du Parking
+                n'est pas un tarif idéal pour ce dernier : l'idée est plutôt qu'on s'imagine que le parking ne peut
+                pas se permettre de vendre moins cher que minPrice, sinon il ne respecte plus ses objectifs financiers.
 
-           float deltaSup = abs (startingPrice - proposedCarPrice);
-           float deltaInf = abs (proposedCarPrice - minPrice);
-            
-            if (deltaSup < deltaInf) {
-                // !!!!! On pourra tester avec d'autres variantes (plus avantageuses pour le parking
-                // [ou pour la voiture ?]) de cette condition.
+                    On met quand même une borne supérieure startingPrice. Non pas que le parking ne veut pas vendre
+                plus cher que startingPrice, mais il faut bien mettre un point de départ de la négociation
+                du côté parking, tout comme il y en a un du côté Utilisateur (variable halfUserMaxPrice locale à la fonction membre managingConversation de Voiture).
+                Si proposedCarPrice n'est pas suffisament proche de startingPrice, le parking fera un "pas" vers
+                la Voiture en proposant un prix légèrement inférieur strictement à startingPrice (mais strictement supérieur
+                à proposedCarPrice).
+
+                */
+
+                float deltaSup = abs(startingPrice - proposedCarPrice);
+                float deltaInf = abs(proposedCarPrice - minPrice);
+
+                if (deltaSup < deltaInf)
+                {
+                    // !!!!! On pourra tester avec d'autres variantes (plus avantageuses pour le parking
+                    // [ou pour la voiture ?]) de cette condition.
+
+                    chosenPrice = proposedCarPrice;
+
+                    responseType = "ACCEPT";
+                    // [SUGGGESTION :] Cela veut dire que le parking acceptera forcément la voiture S'IL A ENCORE
+                    // DE LA PLACE quand la voiture arrivera à son entrée, et ce au prix chosenPrice.
+                    // En revanche, cela ne veut pas dire que la voiture va aller dans ce parking (appelons-le "parking A").
+                    // Ce n'est pas un accord engageant. En effet, si par la suite, dans une conversation parallèle,
+                    // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
+                    // elle n'ira pas dans le parking A.
+                }
+
+                else
+                {
+
+                    chosenPrice = startingPrice - deltaSup / 2;
+                    responseType = "COUNTER_OFFER";
+                }
+            }
+
+            else
+            {
+
+                if (proposedCarPrice >= startingPrice)
+                {
+
+                    chosenPrice = proposedCarPrice;
+                    responseType = "ACCEPT";
+                }
+            }
+        }
+
+        if (sentType == "LAST_OFFER")
+        {
+
+            if (isPriceOk(proposedCarPrice))
+            {
 
                 chosenPrice = proposedCarPrice;
 
@@ -265,40 +295,17 @@ Message Parking::managingConversation (Message* aMessage) const {
                 // Ce n'est pas un accord engageant. En effet, si par la suite, dans une conversation parallèle,
                 // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
                 // elle n'ira pas dans le parking A.
-
             }
 
-            else {
-
-                chosenPrice = startingPrice - deltaSup / 2;
-                responseType = "COUNTER_OFFER";
-
+            else
+            {
+                chosenPrice = -1;
+                responseType = "REJECT";
             }
-
         }
 
-        else {
-
-            if (proposedCarPrice >= startingPrice) {
-
-                chosenPrice = proposedCarPrice;
-                responseType = "ACCEPT";
-
-            }
-
-
-        }
-        
-    }
-
-
-
-
-
-
-    if (sentType == "LAST_OFFER") {
-
-        if (isPriceOk (proposedCarPrice)) {
+        if (sentType == "ACCEPT")
+        {
 
             chosenPrice = proposedCarPrice;
 
@@ -310,72 +317,41 @@ Message Parking::managingConversation (Message* aMessage) const {
             // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
             // elle n'ira pas dans le parking A.
 
+            // TO DO : il faudra appeler une fonction qui fait que le parking stocke l'adresse de l'utilisateur
+            //         pour savoir que, si ce dernier arrive à son entrée, la négociation a déjà été faite et le prix
+            //         décidé.
         }
 
-        else {
+        if (sentType == "REJECT")
+        {
+
             chosenPrice = -1;
+
             responseType = "REJECT";
         }
 
+        Message newMessage(chosenPrice, responseType, senderString, recipientString);
+        return newMessage;
     }
 
+    else
+    {
 
+        string recipientString = "Unknown user";
 
+        Message newMessage(senderString, recipientString);
+        // S'il s'agit du 1er message de la conversation, la voiture ne propose
+        // pas de prix (donc on met ce dernier à -1 en appelant le constructeur à 2 paramètres),
+        // et le message est de type "CALL" (cf constructeur à 2 paramètres)
+        // car la voiture ne fait qu'avertir le parking qu'elle veut démarrer une négociation avec lui.
 
-    if (sentType == "ACCEPT") {
-
-        chosenPrice = proposedCarPrice;
-
-        responseType = "ACCEPT";
-        // [SUGGGESTION :] Cela veut dire que le parking acceptera forcément la voiture S'IL A ENCORE
-        // DE LA PLACE quand la voiture arrivera à son entrée, et ce au prix chosenPrice.
-        // En revanche, cela ne veut pas dire que la voiture va aller dans ce parking (appelons-le "parking A").
-        // Ce n'est pas un accord engageant. En effet, si par la suite, dans une conversation parallèle,
-        // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
-        // elle n'ira pas dans le parking A.
-
-        // TO DO : il faudra appeler une fonction qui fait que le parking stocke l'adresse de l'utilisateur
-        //         pour savoir que, si ce dernier arrive à son entrée, la négociation a déjà été faite et le prix
-        //         décidé.
-
+        return newMessage;
     }
-
-
-
-    if (sentType == "REJECT") {
-
-        chosenPrice = -1;
-
-        responseType = "REJECT";
-
-    }
-
-
-
-
-
-    Message newMessage (chosenPrice, responseType, senderString, recipientString);
-    return newMessage;
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void Parking::testRegression()
 {
-    Parking p1(Vec2(1, 1), 180, 0.4, 0.4, 40, 36,1);
+    Parking p1(Vec2(1, 1), 180, 0.4, 0.4, 40, 36, 1);
 
     // test de la focntion getPlacesTab
     assert(p1.getPlacesTab().size() == p1.placesTab.size());
