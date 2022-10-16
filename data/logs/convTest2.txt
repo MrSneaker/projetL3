@@ -1,0 +1,24 @@
+sender : User_15
+recipient : Unknown car park
+date : 12270
+subject : CALL
+price : -1
+-----------------------------------------------------
+sender : Car_park_4
+recipient : User_User_15
+date : 12313
+subject : OFFER
+price : 4
+-----------------------------------------------------
+sender : User_15
+recipient : Car_park_Car_park_4
+date : 12334
+subject : ACCEPT
+price : 4
+-----------------------------------------------------
+sender : Car_park_4
+recipient : User_User_15
+date : 12357
+subject : ACCEPT
+price : 4
+-----------------------------------------------------

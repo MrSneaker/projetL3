@@ -199,7 +199,7 @@ Message Parking::managingConversation(Message *aMessage) const
     {
         string recipientString = "User_" + aMessage->getSender();
 
-        float chosenPrice = -2;               // Initialisation avec une valeur arbitraire absurde
+        double chosenPrice = -2;               // Initialisation avec une valeur arbitraire absurde
         string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
 
         double proposedCarPrice = aMessage->getPrice();
@@ -241,8 +241,8 @@ Message Parking::managingConversation(Message *aMessage) const
 
                 */
 
-                float deltaSup = abs(startingPrice - proposedCarPrice);
-                float deltaInf = abs(proposedCarPrice - minPrice);
+                double deltaSup = abs(startingPrice - proposedCarPrice);
+                double deltaInf = abs(proposedCarPrice - minPrice);
 
                 if (deltaSup < deltaInf)
                 {
@@ -264,6 +264,7 @@ Message Parking::managingConversation(Message *aMessage) const
                 {
 
                     chosenPrice = startingPrice - deltaSup / 2;
+                    cout<<"priceP : "<<chosenPrice<<endl;
                     responseType = "COUNTER_OFFER";
                 }
             }

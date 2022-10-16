@@ -14,8 +14,7 @@
 class Conversation
 {
 private:
-    thread parking;
-    thread voiture;
+    thread conversation;
     vector<Message> conv;
     string stockConvP;
     string stockConvV;
@@ -31,7 +30,9 @@ public:
     //! \param p un parking,
     //! \param v une voiture.
     void startConv(Parking p, Voiture v);
-    void sendMessage(bool isACar, Voiture v, Parking p);
+    void sendMessageVoiture (Voiture v);
+    void sendMessageParking (Parking p);
+    void manageConversation(Voiture v, Parking p);
     //! \brief stock la conversation, afin de laisser une trace.
     bool stockConv(const string& fileName);
     void testRegression();

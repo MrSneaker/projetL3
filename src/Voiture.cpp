@@ -161,7 +161,7 @@ Message Voiture::managingConversation(Message *aMessage) const
 
         string recipientString = "Car_park_" + aMessage->getSender();
 
-        float chosenPrice = -2;               // Initialisation avec une valeur arbitraire absurde
+        double chosenPrice = -2;               // Initialisation avec une valeur arbitraire absurde
         string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
 
         double proposedParkPrice = aMessage->getPrice();
@@ -178,13 +178,13 @@ Message Voiture::managingConversation(Message *aMessage) const
                 responseType = "LAST_OFFER";
             }
 
-            float halfUserMaxPrice = userMaxPrice / 2;
+            double reducedUserMaxPrice = userMaxPrice / 2;
             // !!!!! On pourra tester avec d'autres variantes (plus avantageuses pour la voiture
             // [ou pour le parking ?]) de cette affectation, comme par exemple userMaxPrice / 3
             // (on nommerait alors la variable thirdOfUserMaxPrice ["third" pour "tiers" et non "troisième"]
             // au lieu de halfUserMaxPrice).
 
-            if (halfUserMaxPrice < proposedParkPrice <= userMaxPrice)
+            if (reducedUserMaxPrice < proposedParkPrice <= userMaxPrice)
             {
 
                 /*
@@ -204,8 +204,8 @@ Message Voiture::managingConversation(Message *aMessage) const
 
                 */
 
-                float deltaInf = abs(halfUserMaxPrice - proposedParkPrice);
-                float deltaSup = abs(proposedParkPrice - userMaxPrice);
+                double deltaInf = abs(reducedUserMaxPrice - proposedParkPrice);
+                double deltaSup = abs(proposedParkPrice - userMaxPrice);
 
                 if (deltaInf < deltaSup)
                 {
@@ -223,7 +223,8 @@ Message Voiture::managingConversation(Message *aMessage) const
                 else
                 {
 
-                    chosenPrice = halfUserMaxPrice + deltaInf / 3;
+                    chosenPrice = reducedUserMaxPrice + deltaInf / 3;
+                    cout<<"priceV : "<<chosenPrice<<endl;
                     responseType = "COUNTER_OFFER";
                 }
             }
@@ -231,7 +232,7 @@ Message Voiture::managingConversation(Message *aMessage) const
             else
             {
 
-                if (proposedParkPrice <= halfUserMaxPrice)
+                if (proposedParkPrice <= reducedUserMaxPrice)
                 {
 
                     chosenPrice = proposedParkPrice;
