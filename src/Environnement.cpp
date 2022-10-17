@@ -20,14 +20,17 @@ int Environnement::random(int min, int max) // fonction permettant de renvoyer u
 
 Environnement::Environnement()
 {
-	initNode();
+	initNodes();
+	map = new int[DimWindowX / tailleCase*DimWindowY / tailleCase];
+
+	
 }
 
 Environnement::~Environnement()
 {
 }
 
-void Environnement::initNode()
+void Environnement::initNodes()
 {
 	nodes = new Node[DimWindowX/tailleCase * DimWindowY/tailleCase];
 
@@ -49,6 +52,49 @@ void Environnement::initNode()
 		}
 	}
 	cout<<"Nombre de noeuds : "<<n<<endl;
+}
+
+void Environnement::resetNodes()
+{
+	for(int x = 0; x < DimWindowX/tailleCase; x++)
+	{
+		for(int y = 0; y < DimWindowY/tailleCase; y++)
+		{
+			nodes[x + y * DimWindowX/tailleCase].isVisited = false;
+			nodes[x + y * DimWindowX/tailleCase].isObstacle = false;
+			nodes[x + y * DimWindowX/tailleCase].fcost = 0;
+			nodes[x + y * DimWindowX/tailleCase].gcost = 0;
+			nodes[x + y * DimWindowX/tailleCase].hcost = 0;
+			nodes[x + y * DimWindowX/tailleCase].parent = nullptr;
+		}
+	}
+
+	pathTab.clear();
+	openList.clear();
+	endNodeReached = false;
+}
+
+void Environnement::setNodes(unsigned int startInd, unsigned int endInd)
+{
+	startNode = &nodes[startInd];
+	currentNode = startNode;
+	endNode = &nodes[endInd];
+	openList.push_back(currentNode);
+
+	//regarde si le noeud est un obstacle ou non
+	for(int x = 0; x < DimWindowX/tailleCase; x++)
+	{
+		for(int y = 0; y < DimWindowY/tailleCase; y++)
+		{
+			if(nodes[x + y * DimWindowX/tailleCase].isObstacle == true)
+			{
+				nodes[x + y * DimWindowX/tailleCase].fcost = INFINITY;
+				nodes[x + y * DimWindowX/tailleCase].gcost = INFINITY;
+				nodes[x + y * DimWindowX/tailleCase].hcost = INFINITY;
+				nodes[x + y * DimWindowX/tailleCase].parent = nullptr;
+			}
+		}
+	}
 }
 
 void Environnement::initUser()
@@ -216,5 +262,5 @@ void Environnement::test_regresion()
 	// assert(E.parkings.size() == 3);
 	// cout << "Test de regression de la fonction initParking() : OK" << endl;
 
-	E.initNode();
+	E.initNodes();
 }

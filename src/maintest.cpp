@@ -45,7 +45,7 @@ int main(){
     Environnement Simulation;
 
     //Simulation.Environnement_play();
-    //Simulation.test_regresion();
+    Simulation.test_regresion();
 
     //Affichage Graph;
 
@@ -57,8 +57,8 @@ int main(){
     //Place P1;
     //P1.test_regresion();
 
-    Conversation c;
-    c.testRegression();
+    //Conversation c;
+    //c.testRegression();
 
     return 0;
 }

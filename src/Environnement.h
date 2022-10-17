@@ -20,6 +20,11 @@ using namespace std;
 
 class Environnement {
     private:
+
+        //tableau a 2 dimensions d'entiers pour stocker les valeurs binaire des cases
+        int* map;
+        
+
         Vec2 position;
         float speed;
         //Struct noeud
@@ -37,6 +42,13 @@ class Environnement {
             
         };
 
+        //Noeud de départ et d'arrivée
+        Node* startNode;
+        Node* endNode;
+        Node* currentNode;
+        bool endNodeReached = false;
+        
+
     public:
         Node *nodes = nullptr;
         //! \brief Fonction revoyant un nombre en deux valeurs
@@ -47,9 +59,11 @@ class Environnement {
         vector<Parking> parkings;
         vector<Utilisateur> conducteurs;
     
-        bool display;
-
-        void initNode();
+        void initNodes();
+        void resetNodes();
+        void setNodes(unsigned int startInd, unsigned int endInd);
+        vector<Node*>pathTab;
+        vector<Node*>openList;
 
 
         Environnement();
