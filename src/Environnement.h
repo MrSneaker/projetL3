@@ -31,21 +31,26 @@ class Environnement {
         Node* endNode;
         Node* currentNode;
         bool endNodeReached = false;
+        int step =0;
         
 
     public:
         string map[DimWindowX/tailleCase*DimWindowY/tailleCase]; 
-        vector<Node> nodes;
+        vector<Node*> nodes;
         vector<Voiture> voitures;
         vector<Parking> parkings;
         vector<Utilisateur> conducteurs;
 
-    
+
         void initNodes();
         void resetNodes();
         void setNodes(unsigned int startInd, unsigned int endInd);
-        vector<Node*>pathTab;
-        vector<Node*>openList;
+        void getCost(Node* node);
+        bool search();
+        void OpenNode(Node* node);
+        void trackPath();
+        vector<Node*>pathTab; //tableau des noeuds du chemin
+        vector<Node*>openList; //liste des noeuds à visiter
 
         //! \brief Fonction revoyant un nombre en deux valeurs
         //! \param min valeur minimale

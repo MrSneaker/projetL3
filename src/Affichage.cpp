@@ -180,11 +180,21 @@ void Affichage::AffichagePlateau()
     {
         for(int y = 0; y < DimWindowY/tailleCase; y++)
         {
-            if(environnement.nodes[x+DimWindowX/tailleCase*y].getisObstacle())
+            if(x+y*DimWindowX/tailleCase == 47 || x+y*DimWindowX/tailleCase == 4299 || x+y*DimWindowX/tailleCase == 1951 )
+            {
+                SDL_Rect Obstacle;
+                Obstacle.x = x*tailleCase;
+                Obstacle.y = y*tailleCase;
+                Obstacle.w = tailleCase;
+                Obstacle.h = tailleCase;
+                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+                SDL_RenderFillRect(renderer, &Obstacle);
+            }
+            else if(environnement.nodes[x+DimWindowX/tailleCase*y]->getisObstacle())
             {
                 SDL_Rect rect;
-                rect.x = environnement.nodes[x+DimWindowX/tailleCase*y].getNodepos().x*10;
-                rect.y = environnement.nodes[x+DimWindowX/tailleCase*y].getNodepos().y*10;
+                rect.x = environnement.nodes[x+DimWindowX/tailleCase*y]->getNodepos().x*10;
+                rect.y = environnement.nodes[x+DimWindowX/tailleCase*y]->getNodepos().y*10;
                 rect.w = 10;
                 rect.h = 10;
                 SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
@@ -194,8 +204,8 @@ void Affichage::AffichagePlateau()
             else
             {
                 SDL_Rect rect;
-                rect.x = environnement.nodes[x+DimWindowX/tailleCase*y].getNodepos().x*10;
-                rect.y = environnement.nodes[x+DimWindowX/tailleCase*y].getNodepos().y*10;
+                rect.x = environnement.nodes[x+DimWindowX/tailleCase*y]->getNodepos().x*10;
+                rect.y = environnement.nodes[x+DimWindowX/tailleCase*y]->getNodepos().y*10;
                 rect.w = 10;
                 rect.h = 10;
                 SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
@@ -205,6 +215,8 @@ void Affichage::AffichagePlateau()
      
         }
     }
+
+    
 
     //------------------ Affiche menu ------------------
     SDL_Rect Menu;
@@ -220,8 +232,13 @@ void Affichage::AffichageSimulation()
 {
     bool display = true;
     bool doit = true;
+    int lanceSim = false;
+    bool ispress = false;
 
     InitAffichage();
+
+    cout<<environnement.map[20][51]<<endl;
+
 
     while (display)
     {
@@ -231,6 +248,7 @@ void Affichage::AffichageSimulation()
         environnement.Environnement_play();
 
         int X, Y;
+        int XC, YC;
 
         // Gestion des evenements
         while (SDL_PollEvent(&event))
@@ -243,6 +261,11 @@ void Affichage::AffichageSimulation()
                 Y = event.motion.y;
 
                 break;
+            case SDL_MOUSEBUTTONDOWN:
+                XC = event.button.x;
+                YC = event.button.y;
+                ispress = true;
+                break;
             case SDL_QUIT:
                 display = false;
                 break;
@@ -253,7 +276,8 @@ void Affichage::AffichageSimulation()
                     display = false;
                     break;
                 case SDLK_SPACE:
-                    environnement.AddVoiture();
+                    //environnement.AddVoiture();
+                    lanceSim = true;
                     // Juste pour tester et pour fun xD
                     // int indice = environnement.random(0, 3);
                     // environnement.voitures[environnement.voitures.size() - 1].setTargetPosition(environnement.parkings[indice].getPlacesTab()[environnement.random(0, environnement.parkings[indice].getPlacesTab().size())].getPos()*Vec2(10, 10));
@@ -261,6 +285,43 @@ void Affichage::AffichageSimulation()
                 }
                 break;
             }
+        }
+        if (ispress == true)
+        {
+            for (int i = 0; i < environnement.nodes.size(); i++)
+            {
+                if (XC >= environnement.nodes[i]->getNodepos().x * 10 && XC <= environnement.nodes[i]->getNodepos().x * 10 + 10 && YC >= environnement.nodes[i]->getNodepos().y * 10 && YC <= environnement.nodes[i]->getNodepos().y * 10 + 10)
+                {
+
+                    cout << "indice du noeud : " << i << endl;
+                    
+                    SDL_Rect rect;
+                    rect.x = environnement.nodes[i]->getNodepos().x * 10;
+                    rect.y = environnement.nodes[i]->getNodepos().y * 10;
+                    rect.w = 10;
+                    rect.h = 10;
+                    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+                    SDL_RenderFillRect(renderer, &rect);
+
+
+                    // change sur le fichier map.txt
+                }
+            }
+            ispress = false;
+        }
+
+        if(lanceSim == true)
+        {
+            if(environnement.search() == true)
+            {
+                cout << "Trouve" << endl;
+                cout<<"path size : "<<environnement.pathTab.size()<<endl;
+            }
+            else
+            {
+                cout << "Pas trouve" << endl;
+            }
+            lanceSim = false;
         }
 
         // Si la valeur Is_in de la voiture est true on modifie la taille de la voiture

@@ -20,6 +20,7 @@ class Node {
         vector<Node*> VecNeighbours;
 
     public:
+        bool open = false;
         int indice;
         //! \brief Constructeur
         Node();
