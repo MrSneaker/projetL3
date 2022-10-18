@@ -1,8 +1,8 @@
 SDL2=`sdl2-config --cflags --libs` -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 all : bin/test
 
-bin/test : obj/maintest.o obj/Environnement.o obj/Parking.o obj/Voiture.o obj/Utilisateur.o obj/vec2.o obj/Affichage.o obj/Place.o obj/Message.o obj/Image.o obj/Conversation.o
-	g++ -o bin/test obj/maintest.o obj/Environnement.o obj/Parking.o obj/Voiture.o obj/Utilisateur.o obj/vec2.o obj/Affichage.o obj/Place.o obj/Message.o obj/Image.o obj/Conversation.o $(SDL2) -pthread
+bin/test : obj/maintest.o obj/Environnement.o obj/Parking.o obj/Voiture.o obj/Utilisateur.o obj/vec2.o obj/Affichage.o obj/Place.o obj/Message.o obj/Image.o obj/Conversation.o obj/Node.o
+	g++ -o bin/test obj/maintest.o obj/Environnement.o obj/Parking.o obj/Voiture.o obj/Utilisateur.o obj/vec2.o obj/Affichage.o obj/Place.o obj/Message.o obj/Image.o obj/Conversation.o obj/Node.o $(SDL2) -pthread
 
 obj/maintest.o : src/maintest.cpp src/Voiture.h 
 	g++ -c -o obj/maintest.o src/maintest.cpp $(SDL2)
@@ -33,6 +33,9 @@ obj/Affichage.o : src/Affichage.cpp src/Affichage.h
 
 obj/Image.o : src/Image.cpp src/Image.h
 	g++ -c -o obj/Image.o src/Image.cpp $(SDL2)
+
+obj/Node.o : src/Node.cpp src/Node.h
+	g++ -c -g -o obj/Node.o src/Node.cpp
 
 obj/Conversation.o : src/Conversation.cpp src/Conversation.h
 	g++ -c -g -o obj/Conversation.o src/Conversation.cpp -pthread

@@ -29,7 +29,7 @@ void Affichage::InitAffichage()
         exit(1);
     }
 
-    window = SDL_CreateWindow("Park Simulation", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DimWindowX, DimWindowY, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("Park Simulation", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DimWindowX, DimWindowY+50, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == NULL)
     {
         std::cout << "Erreur lors de la creation de la fenetre : " << SDL_GetError() << std::endl;
@@ -140,17 +140,6 @@ void Affichage::AffichagePlateau()
         Voiture.draw(renderer, x, y, w, h);
     }
 
-    //------------------ Affiche le Quadrillage pour test ------------------
-    // SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-
-    // for (int i = 0; i < DimWindowX; i += 10)
-    // {
-    //     SDL_RenderDrawLine(renderer, i, 0, i, DimWindowY);
-    // }
-    // for (int i = 0; i < DimWindowY; i += 10)
-    // {
-    //     SDL_RenderDrawLine(renderer, 0, i, DimWindowX, i);
-    // }
 
     //------------------ Affiche les places de chaques parkings ------------------
     for (int j = 0; j < environnement.parkings.size(); j++)
@@ -176,43 +165,44 @@ void Affichage::AffichagePlateau()
                 SDL_RenderDrawRect(renderer, &Place);
             }
         }
-
-        // Affiche le centre de chaque parking (pour reglages + test)
-        SDL_Rect Center;
-        Center.x = environnement.parkings[j].getPos().x * 10 + environnement.parkings[j].getDIMX() * 10 / 2;
-        Center.y = environnement.parkings[j].getPos().y * 10 + environnement.parkings[j].getDIMY() * 10 / 2;
-        Center.w = 10;
-        Center.h = 10;
-
-        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-        SDL_RenderFillRect(renderer, &Center);
-    }
-
-    // Affiche la taille de detection du parking (pour reglages + test) -> rectangle jaune
-    for (int i = 0; i < environnement.parkings.size(); i++)
-    {
+        //Affiche la taille de detection des parkings
         SDL_Rect Park;
-        Park.x = environnement.parkings[i].getPos().x * 10;
-        Park.y = environnement.parkings[i].getPos().y * 10;
-        Park.w = environnement.parkings[i].getDIMX() * 10;
-        Park.h = environnement.parkings[i].getDIMY() * 10;
+        Park.x = environnement.parkings[j].getPos().x * 10;
+        Park.y = environnement.parkings[j].getPos().y * 10;
+        Park.w = environnement.parkings[j].getDIMX() * 10;
+        Park.h = environnement.parkings[j].getDIMY() * 10;
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
         SDL_RenderDrawRect(renderer, &Park);
     }
 
+    //Affiche si la case est un obstacle ou non
     for(int x = 0; x < DimWindowX/tailleCase; x++)
     {
         for(int y = 0; y < DimWindowY/tailleCase; y++)
         {
-            SDL_Rect rect;
-            rect.x = environnement.nodes[x+DimWindowX/tailleCase*y].Nodepos.x*10;
-            rect.y = environnement.nodes[x+DimWindowX/tailleCase*y].Nodepos.y*10;
-            rect.w = 10;
-            rect.h = 10;
-            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-            SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
-            SDL_RenderDrawRect(renderer, &rect);
+            if(environnement.nodes[x+DimWindowX/tailleCase*y].getisObstacle())
+            {
+                SDL_Rect rect;
+                rect.x = environnement.nodes[x+DimWindowX/tailleCase*y].getNodepos().x*10;
+                rect.y = environnement.nodes[x+DimWindowX/tailleCase*y].getNodepos().y*10;
+                rect.w = 10;
+                rect.h = 10;
+                SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 100);
+                SDL_RenderDrawRect(renderer, &rect);
+            }
+            else
+            {
+                SDL_Rect rect;
+                rect.x = environnement.nodes[x+DimWindowX/tailleCase*y].getNodepos().x*10;
+                rect.y = environnement.nodes[x+DimWindowX/tailleCase*y].getNodepos().y*10;
+                rect.w = 10;
+                rect.h = 10;
+                SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+                SDL_SetRenderDrawColor(renderer, 0, 255, 0, 100);
+                SDL_RenderDrawRect(renderer, &rect);
+            }
+     
         }
     }
 

@@ -9,7 +9,7 @@
 #include <iostream>
 
 #define DimWindowX 1000
-#define DimWindowY 850
+#define DimWindowY 800
 
 class Affichage{
 

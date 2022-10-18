@@ -6,11 +6,13 @@
 #include "Utilisateur.h"
 #include "Place.h"
 #include "vec2.h"
+#include "Node.h"
 #include <vector>
 #include <iostream>
 #include <math.h>
 #include <string>
 #include <thread>
+#include <fstream>
 
 #define DimWindowX 1000
 #define DimWindowY 800
@@ -21,27 +23,9 @@ using namespace std;
 class Environnement {
     private:
 
-        //tableau a 2 dimensions d'entiers pour stocker les valeurs binaire des cases
-        int* map;
-        
-
         Vec2 position;
         float speed;
-        //Struct noeud
-        struct Node{
-            Vec2 Nodepos;
-            bool isVisited=false;
-            bool isObstacle=false;
-
-            float fcost;
-            float gcost;
-            float hcost;
-
-            Node* parent;
-            vector<Node*> VecNeighbours;
-            
-        };
-
+      
         //Noeud de départ et d'arrivée
         Node* startNode;
         Node* endNode;
@@ -50,14 +34,12 @@ class Environnement {
         
 
     public:
-        Node *nodes = nullptr;
-        //! \brief Fonction revoyant un nombre en deux valeurs
-        //! \param min valeur minimale
-        //! \param max valeur maximale
-        int random(int min, int max); 
+        string map[DimWindowX/tailleCase*DimWindowY/tailleCase]; 
+        vector<Node> nodes;
         vector<Voiture> voitures;
         vector<Parking> parkings;
         vector<Utilisateur> conducteurs;
+
     
         void initNodes();
         void resetNodes();
@@ -65,6 +47,10 @@ class Environnement {
         vector<Node*>pathTab;
         vector<Node*>openList;
 
+        //! \brief Fonction revoyant un nombre en deux valeurs
+        //! \param min valeur minimale
+        //! \param max valeur maximale
+        int random(int min, int max); 
 
         Environnement();
         ~Environnement();
@@ -87,6 +73,10 @@ class Environnement {
 
         //! \brief Boucle de jeu
         void Environnement_play();
+
+        //! \brief récupère les valeurs contenue dans le fichier map.txt qui contient un plateau de 0 et de 1 
+        //! \brief 0 = case libre, 1 = case obstacle
+        void getMap();
 
 
         //! \brief Test de regression de la classe Environnement
