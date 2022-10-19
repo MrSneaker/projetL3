@@ -96,7 +96,6 @@ void Environnement::setNodes(unsigned int startInd, unsigned int endInd)
 		for (int y = 0; y < DimWindowY / tailleCase; y++)
 		{
 
-			getCost(nodes[x + y * DimWindowX / tailleCase]);
 			if (map[y][x] == '1')
 			{
 				nodes[x + y * DimWindowX / tailleCase]->setisObstacle(true);
@@ -104,6 +103,7 @@ void Environnement::setNodes(unsigned int startInd, unsigned int endInd)
 			}
 			else
 				nodes[x + y * DimWindowX / tailleCase]->setisObstacle(false);
+			getCost(nodes[x + y * DimWindowX / tailleCase]);
 		}
 	}
 }
