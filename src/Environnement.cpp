@@ -50,7 +50,7 @@ void Environnement::initNodes()
 			nodes[x + y * DimWindowX / tailleCase]->open = false;
 			nodes[x + y * DimWindowX / tailleCase]->indice = x + y * DimWindowX / tailleCase;
 
-			if (map[y][x] == '1')
+			if (map[y+1][x] == '1')
 				nodes[x + y * DimWindowX / tailleCase]->setisObstacle(true);
 			else
 				nodes[x + y * DimWindowX / tailleCase]->setisObstacle(false);
@@ -67,10 +67,15 @@ void Environnement::resetNodes()
 			nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
 
 			nodes[x + y * DimWindowX / tailleCase]->open = false;
+			nodes[x + y * DimWindowX / tailleCase]->setParent(nullptr);
+			nodes[x + y * DimWindowX / tailleCase]->setFcost(0);
+			nodes[x + y * DimWindowX / tailleCase]->setGcost(0);
+			nodes[x + y * DimWindowX / tailleCase]->setHcost(0);
 			//obstacle
 			nodes[x + y * DimWindowX / tailleCase]->setisObstacle(false);
 		}
 	}
+	cout<<"reset"<<endl;
 	pathTab.clear();
 	openList.clear();
 	endNodeReached = false;
@@ -79,24 +84,36 @@ void Environnement::resetNodes()
 void Environnement::setNodes(unsigned int startInd, unsigned int endInd)
 {
 	resetNodes();
-	getMap();
 	startNode = nodes[startInd];
 	currentNode = startNode;
 	endNode = nodes[endInd];
 	// ajoute le current node a la liste ouverte
 	openList.push_back(currentNode);
+	cout<<"size openlist setnodes : "<<openList.size()<<endl;
 
 	// on set les coût
 	for (int x = 0; x < DimWindowX / tailleCase; x++)
 	{
 		for (int y = 0; y < DimWindowY / tailleCase; y++)
 		{
-			
-
 
 			getCost(nodes[x + y * DimWindowX / tailleCase]);
+			if (map[y+1][x] == '1')
+			{
+				nodes[x + y * DimWindowX / tailleCase]->setisObstacle(true);
+				nodes[x + y * DimWindowX / tailleCase]->setFcost(99999);
+
+			}
+			else
+				nodes[x + y * DimWindowX / tailleCase]->setisObstacle(false);
+
+		
 		}
+		
+		
+		
 	}
+
 }
 
 void Environnement::getCost(Node *node)
@@ -391,8 +408,17 @@ void Environnement::test_regresion()
 	// E.initParkings();
 	// assert(E.parkings.size() == 3);
 	// cout << "Test de regression de la fonction initParking() : OK" << endl;
-	E.setNodes(47, 4299);
-	// Affiche les infos du noeud 47
+	cout<<"noeud :"<<map[40][47]<<endl;
+	cout<<"noeud :"<<map[41][47]<<endl;
+	cout<<"noeud :"<<map[42][47]<<endl;
+	cout<<"noeud :"<<map[1][47]<<endl;
+	cout<<"noeud :"<<map[40][48]<<endl;
+	cout<<"noeud :"<<map[43][99]<<endl;
+	cout<<nodes[4399]->getisObstacle()<<endl;
+	E.setNodes(47, 4250);
+
+
+	/*// Affiche les infos du noeud 47
 	cout << "Noeud 47 : " << endl;
 	cout << "Position : " << E.nodes[47]->getNodepos().x << " " << E.nodes[47]->getNodepos().y << endl;
 	cout << "fcost : " << E.nodes[47]->getFcost() << endl;
@@ -405,7 +431,7 @@ void Environnement::test_regresion()
 	cout << "fcost : " << E.nodes[4299]->getFcost() << endl;
 	cout << "gcost : " << E.nodes[4299]->getGcost() << endl;
 	cout << "hcost : " << E.nodes[4299]->getHcost() << endl;
-
+	*/
 
 	if (E.search() == true)
 	{

@@ -190,7 +190,7 @@ void Affichage::AffichagePlateau()
                 SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
                 SDL_RenderFillRect(renderer, &Obstacle);
             }
-            else if(environnement.nodes[x+DimWindowX/tailleCase*y]->getisObstacle())
+            else if(environnement.nodes[x+DimWindowX/tailleCase*y]->getisObstacle() == true)
             {
                 SDL_Rect rect;
                 rect.x = environnement.nodes[x+DimWindowX/tailleCase*y]->getNodepos().x*10;
@@ -216,6 +216,18 @@ void Affichage::AffichagePlateau()
         }
     }
 
+    for(int i = 0; i<environnement.pathTab.size(); i++)
+    {
+        SDL_Rect rect;
+        rect.x = environnement.pathTab[i]->getNodepos().x*10;
+        rect.y = environnement.pathTab[i]->getNodepos().y*10;
+        rect.w = 10;
+        rect.h = 10;
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
+        SDL_RenderFillRect(renderer, &rect);
+    }
+
     
 
     //------------------ Affiche menu ------------------
@@ -236,9 +248,7 @@ void Affichage::AffichageSimulation()
     bool ispress = false;
 
     InitAffichage();
-
-    cout<<environnement.map[20][51]<<endl;
-
+    environnement.setNodes(47, 4251);
 
     while (display)
     {
@@ -246,6 +256,7 @@ void Affichage::AffichageSimulation()
 
         AffichagePlateau();
         environnement.Environnement_play();
+
 
         int X, Y;
         int XC, YC;
@@ -294,6 +305,14 @@ void Affichage::AffichageSimulation()
                 {
 
                     cout << "indice du noeud : " << i << endl;
+                    if(environnement.nodes[i]->getisObstacle() == true)
+                    {
+                        cout<<"noeud"<<i<<" est un obstacle"<<endl;
+                    }
+                    else
+                    {
+                        cout<<"noeud"<<i<<" n'est pas un obstacle"<<endl;
+                    }
                     
                     SDL_Rect rect;
                     rect.x = environnement.nodes[i]->getNodepos().x * 10;
