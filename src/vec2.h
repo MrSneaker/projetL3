@@ -4,8 +4,8 @@
 class Vec2
 {
 public:
-    float x;
-    float y;
+    int  x;
+    int  y;
     Vec2();
 
     //! \brief Constructeur de la classe Vec2

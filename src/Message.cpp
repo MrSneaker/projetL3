@@ -4,19 +4,23 @@
 using namespace std;
 
 Message::Message (string aSender, string aRecipient) :
-    date (clock ()), price (-1), subject ("CALL"),
+    messageNumber (0), date (clock ()), price (-1), subject ("CALL"),
     sender (aSender), recipient (aRecipient) {}
 
-Message::Message (float aPrice, string aSubject, string aSender, string aRecipient) :
-    date (clock ()), price (aPrice), subject (aSubject),
+Message::Message (unsigned int eMessageNumber, float aPrice, string aSubject, string aSender, string aRecipient) :
+    messageNumber (eMessageNumber), date (clock ()), price (aPrice), subject (aSubject),
     sender (aSender), recipient (aRecipient) {}
 
-Message::Message () : date (clock ()), price (-21),
+Message::Message () : messageNumber (0), date (clock ()), price (-21),
                       subject ("UNKNOWN SUBJECT"),
                       sender ("UNKNOWN SENDER"),
                       recipient ("UNKNOWN RECIPIENT") {}
 
 Message::~Message () {}
+
+const unsigned int& Message::getMessageNumber() const {
+    return messageNumber;
+}
 
 const string& Message::getSubject() const {
     return subject;

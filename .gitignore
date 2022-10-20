@@ -7,4 +7,6 @@ bin/test
 
 obj/*.o
 
+data/logs/*.txt
+
 UML.dia~

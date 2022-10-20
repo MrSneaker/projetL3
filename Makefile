@@ -1,5 +1,5 @@
 SDL2=`sdl2-config --cflags --libs` -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
-all : bin/test
+all : clean bin/test
 
 bin/test : obj/maintest.o obj/Environnement.o obj/Parking.o obj/Voiture.o obj/Utilisateur.o obj/vec2.o obj/Affichage.o obj/Place.o obj/Message.o obj/Image.o obj/Conversation.o obj/Node.o
 	g++ -o bin/test obj/maintest.o obj/Environnement.o obj/Parking.o obj/Voiture.o obj/Utilisateur.o obj/vec2.o obj/Affichage.o obj/Place.o obj/Message.o obj/Image.o obj/Conversation.o obj/Node.o $(SDL2) -pthread
@@ -8,7 +8,7 @@ obj/maintest.o : src/maintest.cpp src/Voiture.h
 	g++ -c -o obj/maintest.o src/maintest.cpp $(SDL2)
 
 obj/Environnement.o : src/Environnement.cpp src/Environnement.h
-	g++ -c -o obj/Environnement.o src/Environnement.cpp 
+	g++ -c -g -o obj/Environnement.o src/Environnement.cpp 
 
 obj/Parking.o : src/Parking.cpp src/Parking.h
 	g++ -c -g -o obj/Parking.o src/Parking.cpp 
@@ -42,6 +42,7 @@ obj/Conversation.o : src/Conversation.cpp src/Conversation.h
 
 
 
-clean: 
-	rm obj/*.o
-	rm bin/*
+clean:
+	rm -f data/logs/*.txt
+	rm -f obj/*.o
+	rm -f bin/*
