@@ -41,15 +41,18 @@ int main(){
         sleep(1);
         }
     }
-
-    Environnement Simulation;
+    time_t begin = time(NULL);
+    //Environnement Simulation;
 
     //Simulation.Environnement_play();
-    Simulation.test_regresion();
+    //Simulation.test_regresion();
 
-    //Affichage Graph;
+    Affichage Graph;
 
-    //Graph.AffichageSimulation();
+    Graph.AffichageSimulation();
+
+    time_t end = time(NULL);
+
 
     //Parking p1;
     ////p1.testRegression();
@@ -59,6 +62,6 @@ int main(){
 
     //Conversation c;
     //c.testRegression();
-
+    cout<<"Temps de calcul = "<<end-begin<<" secondes"<<endl;
     return 0;
 }

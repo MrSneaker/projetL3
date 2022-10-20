@@ -67,15 +67,8 @@ void Environnement::resetNodes()
 			nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
 
 			nodes[x + y * DimWindowX / tailleCase]->open = false;
-			nodes[x + y * DimWindowX / tailleCase]->setParent(nullptr);
-			nodes[x + y * DimWindowX / tailleCase]->setFcost(0);
-			nodes[x + y * DimWindowX / tailleCase]->setGcost(0);
-			nodes[x + y * DimWindowX / tailleCase]->setHcost(0);
-			// obstacle
-			// nodes[x + y * DimWindowX / tailleCase]->setisObstacle(false);
 		}
 	}
-	cout << "reset" << endl;
 	pathTab.clear();
 	openList.clear();
 	endNodeReached = false;
@@ -95,14 +88,6 @@ void Environnement::setNodes(unsigned int startInd, unsigned int endInd)
 	{
 		for (int y = 0; y < DimWindowY / tailleCase; y++)
 		{
-
-			if (map[y][x] == '1')
-			{
-				nodes[x + y * DimWindowX / tailleCase]->setisObstacle(true);
-				nodes[x + y * DimWindowX / tailleCase]->setFcost(99999);
-			}
-			else
-				nodes[x + y * DimWindowX / tailleCase]->setisObstacle(false);
 			getCost(nodes[x + y * DimWindowX / tailleCase]);
 		}
 	}
@@ -184,7 +169,6 @@ bool Environnement::search()
 				}
 			}
 		}
-
 		// si il n'y a plus de noeud dans la openlist
 		currentNode = openList[bestNodeInd];
 		if (openList.size() == 0)
@@ -207,7 +191,7 @@ void Environnement::trackPath()
 	Node *current = endNode; // on commence par le endnode car on remonte le chemin
 	while (current != startNode)
 	{
-		pathTab.push_back(current);		// on ajoute le noeud courant au chemin pour le tracer
+		pathTab.push_back(current); // on ajoute le noeud courant au chemin pour le tracer
 		current = current->getParent(); // on passe au noeud parent pour continuer le chemin jusqu'au startnode
 	}
 }
@@ -379,15 +363,6 @@ void Environnement::getMap()
 		}
 		MaMap.close();
 	}
-	//affiche la longueur de la map
-	 cout << "Longueur de la map : " << map[0].length() << endl;
-	 cout<<"map[][] : "<<map[42][99]<<endl;
-	 for(int y =0; y<80; y++){
-	 	for(int x =0 ;x<100; x++){
-	 		cout<<map[y][x];
-	 	}
-	 	cout<<endl;
-	 }
 }
 
 void Environnement::test_regresion()
@@ -425,23 +400,30 @@ void Environnement::test_regresion()
 	cout << "hcost : " << E.nodes[4299]->getHcost() << endl;
 	*/
 
-	E.setNodes(47, 4298);
+	E.setNodes(47, 4152);
 
 	if (E.search() == true)
 	{
-		cout<<"test regresion de la fonction search() : OK"<<endl;
+		cout << "test regresion de la fonction search() : OK" << endl;
 	}
 	else
 	{
-		cout<<"test regresion de la fonction search() : FAIL"<<endl;
+		cout << "test regresion de la fonction search() : FAIL" << endl;
 	}
-
-	cout<<"path size : "<<E.pathTab.size()<<endl;
-
-	for(int i=0; i<E.pathTab.size(); i++)
-	{
-		cout<<"Noeud "<<i<<" : "<<E.pathTab[i]->getNodepos().x<<" "<<E.pathTab[i]->getNodepos().y<<endl;
-	}
-	E.getMap();
-	// test de regression de la fonction OpenNode()
+	// cout << "Longueur de la map : " << map[0].length() << endl;
+	// cout<<"map[][] : "<<map[42][99]<<endl;
+	// affiche le pathTab en mode texxte sur la map
+	//  for(int i=0; i<E.pathTab.size(); i++)
+	//  {
+	//  	map[E.pathTab[i]->getNodepos().y][E.pathTab[i]->getNodepos().x] = '#';
+	//  }
+	//  cout << "Longueur de la map : " << map[0].length() << endl;
+	//   cout<<"map[][] : "<<map[42][99]<<endl;
+	//   for(int y =0; y<80; y++){
+	//   	for(int x =0 ;x<100; x++){
+	//   		cout<<map[y][x];
+	//   	}
+	//   	cout<<endl;
+	//   }
+	//  test de regression de la fonction OpenNode()
 }

@@ -8,7 +8,7 @@ obj/maintest.o : src/maintest.cpp src/Voiture.h
 	g++ -c -o obj/maintest.o src/maintest.cpp $(SDL2)
 
 obj/Environnement.o : src/Environnement.cpp src/Environnement.h
-	g++ -c -o obj/Environnement.o src/Environnement.cpp 
+	g++ -c -g -o obj/Environnement.o src/Environnement.cpp 
 
 obj/Parking.o : src/Parking.cpp src/Parking.h
 	g++ -c -g -o obj/Parking.o src/Parking.cpp 

@@ -248,7 +248,7 @@ void Affichage::AffichageSimulation()
     bool ispress = false;
 
     InitAffichage();
-    environnement.setNodes(47, 4299);
+    environnement.setNodes(47, 4200);
 
     while (display)
     {
