@@ -161,7 +161,7 @@ Message Voiture::managingConversation(Message *aMessage) const
 
         string recipientString = aMessage->getSender();
 
-        double chosenPrice = -2;               // Initialisation avec une valeur arbitraire absurde
+        double chosenPrice = -2;              // Initialisation avec une valeur arbitraire absurde
         string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
 
         double proposedParkPrice = aMessage->getPrice();
@@ -170,14 +170,12 @@ Message Voiture::managingConversation(Message *aMessage) const
         if (sentType == "OFFER" || sentType == "COUNTER_OFFER")
         {
             float userMaxPrice = User.getMaxPrice();
-
-            if (proposedParkPrice > userMaxPrice)
+            float nbMessage = aMessage->getMessageNumber();
+            if ((proposedParkPrice > userMaxPrice) || (nbMessage >= 20))
             {
-
                 chosenPrice = userMaxPrice;
                 responseType = "LAST_OFFER";
             }
-
             double reducedUserMaxPrice = userMaxPrice / 2;
             // !!!!! On pourra tester avec d'autres variantes (plus avantageuses pour la voiture
             // [ou pour le parking ?]) de cette affectation, comme par exemple userMaxPrice / 3
@@ -220,9 +218,8 @@ Message Voiture::managingConversation(Message *aMessage) const
                     // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
                 }
 
-                else
+                else if (responseType != "LAST_OFFER")
                 {
-
                     chosenPrice = reducedUserMaxPrice + deltaInf / 3;
                     responseType = "COUNTER_OFFER";
                 }
@@ -233,14 +230,13 @@ Message Voiture::managingConversation(Message *aMessage) const
 
                 if (proposedParkPrice <= reducedUserMaxPrice)
                 {
-
                     chosenPrice = proposedParkPrice;
                     responseType = "ACCEPT";
                 }
             }
         }
 
-        if (sentType == "LAST_OFFER")
+        else if (sentType == "LAST_OFFER")
         {
 
             if (isPriceOk(proposedParkPrice, User))
@@ -285,7 +281,7 @@ Message Voiture::managingConversation(Message *aMessage) const
             responseType = "REJECT";
         }
 
-        unsigned int MessageNum = aMessage -> getMessageNumber () + 1;
+        unsigned int MessageNum = aMessage->getMessageNumber() + 1;
         Message newMessage(MessageNum, chosenPrice, responseType, senderString, recipientString);
         return newMessage;
     }

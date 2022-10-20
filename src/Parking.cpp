@@ -199,7 +199,7 @@ Message Parking::managingConversation(Message *aMessage) const
     {
         string recipientString = aMessage->getSender();
 
-        double chosenPrice = -2;               // Initialisation avec une valeur arbitraire absurde
+        double chosenPrice = -2;              // Initialisation avec une valeur arbitraire absurde
         string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
 
         double proposedCarPrice = aMessage->getPrice();
@@ -213,10 +213,9 @@ Message Parking::managingConversation(Message *aMessage) const
 
         if (sentType == "COUNTER_OFFER")
         {
-
-            if (proposedCarPrice < minPrice)
+            float nbMessage = aMessage->getMessageNumber();
+            if (proposedCarPrice < minPrice || nbMessage >= 20)
             {
-
                 chosenPrice = minPrice;
                 responseType = "LAST_OFFER";
             }
@@ -260,9 +259,8 @@ Message Parking::managingConversation(Message *aMessage) const
                     // elle n'ira pas dans le parking A.
                 }
 
-                else
+                else if (responseType != "LAST_OFFER")
                 {
-
                     chosenPrice = startingPrice - deltaSup / 2;
                     responseType = "COUNTER_OFFER";
                 }
@@ -270,7 +268,6 @@ Message Parking::managingConversation(Message *aMessage) const
 
             else
             {
-
                 if (proposedCarPrice >= startingPrice)
                 {
 
@@ -282,7 +279,6 @@ Message Parking::managingConversation(Message *aMessage) const
 
         if (sentType == "LAST_OFFER")
         {
-
             if (isPriceOk(proposedCarPrice))
             {
 
@@ -330,7 +326,7 @@ Message Parking::managingConversation(Message *aMessage) const
             responseType = "REJECT";
         }
 
-        unsigned int MessageNum = aMessage -> getMessageNumber () + 1;
+        unsigned int MessageNum = aMessage->getMessageNumber() + 1;
         Message newMessage(MessageNum, chosenPrice, responseType, senderString, recipientString);
         return newMessage;
     }

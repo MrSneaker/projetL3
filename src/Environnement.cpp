@@ -365,6 +365,8 @@ void Environnement::getMap()
 	}
 }
 
+
+
 void Environnement::test_regresion()
 {
 

@@ -7,6 +7,7 @@
 #include "Place.h"
 #include "vec2.h"
 #include "Node.h"
+#include "Conversation.h"
 #include <vector>
 #include <iostream>
 #include <math.h>
@@ -20,73 +21,83 @@
 
 using namespace std;
 
-class Environnement {
-    private:
+class Environnement
+{
+private:
+    Vec2 position;
+    float speed;
 
-        Vec2 position;
-        float speed;
-      
-        //Noeud de départ et d'arrivée
-        Node* startNode;
-        Node* endNode;
-        Node* currentNode;
-        bool endNodeReached = false;
-        int step =0;
-        
+    // Noeud de départ et d'arrivée
+    Node *startNode;
+    Node *endNode;
+    Node *currentNode;
+    bool endNodeReached = false;
+    int step = 0;
 
-    public:
-        string map[DimWindowX/tailleCase*DimWindowY/tailleCase]; 
-        vector<Node*> nodes;
-        vector<Voiture> voitures;
-        vector<Parking> parkings;
-        vector<Utilisateur> conducteurs;
+    //on veut gérer les convs dynamiquement
+    vector<Conversation> conv;
 
+    
 
-        void initNodes();
-        void resetNodes();
-        void setNodes(unsigned int startInd, unsigned int endInd);
-        void getCost(Node* node);
-        bool search();
-        void OpenNode(Node* node);
-        void trackPath();
-        vector<Node*>pathTab; //tableau des noeuds du chemin
-        vector<Node*>openList; //liste des noeuds à visiter
+public:
+    string map[DimWindowX / tailleCase * DimWindowY / tailleCase];
+    vector<Node *> nodes;
+    vector<Voiture> voitures;
+    vector<Parking> parkings;
+    vector<Utilisateur> conducteurs;
 
-        //! \brief Fonction revoyant un nombre en deux valeurs
-        //! \param min valeur minimale
-        //! \param max valeur maximale
-        int random(int min, int max); 
+    void initNodes();
+    void resetNodes();
+    void setNodes(unsigned int startInd, unsigned int endInd);
+    void getCost(Node *node);
+    bool search();
+    void OpenNode(Node *node);
+    void trackPath();
+    vector<Node *> pathTab;  // tableau des noeuds du chemin
+    vector<Node *> openList; // liste des noeuds à visiter
 
-        Environnement();
-        ~Environnement();
-        
-        //! \brief Initialisation d'un utilisateur, puis ajout dans le tableau de conducteurs.
-        void initUser();
+    //! \brief Fonction revoyant un nombre en deux valeurs
+    //! \param min valeur minimale
+    //! \param max valeur maximale
+    int random(int min, int max);
 
-        //! \brief Initialisation des parkings
-        void initParkings();
+    Environnement();
+    ~Environnement();
 
-        //! \brief Ajout d'une voiture avec un conducteur dans le tableau de voitures.
-        void AddVoiture();
+    //! \brief Initialisation d'un utilisateur, puis ajout dans le tableau de conducteurs.
+    void initUser();
 
-        //! \brief Enleve une voiture du tableau de voitures.
-        //! \param numVoiture numéro de la voiture à enlever.
-        void RemoveVoiture(int numVoiture);
+    //! \brief Initialisation des parkings
+    void initParkings();
 
-        //! \brief Update le status de chaque voiture.
-        void updateStateVoiture();
+    //! \brief Ajout d'une voiture avec un conducteur dans le tableau de voitures.
+    void AddVoiture();
 
-        //! \brief Boucle de jeu
-        void Environnement_play();
+    //! \brief Enleve une voiture du tableau de voitures.
+    //! \param numVoiture numéro de la voiture à enlever.
+    void RemoveVoiture(int numVoiture);
 
-        //! \brief récupère les valeurs contenue dans le fichier map.txt qui contient un plateau de 0 et de 1 
-        //! \brief 0 = case libre, 1 = case obstacle
-        void getMap();
+    //! \brief Update le status de chaque voiture.
+    void updateStateVoiture();
 
+    //! \brief Boucle de jeu
+    void Environnement_play();
 
-        //! \brief Test de regression de la classe Environnement
-        void test_regresion();
+    //! \brief récupère les valeurs contenue dans le fichier map.txt qui contient un plateau de 0 et de 1
+    //! \brief 0 = case libre, 1 = case obstacle
+    void getMap();
+
+    //on créé une conv quand on veut communiquer.
+    void createConv();
+
+    //pour suppr une conv après utilisation
+    void deleteConv();
+
+    //pour réaliser la conversation.
+    void conversation();
+
+    //! \brief Test de regression de la classe Environnement
+    void test_regresion();
 };
-
 
 #endif

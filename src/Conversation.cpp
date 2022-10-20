@@ -36,7 +36,6 @@ void Conversation::sendMessageVoiture(Voiture v)
     {
         convOK = false;
     }
-    cout << sub << endl;
     conv.push_back(toSend);
 }
 
@@ -62,11 +61,10 @@ void Conversation::sendMessageParking(Parking p)
 
     sub = toSend.getSubject();
 
-    if (sub == "ACCEPT" || sub == "REJECT" || sub == "UNKNOWN SUBJECT" || sub == "INVALID_TYPE" || toSend.getMessageNumber() >= 20)
+    if (sub == "ACCEPT" || sub == "REJECT" || sub == "UNKNOWN SUBJECT" || sub == "INVALID_TYPE")
     {
         convOK = false;
     }
-    cout << sub << endl;
     conv.push_back(toSend);
 }
 
@@ -135,7 +133,7 @@ bool Conversation::stockConv(const string &fileName)
 void Conversation::testRegression()
 {
     Conversation c, c1, c2;
-    Utilisateur u(4.5, 14, "paulo-test");
+    Utilisateur u(3.5, 14, "paulo-test");
     Utilisateur u1(6, 15, "paulo-test2");
     Utilisateur u2(2, 16, "paulo-test3");
     Parking p({10, 10}, 100, 3, 4, 10, 10, 4);
