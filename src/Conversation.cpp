@@ -2,6 +2,7 @@
 
 Conversation::Conversation()
 {
+    //on ouvre la conversation.
     convOK = true;
 }
 
@@ -16,6 +17,7 @@ vector<Message> Conversation::getConv() const
 
 void Conversation::sendMessageVoiture(Voiture v)
 {
+    //On bloque le mutex durant l'execution de la fonction, il est libéré.
     lock_guard<mutex> guard(conv_mutex);
     string sub;
     Message toSend;
@@ -40,6 +42,8 @@ void Conversation::sendMessageVoiture(Voiture v)
 
 void Conversation::sendMessageParking(Parking p)
 {
+    // On fait dormir le sleep 5 milisecondes pour éviter qu'il empiète sur la voiture.
+    this_thread::sleep_for(chrono::milliseconds(5));
     lock_guard<mutex> guard(conv_mutex);
     string sub;
     Message toSend;
@@ -63,38 +67,35 @@ void Conversation::sendMessageParking(Parking p)
     conv.push_back(toSend);
 }
 
-void Conversation::manageConversation(Voiture v, Parking p)
+void Conversation::manageConv(Parking p, Voiture v)
 {
+
+    //  lancement de la conv
     conv_mutex.lock();
-    int i = 0;
     while (convOK)
     {
         conv_mutex.unlock();
-        sendMessageVoiture(v);
-        sendMessageParking(p);
+        voiture = thread(&Conversation::sendMessageVoiture, this, v);
+        parking = thread(&Conversation::sendMessageParking, this, p);
+        if (voiture.joinable())
+        {
+            voiture.join();
+        }
+        else
+            cout << "pb de join V" << endl;
+        if (parking.joinable())
+        {
+            parking.join();
+        }
+        else
+            cout << "pb de join P" << endl; 
         conv_mutex.lock();
     }
 }
 
-void Conversation::startConv(Parking p, Voiture v)
-{
-
-    //  lancement de la conv
-    //  TODO: on doit tout faire dans un thread et pas deux, et gérer le sens de la conversation dans sendMessage (à renommer).
-    //  pour éviter les problèmes de sens de conversation.
-    conversation = thread(&Conversation::manageConversation, this, v, p);
-    if (conversation.joinable())
-    {
-        conversation.join();
-    }
-
-    else
-        cout << "pb de join conversation" << endl;
-}
-
 bool Conversation::stockConv(const string &fileName)
 {
-    if (conversation.joinable() == false)
+    if (voiture.joinable() == false && parking.joinable() == false)
     {
         string newName = "data/logs/" + fileName + ".txt";
         ofstream stockFile(newName.c_str());
@@ -121,13 +122,15 @@ bool Conversation::stockConv(const string &fileName)
 void Conversation::testRegression()
 {
     Conversation c, c1;
-    Utilisateur u(5, 14, "paulo-test");
+    Utilisateur u(4.5, 14, "paulo-test");
     Utilisateur u1(6, 15, "paulo-test2");
     Parking p({10, 10}, 100, 3, 4, 10, 10, 4);
     Voiture v(u);
     Voiture v1(u1);
-    c.startConv(p, v);
-    c1.startConv(p, v1);
-    cout << c.stockConv("convTest") << endl;
-    cout << c1.stockConv("convTest2") << endl;
+    c.manageConv(p, v);
+    c1.manageConv(p, v1);
+    assert(c.convOK == false);
+    assert(c1.convOK == false);
+    c.stockConv("convTest");
+    c1.stockConv("convTest2");
 }
