@@ -2,7 +2,7 @@
 
 Conversation::Conversation()
 {
-    //on ouvre la conversation.
+    // on ouvre la conversation.
     convOK = true;
 }
 
@@ -17,7 +17,7 @@ vector<Message> Conversation::getConv() const
 
 void Conversation::sendMessageVoiture(Voiture v)
 {
-    //On bloque le mutex durant l'execution de la fonction, il est libéré.
+    // On bloque le mutex durant l'execution de la fonction, il est libéré.
     lock_guard<mutex> guard(conv_mutex);
     string sub;
     Message toSend;
@@ -44,8 +44,11 @@ void Conversation::sendMessageParking(Parking p)
 {
     // On fait dormir le sleep 5 milisecondes pour éviter qu'il empiète sur la voiture.
     this_thread::sleep_for(chrono::milliseconds(5));
+    // On bloque le mutex durant l'execution de la procédure, il est libéré.
     lock_guard<mutex> guard(conv_mutex);
+    // sujet testé en fin de procédure pour mettre à jour convOK.
     string sub;
+    // le nouveau message envoyé.
     Message toSend;
 
     if (conv.size() == 0)
@@ -59,6 +62,7 @@ void Conversation::sendMessageParking(Parking p)
 
     sub = toSend.getSubject();
 
+    // mise à jour de convOK.
     if (sub == "ACCEPT" || sub == "REJECT" || sub == "UNKNOWN SUBJECT" || sub == "INVALID_TYPE")
     {
         convOK = false;
@@ -69,11 +73,12 @@ void Conversation::sendMessageParking(Parking p)
 
 void Conversation::manageConv(Parking p, Voiture v)
 {
-
-    //  lancement de la conv
+    //on bloque le mutex pour ne pas avoir de conflit dans les threads avec convOK.
     conv_mutex.lock();
+    //  lancement de la conversation, tant qu'elle est valide.
     while (convOK)
     {
+        //on débloque le mutex pour laisser les threads fonctionner.
         conv_mutex.unlock();
         voiture = thread(&Conversation::sendMessageVoiture, this, v);
         parking = thread(&Conversation::sendMessageParking, this, p);
@@ -88,17 +93,22 @@ void Conversation::manageConv(Parking p, Voiture v)
             parking.join();
         }
         else
-            cout << "pb de join P" << endl; 
+            cout << "pb de join P" << endl;
+        //on rebloque le mutex en fin de boucle pour permettre la vérification de condition.
         conv_mutex.lock();
     }
 }
 
 bool Conversation::stockConv(const string &fileName)
 {
+    //si les threads sont terminés, on peut stocker leur conversation.
     if (voiture.joinable() == false && parking.joinable() == false)
     {
+        //nom du fichier.
         string newName = "data/logs/" + fileName + ".txt";
+        //ouverture du fichier.
         ofstream stockFile(newName.c_str());
+        //si le fichier est ouvert on écrit les informations de la conversation.
         if (stockFile.is_open())
         {
             for (int i = 0; i < conv.size(); i++)
@@ -110,11 +120,14 @@ bool Conversation::stockConv(const string &fileName)
                 stockFile << "price : " << conv.at(i).getPrice() << endl;
                 stockFile << "-----------------------------------------------------" << endl;
             }
+            //on retourne vrai quand on fini de tout écrire.
             return true;
         }
+        // sinon on retourne false.
         else
             return false;
     }
+    //sinon on retourne false.
     else
         return false;
 }
