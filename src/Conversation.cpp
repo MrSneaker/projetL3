@@ -55,7 +55,7 @@ void Conversation::sendMessageParking(Parking p)
 
     sub = toSend.getSubject();
 
-    if (sub == "ACCEPT" || sub == "REJECT" || sub == "UNKNOWN SUBJECT" || sub == "INVALID_TYPE")
+    if (sub == "ACCEPT" || sub == "REJECT" || sub == "UNKNOWN SUBJECT" || sub == "INVALID_TYPE" || toSend.getMessageNumber() >= 20)
     {
         convOK = false;
     }
@@ -102,6 +102,7 @@ bool Conversation::stockConv(const string &fileName)
         {
             for (int i = 0; i < conv.size(); i++)
             {
+                stockFile << "messageNumber : " << conv.at(i).getMessageNumber() << endl;
                 stockFile << "sender : " << conv.at(i).getSender() << endl;
                 stockFile << "recipient : " << conv.at(i).getRecipient() << endl;
                 stockFile << "date : " << conv.at(i).getDate() << endl;
@@ -120,14 +121,18 @@ bool Conversation::stockConv(const string &fileName)
 
 void Conversation::testRegression()
 {
-    Conversation c, c1;
+    Conversation c, c1, c2;
     Utilisateur u(5, 14, "paulo-test");
     Utilisateur u1(6, 15, "paulo-test2");
+    Utilisateur u2(2, 16, "paulo-test3");
     Parking p({10, 10}, 100, 3, 4, 10, 10, 4);
     Voiture v(u);
     Voiture v1(u1);
+    Voiture v2(u2);
     c.startConv(p, v);
     c1.startConv(p, v1);
+    c2.startConv(p, v2);
     cout << c.stockConv("convTest") << endl;
     cout << c1.stockConv("convTest2") << endl;
+    cout << c2.stockConv("convTest3") << endl;
 }

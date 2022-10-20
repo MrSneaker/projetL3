@@ -197,7 +197,7 @@ Message Parking::managingConversation(Message *aMessage) const
 
     if (aMessage != nullptr)
     {
-        string recipientString = "User_" + aMessage->getSender();
+        string recipientString = aMessage->getSender();
 
         double chosenPrice = -2;               // Initialisation avec une valeur arbitraire absurde
         string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
@@ -331,7 +331,8 @@ Message Parking::managingConversation(Message *aMessage) const
             responseType = "REJECT";
         }
 
-        Message newMessage(chosenPrice, responseType, senderString, recipientString);
+        unsigned int MessageNum = aMessage -> getMessageNumber () + 1;
+        Message newMessage(MessageNum, chosenPrice, responseType, senderString, recipientString);
         return newMessage;
     }
 
