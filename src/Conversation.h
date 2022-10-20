@@ -14,27 +14,46 @@
 class Conversation
 {
 private:
-    thread conversation;
+    // thread de voiture et parking, permettant le lancement indépendant de la conversation de chaque côté.
+    thread voiture;
+    thread parking;
+
+    // vecteur de message, représentant la conversation.
     vector<Message> conv;
-    string stockConvP;
-    string stockConvV;
+
+    // booléen permettant de savoir si la conversation est fini ou non.
     bool convOK;
+
+    // exception mutuelle permettant aux threads de ne pas accéder aux données sensibles au même instant.
     mutex conv_mutex;
-    mutex convOK_mutex;
 
 public:
+    //! \brief Constucteur par défaut de Conversation.
     Conversation();
+
+    //! \brief Destructeur de Conversation.
     ~Conversation();
+
+    //! \brief Renvoie le vecteur de Message conv.
     vector<Message> getConv() const;
-    //! \brief démarre une conversation entre deux entités en paramètres.
+
+    //! \brief Démarre une conversation entre deux entités en paramètres.
     //! \param p un parking,
     //! \param v une voiture.
-    void startConv(Parking p, Voiture v);
-    void sendMessageVoiture (Voiture v);
-    void sendMessageParking (Parking p);
-    void manageConversation(Voiture v, Parking p);
-    //! \brief stock la conversation, afin de laisser une trace.
-    bool stockConv(const string& fileName);
+    void manageConv(Parking p, Voiture v);
+
+    //! \brief Fait appel à manageConversation dans Voiture pour écrire un message approprié à l'état de la conversation.
+    //! \param v une voiture.
+    void sendMessageVoiture(Voiture v);
+
+    //! \brief Fait appel à manageConversation dans Parking pour écrire un message approprié à l'état de la conversation.
+    //! \param p un parking.
+    void sendMessageParking(Parking p);
+
+    //! \brief Stocke la conversation, afin de laisser une trace.
+    bool stockConv(const string &fileName);
+
+    //! \brief Test de régression de la classe Conversation.
     void testRegression();
 };
 

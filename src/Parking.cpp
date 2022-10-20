@@ -264,7 +264,6 @@ Message Parking::managingConversation(Message *aMessage) const
                 {
 
                     chosenPrice = startingPrice - deltaSup / 2;
-                    cout<<"priceP : "<<chosenPrice<<endl;
                     responseType = "COUNTER_OFFER";
                 }
             }

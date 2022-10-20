@@ -224,7 +224,6 @@ Message Voiture::managingConversation(Message *aMessage) const
                 {
 
                     chosenPrice = reducedUserMaxPrice + deltaInf / 3;
-                    cout<<"priceV : "<<chosenPrice<<endl;
                     responseType = "COUNTER_OFFER";
                 }
             }

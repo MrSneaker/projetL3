@@ -42,10 +42,10 @@ int main(){
         }
     }
 
-    Environnement Simulation;
+    //Environnement Simulation;
 
     //Simulation.Environnement_play();
-    Simulation.test_regresion();
+    //Simulation.test_regresion();
 
     //Affichage Graph;
 
