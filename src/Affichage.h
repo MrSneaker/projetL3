@@ -44,6 +44,9 @@ class Affichage{
         //------------------------------- TEXT -----------------------------------
         TTF_Font *font_default;
 
+        int X = 0;
+        int Y = 0;
+
 
 
 

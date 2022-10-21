@@ -47,9 +47,9 @@ int main(){
     //Simulation.Environnement_play();
     //Simulation.test_regresion();
 
-    //Affichage Graph;
+    Affichage Graph;
 
-    //Graph.AffichageSimulation();
+    Graph.AffichageSimulation();
 
     time_t end = time(NULL);
 
@@ -60,8 +60,8 @@ int main(){
     //Place P1;
     //P1.test_regresion();
 
-    Conversation c;
-    c.testRegression();
+    //Conversation c;
+    //c.testRegression();
     //cout<<"Temps de calcul = "<<end-begin<<" secondes"<<endl;
     return 0;
 }

@@ -29,7 +29,7 @@ void Affichage::InitAffichage()
         exit(1);
     }
 
-    window = SDL_CreateWindow("Park Simulation", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DimWindowX, DimWindowY+50, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("Park Simulation", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DimWindowX, DimWindowY + 50, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == NULL)
     {
         std::cout << "Erreur lors de la creation de la fenetre : " << SDL_GetError() << std::endl;
@@ -140,7 +140,6 @@ void Affichage::AffichagePlateau()
         Voiture.draw(renderer, x, y, w, h);
     }
 
-
     //------------------ Affiche les places de chaques parkings ------------------
     for (int j = 0; j < environnement.parkings.size(); j++)
     {
@@ -165,7 +164,7 @@ void Affichage::AffichagePlateau()
                 SDL_RenderDrawRect(renderer, &Place);
             }
         }
-        //Affiche la taille de detection des parkings
+        // Affiche la taille de detection des parkings
         SDL_Rect Park;
         Park.x = environnement.parkings[j].getPos().x * 10;
         Park.y = environnement.parkings[j].getPos().y * 10;
@@ -175,7 +174,8 @@ void Affichage::AffichagePlateau()
         SDL_RenderDrawRect(renderer, &Park);
     }
 
-    //Affiche si la case est un obstacle ou non
+    // Affiche si la case est un obstacle ou non
+    /*
     for(int x = 0; x < DimWindowX/tailleCase; x++)
     {
         for(int y = 0; y < DimWindowY/tailleCase; y++)
@@ -212,23 +212,21 @@ void Affichage::AffichagePlateau()
                 SDL_SetRenderDrawColor(renderer, 0, 255, 0, 100);
                 SDL_RenderDrawRect(renderer, &rect);
             }
-     
-        }
-    }
 
-    for(int i = 0; i<environnement.pathTab.size(); i++)
+        }
+    }*/
+
+    for (int i = 0; i < environnement.pathTab.size(); i++)
     {
         SDL_Rect rect;
-        rect.x = environnement.pathTab[i]->getNodepos().x*10;
-        rect.y = environnement.pathTab[i]->getNodepos().y*10;
+        rect.x = environnement.pathTab[i]->getNodepos().x * 10;
+        rect.y = environnement.pathTab[i]->getNodepos().y * 10;
         rect.w = 10;
         rect.h = 10;
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
         SDL_RenderFillRect(renderer, &rect);
     }
-
-    
 
     //------------------ Affiche menu ------------------
     SDL_Rect Menu;
@@ -246,9 +244,13 @@ void Affichage::AffichageSimulation()
     bool doit = true;
     int lanceSim = false;
     bool ispress = false;
+    bool ispressR = false;
+    bool ispressL = false;
+    int x = 0;
+    int y = 0;
+    bool isapress = false;
 
     InitAffichage();
-    environnement.setNodes(47, 4200);
 
     while (display)
     {
@@ -257,8 +259,7 @@ void Affichage::AffichageSimulation()
         AffichagePlateau();
         environnement.Environnement_play();
 
-
-        int X, Y;
+        int Xm, Ym;
         int XC, YC;
 
         // Gestion des evenements
@@ -268,14 +269,24 @@ void Affichage::AffichageSimulation()
             {
             // detecte la mouvement de la souris
             case SDL_MOUSEMOTION:
-                X = event.motion.x;
-                Y = event.motion.y;
+                Xm = event.motion.x;
+                Ym = event.motion.y;
 
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                XC = event.button.x;
-                YC = event.button.y;
                 ispress = true;
+                if (event.button.button == SDL_BUTTON_LEFT)
+                {
+                    XC = event.button.x;
+                    YC = event.button.y;
+                    isapress = true;
+                }
+                else if (event.button.button == SDL_BUTTON_RIGHT)
+                {
+                    XC = event.button.x;
+                    YC = event.button.y;
+                    ispressR = true;
+                }
                 break;
             case SDL_QUIT:
                 display = false;
@@ -287,7 +298,7 @@ void Affichage::AffichageSimulation()
                     display = false;
                     break;
                 case SDLK_SPACE:
-                    //environnement.AddVoiture();
+                    // environnement.AddVoiture();
                     lanceSim = true;
                     // Juste pour tester et pour fun xD
                     // int indice = environnement.random(0, 3);
@@ -305,41 +316,39 @@ void Affichage::AffichageSimulation()
                 {
 
                     cout << "indice du noeud : " << i << endl;
-                    if(environnement.nodes[i]->getisObstacle() == true)
+                    if (ispressL == true)
                     {
-                        cout<<"noeud"<<i<<" est un obstacle"<<endl;
+                        X = i;
                     }
-                    else
+                    else if (ispressR == true)
                     {
-                        cout<<"noeud"<<i<<" n'est pas un obstacle"<<endl;
+                        Y = i;
                     }
-                    
-                    SDL_Rect rect;
-                    rect.x = environnement.nodes[i]->getNodepos().x * 10;
-                    rect.y = environnement.nodes[i]->getNodepos().y * 10;
-                    rect.w = 10;
-                    rect.h = 10;
-                    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-                    SDL_RenderFillRect(renderer, &rect);
 
+                    else if (isapress == true)
+                    {
+
+                        environnement.nodes[i]->setisObstacle(true);
+                        if (environnement.nodes[i]->getisObstacle() == true)
+                        {
+                            cout << "noeud : " << i << " est bien un obstacle" << endl;
+                        }
+                    }
 
                     // change sur le fichier map.txt
                 }
             }
+
+            environnement.setNodes(47, Y);
+            ispressL = false;
+            ispressR = false;
+            isapress = false;
             ispress = false;
         }
 
-        if(lanceSim == true)
+        if (lanceSim == true)
         {
-            if(environnement.search() == true)
-            {
-                cout << "Trouve" << endl;
-                cout<<"path size : "<<environnement.pathTab.size()<<endl;
-            }
-            else
-            {
-                cout << "Pas trouve" << endl;
-            }
+            environnement.Astar();
             lanceSim = false;
         }
 

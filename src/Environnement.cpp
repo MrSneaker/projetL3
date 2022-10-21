@@ -43,9 +43,6 @@ void Environnement::initNodes()
 		{
 			nodes[x + y * DimWindowX / tailleCase]->setNodepos(Vec2(x, y));
 			nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
-			nodes[x + y * DimWindowX / tailleCase]->setFcost(0);
-			nodes[x + y * DimWindowX / tailleCase]->setGcost(0);
-			nodes[x + y * DimWindowX / tailleCase]->setHcost(0);
 			nodes[x + y * DimWindowX / tailleCase]->setParent(nullptr);
 			nodes[x + y * DimWindowX / tailleCase]->open = false;
 			nodes[x + y * DimWindowX / tailleCase]->indice = x + y * DimWindowX / tailleCase;
@@ -66,7 +63,7 @@ void Environnement::resetNodes()
 		{
 			nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
 
-			nodes[x + y * DimWindowX / tailleCase]->open = false;
+			nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().clear();
 		}
 	}
 	pathTab.clear();
@@ -78,112 +75,86 @@ void Environnement::setNodes(unsigned int startInd, unsigned int endInd)
 {
 	resetNodes();
 	startNode = nodes[startInd];
-	currentNode = startNode;
 	endNode = nodes[endInd];
-	// ajoute le current node a la liste ouverte
-	openList.push_back(currentNode);
+}
 
-	// on set les coût
+void Environnement::Astar()
+{
+	resetNodes();
 	for (int x = 0; x < DimWindowX / tailleCase; x++)
 	{
 		for (int y = 0; y < DimWindowY / tailleCase; y++)
 		{
-			getCost(nodes[x + y * DimWindowX / tailleCase]);
+			nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
+			nodes[x + y * DimWindowX / tailleCase]->setlocalGoal(INFINITY);
+			nodes[x + y * DimWindowX / tailleCase]->setGlobalGoal(INFINITY);
+			nodes[x + y * tailleCase]->setParent(nullptr);
+
+			if (y > 0)
+				nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x + 0) + (y - 1) * DimWindowX / tailleCase]);
+			if (y < DimWindowY / tailleCase - 1)
+				nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x + 0) + (y + 1) * DimWindowX / tailleCase]);
+			if (x > 0)
+				nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x - 1) + (y + 0) * DimWindowX / tailleCase]);
+			if (x < DimWindowX / tailleCase - 1)
+				nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x + 1) + (y + 0) * DimWindowX / tailleCase]);
 		}
 	}
-}
-
-void Environnement::getCost(Node *node)
-{
-	// Gcost
-	unsigned int xDist = abs(node->getNodepos().x - startNode->getNodepos().x);
-	unsigned int yDist = abs(node->getNodepos().y - startNode->getNodepos().y);
-	node->setGcost(xDist + yDist);
-
-	// Hcost
-	xDist = abs(node->getNodepos().x - endNode->getNodepos().x);
-	yDist = abs(node->getNodepos().y - endNode->getNodepos().y);
-	node->setHcost(xDist + yDist);
-
-	// Fcost
-	node->setFcost(node->getGcost() + node->getHcost());
-}
-
-bool Environnement::search()
-{
-	while (endNodeReached == false)
+	auto distance = [](Node *a, Node *b)
 	{
-		int x = currentNode->indice % (DimWindowX / tailleCase);
-		int y = currentNode->indice / (DimWindowX / tailleCase);
+		return sqrtf((a->getNodepos().x - b->getNodepos().x) * (a->getNodepos().x - b->getNodepos().x) + (a->getNodepos().y - b->getNodepos().y) * (a->getNodepos().y - b->getNodepos().y));
+	};
 
+	auto heuristic = [distance](Node *a, Node *b)
+	{
+		return distance(a, b);
+	};
+
+	currentNode = startNode;
+	startNode->setlocalGoal(0.0f);
+	startNode->setGlobalGoal(heuristic(startNode, endNode));
+
+	openList.push_back(startNode);
+
+	while (!openList.empty() && currentNode != endNode)
+	{
+		while (!openList.empty() && openList.front()->getisVisited())
+		{
+			openList.erase(openList.begin());
+		}
+
+		if (openList.empty())
+		{
+			break;
+		}
+
+		currentNode = openList.front();
 		currentNode->setisVisited(true);
-		// retire le currentnode de openlist
-		openList.erase(openList.begin());
 
-		// ajoute les voisins du current node a la liste ouverte
-		// ouvre le voisin du haut
-		if (y - 1 >= 0)
+		// check each of this node's neighbours
+		for (auto neighbour : currentNode->getVecNeighbours())
 		{
-			// cout<<"voisin du haut : "<<(x + (y-1) * DimWindowX / tailleCase)<<endl;
-			OpenNode(nodes[x + (y - 1) * DimWindowX / tailleCase]);
-		}
-		// ouvre le voisin du bas
-		if (y + 1 < DimWindowY / tailleCase)
-		{
-			// cout<<"voisin du bas : "<<(x + (y+1) * DimWindowX / tailleCase)<<endl;
-			OpenNode(nodes[x + (y + 1) * DimWindowX / tailleCase]);
-		}
-		// ouvre le voisin de gauche
-		if (x - 1 >= 0)
-		{
-			// cout<<"voisin de gauche : "<<((x-1) + y * DimWindowX / tailleCase)<<endl;
-			OpenNode(nodes[(x - 1) + y * DimWindowX / tailleCase]);
-		}
-		// ouvre le voisin de droite
-		if (x + 1 < DimWindowX / tailleCase)
-		{
-			// cout<<"voisin de droite : "<<((x+1) + y * DimWindowX / tailleCase)<<endl;
-			OpenNode(nodes[(x + 1) + y * DimWindowX / tailleCase]);
-		}
+			if (neighbour->getisVisited() == false && neighbour->getisObstacle() == false)
+			{
+				openList.push_back(neighbour);
 
-		unsigned int bestNodeInd = 0;
-		unsigned int bestNodeFcost = 999;
-		// trouve le noeud avec le plus petit Fcost
-		for (int i = 0; i < openList.size(); i++)
-		{
-			// si le fcost du noeud est le meilleur
-			if (openList[i]->getFcost() < bestNodeFcost)
-			{
-				// cout<<"bestNodeFcost = "<<bestNodeFcost<<endl;
-				bestNodeInd = i;
-				bestNodeFcost = openList[i]->getFcost();
-			}
-			// si le fcost est le même, on regarde le gcost
-			else if (openList[i]->getFcost() == bestNodeFcost)
-			{
-				// si le gcost est meilleur
-				// cout<<"bestNodeFcost = "<<bestNodeFcost<<endl;
-				if (openList[i]->getGcost() < openList[bestNodeInd]->getGcost())
+				float possiblyLowerGoal = currentNode->getlocalGoal() + distance(currentNode, neighbour);
+
+				if (possiblyLowerGoal < neighbour->getlocalGoal())
 				{
-					bestNodeInd = i;
+					neighbour->setParent(currentNode);
+
+					neighbour->setlocalGoal(possiblyLowerGoal);
+
+					neighbour->setGlobalGoal(neighbour->getlocalGoal() + heuristic(neighbour, endNode));
 				}
 			}
 		}
-		// si il n'y a plus de noeud dans la openlist
-		currentNode = openList[bestNodeInd];
-		if (openList.size() == 0)
-		{
-			endNodeReached = true;
-		}
-
-		// si le currentnode est le endnode
-		if (currentNode == endNode)
-		{
-			endNodeReached = true;
-			trackPath();
-		}
 	}
-	return endNodeReached;
+	endNodeReached = true;
+	cout << "endNodeReached" << endl;
+	trackPath();
+	cout << "trackPath" << pathTab.size() << endl;
 }
 
 void Environnement::trackPath()
@@ -191,18 +162,8 @@ void Environnement::trackPath()
 	Node *current = endNode; // on commence par le endnode car on remonte le chemin
 	while (current != startNode)
 	{
-		pathTab.push_back(current); // on ajoute le noeud courant au chemin pour le tracer
+		pathTab.push_back(current);		// on ajoute le noeud courant au chemin pour le tracer
 		current = current->getParent(); // on passe au noeud parent pour continuer le chemin jusqu'au startnode
-	}
-}
-
-void Environnement::OpenNode(Node *node)
-{
-	if (node->open == false && node->getisObstacle() == false && node->getisVisited() == false)
-	{
-		node->open = true;
-		node->setParent(currentNode);
-		openList.push_back(node);
 	}
 }
 
@@ -365,8 +326,6 @@ void Environnement::getMap()
 	}
 }
 
-
-
 void Environnement::test_regresion()
 {
 
@@ -404,14 +363,7 @@ void Environnement::test_regresion()
 
 	E.setNodes(47, 4152);
 
-	if (E.search() == true)
-	{
-		cout << "test regresion de la fonction search() : OK" << endl;
-	}
-	else
-	{
-		cout << "test regresion de la fonction search() : FAIL" << endl;
-	}
+	E.Astar();
 	// cout << "Longueur de la map : " << map[0].length() << endl;
 	// cout<<"map[][] : "<<map[42][99]<<endl;
 	// affiche le pathTab en mode texxte sur la map

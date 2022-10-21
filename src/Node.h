@@ -12,9 +12,8 @@ class Node {
         Vec2 Nodepos;
         bool isVisited=false;
         bool isObstacle=false;
-        float fcost;
-        float gcost;
-        float hcost;
+        float localGoal;
+        float GlobalGoal;
         
         Node* parent;
         vector<Node*> VecNeighbours;
@@ -40,24 +39,18 @@ class Node {
         bool getisObstacle();
         //! \brief Fonction permettant de modifier la valeur de fcost
         //! \param fcost valeur flottante
-        void setFcost(float fcost);
+        void setlocalGoal(float newlocalGoal);
         //! \brief Fonction permettant de récupérer la valeur de fcost
         //! \return fcost
-        float getFcost();
+        float getlocalGoal();
         //! \brief Fonction permettant de modifier la valeur de gcost
         //! \param gcost valeur flottante
-        void setGcost(float gcost);
+        void setGlobalGoal(float newglobalGoal);
         //! \brief Fonction permettant de récupérer la valeur de gcost
         //! \return gcost
-        float getGcost();
-        //! \brief Fonction permettant de modifier la valeur de hcost
-        //! \param hcost valeur flottante
-        void setHcost(float hcost);
-        //! \brief Fonction permettant de récupérer la valeur de hcost
-        //! \return hcost
-        float getHcost();
+        float getGlobalGoal();
         //! \brief Fonction permettant de modifier la valeur de parent
-        //! \param parent pointeur sur un node
+        //! \param parent pointeur sur un noeud
         void setParent(Node* parent);
         //! \brief Fonction permettant de récupérer la valeur de parent
         //! \return parent

@@ -49,9 +49,7 @@ public:
     void initNodes();
     void resetNodes();
     void setNodes(unsigned int startInd, unsigned int endInd);
-    void getCost(Node *node);
-    bool search();
-    void OpenNode(Node *node);
+    void Astar();
     void trackPath();
     vector<Node *> pathTab;  // tableau des noeuds du chemin
     vector<Node *> openList; // liste des noeuds à visiter
