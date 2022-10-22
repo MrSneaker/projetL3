@@ -42,20 +42,20 @@ int main(){
         }
     }
     time_t begin = time(NULL);
-    //Environnement Simulation;
+    Environnement Simulation;
 
     //Simulation.Environnement_play();
-    //Simulation.test_regresion();
+    Simulation.test_regresion();
 
-    Affichage Graph;
+    //Affichage Graph;
 
-    Graph.AffichageSimulation();
+    //Graph.AffichageSimulation();
 
     time_t end = time(NULL);
 
 
-    //Parking p1;
-    ////p1.testRegression();
+    Parking p1;
+    p1.testRegression();
 
     //Place P1;
     //P1.test_regresion();

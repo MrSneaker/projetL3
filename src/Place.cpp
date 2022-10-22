@@ -16,12 +16,12 @@ Place::~Place()
 {
 }
 
-Vec2 Place::getPos() const
+const Vec2& Place::getPos() const
 {
     return pos;
 }
 
-int Place::getIndP() const
+const int& Place::getIndP() const
 {
     return indP;
 }
@@ -31,7 +31,7 @@ void Place::setIsTaken(bool new_isTaken)
     isTaken = new_isTaken;
 }
 
-bool Place::getIsTaken() const
+const bool& Place::getIsTaken() const
 {
     return isTaken;
 }

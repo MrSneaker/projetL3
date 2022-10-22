@@ -20,7 +20,7 @@ int Environnement::random(int min, int max) // fonction permettant de renvoyer u
 
 Environnement::Environnement()
 {
-	initNodes();
+	// initNodes();
 }
 
 Environnement::~Environnement()
@@ -232,14 +232,14 @@ void Environnement::AddVoiture()
 	voitures.push_back(V);			// Ajout de la voiture dans le tableau de voitures
 	for (int i = 0; i < parkings.size(); i++)
 	{
-		parkings[i].addUsersTab(&conducteurs[conducteurs.size() - 1]);
+		Utilisateur newUser = conducteurs[conducteurs.size() - 1];
+		parkings[i].addUsersTab(newUser);
 	}
 }
 
 void Environnement::RemoveVoiture(int numVoiture)
 {
 	voitures.erase(voitures.begin() + numVoiture);
-	voitures[numVoiture].~Voiture(); // inutile, vector utilise déjà le destructeur de la classe à l'appel de erase..
 }
 
 void Environnement::updateStateVoiture()
@@ -326,25 +326,68 @@ void Environnement::getMap()
 	}
 }
 
+int Environnement::createConv()
+{
+	Conversation *newConv;
+	conv.push_back(newConv);
+	return conv.size() - 1;
+}
+
+void Environnement::deleteConv(int ind)
+{
+	conv.erase(conv.begin() + ind);
+}
+
+void Environnement::conversation(Voiture v, Parking p)
+{
+	int indConv = createConv();
+	cout << "test" << endl;
+	bool isFinished = conv.at(indConv)->manageConv(p, v);
+	cout << "test2" << endl;
+	if (isFinished)
+	{
+		cout << "test3" << endl;
+		conv.at(indConv)->stockConv("Conversation" + to_string(indConv));
+		cout << "test4" << endl;
+		deleteConv(indConv);
+	}
+}
+
 void Environnement::test_regresion()
 {
 
 	// test de regression de la classe Environnement
 	Environnement E;
 
-	// for (int i = 0; i < 10; i++)
-	// {
-	// 	E.AddVoiture();
-	// }
-	// assert(E.voitures.size() == 10);
-	// E.RemoveVoiture(0);
-	// assert(E.voitures.size() == 9);
+	E.initParkings();
+	assert(E.parkings.size() == 3);
+	cout << "Test de regression de la fonction initParking() : OK" << endl;
 
-	// cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
+	for (int i = 0; i < 10; i++)
+	{
+		E.AddVoiture();
+	}
+	assert(E.voitures.size() == 10);
+	E.RemoveVoiture(0);
+	assert(E.voitures.size() == 9);
 
-	// E.initParkings();
-	// assert(E.parkings.size() == 3);
-	// cout << "Test de regression de la fonction initParking() : OK" << endl;
+	cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
+
+	int a = E.createConv();
+	assert(E.conv.size() == 1);
+	E.deleteConv(a);
+	assert(E.conv.size() == 0);
+	cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
+
+	// E.conversation(voitures[0],parkings[0]);
+
+	/*for(int i=0; i <E.voitures.size();i++)
+	{
+		for(int j=0;j<E.parkings.size();j++)
+		{
+			E.conversation(E.voitures.at(i),E.parkings.at(j));
+		}
+	}*/
 
 	/*// Affiche les infos du noeud 47
 	cout << "Noeud 47 : " << endl;
@@ -361,23 +404,23 @@ void Environnement::test_regresion()
 	cout << "hcost : " << E.nodes[4299]->getHcost() << endl;
 	*/
 
-	E.setNodes(47, 4152);
+	// E.setNodes(47, 4152);
 
-	E.Astar();
-	// cout << "Longueur de la map : " << map[0].length() << endl;
-	// cout<<"map[][] : "<<map[42][99]<<endl;
-	// affiche le pathTab en mode texxte sur la map
-	//  for(int i=0; i<E.pathTab.size(); i++)
-	//  {
-	//  	map[E.pathTab[i]->getNodepos().y][E.pathTab[i]->getNodepos().x] = '#';
-	//  }
+	// E.Astar();
 	//  cout << "Longueur de la map : " << map[0].length() << endl;
-	//   cout<<"map[][] : "<<map[42][99]<<endl;
-	//   for(int y =0; y<80; y++){
-	//   	for(int x =0 ;x<100; x++){
-	//   		cout<<map[y][x];
-	//   	}
-	//   	cout<<endl;
+	//  cout<<"map[][] : "<<map[42][99]<<endl;
+	//  affiche le pathTab en mode texxte sur la map
+	//   for(int i=0; i<E.pathTab.size(); i++)
+	//   {
+	//   	map[E.pathTab[i]->getNodepos().y][E.pathTab[i]->getNodepos().x] = '#';
 	//   }
-	//  test de regression de la fonction OpenNode()
+	//   cout << "Longueur de la map : " << map[0].length() << endl;
+	//    cout<<"map[][] : "<<map[42][99]<<endl;
+	//    for(int y =0; y<80; y++){
+	//    	for(int x =0 ;x<100; x++){
+	//    		cout<<map[y][x];
+	//    	}
+	//    	cout<<endl;
+	//    }
+	//   test de regression de la fonction OpenNode()
 }

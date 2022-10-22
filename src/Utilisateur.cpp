@@ -32,7 +32,7 @@ double Utilisateur::getMaxPrice() const
     return maxPrice;
 }
 
-unsigned int Utilisateur::getId() const
+const unsigned int& Utilisateur::getId() const
 {
     return id;
 }

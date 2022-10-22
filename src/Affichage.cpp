@@ -6,9 +6,9 @@ using namespace std;
 
 Affichage::Affichage()
 {
-    Environnement Env;
-    Env.initParkings();
-    environnement = Env;
+    //Environnement Env;
+    //Env.initParkings();
+    //environnement = Env;
 }
 
 Affichage::~Affichage()

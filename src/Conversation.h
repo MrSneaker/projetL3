@@ -40,7 +40,7 @@ public:
     //! \brief Démarre une conversation entre deux entités en paramètres.
     //! \param p un parking,
     //! \param v une voiture.
-    void manageConv(Parking p, Voiture v);
+    bool manageConv(Parking p, Voiture v);
 
     //! \brief Fait appel à manageConversation dans Voiture pour écrire un message approprié à l'état de la conversation.
     //! \param v une voiture.

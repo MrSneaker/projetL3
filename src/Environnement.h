@@ -12,7 +12,6 @@
 #include <iostream>
 #include <math.h>
 #include <string>
-#include <thread>
 #include <fstream>
 
 #define DimWindowX 1000
@@ -35,7 +34,7 @@ private:
     int step = 0;
 
     //on veut gérer les convs dynamiquement
-    vector<Conversation> conv;
+    vector<Conversation*> conv;
 
     
 
@@ -54,7 +53,7 @@ public:
     vector<Node *> pathTab;  // tableau des noeuds du chemin
     vector<Node *> openList; // liste des noeuds à visiter
 
-    //! \brief Fonction revoyant un nombre en deux valeurs
+    //! \brief Fonction revoyant un nombre aléatoire en deux valeurs
     //! \param min valeur minimale
     //! \param max valeur maximale
     int random(int min, int max);
@@ -86,13 +85,13 @@ public:
     void getMap();
 
     //on créé une conv quand on veut communiquer.
-    void createConv();
+    int createConv();
 
     //pour suppr une conv après utilisation
-    void deleteConv();
+    void deleteConv(int ind);
 
     //pour réaliser la conversation.
-    void conversation();
+    void conversation(Voiture v,Parking p);
 
     //! \brief Test de regression de la classe Environnement
     void test_regresion();
