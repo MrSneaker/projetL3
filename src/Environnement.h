@@ -12,7 +12,6 @@
 #include <iostream>
 #include <math.h>
 #include <string>
-#include <thread>
 #include <fstream>
 
 #define DimWindowX 1000
@@ -34,8 +33,8 @@ private:
     bool endNodeReached = false;
     int step = 0;
 
-    // on veut gérer les convs dynamiquement
-    vector<Conversation> conv;
+    //on veut gérer les convs dynamiquement
+    vector<Conversation*> conv;
 
 public:
     string map[DimWindowX / tailleCase * DimWindowY / tailleCase];
@@ -49,7 +48,10 @@ public:
     void setNodes(unsigned int startInd, unsigned int endInd);
     void Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd);
     void trackPath();
-    //! \brief Fonction revoyant un nombre en deux valeurs
+    vector<Node *> pathTab;  // tableau des noeuds du chemin
+    vector<Node *> openList; // liste des noeuds à visiter
+
+    //! \brief Fonction revoyant un nombre aléatoire en deux valeurs
     //! \param min valeur minimale
     //! \param max valeur maximale
     int random(int min, int max);
@@ -83,14 +85,14 @@ public:
     //! \brief 0 = case libre, 1 = case obstacle
     void getMap();
 
-    // on créé une conv quand on veut communiquer.
-    void createConv();
+    //on créé une conv quand on veut communiquer.
+    int createConv();
 
-    // pour suppr une conv après utilisation
-    void deleteConv();
+    //pour suppr une conv après utilisation
+    void deleteConv(int ind);
 
-    // pour réaliser la conversation.
-    void conversation();
+    //pour réaliser la conversation.
+    void conversation(Voiture v,Parking p);
 
     //! \brief Test de regression de la classe Environnement
     void test_regresion();

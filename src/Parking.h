@@ -86,7 +86,7 @@ private:
 
 
 
-    vector<pair<int,Utilisateur*>> usersTab;
+    vector<pair<unsigned int, const Utilisateur>> usersTab;
     // - Tableau dynamique 1D de pointeurs sur Utilisateur
 
     // - Quand un Utilisateur se gare dans le parking,
@@ -149,7 +149,7 @@ public:
 
     // ACCESSEURS
 
-    vector<Place> &getPlacesTab();
+    vector<Place> getPlacesTab();
 
     //! \brief Retourne le nombre de places du parking
     int getNbPlaces() const;
@@ -160,24 +160,24 @@ public:
 
     int getStartingPrice () const;
 
-    int getId() const;
+    const int &getId() const;
 
     vector<int> getConversationsTab() const;
     // Pas encore sûrs qu'on va l'utiliser
     // (cf commentaire de la donnée membre conversationsTab)
 
-    vector<pair<int,Utilisateur*>> getUsersTab() const;
+    const vector<pair<unsigned int,const Utilisateur>> &getUsersTab() const;
 
     int getNbTotalVisits() const;
 
     //! \brief Donne la position (x,y) du parking - coin en haut a gauche
-    Vec2 getPos() const;
+    const Vec2& getPos() const;
 
     //! \brief Donne la largeur du parking
-    int getDIMX() const;
+    const int& getDIMX() const;
 
     //! \brief Donne la hauteur du parking
-    int getDIMY() const;
+    const int& getDIMY() const;
 
     //! \brief Fonction qui renvoie un entier, permet de savoir si le parking est plein ou non
     bool IsFull();
@@ -202,7 +202,7 @@ public:
 
     //! \brief ajoute un utilisateur au tableau userTab en vérifiant que celui-ci n'existe pas déjà dans le tableau.
     //! \param unUtilisateur pointeur sur un utilisateur.
-    void addUsersTab(Utilisateur* unUtilisateur);
+    void addUsersTab(Utilisateur unUtilisateur);
     
 
     void incrementNbTotalVisits();

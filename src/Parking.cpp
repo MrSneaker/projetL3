@@ -21,7 +21,7 @@ Parking::~Parking()
 
 // ACCESSEURS
 
-vector<Place> &Parking::getPlacesTab()
+vector<Place> Parking::getPlacesTab()
 {
     return placesTab;
 }
@@ -46,17 +46,17 @@ int Parking::getStartingPrice() const
     return startingPrice;
 }
 
-int Parking::getDIMX() const
+const int &Parking::getDIMX() const
 {
     return DIMX;
 }
 
-int Parking::getDIMY() const
+const int &Parking::getDIMY() const
 {
     return DIMY;
 }
 
-int Parking::getId() const
+const int &Parking::getId() const
 {
     return idP;
 }
@@ -79,7 +79,7 @@ vector<int> Parking::getConversationsTab() const
     return conversationsTab;
 }
 
-vector<pair<int, Utilisateur *>> Parking::getUsersTab() const
+const vector<pair<unsigned int, const Utilisateur>> &Parking::getUsersTab() const
 {
     return usersTab;
 }
@@ -89,7 +89,7 @@ int Parking::getNbTotalVisits() const
     return nbTotalVisits;
 }
 
-Vec2 Parking::getPos() const
+const Vec2 &Parking::getPos() const
 {
     return pos;
 }
@@ -122,20 +122,25 @@ void Parking::setConversationsTab()
 {
 }
 
-void Parking::addUsersTab(Utilisateur *unUtilisateur)
+void Parking::addUsersTab(Utilisateur unUtilisateur)
 {
     bool addOk = false; // on initialise un bool sur false, bool qui définit si on ajoute ou non l'utilisateur.
     if (usersTab.size() == 0)
-        addOk = true; // dans le cas ou le tableau est vide, pas besoin de vérifier donc on ajoute.
-    for (int i = 0; i < usersTab.size(); i++)
     {
-        if (usersTab[i].second->getId() == unUtilisateur->getId())
+        addOk = true; // dans le cas ou le tableau est vide, pas besoin de vérifier donc on ajoute.
+    }
+    if (!addOk)
+    {
+        for (int i = 0; i < usersTab.size(); i++)
         {
-            addOk = false; // si on trouve le meme id deux fois, on ajoute pas.
-            break;
+            if (usersTab[i].second.getId() == unUtilisateur.getId())
+            {
+                addOk = false; // si on trouve le meme id deux fois, on ajoute pas.
+                break;
+            }
+            else
+                addOk = true;
         }
-        else
-            addOk = true;
     }
     if (addOk) // si addOk est vraie en fin de procédure, on ajoute alors l'utilisateur.
         usersTab.push_back(make_pair(0, unUtilisateur));
@@ -150,7 +155,7 @@ void Parking::incrementNbVisitsTab(Utilisateur *unUtilisateur)
 {
     for (int i = 0; i < usersTab.size(); i++)
     {
-        if (usersTab.at(i).second->getId() == unUtilisateur->getId())
+        if (usersTab.at(i).second.getId() == unUtilisateur->getId())
         {
             usersTab.at(i).first++;
         }
@@ -368,10 +373,11 @@ void Parking::testRegression()
 
     Utilisateur u1(2.5, 1, "paulo-1");
     Utilisateur u2(2.5, 2, "paulo-2");
-    p1.addUsersTab(&u1);
-    p1.addUsersTab(&u2);
-    p1.addUsersTab(&u1);
+    p1.addUsersTab(u1);
+    p1.addUsersTab(u2);
+    p1.addUsersTab(u1);
     assert(p1.usersTab.size() == 2);
+    assert(p1.usersTab.at(0).second.getId() == 1);
     p1.incrementNbVisitsTab(&u1);
     p1.incrementNbVisitsTab(&u1);
     assert(p1.getUsersTab().at(0).first == 2);

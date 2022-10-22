@@ -32,7 +32,7 @@ public:
     //! \brief renvoie un float contenant le prix maximum que l'utilisateur pourrait payer.
     double getMaxPrice() const;
     //! \brief renvoie l'id de l'utilisateur, qui sera unique.
-    unsigned int getId() const;
+    const unsigned int& getId() const;
     //! \brief renvoie le temps de stationnement de l'utilisateur.
     float getParkTime() const;
     //! \brief Modifie le temps de stationnement de l'utilisateur.

@@ -68,10 +68,10 @@ void Conversation::sendMessageParking(Parking p)
     conv.push_back(toSend);
 }
 
-void Conversation::manageConv(Parking p, Voiture v)
+bool Conversation::manageConv(Parking p, Voiture v)
 {
     //on bloque le mutex pour ne pas avoir de conflit dans les threads avec convOK.
-    conv_mutex.lock();
+    lock_guard<mutex> guard(conv_mutex); 
     //  lancement de la conversation, tant qu'elle est valide.
     while (convOK)
     {
@@ -84,16 +84,17 @@ void Conversation::manageConv(Parking p, Voiture v)
             voiture.join();
         }
         else
-            cout << "pb de join V" << endl;
+            return false;
         if (parking.joinable())
         {
             parking.join();
         }
         else
-            cout << "pb de join P" << endl;
+            return false;
         //on rebloque le mutex en fin de boucle pour permettre la vérification de condition.
         conv_mutex.lock();
     }
+    return true;
 }
 
 bool Conversation::stockConv(const string &fileName)

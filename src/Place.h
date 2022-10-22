@@ -17,13 +17,13 @@ public:
     //! \brief destructeur de la place.
     ~Place();
     //! \brief position de la place.
-    Vec2 getPos() const;
+    const Vec2& getPos() const;
     //! \brief procédure de récupération de l'indice de la position de la place.
-    int getIndP() const;
+    const int& getIndP() const;
 
     void setIsTaken(bool new_isTaken);
 
-    bool getIsTaken() const;
+    const bool& getIsTaken() const;
 
     void test_regresion();
     
