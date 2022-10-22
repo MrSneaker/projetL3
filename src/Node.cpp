@@ -28,25 +28,6 @@ bool Node::getisObstacle()
     return isObstacle;
 }
 
-void Node::setlocalGoal(float newlocalGoal)
-{
-    localGoal = newlocalGoal;
-}
-
-float Node::getlocalGoal()
-{
-    return localGoal;
-}
-
-void Node::setGlobalGoal(float newglobalGoal)
-{
-    GlobalGoal = newglobalGoal;
-}
-
-float Node::getGlobalGoal()
-{
-    return GlobalGoal;
-}
 void Node::setParent(Node *parent)
 {
     this->parent = parent;
@@ -62,7 +43,7 @@ void Node::setVecNeighbours(vector<Node *> VecNeighbours)
     this->VecNeighbours = VecNeighbours;
 }
 
-vector<Node *> Node::getVecNeighbours()
+vector<Node *> &Node::getVecNeighbours()
 {
     return VecNeighbours;
 }

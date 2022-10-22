@@ -20,6 +20,7 @@ Voiture::Voiture(Utilisateur U)
     place = 0;
     width = 1;
     height = 2;
+    indice = 0;
     position = Vec2(0, 0);
 }
 
@@ -94,61 +95,30 @@ Vec2 Voiture::getTargetPosition()
 // // Nouvelle position cible = position place de parking etc.
 bool Voiture::MoveToTargetPosition()
 {
-
-    // Si la voiture est au dessus de la cible
-    if (position.y > TargetPosition.y)
-    {
-
-        MoveDown();
-
-        if (position.y < TargetPosition.y)
-        {
-
-            position.y = TargetPosition.y;
-        }
-    }
-    // Si la voiture est au dessous de la cible
-    else if (position.y < TargetPosition.y)
-    {
-
-        MoveUp();
-
-        if (position.y > TargetPosition.y)
-        {
-
-            position.y = TargetPosition.y;
-        }
-    }
-    // Si la voiture est à gauche de la cible
     if (position.x < TargetPosition.x)
     {
-
         MoveRight();
-
-        if (position.x > TargetPosition.x)
-        {
-
-            position.x = TargetPosition.x;
-        }
+        return false;
     }
-    // Si la voiture est à droite de la cible
     else if (position.x > TargetPosition.x)
     {
-
         MoveLeft();
-
-        if (position.x < TargetPosition.x)
-        {
-
-            position.x = TargetPosition.x;
-        }
+        return false;
     }
-    // Si la voiture est à la position cible
-    else if (position.x == TargetPosition.x && position.y == TargetPosition.y)
+    else if (position.y < TargetPosition.y)
+    {
+        MoveUp();
+        return false;
+    }
+    else if (position.y > TargetPosition.y)
+    {
+        MoveDown();
+        return false;
+    }
+    else
     {
         return true;
     }
-    return false;
 }
 
 Message Voiture::managingConversation(Message *aMessage) const

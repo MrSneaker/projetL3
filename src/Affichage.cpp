@@ -6,9 +6,6 @@ using namespace std;
 
 Affichage::Affichage()
 {
-    Environnement Env;
-    Env.initParkings();
-    environnement = Env;
 }
 
 Affichage::~Affichage()
@@ -216,16 +213,19 @@ void Affichage::AffichagePlateau()
         }
     }*/
 
-    for (int i = 0; i < environnement.pathTab.size(); i++)
+    for (int i = 0; i < environnement.voitures.size(); i++)
     {
-        SDL_Rect rect;
-        rect.x = environnement.pathTab[i]->getNodepos().x * 10;
-        rect.y = environnement.pathTab[i]->getNodepos().y * 10;
-        rect.w = 10;
-        rect.h = 10;
-        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
-        SDL_RenderFillRect(renderer, &rect);
+        for (int j = 0; j < environnement.voitures[i].pathTab.size(); j++)
+        {
+            SDL_Rect rect;
+            rect.x = environnement.voitures[i].pathTab[j]->getNodepos().x * 10;
+            rect.y = environnement.voitures[i].pathTab[j]->getNodepos().y * 10;
+            rect.w = 10;
+            rect.h = 10;
+            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
+            SDL_RenderFillRect(renderer, &rect);
+        }
     }
 
     //------------------ Affiche menu ------------------
@@ -298,7 +298,7 @@ void Affichage::AffichageSimulation()
                     display = false;
                     break;
                 case SDLK_SPACE:
-                    // environnement.AddVoiture();
+                    environnement.AddVoiture();
                     lanceSim = true;
                     // Juste pour tester et pour fun xD
                     // int indice = environnement.random(0, 3);
@@ -339,17 +339,10 @@ void Affichage::AffichageSimulation()
                 }
             }
 
-            environnement.setNodes(47, Y);
             ispressL = false;
             ispressR = false;
             isapress = false;
             ispress = false;
-        }
-
-        if (lanceSim == true)
-        {
-            environnement.Astar();
-            lanceSim = false;
         }
 
         // Si la valeur Is_in de la voiture est true on modifie la taille de la voiture
@@ -365,6 +358,12 @@ void Affichage::AffichageSimulation()
             {
                 environnement.voitures[i].setwidth(20);
                 environnement.voitures[i].setheight(30);
+            }
+
+            if (lanceSim == true)
+            {
+                environnement.Astar(environnement.voitures[i], 47, 1721);
+                lanceSim = false;
             }
         }
 

@@ -21,10 +21,19 @@ int Environnement::random(int min, int max) // fonction permettant de renvoyer u
 Environnement::Environnement()
 {
 	initNodes();
+	initParkings();
 }
 
 Environnement::~Environnement()
 {
+}
+
+Vec2 Environnement::GetPosbyNodeInd(int indiceCase)
+{
+	Vec2 pos;
+	pos.x = (indiceCase % (DimWindowX / tailleCase))*10;
+	pos.y = (indiceCase / (DimWindowX / tailleCase))*10;
+	return pos;
 }
 
 void Environnement::initNodes()
@@ -44,7 +53,6 @@ void Environnement::initNodes()
 			nodes[x + y * DimWindowX / tailleCase]->setNodepos(Vec2(x, y));
 			nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
 			nodes[x + y * DimWindowX / tailleCase]->setParent(nullptr);
-			nodes[x + y * DimWindowX / tailleCase]->open = false;
 			nodes[x + y * DimWindowX / tailleCase]->indice = x + y * DimWindowX / tailleCase;
 
 			if (map[y][x] == '1')
@@ -55,8 +63,9 @@ void Environnement::initNodes()
 	}
 }
 
-void Environnement::resetNodes()
+void Environnement::resetNodes(Voiture &v)
 {
+		//---------------------------------Reset---------------------------------
 	for (int x = 0; x < DimWindowX / tailleCase; x++)
 	{
 		for (int y = 0; y < DimWindowY / tailleCase; y++)
@@ -66,28 +75,30 @@ void Environnement::resetNodes()
 			nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().clear();
 		}
 	}
-	pathTab.clear();
-	openList.clear();
+	v.pathTab.clear();
 	endNodeReached = false;
+	//---------------------------------Reset---------------------------------
+	
 }
 
-void Environnement::setNodes(unsigned int startInd, unsigned int endInd)
+void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd)
 {
-	resetNodes();
-	startNode = nodes[startInd];
-	endNode = nodes[endInd];
-}
+	resetNodes(v);
+	vector<Node*> openList;
+	openList.clear();
 
-void Environnement::Astar()
-{
-	resetNodes();
+	Node* currentNode;
+	Node* StartNode = nodes[StartInd];
+	Node* EndNode = nodes[EndInd];
+
+
 	for (int x = 0; x < DimWindowX / tailleCase; x++)
 	{
 		for (int y = 0; y < DimWindowY / tailleCase; y++)
 		{
 			nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
-			nodes[x + y * DimWindowX / tailleCase]->setlocalGoal(INFINITY);
-			nodes[x + y * DimWindowX / tailleCase]->setGlobalGoal(INFINITY);
+			nodes[x + y * DimWindowX / tailleCase]->localGoal = INFINITY;
+			nodes[x + y * DimWindowX / tailleCase]->GlobalGoal = INFINITY;
 			nodes[x + y * tailleCase]->setParent(nullptr);
 
 			if (y > 0)
@@ -110,13 +121,13 @@ void Environnement::Astar()
 		return distance(a, b);
 	};
 
-	currentNode = startNode;
-	startNode->setlocalGoal(0.0f);
-	startNode->setGlobalGoal(heuristic(startNode, endNode));
+	currentNode = StartNode;
+	StartNode->localGoal = 0.0f;
+	StartNode->GlobalGoal = heuristic(StartNode, EndNode);
 
-	openList.push_back(startNode);
+	openList.push_back(StartNode);
 
-	while (!openList.empty() && currentNode != endNode)
+	while (!openList.empty() && currentNode != EndNode)
 	{
 		while (!openList.empty() && openList.front()->getisVisited())
 		{
@@ -138,33 +149,30 @@ void Environnement::Astar()
 			{
 				openList.push_back(neighbour);
 
-				float possiblyLowerGoal = currentNode->getlocalGoal() + distance(currentNode, neighbour);
+				float possiblyLowerGoal = currentNode->localGoal + distance(currentNode, neighbour);
 
-				if (possiblyLowerGoal < neighbour->getlocalGoal())
+				if (possiblyLowerGoal < neighbour->localGoal)
 				{
 					neighbour->setParent(currentNode);
 
-					neighbour->setlocalGoal(possiblyLowerGoal);
+					neighbour->localGoal = possiblyLowerGoal;
 
-					neighbour->setGlobalGoal(neighbour->getlocalGoal() + heuristic(neighbour, endNode));
+					neighbour->GlobalGoal = neighbour->localGoal + heuristic(neighbour, EndNode);
 				}
 			}
 		}
 	}
 	endNodeReached = true;
-	cout << "endNodeReached" << endl;
-	trackPath();
-	cout << "trackPath" << pathTab.size() << endl;
-}
-
-void Environnement::trackPath()
-{
-	Node *current = endNode; // on commence par le endnode car on remonte le chemin
-	while (current != startNode)
+	cout << "EndNodeReached" << endl;
+	//---------------------------------TrackPath---------------------------------
+	Node *current = EndNode; // on commence par le EndNode car on remonte le chemin
+	while (current->getParent() != nullptr)
 	{
-		pathTab.push_back(current);		// on ajoute le noeud courant au chemin pour le tracer
-		current = current->getParent(); // on passe au noeud parent pour continuer le chemin jusqu'au startnode
+		v.pathTab.push_back(current);		// on ajoute le noeud courant au chemin pour le tracer
+		current = current->getParent(); // on passe au noeud parent pour continuer le chemin jusqu'au StartNode
 	}
+	//---------------------------------TrackPath---------------------------------
+
 }
 
 void Environnement::initUser()
@@ -204,32 +212,10 @@ void Environnement::AddVoiture()
 	Voiture V(conducteurs[conducteurs.size() - 1]);
 	Vec2 pos = {460, 0};
 	V.set_position(pos); // TODO : Set la position aléatoire dans le terrain parmis les 3 entrées possibles -> cf :Schema de la map
+	V.indice = voitures.size();
+	V.setTargetPosition(GetPosbyNodeInd(1721));
 
-	// la position de la target est aléatoire entre l'entrée parkings
-	float TargetPosX;
-	float TargetPosY;
-	int target = random(0, 3);
-	switch (target)
-	{
-	case 0:
-		TargetPosX = parkings[0].getPos().x + parkings[0].getDIMX() / 2; // on prend la position de l'entrée du parking
-		TargetPosY = parkings[0].getPos().y + parkings[0].getDIMY();
-		break;
-	case 1:
-		TargetPosX = parkings[1].getPos().x; // on prend la position de l'entrée du parking
-		TargetPosY = parkings[1].getPos().y + parkings[1].getDIMY() / 2;
-		break;
-	case 2:
-		TargetPosX = parkings[2].getPos().x + parkings[2].getDIMX() / 2 - 1; // on prend la position de l'entrée du parking
-		TargetPosY = parkings[2].getPos().y;
-		break;
-	default:
-		break;
-	}
-
-	Vec2 targetPos = {TargetPosX * 10 + 5, TargetPosY * 10 + 5};
-	V.setTargetPosition(targetPos); // TODO : Set la position de la target : soit un parking, soit une sortie.
-	voitures.push_back(V);			// Ajout de la voiture dans le tableau de voitures
+	voitures.push_back(V); // Ajout de la voiture dans le tableau de voitures
 	for (int i = 0; i < parkings.size(); i++)
 	{
 		parkings[i].addUsersTab(&conducteurs[conducteurs.size() - 1]);
@@ -361,9 +347,6 @@ void Environnement::test_regresion()
 	cout << "hcost : " << E.nodes[4299]->getHcost() << endl;
 	*/
 
-	E.setNodes(47, 4152);
-
-	E.Astar();
 	// cout << "Longueur de la map : " << map[0].length() << endl;
 	// cout<<"map[][] : "<<map[42][99]<<endl;
 	// affiche le pathTab en mode texxte sur la map
@@ -379,5 +362,19 @@ void Environnement::test_regresion()
 	//   	}
 	//   	cout<<endl;
 	//   }
-	//  test de regression de la fonction OpenNode()
+	
+	E.AddVoiture();
+	E.AddVoiture();
+
+	for(int i=0; i<E.voitures.size(); i++)
+	{
+		cout<<"Voiture "<<i<<" : "<< "pathTab.size() : "<<E.voitures[i].pathTab.size()<<endl;
+		E.Astar(E.voitures[i], 47, 1721);
+		cout << "la" << endl;
+		cout << "Voiture : "<<i<<" : "<< " PathTab size : " << E.voitures[0].pathTab.size() << endl;
+		for (int j = 0; j < E.voitures[i].pathTab.size(); j++)
+		{
+			cout << "Noeud " << j << " : " << E.voitures[i].pathTab[j]->getNodepos().x << " " << E.voitures[i].pathTab[j]->getNodepos().y << endl;
+		}
+	}
 }

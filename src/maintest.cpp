@@ -18,7 +18,7 @@ int main(){
     //V1.test_regresion();
 
     //test de regression de la classe Utilisateur 
-    Utilisateur u;
+    //Utilisateur u;
     //u.testRegression(); 
     
     bool AfficheTime = false;
