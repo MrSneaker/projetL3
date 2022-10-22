@@ -345,7 +345,6 @@ void Environnement::test_regresion()
 	// test de regression de la classe Environnement
 	Environnement E;
 
-	E.initParkings();
 	assert(E.parkings.size() == 3);
 	cout << "Test de regression de la fonction initParking() : OK" << endl;
 
