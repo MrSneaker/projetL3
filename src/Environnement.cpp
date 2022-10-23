@@ -213,8 +213,8 @@ void Environnement::AddVoiture()
 {
 	initUser();
 	Voiture V(conducteurs[conducteurs.size() - 1]);
-	Vec2 pos = GetPosbyNodeInd(47)+Vec2(5,5); // on place la voiture au milieu du noeud 47
-	V.set_position(pos); // TODO : Set la position aléatoire dans le terrain parmis les 3 entrées possibles -> cf :Schema de la map
+	V.set_position(GetPosbyNodeInd(4700)+Vec2(5,5)); // on place la voiture au milieu du noeud 47
+	// TODO : Set la position aléatoire dans le terrain parmis les 3 entrées possibles -> cf :Schema de la map
 	V.indice = voitures.size();
 	int ind = random(0, 3);
 	switch (ind)

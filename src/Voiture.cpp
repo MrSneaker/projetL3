@@ -13,7 +13,7 @@ Voiture::Voiture()
 Voiture::Voiture(Utilisateur U)
 {
     User = U;
-    speed = 2;
+    speed = 5;
     Is_in = false;
     Is_parked = false;
     Is_pathfind = false;

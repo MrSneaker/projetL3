@@ -77,7 +77,7 @@ void Image::loadFromFile(const char *filename, SDL_Renderer *renderer)
     }
 }
 
-void Image::draw(SDL_Renderer *renderer, int x, int y, int w, int h)
+void Image::draw(SDL_Renderer *renderer, int x, int y, int w, int h, int angle)
 {
 
     int ok;
@@ -101,8 +101,7 @@ void Image::draw(SDL_Renderer *renderer, int x, int y, int w, int h)
 
         m_hasChanged = false;
     }
-
-    ok = SDL_RenderCopy(renderer, m_texture, nullptr, &r);
+    ok = SDL_RenderCopyEx(renderer, m_texture, nullptr, &r, angle, nullptr, SDL_FLIP_NONE);
 
     assert(ok == 0);
 }

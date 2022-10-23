@@ -127,14 +127,17 @@ void Affichage::AffichagePlateau()
     SDL_RenderCopy(renderer, textureDownRoad, NULL, &DownRoad);
 
     //------------------ Affiche les voitures ------------------
+    //Avec l'anlge
     for (int i = 0; i < environnement.voitures.size(); i++)
     {
+
         unsigned int w = environnement.voitures[i].getwidth();
         unsigned int h = environnement.voitures[i].getheight();
         unsigned int x = environnement.voitures[i].get_position().x - w / 2;
         unsigned int y = environnement.voitures[i].get_position().y - h / 2;
+        int angle = environnement.voitures[i].getAngle();
 
-        Voiture.draw(renderer, x, y, w, h);
+        Voiture.draw(renderer, x, y, w, h, angle);
     }
 
     //------------------ Affiche les places de chaques parkings ------------------
@@ -364,7 +367,7 @@ void Affichage::AffichageSimulation()
         {
             for(int i = 0; i < environnement.voitures.size(); i++)
             {
-                environnement.Astar(environnement.voitures[i], 47, environnement.GetNodeIndbyPos(environnement.voitures[i].getTargetPosition()));
+                environnement.Astar(environnement.voitures[i], 4700, environnement.GetNodeIndbyPos(environnement.voitures[i].getTargetPosition()));
                 
                 lanceSim = false;
             }
