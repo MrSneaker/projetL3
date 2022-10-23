@@ -114,7 +114,7 @@ public:
 
     bool getIs_parked();
 
-    bool setIs_pathfind(bool new_Is_pathfind);
+    void setIs_pathfind(bool new_Is_pathfind);
 
     bool getIs_pathfind();
 

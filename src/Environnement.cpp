@@ -31,15 +31,15 @@ Environnement::~Environnement()
 Vec2 Environnement::GetPosbyNodeInd(int indiceCase)
 {
 	Vec2 pos;
-	pos.x = (indiceCase % (DimWindowX / tailleCase))*10;
-	pos.y = (indiceCase / (DimWindowX / tailleCase))*10;
+	pos.x = (indiceCase % (DimWindowX / tailleCase)) * 10;
+	pos.y = (indiceCase / (DimWindowX / tailleCase)) * 10;
 	return pos;
 }
 
 int Environnement::GetNodeIndbyPos(Vec2 pos)
 {
 	int indiceCase;
-	indiceCase = (pos.x / tailleCase) + (pos.y / tailleCase)*(DimWindowX / tailleCase);
+	indiceCase = (pos.x / tailleCase) + (pos.y / tailleCase) * (DimWindowX / tailleCase);
 	return indiceCase;
 }
 
@@ -72,7 +72,7 @@ void Environnement::initNodes()
 
 void Environnement::resetNodes(Voiture &v)
 {
-		//---------------------------------Reset---------------------------------
+	//---------------------------------Reset---------------------------------
 	for (int x = 0; x < DimWindowX / tailleCase; x++)
 	{
 		for (int y = 0; y < DimWindowY / tailleCase; y++)
@@ -83,7 +83,6 @@ void Environnement::resetNodes(Voiture &v)
 		}
 	}
 	//---------------------------------Reset---------------------------------
-	
 }
 
 void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd)
@@ -171,8 +170,8 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
 	Node *current = EndNode; // on commence par le EndNode car on remonte le chemin
 	while (current->getParent() != nullptr && v.getIs_pathfind() == false)
 	{
-		v.getpathTab().push_back(current);	// on ajoute le noeud courant au chemin pour le tracer
-		current = current->getParent(); // on passe au noeud parent pour continuer le chemin jusqu'au StartNode
+		v.getpathTab().push_back(current); // on ajoute le noeud courant au chemin pour le tracer
+		current = current->getParent();	   // on passe au noeud parent pour continuer le chemin jusqu'au StartNode
 	}
 	//---------------------------------TrackPath---------------------------------
 	v.setIs_pathfind(true);
@@ -213,24 +212,18 @@ void Environnement::AddVoiture()
 {
 	initUser();
 	Voiture V(conducteurs[conducteurs.size() - 1]);
-	V.set_position(GetPosbyNodeInd(4700)+Vec2(5,5)); // on place la voiture au milieu du noeud 47
-	// TODO : Set la position aléatoire dans le terrain parmis les 3 entrées possibles -> cf :Schema de la map
-	V.indice = voitures.size();
-	int ind = random(0, 3);
-	switch (ind)
-	{
-	case 0:
-		V.setTargetPosition(GetPosbyNodeInd(1721)+Vec2(5,5));
-		break;
-	case 1:
-		V.setTargetPosition(GetPosbyNodeInd(6647)+Vec2(5,5));
-		break;
-	case 2:
-		V.setTargetPosition(GetPosbyNodeInd(1882)+Vec2(5,5));
-		break;
-	}
-	;
+	V.indice = voitures.size(); // TODO : Faire en sorte qu'ont ai 50 voitures en tout, qui tourne en boucle pour la création
 
+
+	V.set_position(GetPosbyNodeInd(4700) + Vec2(5, 5)); // on place la voiture au milieu du noeud 4700
+	// TODO : Set la position aléatoire dans le terrain parmis les 3 entrées possibles -> cf :Schema de la map
+
+	unsigned int indiceParking = random(0, 3);
+	unsigned int indicePlace = random(0, parkings[indiceParking].getPlacesTab().size());
+	Vec2 Placepos = parkings[indiceParking].getPlacesTab()[indicePlace].getPos();
+	V.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5) ); // on place la cible au milieu de la place
+	// TODO : La target sera ce que renvoie la communication avec le parking
+	V.setPlace(indicePlace);
 	voitures.push_back(V); // Ajout de la voiture dans le tableau de voitures
 	for (int i = 0; i < parkings.size(); i++)
 	{
@@ -269,22 +262,22 @@ void Environnement::updateStateVoiture()
 				inParking = true;		   // La voiture est dans un parking
 				voitures[i].setParking(j); // on stock le numero du parking
 
-				// On parcours le tableau de places du parking
-				for (int k = 0; k < parkings[j].getPlacesTab().size(); k++)
+
+				int TargetPlacePosX = parkings[j].getPlacesTab()[voitures[i].getPlace()].getPos().x * 10; // Position de la place en x
+				int TargetPlacePosY = parkings[j].getPlacesTab()[voitures[i].getPlace()].getPos().y * 10; // Position de la place en y
+
+				// Si la voiture est dans l'enceinte de la place
+				if (VoiturePosX >= TargetPlacePosX && VoiturePosX <= TargetPlacePosX + 10 && VoiturePosY >= TargetPlacePosY && VoiturePosY <= TargetPlacePosY + 20)
 				{
-					int TargetPlacePosX = parkings[j].getPlacesTab()[k].getPos().x * 10; // Position de la place en x
-					int TargetPlacePosY = parkings[j].getPlacesTab()[k].getPos().y * 10; // Position de la place en y
+					parkings[j].getPlacesTab()[voitures[i].getPlace()].setIsTaken(true); // on met à jour l'état de la place
 
-					// Si la voiture est dans l'enceinte de la place
-					if (VoiturePosX >= TargetPlacePosX && VoiturePosX <= TargetPlacePosX + 10 && VoiturePosY >= TargetPlacePosY && VoiturePosY <= TargetPlacePosY + 20)
-					{
-						voitures[i].setPlace(k);						// on stock le numero de la place
-						parkings[j].getPlacesTab()[k].setIsTaken(true); // on met à jour l'état de la place
+					unsigned int NoeudPlace = GetNodeIndbyPos(Vec2(TargetPlacePosX, TargetPlacePosY));
+					nodes[NoeudPlace]->setisObstacle(true); // on met à jour l'état du noeud
+					nodes[NoeudPlace+100]->setisObstacle(true); // on met à jour l'état du noeud
 
-						// cout << "Voiture " << i << " est dans la place " << k << " du parking " << j << endl;
-						isInPlace = true; // La voiture est dans une place
-					}
+					isInPlace = true; // La voiture est dans une place
 				}
+				
 			}
 			else
 			{
@@ -295,7 +288,11 @@ void Environnement::updateStateVoiture()
 		{
 			voitures[i].setIs_in(true);
 			if (isInPlace)
+			{
 				voitures[i].setIs_parked(true);
+				voitures[i].setAngle(0);
+
+			}
 			else
 				voitures[i].setIs_parked(false);
 		}
@@ -419,16 +416,18 @@ void Environnement::test_regresion()
 	//   {
 	//   	map[E.pathTab[i]->getNodepos().y][E.pathTab[i]->getNodepos().x] = '#';
 	//   }
-	
+
 	E.AddVoiture();
 	E.AddVoiture();
 
-	for(int i=0; i<E.voitures.size(); i++)
+	for (int i = 0; i < E.voitures.size(); i++)
 	{
-		cout<<"Voiture "<<i<<" : "<< "pathTab.size() : "<<E.voitures[i].getpathTab().size()<<endl;
+		cout << "Voiture " << i << " : "
+			 << "pathTab.size() : " << E.voitures[i].getpathTab().size() << endl;
 		E.Astar(E.voitures[i], 47, 1721);
 		cout << "la" << endl;
-		cout << "Voiture : "<<i<<" : "<< " getpathTab() size : " << E.voitures[0].getpathTab().size() << endl;
+		cout << "Voiture : " << i << " : "
+			 << " getpathTab() size : " << E.voitures[0].getpathTab().size() << endl;
 		for (int j = 0; j < E.voitures[i].getpathTab().size(); j++)
 		{
 			cout << "Noeud " << j << " : " << E.voitures[i].getpathTab()[j]->getNodepos().x << " " << E.voitures[i].getpathTab()[j]->getNodepos().y << endl;

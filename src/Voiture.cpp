@@ -12,7 +12,8 @@ Voiture::Voiture()
 
 Voiture::Voiture(Utilisateur U)
 {
-    User = U;
+    position = Vec2(0, 0);
+    TargetPosition = Vec2(0, 0);
     speed = 5;
     Is_in = false;
     Is_parked = false;
@@ -22,7 +23,8 @@ Voiture::Voiture(Utilisateur U)
     width = 1;
     height = 2;
     indice = 0;
-    position = Vec2(0, 0);
+    User = U;
+    pathTab.clear();
 }
 
 // Destructeur de la classe Voiture
@@ -102,24 +104,31 @@ bool Voiture::MoveToTargetPosition()
         if (Current->getNodepos().x * 10 + 5 > position.x)
         {
             MoveRight();
+            return false;
         }
         else if (Current->getNodepos().x * 10 + 5 < position.x)
         {
             MoveLeft();
+            return false;
         }
         else if (Current->getNodepos().y * 10 + 5 > position.y)
         {
             MoveUp();
+            return false;
         }
         else if (Current->getNodepos().y * 10 + 5 < position.y)
         {
             MoveDown();
+            return false;
         }
         else
         {
             pathTab.pop_back();
         }
     }
+    
+    return true;
+    
 }
 
 Message Voiture::managingConversation(Message *aMessage) const
@@ -333,7 +342,7 @@ int Voiture::getParking()
 {
     return parking;
 }
-bool Voiture::setIs_pathfind(bool new_is_pathfind)
+void Voiture::setIs_pathfind(bool new_is_pathfind)
 {
     Is_pathfind = new_is_pathfind;
 }

@@ -14,6 +14,15 @@ Affichage::~Affichage()
     TTF_CloseFont(font_default);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    P1.~Image();
+    P2.~Image();
+    P3.~Image();
+    UpRoad.~Image();
+    DownRoad.~Image();
+    Voiture.~Image();
+
+    TTF_Quit();
+
     SDL_Quit();
 }
 
@@ -61,27 +70,13 @@ void Affichage::InitAffichage()
     SDL_RenderClear(renderer);
 
     // Donne au parkings une image
-    P1 = IMG_Load("img/P1.png");
-    P1Texture = SDL_CreateTextureFromSurface(renderer, P1);
-    SDL_FreeSurface(P1); // on libère la surface
-    P2 = IMG_Load("img/P2.png");
-    P2Texture = SDL_CreateTextureFromSurface(renderer, P2);
-    SDL_FreeSurface(P2); // On libère la surface car on a créé la texture à partir de celle-ci (on a donc plus besoin de la surface)
-    P3 = IMG_Load("img/P3.png");
-    P3Texture = SDL_CreateTextureFromSurface(renderer, P3);
-    SDL_FreeSurface(P3); // On libère la surface pour éviter les fuites de mémoire
-
+    P1.loadFromFile("img/P2.png", renderer);
+    P2.loadFromFile("img/P1.png", renderer);
+    P3.loadFromFile("img/P3.png", renderer);
     // Donne aux routes une image
-    UpRoad = IMG_Load("img/UpRoad.png"); // Route verticale
-    textureUpRoad = SDL_CreateTextureFromSurface(renderer, UpRoad);
-    SDL_FreeSurface(UpRoad);
-    DownRoad = IMG_Load("img/DownRoad.png"); // Route horizontale
-    textureDownRoad = SDL_CreateTextureFromSurface(renderer, DownRoad);
-    SDL_FreeSurface(DownRoad);
-
+    UpRoad.loadFromFile("img/UpRoad.png", renderer);
+    DownRoad.loadFromFile("img/DownRoad.png", renderer);
     Voiture.loadFromFile("img/Voiture1.png", renderer);
-
-    environnement.parkings[0].getPlacesTab()[21].setIsTaken(true);
 }
 
 void Affichage::AffichagePlateau()
@@ -89,42 +84,28 @@ void Affichage::AffichagePlateau()
     // Test Affichage
 
     // ------------------ Affiche l'image des parkings ------------------
+  
+    P1.draw(renderer, environnement.parkings[0].getPos().x * 10 - 10
+        , environnement.parkings[0].getPos().y * 10 - 10
+        , 440
+        , 390
+        , 0);
+    P2.draw(renderer, environnement.parkings[1].getPos().x * 10 - 10
+        , environnement.parkings[1].getPos().y * 10 - 10
+        , 440
+        , 390
+        , 0);
 
-    SDL_Rect P1;
-    P1.x = environnement.parkings[1].getPos().x * 10 - 10;
-    P1.y = environnement.parkings[1].getPos().y * 10 - 10;
-    P1.w = 440;
-    P1.h = 390;
-    SDL_RenderCopy(renderer, P1Texture, NULL, &P1);
-
-    SDL_Rect P2;
-    P2.x = environnement.parkings[0].getPos().x * 10 - 10;
-    P2.y = environnement.parkings[0].getPos().y * 10 - 10;
-    P2.w = 440;
-    P2.h = 390;
-    SDL_RenderCopy(renderer, P2Texture, NULL, &P2);
-
-    SDL_Rect P3;
-    P3.x = environnement.parkings[2].getPos().x * 10 - 10;
-    P3.y = environnement.parkings[2].getPos().y * 10 - 10;
-    P3.w = 1000;
-    P3.h = 290;
-    SDL_RenderCopy(renderer, P3Texture, NULL, &P3);
-
+    P3.draw(renderer, environnement.parkings[2].getPos().x * 10 - 10
+        , environnement.parkings[2].getPos().y * 10 - 10
+        , 1000
+        , 290
+        , 0);
     //------------------ Affiche les routes ------------------
-    SDL_Rect UpRoad;
-    UpRoad.x = 440;
-    UpRoad.y = 0;
-    UpRoad.w = 120;
-    UpRoad.h = 400;
-    SDL_RenderCopy(renderer, textureUpRoad, NULL, &UpRoad);
 
-    SDL_Rect DownRoad;
-    DownRoad.x = 0;
-    DownRoad.y = 390;
-    DownRoad.w = 1000;
-    DownRoad.h = 120;
-    SDL_RenderCopy(renderer, textureDownRoad, NULL, &DownRoad);
+    UpRoad.draw(renderer, 440, 0, 120, 400, 0);
+    DownRoad.draw(renderer, 0, 390, 1000, 120, 0);
+
 
     //------------------ Affiche les voitures ------------------
     //Avec l'anlge
@@ -164,33 +145,15 @@ void Affichage::AffichagePlateau()
                 SDL_RenderDrawRect(renderer, &Place);
             }
         }
-        // Affiche la taille de detection des parkings
-        SDL_Rect Park;
-        Park.x = environnement.parkings[j].getPos().x * 10;
-        Park.y = environnement.parkings[j].getPos().y * 10;
-        Park.w = environnement.parkings[j].getDIMX() * 10;
-        Park.h = environnement.parkings[j].getDIMY() * 10;
-        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
-        SDL_RenderDrawRect(renderer, &Park);
     }
 
     // Affiche si la case est un obstacle ou non
-    /*
     for(int x = 0; x < DimWindowX/tailleCase; x++)
     {
         for(int y = 0; y < DimWindowY/tailleCase; y++)
         {
-            if(x+y*DimWindowX/tailleCase == 47 || x+y*DimWindowX/tailleCase == 4299 || x+y*DimWindowX/tailleCase == 1951 )
-            {
-                SDL_Rect Obstacle;
-                Obstacle.x = x*tailleCase;
-                Obstacle.y = y*tailleCase;
-                Obstacle.w = tailleCase;
-                Obstacle.h = tailleCase;
-                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-                SDL_RenderFillRect(renderer, &Obstacle);
-            }
-            else if(environnement.nodes[x+DimWindowX/tailleCase*y]->getisObstacle() == true)
+
+            if(environnement.nodes[x+DimWindowX/tailleCase*y]->getisObstacle() == true)
             {
                 SDL_Rect rect;
                 rect.x = environnement.nodes[x+DimWindowX/tailleCase*y]->getNodepos().x*10;
@@ -214,7 +177,7 @@ void Affichage::AffichagePlateau()
             }
 
         }
-    }*/
+    }
 
     for (int i = 0; i < environnement.voitures.size(); i++)
     {
@@ -244,7 +207,6 @@ void Affichage::AffichagePlateau()
 void Affichage::AffichageSimulation()
 {
     bool display = true;
-    bool doit = true;
     int lanceSim = false;
     bool ispress = false;
     bool ispressR = false;
@@ -257,7 +219,6 @@ void Affichage::AffichageSimulation()
 
     while (display)
     {
-        this_thread::sleep_for(chrono::milliseconds(10));
 
         AffichagePlateau();
         environnement.Environnement_play();
@@ -303,9 +264,6 @@ void Affichage::AffichageSimulation()
                 case SDLK_SPACE:
                     environnement.AddVoiture();
                     lanceSim = true;
-                    // Juste pour tester et pour fun xD
-                    // int indice = environnement.random(0, 3);
-                    // environnement.voitures[environnement.voitures.size() - 1].setTargetPosition(environnement.parkings[indice].getPlacesTab()[environnement.random(0, environnement.parkings[indice].getPlacesTab().size())].getPos()*Vec2(10, 10));
                     break;
                 }
                 break;
@@ -330,11 +288,13 @@ void Affichage::AffichageSimulation()
 
                     else if (isapress == true)
                     {
-
-                        environnement.nodes[i]->setisObstacle(true);
                         if (environnement.nodes[i]->getisObstacle() == true)
                         {
                             cout << "noeud : " << i << " est bien un obstacle" << endl;
+                        }
+                        else
+                        {
+                            cout << "noeud : " << i << " n'est pas un obstacle" << endl;
                         }
                     }
 
