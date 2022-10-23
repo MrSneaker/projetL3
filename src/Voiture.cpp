@@ -16,6 +16,7 @@ Voiture::Voiture(Utilisateur U)
     speed = 2;
     Is_in = false;
     Is_parked = false;
+    Is_pathfind = false;
     parking = 0;
     place = 0;
     width = 1;
@@ -95,29 +96,29 @@ Vec2 Voiture::getTargetPosition()
 // // Nouvelle position cible = position place de parking etc.
 bool Voiture::MoveToTargetPosition()
 {
-    if (position.x < TargetPosition.x)
+    if (pathTab.size() > 0)
     {
-        MoveRight();
-        return false;
-    }
-    else if (position.x > TargetPosition.x)
-    {
-        MoveLeft();
-        return false;
-    }
-    else if (position.y < TargetPosition.y)
-    {
-        MoveUp();
-        return false;
-    }
-    else if (position.y > TargetPosition.y)
-    {
-        MoveDown();
-        return false;
-    }
-    else
-    {
-        return true;
+        Node *Current = pathTab[pathTab.size() - 1];
+        if (Current->getNodepos().x * 10 + 5 > position.x)
+        {
+            MoveRight();
+        }
+        else if (Current->getNodepos().x * 10 + 5 < position.x)
+        {
+            MoveLeft();
+        }
+        else if (Current->getNodepos().y * 10 + 5 > position.y)
+        {
+            MoveUp();
+        }
+        else if (Current->getNodepos().y * 10 + 5 < position.y)
+        {
+            MoveDown();
+        }
+        else
+        {
+            pathTab.pop_back();
+        }
     }
 }
 
@@ -332,6 +333,15 @@ int Voiture::getParking()
 {
     return parking;
 }
+bool Voiture::setIs_pathfind(bool new_is_pathfind)
+{
+    Is_pathfind = new_is_pathfind;
+}
+
+bool Voiture::getIs_pathfind()
+{
+    return Is_pathfind;
+}
 
 // set place
 void Voiture::setPlace(int new_place)
@@ -368,6 +378,13 @@ int Voiture::getheight()
 {
     return height;
 }
+
+vector<Node *> &Voiture::getpathTab()
+{
+    return pathTab;
+}
+
+
 
 // -----------------------------------------------------------------------------------------------
 // Test de regression la classe Voiture

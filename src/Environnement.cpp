@@ -36,6 +36,13 @@ Vec2 Environnement::GetPosbyNodeInd(int indiceCase)
 	return pos;
 }
 
+int Environnement::GetNodeIndbyPos(Vec2 pos)
+{
+	int indiceCase;
+	indiceCase = (pos.x / tailleCase) + (pos.y / tailleCase)*(DimWindowX / tailleCase);
+	return indiceCase;
+}
+
 void Environnement::initNodes()
 {
 	getMap();
@@ -75,8 +82,6 @@ void Environnement::resetNodes(Voiture &v)
 			nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().clear();
 		}
 	}
-	v.pathTab.clear();
-	endNodeReached = false;
 	//---------------------------------Reset---------------------------------
 	
 }
@@ -84,13 +89,12 @@ void Environnement::resetNodes(Voiture &v)
 void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd)
 {
 	resetNodes(v);
-	vector<Node*> openList;
+	vector<Node *> openList;
 	openList.clear();
 
-	Node* currentNode;
-	Node* StartNode = nodes[StartInd];
-	Node* EndNode = nodes[EndInd];
-
+	Node *currentNode;
+	Node *StartNode = nodes[StartInd];
+	Node *EndNode = nodes[EndInd];
 
 	for (int x = 0; x < DimWindowX / tailleCase; x++)
 	{
@@ -127,7 +131,7 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
 
 	openList.push_back(StartNode);
 
-	while (!openList.empty() && currentNode != EndNode)
+	while (!openList.empty() && currentNode != EndNode && v.getIs_pathfind() == false)
 	{
 		while (!openList.empty() && openList.front()->getisVisited())
 		{
@@ -136,6 +140,7 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
 
 		if (openList.empty())
 		{
+
 			break;
 		}
 
@@ -162,17 +167,15 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
 			}
 		}
 	}
-	endNodeReached = true;
-	cout << "EndNodeReached" << endl;
 	//---------------------------------TrackPath---------------------------------
 	Node *current = EndNode; // on commence par le EndNode car on remonte le chemin
-	while (current->getParent() != nullptr)
+	while (current->getParent() != nullptr && v.getIs_pathfind() == false)
 	{
-		v.pathTab.push_back(current);		// on ajoute le noeud courant au chemin pour le tracer
+		v.getpathTab().push_back(current);	// on ajoute le noeud courant au chemin pour le tracer
 		current = current->getParent(); // on passe au noeud parent pour continuer le chemin jusqu'au StartNode
 	}
 	//---------------------------------TrackPath---------------------------------
-
+	v.setIs_pathfind(true);
 }
 
 void Environnement::initUser()
@@ -210,10 +213,23 @@ void Environnement::AddVoiture()
 {
 	initUser();
 	Voiture V(conducteurs[conducteurs.size() - 1]);
-	Vec2 pos = {460, 0};
+	Vec2 pos = GetPosbyNodeInd(47)+Vec2(5,5); // on place la voiture au milieu du noeud 47
 	V.set_position(pos); // TODO : Set la position aléatoire dans le terrain parmis les 3 entrées possibles -> cf :Schema de la map
 	V.indice = voitures.size();
-	V.setTargetPosition(GetPosbyNodeInd(1721));
+	int ind = random(0, 3);
+	switch (ind)
+	{
+	case 0:
+		V.setTargetPosition(GetPosbyNodeInd(1721)+Vec2(5,5));
+		break;
+	case 1:
+		V.setTargetPosition(GetPosbyNodeInd(6647)+Vec2(5,5));
+		break;
+	case 2:
+		V.setTargetPosition(GetPosbyNodeInd(1882)+Vec2(5,5));
+		break;
+	}
+	;
 
 	voitures.push_back(V); // Ajout de la voiture dans le tableau de voitures
 	for (int i = 0; i < parkings.size(); i++)
@@ -409,13 +425,13 @@ void Environnement::test_regresion()
 
 	for(int i=0; i<E.voitures.size(); i++)
 	{
-		cout<<"Voiture "<<i<<" : "<< "pathTab.size() : "<<E.voitures[i].pathTab.size()<<endl;
+		cout<<"Voiture "<<i<<" : "<< "pathTab.size() : "<<E.voitures[i].getpathTab().size()<<endl;
 		E.Astar(E.voitures[i], 47, 1721);
 		cout << "la" << endl;
-		cout << "Voiture : "<<i<<" : "<< " PathTab size : " << E.voitures[0].pathTab.size() << endl;
-		for (int j = 0; j < E.voitures[i].pathTab.size(); j++)
+		cout << "Voiture : "<<i<<" : "<< " getpathTab() size : " << E.voitures[0].getpathTab().size() << endl;
+		for (int j = 0; j < E.voitures[i].getpathTab().size(); j++)
 		{
-			cout << "Noeud " << j << " : " << E.voitures[i].pathTab[j]->getNodepos().x << " " << E.voitures[i].pathTab[j]->getNodepos().y << endl;
+			cout << "Noeud " << j << " : " << E.voitures[i].getpathTab()[j]->getNodepos().x << " " << E.voitures[i].getpathTab()[j]->getNodepos().y << endl;
 		}
 	}
 }

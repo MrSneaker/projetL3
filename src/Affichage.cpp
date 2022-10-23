@@ -215,11 +215,11 @@ void Affichage::AffichagePlateau()
 
     for (int i = 0; i < environnement.voitures.size(); i++)
     {
-        for (int j = 0; j < environnement.voitures[i].pathTab.size(); j++)
+        for (int j = 0; j < environnement.voitures[i].getpathTab().size(); j++)
         {
             SDL_Rect rect;
-            rect.x = environnement.voitures[i].pathTab[j]->getNodepos().x * 10;
-            rect.y = environnement.voitures[i].pathTab[j]->getNodepos().y * 10;
+            rect.x = environnement.voitures[i].getpathTab()[j]->getNodepos().x * 10;
+            rect.y = environnement.voitures[i].getpathTab()[j]->getNodepos().y * 10;
             rect.w = 10;
             rect.h = 10;
             SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
@@ -359,10 +359,13 @@ void Affichage::AffichageSimulation()
                 environnement.voitures[i].setwidth(20);
                 environnement.voitures[i].setheight(30);
             }
-
-            if (lanceSim == true)
+        }
+        if (lanceSim == true)
+        {
+            for(int i = 0; i < environnement.voitures.size(); i++)
             {
-                environnement.Astar(environnement.voitures[i], 47, 1721);
+                environnement.Astar(environnement.voitures[i], 47, environnement.GetNodeIndbyPos(environnement.voitures[i].getTargetPosition()));
+                
                 lanceSim = false;
             }
         }

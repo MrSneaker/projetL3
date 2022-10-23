@@ -19,16 +19,16 @@ private:
     int angle;           // angle de la voiture
     bool Is_in;          // true si la voiture entre dans le parking
     bool Is_parked;      // true si la voiture est garée dans le parking
+    bool Is_pathfind;    // true si la voiture a trouvé un chemin
     int parking;         // numéro du parking dans lequel la voiture est garée
     int place;           // numéro de la place dans lequel la voiture est garée
     float width;         // largeur de la voiture
     float height;        // hauteur de la voiture
     // float batterie; // batterie de la voiture
     // Couleur couleur; // Couleur de la voiture
+    vector<Node *> pathTab; // tableau des noeuds du chemin
 
 public:
-    vector<Node *> pathTab; // tableau des noeuds du chemin
-    vector<Node *> openList;
     Utilisateur User; // Utilisateur de la voiture
     int indice;
 
@@ -114,6 +114,10 @@ public:
 
     bool getIs_parked();
 
+    bool setIs_pathfind(bool new_Is_pathfind);
+
+    bool getIs_pathfind();
+
     void setParking(int new_parking);
 
     int getParking();
@@ -129,6 +133,8 @@ public:
     void setheight(int new_height);
 
     int getheight();
+
+    vector<Node *> &getpathTab();
 
     //! \brief Test de regression la classe Voiture
     void test_regresion();
