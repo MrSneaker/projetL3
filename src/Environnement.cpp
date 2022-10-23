@@ -212,7 +212,7 @@ void Environnement::AddVoiture()
 {
 	initUser();
 	Voiture V(conducteurs[conducteurs.size() - 1]);
-	V.indice = voitures.size(); // TODO : Faire en sorte qu'ont ai 50 voitures en tout, qui tourne en boucle pour la création
+	V.indice = voitures.size(); // TODO : Faire en sorte qu'ont ai un nombre fini de voiture, qui tourne en boucle pour la création
 
 
 	V.set_position(GetPosbyNodeInd(4700) + Vec2(5, 5)); // on place la voiture au milieu du noeud 4700

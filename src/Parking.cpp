@@ -21,7 +21,7 @@ Parking::~Parking()
 
 // ACCESSEURS
 
-vector<Place> Parking::getPlacesTab()
+vector<Place> &Parking::getPlacesTab()
 {
     return placesTab;
 }

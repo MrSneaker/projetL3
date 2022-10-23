@@ -84,31 +84,18 @@ void Affichage::AffichagePlateau()
     // Test Affichage
 
     // ------------------ Affiche l'image des parkings ------------------
-  
-    P1.draw(renderer, environnement.parkings[0].getPos().x * 10 - 10
-        , environnement.parkings[0].getPos().y * 10 - 10
-        , 440
-        , 390
-        , 0);
-    P2.draw(renderer, environnement.parkings[1].getPos().x * 10 - 10
-        , environnement.parkings[1].getPos().y * 10 - 10
-        , 440
-        , 390
-        , 0);
 
-    P3.draw(renderer, environnement.parkings[2].getPos().x * 10 - 10
-        , environnement.parkings[2].getPos().y * 10 - 10
-        , 1000
-        , 290
-        , 0);
+    P1.draw(renderer, environnement.parkings[0].getPos().x * 10 - 10, environnement.parkings[0].getPos().y * 10 - 10, 440, 390, 0);
+    P2.draw(renderer, environnement.parkings[1].getPos().x * 10 - 10, environnement.parkings[1].getPos().y * 10 - 10, 440, 390, 0);
+
+    P3.draw(renderer, environnement.parkings[2].getPos().x * 10 - 10, environnement.parkings[2].getPos().y * 10 - 10, 1000, 290, 0);
     //------------------ Affiche les routes ------------------
 
     UpRoad.draw(renderer, 440, 0, 120, 400, 0);
     DownRoad.draw(renderer, 0, 390, 1000, 120, 0);
 
-
     //------------------ Affiche les voitures ------------------
-    //Avec l'anlge
+    // Avec l'anlge
     for (int i = 0; i < environnement.voitures.size(); i++)
     {
 
@@ -125,16 +112,16 @@ void Affichage::AffichagePlateau()
     for (int j = 0; j < environnement.parkings.size(); j++)
     {
 
-        for (int i = 0; i < environnement.parkings[j].getNbPlaces(); i++)
+        for (int i = 0; i < environnement.parkings[j].getPlacesTab().size(); i++)
         {
+            // cout<<"size parking j : "<<j<<" : "<<environnement.parkings[j].getPlacesTab().size()<<endl;
 
             Place.x = environnement.parkings[j].getPlacesTab()[i].getPos().x * 10;
             Place.y = environnement.parkings[j].getPlacesTab()[i].getPos().y * 10;
             Place.w = 10;
             Place.h = 20;
 
-            // Si la place est prise, on affiche une place rouge
-            if (environnement.parkings[j].getPlacesTab()[i].getIsTaken())
+            if (environnement.parkings[j].getPlacesTab()[i].getIsTaken() == true)
             {
                 SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
                 SDL_RenderDrawRect(renderer, &Place);
@@ -148,36 +135,30 @@ void Affichage::AffichagePlateau()
     }
 
     // Affiche si la case est un obstacle ou non
-    for(int x = 0; x < DimWindowX/tailleCase; x++)
-    {
-        for(int y = 0; y < DimWindowY/tailleCase; y++)
-        {
+    // for (int x = 0; x < DimWindowX / tailleCase; x++)
+    // {
+    //     for (int y = 0; y < DimWindowY / tailleCase; y++)
+    //     {
 
-            if(environnement.nodes[x+DimWindowX/tailleCase*y]->getisObstacle() == true)
-            {
-                SDL_Rect rect;
-                rect.x = environnement.nodes[x+DimWindowX/tailleCase*y]->getNodepos().x*10;
-                rect.y = environnement.nodes[x+DimWindowX/tailleCase*y]->getNodepos().y*10;
-                rect.w = 10;
-                rect.h = 10;
-                SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 100);
-                SDL_RenderDrawRect(renderer, &rect);
-            }
-            else
-            {
-                SDL_Rect rect;
-                rect.x = environnement.nodes[x+DimWindowX/tailleCase*y]->getNodepos().x*10;
-                rect.y = environnement.nodes[x+DimWindowX/tailleCase*y]->getNodepos().y*10;
-                rect.w = 10;
-                rect.h = 10;
-                SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-                SDL_SetRenderDrawColor(renderer, 0, 255, 0, 100);
-                SDL_RenderDrawRect(renderer, &rect);
-            }
-
-        }
-    }
+    //         SDL_Rect rect;
+    //         rect.x = environnement.nodes[x + DimWindowX / tailleCase * y]->getNodepos().x * 10;
+    //         rect.y = environnement.nodes[x + DimWindowX / tailleCase * y]->getNodepos().y * 10;
+    //         rect.w = 10;
+    //         rect.h = 10;
+    //         if (environnement.nodes[x + DimWindowX / tailleCase * y]->getisObstacle() == true)
+    //         {
+    //             SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    //             SDL_SetRenderDrawColor(renderer, 255, 0, 0, 100);
+    //             SDL_RenderDrawRect(renderer, &rect);
+    //         }
+    //         else
+    //         {
+    //             SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    //             SDL_SetRenderDrawColor(renderer, 0, 255, 0, 100);
+    //             SDL_RenderDrawRect(renderer, &rect);
+    //         }
+    //     }
+    // }
 
     for (int i = 0; i < environnement.voitures.size(); i++)
     {
@@ -245,12 +226,6 @@ void Affichage::AffichageSimulation()
                     YC = event.button.y;
                     isapress = true;
                 }
-                else if (event.button.button == SDL_BUTTON_RIGHT)
-                {
-                    XC = event.button.x;
-                    YC = event.button.y;
-                    ispressR = true;
-                }
                 break;
             case SDL_QUIT:
                 display = false;
@@ -275,18 +250,7 @@ void Affichage::AffichageSimulation()
             {
                 if (XC >= environnement.nodes[i]->getNodepos().x * 10 && XC <= environnement.nodes[i]->getNodepos().x * 10 + 10 && YC >= environnement.nodes[i]->getNodepos().y * 10 && YC <= environnement.nodes[i]->getNodepos().y * 10 + 10)
                 {
-
-                    cout << "indice du noeud : " << i << endl;
-                    if (ispressL == true)
-                    {
-                        X = i;
-                    }
-                    else if (ispressR == true)
-                    {
-                        Y = i;
-                    }
-
-                    else if (isapress == true)
+                    if (isapress == true)
                     {
                         if (environnement.nodes[i]->getisObstacle() == true)
                         {
@@ -297,8 +261,6 @@ void Affichage::AffichageSimulation()
                             cout << "noeud : " << i << " n'est pas un obstacle" << endl;
                         }
                     }
-
-                    // change sur le fichier map.txt
                 }
             }
 
@@ -325,10 +287,10 @@ void Affichage::AffichageSimulation()
         }
         if (lanceSim == true)
         {
-            for(int i = 0; i < environnement.voitures.size(); i++)
+            for (int i = 0; i < environnement.voitures.size(); i++)
             {
                 environnement.Astar(environnement.voitures[i], 4700, environnement.GetNodeIndbyPos(environnement.voitures[i].getTargetPosition()));
-                
+
                 lanceSim = false;
             }
         }
