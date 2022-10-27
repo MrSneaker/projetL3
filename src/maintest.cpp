@@ -18,7 +18,7 @@ int main(){
     //V1.test_regresion();
 
     //test de regression de la classe Utilisateur 
-    Utilisateur u;
+    //Utilisateur u;
     //u.testRegression(); 
     
     bool AfficheTime = false;
@@ -42,14 +42,14 @@ int main(){
         }
     }
     time_t begin = time(NULL);
-    Environnement Simulation;
+    //Environnement Simulation;
 
     //Simulation.Environnement_play();
-    Simulation.test_regresion();
+    //Simulation.test_regresion();
 
-    //Affichage Graph;
+    Affichage Graph;
 
-    //Graph.AffichageSimulation();
+    Graph.AffichageSimulation();
 
     time_t end = time(NULL);
 

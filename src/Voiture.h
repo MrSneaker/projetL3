@@ -1,40 +1,40 @@
 #ifndef _VOITURE_H
-#define _VOITURE_H 
+#define _VOITURE_H
 
 #include "vec2.h"
 #include "Utilisateur.h"
+#include "Node.h"
 #include <assert.h>
 #include <vector>
 #include <mutex>
 #include "Message.h"
 
-class Voiture 
+class Voiture
 {
 
-    private:
+private:
+    Vec2 position;       // Position (x,y) de la voiture
+    Vec2 TargetPosition; // Position (x,y) de la cible (parking / place / sortie)
+    float speed;         // speed de la voiture
+    int angle;           // angle de la voiture
+    bool Is_in;          // true si la voiture entre dans le parking
+    bool Is_parked;      // true si la voiture est garée dans le parking
+    bool Is_pathfind;    // true si la voiture a trouvé un chemin
+    int parking;         // numéro du parking dans lequel la voiture est garée
+    int place;           // numéro de la place dans lequel la voiture est garée
+    float width;         // largeur de la voiture
+    float height;        // hauteur de la voiture
+    // float batterie; // batterie de la voiture
+    // Couleur couleur; // Couleur de la voiture
+    vector<Node *> pathTab; // tableau des noeuds du chemin
 
-        Vec2 position; // Position (x,y) de la voiture
-        Vec2 TargetPosition; // Position (x,y) de la cible (parking / place / sortie)
-        float speed; // speed de la voiture
-        int angle; // angle de la voiture
-        bool Is_in; // true si la voiture entre dans le parking
-        bool Is_parked; // true si la voiture est garée dans le parking
-        int parking; // numéro du parking dans lequel la voiture est garée
-        int place; // numéro de la place dans lequel la voiture est garée
-        float width; // largeur de la voiture 
-        float height; // hauteur de la voiture
-        //float batterie; // batterie de la voiture
-        //Couleur couleur; // Couleur de la voiture
-
-    
-    public:
-        Utilisateur User; // Utilisateur de la voiture
-
-
+public:
+    Utilisateur User; // Utilisateur de la voiture
+    int indice;
 
     Voiture();
 
-    //constructeur de voiture avec un utilisateur
+    // constructeur de voiture avec un utilisateur
     Voiture(Utilisateur User);
 
     ~Voiture();
@@ -55,10 +55,6 @@ class Voiture
     //! \return true si la voiture est arrivée à la position de la cible (parking / place / sortie)
     bool MoveToTargetPosition();
 
-
-
-
-
     //! \brief La voiture lit le message reçu (donné en paramètre) s'il y en a un
     //! \brief (s'il n'y en a pas, le pointeur est nul),
     //! \brief et en crée un nouveau (s'il s'agit d'une réponse, les données du nouveau
@@ -75,10 +71,7 @@ class Voiture
     //! \brief  - LAST_OFFER
     //! \brief  - ACCEPT
     //! \brief  - REJECT
-    Message managingConversation (Message * aMessage) const;
-
-
-
+    Message managingConversation(Message *aMessage) const;
 
     //! \brief Modifie la position de la cible (parking / place / sortie)
     void setTargetPosition(Vec2 new_pos);
@@ -113,7 +106,6 @@ class Voiture
     //! \brief Modifie la vitesse de la voiture
     void setSpeed(float new_speed);
 
-    
     bool getIs_in();
 
     void setIs_in(bool new_Is_in);
@@ -121,6 +113,10 @@ class Voiture
     void setIs_parked(bool new_Is_parked);
 
     bool getIs_parked();
+
+    void setIs_pathfind(bool new_Is_pathfind);
+
+    bool getIs_pathfind();
 
     void setParking(int new_parking);
 
@@ -138,10 +134,10 @@ class Voiture
 
     int getheight();
 
+    vector<Node *> &getpathTab();
+
     //! \brief Test de regression la classe Voiture
     void test_regresion();
-
 };
 
-
-#endif  
+#endif

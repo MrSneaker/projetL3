@@ -20,21 +20,14 @@ class Affichage{
         SDL_Event event;
         
         //------------------------------- IMAGE -----------------------------------
-        SDL_Surface *P1;
-        SDL_Texture *P1Texture;
-        SDL_Surface *P2;
-        SDL_Texture *P2Texture;
-        SDL_Surface *P3;
-        SDL_Texture *P3Texture;
-
-
-        SDL_Surface *UpRoad;
-        SDL_Texture *textureUpRoad;
-
-        SDL_Surface *DownRoad; 
-        SDL_Texture *textureDownRoad;
-
+      
         Image Voiture;
+        Image P1;
+        Image P2;
+        Image P3;
+        Image UpRoad;
+        Image DownRoad;
+
 
         SDL_Rect Place;
 

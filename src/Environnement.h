@@ -33,10 +33,8 @@ private:
     bool endNodeReached = false;
     int step = 0;
 
-    //on veut gérer les convs dynamiquement
-    vector<Conversation*> conv;
-
-    
+    // on veut gérer les convs dynamiquement
+    vector<Conversation *> conv;
 
 public:
     string map[DimWindowX / tailleCase * DimWindowY / tailleCase];
@@ -46,9 +44,9 @@ public:
     vector<Utilisateur> conducteurs;
 
     void initNodes();
-    void resetNodes();
+    void resetNodes(Voiture &v);
     void setNodes(unsigned int startInd, unsigned int endInd);
-    void Astar();
+    void Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd);
     void trackPath();
     vector<Node *> pathTab;  // tableau des noeuds du chemin
     vector<Node *> openList; // liste des noeuds à visiter
@@ -60,6 +58,12 @@ public:
 
     Environnement();
     ~Environnement();
+
+    //! \brief Fonction permettant de retourner la position d'une case a partir de son indice
+    Vec2 GetPosbyNodeInd(int indiceCase);
+
+    //! \brief Fonction permettant de retourner l'indice d'une case a partir de sa position
+    int GetNodeIndbyPos(Vec2 pos);
 
     //! \brief Initialisation d'un utilisateur, puis ajout dans le tableau de conducteurs.
     void initUser();
@@ -84,14 +88,14 @@ public:
     //! \brief 0 = case libre, 1 = case obstacle
     void getMap();
 
-    //on créé une conv quand on veut communiquer.
+    // on créé une conv quand on veut communiquer.
     int createConv();
 
-    //pour suppr une conv après utilisation
+    // pour suppr une conv après utilisation
     void deleteConv(int ind);
 
-    //pour réaliser la conversation.
-    void conversation(Voiture v,Parking p);
+    // pour réaliser la conversation.
+    void conversation(Voiture v, Parking p);
 
     //! \brief Test de regression de la classe Environnement
     void test_regresion();

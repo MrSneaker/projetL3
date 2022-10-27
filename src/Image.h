@@ -25,7 +25,7 @@ public:
     void loadFromFile(const char *filename, SDL_Renderer *renderer);
 
     // Dessine l'image
-    void draw(SDL_Renderer *renderer, int x, int y, int w = -1, int h = -1);
+    void draw(SDL_Renderer *renderer, int x, int y, int w = -1, int h = -1, int angle = 0);
 };
 
 #endif

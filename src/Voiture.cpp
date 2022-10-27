@@ -12,15 +12,19 @@ Voiture::Voiture()
 
 Voiture::Voiture(Utilisateur U)
 {
-    User = U;
-    speed = 2;
+    position = Vec2(0, 0);
+    TargetPosition = Vec2(0, 0);
+    speed = 5;
     Is_in = false;
     Is_parked = false;
+    Is_pathfind = false;
     parking = 0;
     place = 0;
     width = 1;
     height = 2;
-    position = Vec2(0, 0);
+    indice = 0;
+    User = U;
+    pathTab.clear();
 }
 
 // Destructeur de la classe Voiture
@@ -94,61 +98,37 @@ Vec2 Voiture::getTargetPosition()
 // // Nouvelle position cible = position place de parking etc.
 bool Voiture::MoveToTargetPosition()
 {
-
-    // Si la voiture est au dessus de la cible
-    if (position.y > TargetPosition.y)
+    if (pathTab.size() > 0)
     {
-
-        MoveDown();
-
-        if (position.y < TargetPosition.y)
+        Node *Current = pathTab[pathTab.size() - 1];
+        if (Current->getNodepos().x * 10 + 5 > position.x)
         {
-
-            position.y = TargetPosition.y;
+            MoveRight();
+            return false;
+        }
+        else if (Current->getNodepos().x * 10 + 5 < position.x)
+        {
+            MoveLeft();
+            return false;
+        }
+        else if (Current->getNodepos().y * 10 + 5 > position.y)
+        {
+            MoveUp();
+            return false;
+        }
+        else if (Current->getNodepos().y * 10 + 5 < position.y)
+        {
+            MoveDown();
+            return false;
+        }
+        else
+        {
+            pathTab.pop_back();
         }
     }
-    // Si la voiture est au dessous de la cible
-    else if (position.y < TargetPosition.y)
-    {
-
-        MoveUp();
-
-        if (position.y > TargetPosition.y)
-        {
-
-            position.y = TargetPosition.y;
-        }
-    }
-    // Si la voiture est à gauche de la cible
-    if (position.x < TargetPosition.x)
-    {
-
-        MoveRight();
-
-        if (position.x > TargetPosition.x)
-        {
-
-            position.x = TargetPosition.x;
-        }
-    }
-    // Si la voiture est à droite de la cible
-    else if (position.x > TargetPosition.x)
-    {
-
-        MoveLeft();
-
-        if (position.x < TargetPosition.x)
-        {
-
-            position.x = TargetPosition.x;
-        }
-    }
-    // Si la voiture est à la position cible
-    else if (position.x == TargetPosition.x && position.y == TargetPosition.y)
-    {
-        return true;
-    }
-    return false;
+    
+    return true;
+    
 }
 
 Message Voiture::managingConversation(Message *aMessage) const
@@ -362,6 +342,15 @@ int Voiture::getParking()
 {
     return parking;
 }
+void Voiture::setIs_pathfind(bool new_is_pathfind)
+{
+    Is_pathfind = new_is_pathfind;
+}
+
+bool Voiture::getIs_pathfind()
+{
+    return Is_pathfind;
+}
 
 // set place
 void Voiture::setPlace(int new_place)
@@ -398,6 +387,13 @@ int Voiture::getheight()
 {
     return height;
 }
+
+vector<Node *> &Voiture::getpathTab()
+{
+    return pathTab;
+}
+
+
 
 // -----------------------------------------------------------------------------------------------
 // Test de regression la classe Voiture
