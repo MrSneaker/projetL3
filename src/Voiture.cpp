@@ -14,7 +14,7 @@ Voiture::Voiture(Utilisateur U)
 {
     position = Vec2(0, 0);
     TargetPosition = Vec2(0, 0);
-    speed = 5;
+    speed = 10;
     Is_in = false;
     Is_parked = false;
     Is_pathfind = false;
@@ -66,13 +66,13 @@ void Voiture::setAngle(int new_angle)
     angle = new_angle;
 }
 
-int Voiture::getAngle()
+const int& Voiture::getAngle() const
 {
     return angle;
 }
 
 // Renvoie la position (x;y) de la voiture
-Vec2 Voiture::get_position()
+const Vec2& Voiture::get_position() const
 {
     return position;
 }
@@ -89,7 +89,7 @@ void Voiture::setTargetPosition(Vec2 new_pos)
     TargetPosition = new_pos;
 }
 
-Vec2 Voiture::getTargetPosition()
+const Vec2& Voiture::getTargetPosition() const
 {
     return TargetPosition;
 }
@@ -338,7 +338,7 @@ void Voiture::UserGetInfos()
     std::cout << "Prix max : " << User.getMaxPrice() << std::endl;
 }
 
-float Voiture::getSpeed()
+const float& Voiture::getSpeed() const 
 {
     return speed;
 }
@@ -353,7 +353,7 @@ void Voiture::setIs_in(bool new_is_in)
     Is_in = new_is_in;
 }
 
-bool Voiture::getIs_in()
+const bool& Voiture::getIs_in() const 
 {
     return Is_in;
 }
@@ -363,7 +363,7 @@ void Voiture::setIs_parked(bool new_is_parked)
     Is_parked = new_is_parked;
 }
 
-bool Voiture::getIs_parked()
+const bool& Voiture::getIs_parked() const 
 {
     return Is_parked;
 }
@@ -373,7 +373,7 @@ void Voiture::setParking(int new_parking)
     parking = new_parking;
 }
 
-int Voiture::getParking()
+const int& Voiture::getParking() const
 {
     return parking;
 }
@@ -382,7 +382,7 @@ void Voiture::setIs_pathfind(bool new_is_pathfind)
     Is_pathfind = new_is_pathfind;
 }
 
-bool Voiture::getIs_pathfind()
+const bool& Voiture::getIs_pathfind() const 
 {
     return Is_pathfind;
 }
@@ -394,7 +394,7 @@ void Voiture::setPlace(int new_place)
 }
 
 // get place
-int Voiture::getPlace()
+const int& Voiture::getPlace() const
 {
     return place;
 }
@@ -406,7 +406,7 @@ void Voiture::setwidth(int new_width)
 }
 
 // get Width
-int Voiture::getwidth()
+const int& Voiture::getwidth() const
 {
     return width;
 }
@@ -418,7 +418,7 @@ void Voiture::setheight(int new_height)
 }
 
 // get Height
-int Voiture::getheight()
+const int& Voiture::getheight() const
 {
     return height;
 }

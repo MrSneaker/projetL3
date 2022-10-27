@@ -22,8 +22,8 @@ private:
     bool Is_pathfind;    // true si la voiture a trouvé un chemin
     int parking;         // numéro du parking dans lequel la voiture est garée
     int place;           // numéro de la place dans lequel la voiture est garée
-    float width;         // largeur de la voiture
-    float height;        // hauteur de la voiture
+    int width;         // largeur de la voiture
+    int height;        // hauteur de la voiture
     // float batterie; // batterie de la voiture
     // Couleur couleur; // Couleur de la voiture
     vector<Node *> pathTab; // tableau des noeuds du chemin
@@ -82,13 +82,13 @@ public:
     void setAngle(int new_angle);
 
     //! \brief Renvoie la position de la cible (parking / place / sortie)
-    Vec2 getTargetPosition();
+    const Vec2& getTargetPosition() const;
 
     //! \brief Renvoie la position de la voiture
-    Vec2 get_position();
+    const Vec2& get_position() const;
 
     //! \brief Renvoie l'angle de la voiture
-    int getAngle();
+    const int& getAngle() const;
 
     //! \brief Modifie la position de la voiture
     //! \param new_pos nouvelle position de la voiture
@@ -102,7 +102,7 @@ public:
     void UserGetInfos();
 
     //! \brief renvoie la vitesse de la voiture
-    float getSpeed();
+    const float& getSpeed() const;
 
     //! \brief renvoie le nombre de conversations achevées par la voiture
     unsigned int getNbEndedConversations() const;
@@ -110,33 +110,33 @@ public:
     //! \brief Modifie la vitesse de la voiture
     void setSpeed(float new_speed);
 
-    bool getIs_in();
+    const bool& getIs_in() const;
 
     void setIs_in(bool new_Is_in);
 
     void setIs_parked(bool new_Is_parked);
 
-    bool getIs_parked();
+    const bool& getIs_parked() const;
 
     void setIs_pathfind(bool new_Is_pathfind);
 
-    bool getIs_pathfind();
+    const bool& getIs_pathfind() const;
 
     void setParking(int new_parking);
 
-    int getParking();
+    const int& getParking() const ;
 
     void setPlace(int new_place);
 
-    int getPlace();
+    const int& getPlace() const ;
 
     void setwidth(int new_width);
 
-    int getwidth();
+    const int& getwidth() const ;
 
     void setheight(int new_height);
 
-    int getheight();
+    const int& getheight() const;
 
     vector<Node *> &getpathTab();
 
