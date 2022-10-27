@@ -328,27 +328,24 @@ void Environnement::getMap()
 
 int Environnement::createConv()
 {
-	Conversation *newConv;
+	Conversation *newConv = new Conversation;
 	conv.push_back(newConv);
 	return conv.size() - 1;
 }
 
 void Environnement::deleteConv(int ind)
 {
+	delete conv.at(ind);
 	conv.erase(conv.begin() + ind);
 }
 
 void Environnement::conversation(Voiture v, Parking p)
 {
 	int indConv = createConv();
-	cout << "test" << endl;
 	bool isFinished = conv.at(indConv)->manageConv(p, v);
-	cout << "test2" << endl;
 	if (isFinished)
 	{
-		cout << "test3" << endl;
-		conv.at(indConv)->stockConv("Conversation" + to_string(indConv));
-		cout << "test4" << endl;
+		conv.at(indConv)->stockConv("Conversation U" + to_string(v.User.getId())+"P"+to_string(p.getId()));
 		deleteConv(indConv);
 	}
 }
@@ -378,18 +375,14 @@ void Environnement::test_regresion()
 	E.deleteConv(a);
 	assert(E.conv.size() == 0);
 	cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
-	cout<<E.voitures.size()<<endl;
-	cout<<E.parkings.size()<<endl;
-	cout<<E.parkings.at(0).getId()<<endl;
-	E.conversation(E.voitures.at(0),E.parkings.at(0));
 
-	/*for(int i=0; i <E.voitures.size();i++)
+	for(int i=0; i <E.voitures.size();i++)
 	{
 		for(int j=0;j<E.parkings.size();j++)
 		{
 			E.conversation(E.voitures.at(i),E.parkings.at(j));
 		}
-	}*/
+	}
 
 	/*// Affiche les infos du noeud 47
 	cout << "Noeud 47 : " << endl;
