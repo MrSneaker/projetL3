@@ -27,6 +27,7 @@ private:
     // float batterie; // batterie de la voiture
     // Couleur couleur; // Couleur de la voiture
     vector<Node *> pathTab; // tableau des noeuds du chemin
+    unsigned int nbEndedConversations; // nombre de conversations achevées
 
 public:
     Utilisateur User; // Utilisateur de la voiture
@@ -71,7 +72,7 @@ public:
     //! \brief  - LAST_OFFER
     //! \brief  - ACCEPT
     //! \brief  - REJECT
-    Message managingConversation(Message *aMessage) const;
+    Message managingConversation(Message *aMessage);
 
     //! \brief Modifie la position de la cible (parking / place / sortie)
     void setTargetPosition(Vec2 new_pos);
@@ -102,6 +103,9 @@ public:
 
     //! \brief renvoie la vitesse de la voiture
     float getSpeed();
+
+    //! \brief renvoie le nombre de conversations achevées par la voiture
+    unsigned int getNbEndedConversations() const;
 
     //! \brief Modifie la vitesse de la voiture
     void setSpeed(float new_speed);
