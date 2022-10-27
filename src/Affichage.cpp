@@ -190,16 +190,37 @@ void Affichage::AffichageSimulation()
     bool display = true;
     int lanceSim = false;
     bool ispress = false;
-    bool ispressR = false;
-    bool ispressL = false;
     int x = 0;
     int y = 0;
     bool isapress = false;
+
+    float beginTick = SDL_GetTicks();
 
     InitAffichage();
 
     while (display)
     {
+
+        // Met le jeu en pause pdt 10ms pour avoir quelquechose comme 100fps
+
+        // // Affiche les fps dans la console
+        // frames++;
+        // totalFrames++;
+        
+        // // fonction de frametime
+        // prevtime = currenttime;
+        // currenttime = SDL_GetTicks();
+        // deltatime = (currenttime - prevtime) / 1000.f;
+        // frametime += deltatime;
+        // environnement.temps = 0;
+        // int temps1;
+        
+        // //===============Afficher le temps===================================================
+
+        // // récup le temps toute les nanosecondes
+        // environnement.temps = SDL_GetTicks() - beginTick;
+       
+
 
         AffichagePlateau();
         environnement.Environnement_play();
@@ -264,8 +285,6 @@ void Affichage::AffichageSimulation()
                 }
             }
 
-            ispressL = false;
-            ispressR = false;
             isapress = false;
             ispress = false;
         }

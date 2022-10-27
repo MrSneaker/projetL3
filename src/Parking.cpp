@@ -219,7 +219,7 @@ Message Parking::managingConversation(Message *aMessage) const
         if (sentType == "COUNTER_OFFER")
         {
             float nbMessage = aMessage->getMessageNumber();
-            if (proposedCarPrice < minPrice || nbMessage >= 20)
+            if (proposedCarPrice < minPrice)
             {
                 chosenPrice = minPrice;
                 responseType = "LAST_OFFER";
@@ -266,7 +266,17 @@ Message Parking::managingConversation(Message *aMessage) const
 
                 else if (responseType != "LAST_OFFER")
                 {
-                    chosenPrice = startingPrice - deltaSup / 2;
+                    double chosenPriceTimes100 = startingPrice - deltaSup / 2 * 100;
+                    double roundedChosenPriceTimes100 = floor (chosenPriceTimes100);
+                    double chosenPricePlusOneCentime = roundedChosenPriceTimes100 / 100;
+                    /* Les 3 lignes ci-dessus permettent d'affecter la valeur startingPrice - deltaSup / 2
+                    à chosenPricePlusOneCentime, mais arrondie au centime (i.e. au centième) inférieur. On fait cela car
+                    ça n'a pas de sens de proposer un prix plus précis qu'au centime près, et on arrondit
+                    vers le bas car le but est que le parking diminue son prix (pour que la négociation avance !). */
+
+                    chosenPrice = chosenPricePlusOneCentime - 0.01;
+                    /* On retire 1 centime au prix pour être sûr que ce dernier ne stagne pas. */
+
                     responseType = "COUNTER_OFFER";
                 }
             }
@@ -350,6 +360,13 @@ Message Parking::managingConversation(Message *aMessage) const
         return newMessage;
     }
 }
+
+
+
+
+
+
+
 
 void Parking::testRegression()
 {

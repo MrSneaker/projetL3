@@ -8,6 +8,7 @@
         "vector": "cpp",
         "thread": "cpp",
         "string": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "string_view": "cpp"
     }
 }

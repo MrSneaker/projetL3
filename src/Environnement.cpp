@@ -175,6 +175,8 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
 	}
 	//---------------------------------TrackPath---------------------------------
 	v.setIs_pathfind(true);
+
+	openList.clear();
 }
 
 void Environnement::initUser()
@@ -299,9 +301,19 @@ void Environnement::updateStateVoiture()
 // Boucle de jeu
 void Environnement::Environnement_play()
 {
-
+	// int current_time = 0;
+	// int prevtemp = current_time;
+	// current_time = temps;
+	// int deltatime = (current_time - prevtemp);
+	
+	// if((deltatime) == 5000)
+	// {
+	// 	AddVoiture();
+	// }
 	for (int i = 0; i < voitures.size(); i++)
 	{
+		Astar(voitures[i], 4700, GetNodeIndbyPos(voitures[i].getTargetPosition()));
+
 		voitures[i].MoveToTargetPosition();
 		for (int j = 0; j < parkings.size(); j++)
 		{

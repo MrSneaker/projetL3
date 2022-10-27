@@ -21,26 +21,6 @@ int main(){
     //Utilisateur u;
     //u.testRegression(); 
     
-    bool AfficheTime = false;
-    if(AfficheTime){
-        while(1){
-            time_t now = time(NULL); // temps actuel
-            tm *ltm = localtime(&now); // temps local
-            int heure = ltm->tm_hour;
-            int minute = ltm->tm_min;
-            int seconde = ltm->tm_sec;
-            cout<<"--------------------------------------"<<endl;
-            cout<<"Heure : "<<heure<<":"<<minute<<":"<<seconde<<endl;
-            cout<<"--------------------------------------"<<endl;
-
-            if(seconde%10 == 0)
-            {
-                cout<<"Faire une action"<<endl;
-            }
-
-        sleep(1);
-        }
-    }
     time_t begin = time(NULL);
     Environnement Simulation;
 
@@ -60,8 +40,8 @@ int main(){
     //Place P1;
     //P1.test_regresion();
 
-    //Conversation c;
-    //c.testRegression();
+    Conversation c;
+    c.testRegression();
     //cout<<"Temps de calcul = "<<end-begin<<" secondes"<<endl;
     return 0;
 }

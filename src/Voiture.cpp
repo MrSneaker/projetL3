@@ -2,8 +2,8 @@
 
 #include <iostream>
 #include <string.h>
+#include <math.h>
 
-const int REDUCTION_FACTOR = 0.5;
 
 // Constructeur de la classe Voiture
 Voiture::Voiture()
@@ -15,7 +15,7 @@ Voiture::Voiture(Utilisateur U)
 {
     position = Vec2(0, 0);
     TargetPosition = Vec2(0, 0);
-    speed = 5;
+    speed = 10;
     Is_in = false;
     Is_parked = false;
     Is_pathfind = false;
@@ -27,6 +27,7 @@ Voiture::Voiture(Utilisateur U)
     User = U;
     nbFinishedConv = 0;
     pathTab.clear();
+    nbEndedConversations = 0;
 }
 
 // Destructeur de la classe Voiture
@@ -67,13 +68,13 @@ void Voiture::setAngle(int new_angle)
     angle = new_angle;
 }
 
-int Voiture::getAngle()
+const int& Voiture::getAngle() const
 {
     return angle;
 }
 
 // Renvoie la position (x;y) de la voiture
-Vec2 Voiture::get_position()
+const Vec2& Voiture::get_position() const
 {
     return position;
 }
@@ -90,7 +91,7 @@ void Voiture::setTargetPosition(Vec2 new_pos)
     TargetPosition = new_pos;
 }
 
-Vec2 Voiture::getTargetPosition()
+const Vec2& Voiture::getTargetPosition() const
 {
     return TargetPosition;
 }
@@ -133,7 +134,7 @@ bool Voiture::MoveToTargetPosition()
     
 }
 
-Message Voiture::managingConversation(Message *aMessage) const
+Message Voiture::managingConversation(Message *aMessage)
 {
 
     string senderString = "User_" + to_string(User.getId());
@@ -153,7 +154,7 @@ Message Voiture::managingConversation(Message *aMessage) const
         {
             float userMaxPrice = User.getMaxPrice();
             float nbMessage = aMessage->getMessageNumber();
-            if ((proposedParkPrice > userMaxPrice) || (nbMessage >= 20))
+            if (proposedParkPrice > userMaxPrice)
             {
                 chosenPrice = userMaxPrice;
                 responseType = "LAST_OFFER";
@@ -197,12 +198,27 @@ Message Voiture::managingConversation(Message *aMessage) const
                     // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A").
                     // Ce n'est pas une acceptation engageante. En effet, si par la suite, dans une conversation parallèle,
                     // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
+
+                    assert(nbEndedConversations >= 0 && nbEndedConversations <= 2);
+                    nbEndedConversations++;
                 }
 
                 else if (responseType != "LAST_OFFER")
                 {
-                    chosenPrice = reducedUserMaxPrice + deltaInf / 3;
+
+                    double chosenPriceTimes100 = reducedUserMaxPrice + deltaSup / 3 * 100;
+                    double roundedChosenPriceTimes100 = ceil (chosenPriceTimes100);
+                    double chosenPriceMinusOneCentime = roundedChosenPriceTimes100 / 100;
+                    /* Les 3 lignes ci-dessus permettent d'affecter la valeur reducedUserMaxPrice + deltaSup / 3
+                    à chosenPriceMinusOneCentime, mais arrondie au centime (i.e. au centième) supérieur. On fait cela car
+                    ça n'a pas de sens de proposer un prix plus précis qu'au centime près, et on arrondit
+                    vers le haut car le but est que la voiture augmente son prix (pour que la négociation avance !). */
+
+                    chosenPrice = chosenPriceMinusOneCentime + 0.01;
+                    /* On ajoute 1 centime au prix pour être sûr que ce dernier ne stagne pas. */
+
                     responseType = "COUNTER_OFFER";
+                
                 }
             }
 
@@ -213,6 +229,8 @@ Message Voiture::managingConversation(Message *aMessage) const
                 {
                     chosenPrice = proposedParkPrice;
                     responseType = "ACCEPT";
+                    assert(nbEndedConversations >= 0 && nbEndedConversations <= 2);
+                    nbEndedConversations++;
                 }
             }
         }
@@ -228,12 +246,18 @@ Message Voiture::managingConversation(Message *aMessage) const
                 // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A")
                 // (ce n'est pas une acceptation engageante). En effet, si par la suite, dans une conversation parallèle,
                 // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
+
+                assert(nbEndedConversations >= 0 && nbEndedConversations <= 2);
+                nbEndedConversations++;
             }
 
             else
             {
                 chosenPrice = -1;
                 responseType = "REJECT";
+
+                assert(nbEndedConversations >= 0 && nbEndedConversations <= 2);
+                nbEndedConversations++;
             }
         }
 
@@ -250,6 +274,8 @@ Message Voiture::managingConversation(Message *aMessage) const
             //         qui lui permet d'identifier le parking) du parking, ainsi que le prix accepté, pour que la voiture
             //         puisse ensuite comparer les prix acceptés dans les différentes conversations, et ainsi se diriger
             //         vers le parking lui ayant proposé le meilleur prix.
+
+            nbEndedConversations++;
         }
 
         if (sentType == "REJECT")
@@ -257,6 +283,9 @@ Message Voiture::managingConversation(Message *aMessage) const
 
             chosenPrice = -1;
             responseType = "REJECT";
+
+            assert(nbEndedConversations >= 0 && nbEndedConversations <= 2);
+            nbEndedConversations++;
         }
 
         unsigned int MessageNum = aMessage->getMessageNumber() + 1;
@@ -278,6 +307,12 @@ Message Voiture::managingConversation(Message *aMessage) const
         return newMessage;
     }
 }
+
+
+
+
+
+
 
 bool Voiture::isPriceOk(double price, Utilisateur User) const
 {
@@ -301,7 +336,7 @@ void Voiture::UserGetInfos()
     std::cout << "Prix max : " << User.getMaxPrice() << std::endl;
 }
 
-float Voiture::getSpeed()
+const float& Voiture::getSpeed() const 
 {
     return speed;
 }
@@ -321,7 +356,7 @@ void Voiture::setIs_in(bool new_is_in)
     Is_in = new_is_in;
 }
 
-bool Voiture::getIs_in()
+const bool& Voiture::getIs_in() const 
 {
     return Is_in;
 }
@@ -331,7 +366,7 @@ void Voiture::setIs_parked(bool new_is_parked)
     Is_parked = new_is_parked;
 }
 
-bool Voiture::getIs_parked()
+const bool& Voiture::getIs_parked() const 
 {
     return Is_parked;
 }
@@ -341,7 +376,7 @@ void Voiture::setParking(int new_parking)
     parking = new_parking;
 }
 
-int Voiture::getParking()
+const int& Voiture::getParking() const
 {
     return parking;
 }
@@ -350,7 +385,7 @@ void Voiture::setIs_pathfind(bool new_is_pathfind)
     Is_pathfind = new_is_pathfind;
 }
 
-bool Voiture::getIs_pathfind()
+const bool& Voiture::getIs_pathfind() const 
 {
     return Is_pathfind;
 }
@@ -362,7 +397,7 @@ void Voiture::setPlace(int new_place)
 }
 
 // get place
-int Voiture::getPlace()
+const int& Voiture::getPlace() const
 {
     return place;
 }
@@ -374,7 +409,7 @@ void Voiture::setwidth(int new_width)
 }
 
 // get Width
-int Voiture::getwidth()
+const int& Voiture::getwidth() const
 {
     return width;
 }
@@ -386,7 +421,7 @@ void Voiture::setheight(int new_height)
 }
 
 // get Height
-int Voiture::getheight()
+const int& Voiture::getheight() const
 {
     return height;
 }

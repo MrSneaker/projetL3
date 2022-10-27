@@ -43,6 +43,7 @@ public:
     vector<Voiture> voitures;
     vector<Parking> parkings;
     vector<Utilisateur> conducteurs;
+    unsigned int temps;
 
     void initNodes();
     void resetNodes(Voiture &v);

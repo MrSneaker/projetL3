@@ -40,6 +40,22 @@ class Affichage{
         int X = 0;
         int Y = 0;
 
+        
+        //Utile pour le temps et les frames
+
+        int totalFrames = 0;
+
+        int frames = 0;
+
+        float frametime=0;
+
+        int prevtime = 0;
+
+        int currenttime = 0;
+
+        float deltatime = 0.f;
+
+
 
 
 

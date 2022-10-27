@@ -13,7 +13,7 @@ void Node::setisVisited(bool visited)
     isVisited = visited;
 }
 
-bool Node::getisVisited()
+const bool& Node::getisVisited() const
 {
     return isVisited;
 }
@@ -23,7 +23,7 @@ void Node::setisObstacle(bool obstacle)
     isObstacle = obstacle;
 }
 
-bool Node::getisObstacle()
+const bool& Node::getisObstacle() const
 {
     return isObstacle;
 }
@@ -33,7 +33,7 @@ void Node::setParent(Node *parent)
     this->parent = parent;
 }
 
-Node *Node::getParent()
+Node *Node::getParent() const
 {
     return parent;
 }
@@ -53,7 +53,7 @@ void Node::setNodepos(Vec2 pos)
     Nodepos = pos;
 }
 
-Vec2 Node::getNodepos()
+const Vec2& Node::getNodepos() const
 {
     return Nodepos;
 }
