@@ -13,7 +13,7 @@ public:
     //! \brief constructeur de la place.
     Place();
     //! \brief constructeur à paramètre de Place.
-    Place(Vec2 pos, int indP, bool isTaken);
+    Place(Vec2 pos, int indP);
     //! \brief destructeur de la place.
     ~Place();
     //! \brief position de la place.

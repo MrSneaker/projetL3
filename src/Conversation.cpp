@@ -131,6 +131,7 @@ bool Conversation::stockConv(const string &fileName)
         return false;
 }
 
+
 void Conversation::testRegression()
 {
     Conversation c, c1, c2;

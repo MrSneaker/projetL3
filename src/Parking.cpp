@@ -21,7 +21,7 @@ Parking::~Parking()
 
 // ACCESSEURS
 
-vector<Place> Parking::getPlacesTab()
+vector<Place> &Parking::getPlacesTab()
 {
     return placesTab;
 }
@@ -176,7 +176,7 @@ void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
     {
         for (int j = 0; j < nbPlCol; j++)
         {
-            Place p = Place(Vec2(PcornerX + j * 2, PcornerY + i * 3 + i), indPl, false);
+            Place p = Place(Vec2(PcornerX + j * 2, PcornerY + i * 3 + i), indPl);
             placesTab.push_back(p);
             indPl++;
         }

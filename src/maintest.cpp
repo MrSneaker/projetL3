@@ -54,8 +54,8 @@ int main(){
     time_t end = time(NULL);
 
 
-    Parking p1;
-    p1.testRegression();
+    //Parking p1;
+    //p1.testRegression();
 
     //Place P1;
     //P1.test_regresion();

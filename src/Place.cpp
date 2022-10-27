@@ -5,11 +5,11 @@ Place::Place()
 {
 }
 
-Place::Place(Vec2 p_pos, int p_indP, bool p_isTaken)
+Place::Place(Vec2 p_pos, int p_indP)
 {
     pos = p_pos;
     indP = p_indP;
-    isTaken = p_isTaken;
+    isTaken = false;
 }
 
 Place::~Place()
@@ -40,7 +40,7 @@ void Place::test_regresion()
 {
     std::cout << "test regression" << std::endl;
 
-    Place p2(Vec2(1, 2), 3, false);
+    Place p2(Vec2(1, 2), 3);
 
     std::cout << "p2.getPos().x = " << p2.getPos().x << std::endl;
     std::cout << "p2.getPos().y = " << p2.getPos().y << std::endl;

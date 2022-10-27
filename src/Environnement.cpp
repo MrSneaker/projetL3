@@ -378,8 +378,10 @@ void Environnement::test_regresion()
 	E.deleteConv(a);
 	assert(E.conv.size() == 0);
 	cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
-
-	// E.conversation(voitures[0],parkings[0]);
+	cout<<E.voitures.size()<<endl;
+	cout<<E.parkings.size()<<endl;
+	cout<<E.parkings.at(0).getId()<<endl;
+	E.conversation(E.voitures.at(0),E.parkings.at(0));
 
 	/*for(int i=0; i <E.voitures.size();i++)
 	{
