@@ -134,7 +134,7 @@ bool Voiture::MoveToTargetPosition()
     
 }
 
-Message Voiture::managingConversation(Message *aMessage)
+Message Voiture::managingConversation(Message *aMessage) const
 {
 
     string senderString = "User_" + to_string(User.getId());
@@ -198,9 +198,6 @@ Message Voiture::managingConversation(Message *aMessage)
                     // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A").
                     // Ce n'est pas une acceptation engageante. En effet, si par la suite, dans une conversation parallèle,
                     // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
-
-                    assert(nbEndedConversations >= 0 && nbEndedConversations <= 2);
-                    nbEndedConversations++;
                 }
 
                 else if (responseType != "LAST_OFFER")
@@ -229,8 +226,6 @@ Message Voiture::managingConversation(Message *aMessage)
                 {
                     chosenPrice = proposedParkPrice;
                     responseType = "ACCEPT";
-                    assert(nbEndedConversations >= 0 && nbEndedConversations <= 2);
-                    nbEndedConversations++;
                 }
             }
         }
@@ -246,18 +241,12 @@ Message Voiture::managingConversation(Message *aMessage)
                 // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A")
                 // (ce n'est pas une acceptation engageante). En effet, si par la suite, dans une conversation parallèle,
                 // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
-
-                assert(nbEndedConversations >= 0 && nbEndedConversations <= 2);
-                nbEndedConversations++;
             }
 
             else
             {
                 chosenPrice = -1;
                 responseType = "REJECT";
-
-                assert(nbEndedConversations >= 0 && nbEndedConversations <= 2);
-                nbEndedConversations++;
             }
         }
 
@@ -274,8 +263,6 @@ Message Voiture::managingConversation(Message *aMessage)
             //         qui lui permet d'identifier le parking) du parking, ainsi que le prix accepté, pour que la voiture
             //         puisse ensuite comparer les prix acceptés dans les différentes conversations, et ainsi se diriger
             //         vers le parking lui ayant proposé le meilleur prix.
-
-            nbEndedConversations++;
         }
 
         if (sentType == "REJECT")
@@ -284,8 +271,6 @@ Message Voiture::managingConversation(Message *aMessage)
             chosenPrice = -1;
             responseType = "REJECT";
 
-            assert(nbEndedConversations >= 0 && nbEndedConversations <= 2);
-            nbEndedConversations++;
         }
 
         unsigned int MessageNum = aMessage->getMessageNumber() + 1;

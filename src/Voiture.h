@@ -23,8 +23,8 @@ private:
     int parking;         // numéro du parking dans lequel la voiture est garée
     int place;           // numéro de la place dans lequel la voiture est garée
     int nbFinishedConv;  // nombre de conversation finis par voiture. 
-    float width;         // largeur de la voiture
-    float height;        // hauteur de la voiture
+    int width;         // largeur de la voiture
+    int height;        // hauteur de la voiture
     // float batterie; // batterie de la voiture
     // Couleur couleur; // Couleur de la voiture
     vector<Node *> pathTab; // tableau des noeuds du chemin
@@ -73,7 +73,7 @@ public:
     //! \brief  - LAST_OFFER
     //! \brief  - ACCEPT
     //! \brief  - REJECT
-    Message managingConversation(Message *aMessage);
+    Message managingConversation(Message *aMessage) const;
 
     void incrementNbFinishedConv();
 
@@ -106,9 +106,6 @@ public:
 
     //! \brief renvoie la vitesse de la voiture
     const float& getSpeed() const;
-
-    //! \brief renvoie le nombre de conversations achevées par la voiture
-    unsigned int getNbEndedConversations() const;
 
     const int& getNbFinishedConv() const;
 

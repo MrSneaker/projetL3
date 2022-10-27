@@ -312,7 +312,7 @@ void Environnement::Environnement_play()
 	// }
 	for (int i = 0; i < voitures.size(); i++)
 	{
-		Astar(voitures[i], 4700, GetNodeIndbyPos(voitures[i].getTargetPosition()));
+		//Astar(voitures[i], 4700, GetNodeIndbyPos(voitures[i].getTargetPosition()));
 
 		voitures[i].MoveToTargetPosition();
 		for (int j = 0; j < parkings.size(); j++)
