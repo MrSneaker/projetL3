@@ -42,7 +42,7 @@ int main(){
         }
     }
     time_t begin = time(NULL);
-    //Environnement Simulation;
+    Environnement Simulation;
 
     //Simulation.Environnement_play();
     //Simulation.test_regresion();

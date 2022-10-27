@@ -22,6 +22,7 @@ private:
     bool Is_pathfind;    // true si la voiture a trouvé un chemin
     int parking;         // numéro du parking dans lequel la voiture est garée
     int place;           // numéro de la place dans lequel la voiture est garée
+    int nbFinishedConv;  // nombre de conversation finis par voiture. 
     float width;         // largeur de la voiture
     float height;        // hauteur de la voiture
     // float batterie; // batterie de la voiture
@@ -73,6 +74,8 @@ public:
     //! \brief  - REJECT
     Message managingConversation(Message *aMessage) const;
 
+    void incrementNbFinishedConv();
+
     //! \brief Modifie la position de la cible (parking / place / sortie)
     void setTargetPosition(Vec2 new_pos);
 
@@ -102,6 +105,8 @@ public:
 
     //! \brief renvoie la vitesse de la voiture
     float getSpeed();
+
+    const int& getNbFinishedConv() const;
 
     //! \brief Modifie la vitesse de la voiture
     void setSpeed(float new_speed);

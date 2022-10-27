@@ -13,6 +13,7 @@
 #include <math.h>
 #include <string>
 #include <fstream>
+#include <thread>
 
 #define DimWindowX 1000
 #define DimWindowY 800

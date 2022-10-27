@@ -179,7 +179,7 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
 
 void Environnement::initUser()
 {
-	float price = random(20, 60) / 10;	  // on simule des floats en divisants par 10.
+	float price = (float)(random(20, 60) / 10);	  // on simule des floats en divisants par 10.
 	unsigned int id = conducteurs.size(); // Marche pas si on supprime un utilisateur du tableau et qu'on en rajoute un.
 	string name = "Paulo - " + to_string(id);
 
@@ -199,10 +199,10 @@ void Environnement::initParkings()
 	// Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir
 
 	// Créer 3 parkings et les ajouter dans le tableau de parkings
-	Parking p1(Vec2(1, 1), 189, 0.5, 1.5, 42, 37, 0);
+	Parking p1(Vec2(1, 1), 189, 2, 4.5, 42, 37, 0);
 
-	Parking p2(Vec2(57, 1), 189, 0.5, 1.5, 42, 37, 1);
-	Parking p3(Vec2(1, 52), 294, 0.5, 1.5, 98, 27, 2);
+	Parking p2(Vec2(57, 1), 189, 3, 3.5, 42, 37, 1);
+	Parking p3(Vec2(1, 52), 294, 5, 6, 98, 27, 2);
 	parkings.push_back(p1);
 	parkings.push_back(p2);
 	parkings.push_back(p3);
@@ -214,14 +214,13 @@ void Environnement::AddVoiture()
 	Voiture V(conducteurs[conducteurs.size() - 1]);
 	V.indice = voitures.size(); // TODO : Faire en sorte qu'ont ai un nombre fini de voiture, qui tourne en boucle pour la création
 
-
 	V.set_position(GetPosbyNodeInd(4700) + Vec2(5, 5)); // on place la voiture au milieu du noeud 4700
 	// TODO : Set la position aléatoire dans le terrain parmis les 3 entrées possibles -> cf :Schema de la map
 
 	unsigned int indiceParking = random(0, 3);
 	unsigned int indicePlace = random(0, parkings[indiceParking].getPlacesTab().size());
 	Vec2 Placepos = parkings[indiceParking].getPlacesTab()[indicePlace].getPos();
-	V.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5) ); // on place la cible au milieu de la place
+	V.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place
 	// TODO : La target sera ce que renvoie la communication avec le parking
 	V.setPlace(indicePlace);
 	voitures.push_back(V); // Ajout de la voiture dans le tableau de voitures
@@ -262,7 +261,6 @@ void Environnement::updateStateVoiture()
 				inParking = true;		   // La voiture est dans un parking
 				voitures[i].setParking(j); // on stock le numero du parking
 
-
 				int TargetPlacePosX = parkings[j].getPlacesTab()[voitures[i].getPlace()].getPos().x * 10; // Position de la place en x
 				int TargetPlacePosY = parkings[j].getPlacesTab()[voitures[i].getPlace()].getPos().y * 10; // Position de la place en y
 
@@ -272,12 +270,11 @@ void Environnement::updateStateVoiture()
 					parkings[j].getPlacesTab()[voitures[i].getPlace()].setIsTaken(true); // on met à jour l'état de la place
 
 					unsigned int NoeudPlace = GetNodeIndbyPos(Vec2(TargetPlacePosX, TargetPlacePosY));
-					nodes[NoeudPlace]->setisObstacle(true); // on met à jour l'état du noeud
-					nodes[NoeudPlace+100]->setisObstacle(true); // on met à jour l'état du noeud
+					nodes[NoeudPlace]->setisObstacle(true);		  // on met à jour l'état du noeud
+					nodes[NoeudPlace + 100]->setisObstacle(true); // on met à jour l'état du noeud
 
 					isInPlace = true; // La voiture est dans une place
 				}
-				
 			}
 			else
 			{
@@ -291,7 +288,6 @@ void Environnement::updateStateVoiture()
 			{
 				voitures[i].setIs_parked(true);
 				voitures[i].setAngle(0);
-
 			}
 			else
 				voitures[i].setIs_parked(false);
@@ -307,6 +303,18 @@ void Environnement::Environnement_play()
 	for (int i = 0; i < voitures.size(); i++)
 	{
 		voitures[i].MoveToTargetPosition();
+		for (int j = 0; j < parkings.size(); j++)
+		{
+			if (voitures[i].getNbFinishedConv() < 3)
+			{
+				thread convThread(&Environnement::conversation, this, voitures[i], parkings[j]);
+				if (convThread.joinable())
+				{
+					voitures[i].incrementNbFinishedConv();
+					convThread.join();
+				}
+			}
+		}
 	}
 	updateStateVoiture();
 }
@@ -344,7 +352,7 @@ void Environnement::conversation(Voiture v, Parking p)
 	bool isFinished = conv.at(indConv)->manageConv(p, v);
 	if (isFinished)
 	{
-		conv.at(indConv)->stockConv("Conversation U" + to_string(v.User.getId())+"P"+to_string(p.getId()));
+		conv.at(indConv)->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(p.getId()));
 		deleteConv(indConv);
 	}
 }
@@ -374,11 +382,11 @@ void Environnement::test_regresion()
 	assert(E.conv.size() == 0);
 	cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
 
-	for(int i=0; i <E.voitures.size();i++)
+	for (int i = 0; i < E.voitures.size(); i++)
 	{
-		for(int j=0;j<E.parkings.size();j++)
+		for (int j = 0; j < E.parkings.size(); j++)
 		{
-			E.conversation(E.voitures.at(i),E.parkings.at(j));
+			E.conversation(E.voitures.at(i), E.parkings.at(j));
 		}
 	}
 

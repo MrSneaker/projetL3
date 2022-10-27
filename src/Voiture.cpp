@@ -8,6 +8,7 @@ const int REDUCTION_FACTOR = 0.5;
 // Constructeur de la classe Voiture
 Voiture::Voiture()
 {
+
 }
 
 Voiture::Voiture(Utilisateur U)
@@ -24,6 +25,7 @@ Voiture::Voiture(Utilisateur U)
     height = 2;
     indice = 0;
     User = U;
+    nbFinishedConv = 0;
     pathTab.clear();
 }
 
@@ -191,7 +193,6 @@ Message Voiture::managingConversation(Message *aMessage) const
                     // [ou pour le parking ?]) de cette condition
 
                     chosenPrice = proposedParkPrice;
-
                     responseType = "ACCEPT";
                     // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A").
                     // Ce n'est pas une acceptation engageante. En effet, si par la suite, dans une conversation parallèle,
@@ -223,7 +224,6 @@ Message Voiture::managingConversation(Message *aMessage) const
             {
 
                 chosenPrice = proposedParkPrice;
-
                 responseType = "ACCEPT";
                 // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A")
                 // (ce n'est pas une acceptation engageante). En effet, si par la suite, dans une conversation parallèle,
@@ -241,7 +241,6 @@ Message Voiture::managingConversation(Message *aMessage) const
         {
 
             chosenPrice = proposedParkPrice;
-
             responseType = "ACCEPT";
             // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A")
             // (ce n'est pas une acceptation engageante). En effet, si par la suite, dans une conversation parallèle,
@@ -257,7 +256,6 @@ Message Voiture::managingConversation(Message *aMessage) const
         {
 
             chosenPrice = -1;
-
             responseType = "REJECT";
         }
 
@@ -306,6 +304,11 @@ void Voiture::UserGetInfos()
 float Voiture::getSpeed()
 {
     return speed;
+}
+
+const int& Voiture::getNbFinishedConv() const
+{
+    return nbFinishedConv;
 }
 
 void Voiture::setSpeed(float new_speed)
@@ -393,6 +396,10 @@ vector<Node *> &Voiture::getpathTab()
     return pathTab;
 }
 
+void Voiture::incrementNbFinishedConv()
+{
+    nbFinishedConv++;
+}
 
 
 // -----------------------------------------------------------------------------------------------
