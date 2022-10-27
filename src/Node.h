@@ -18,7 +18,6 @@ private:
     vector<Node *> VecNeighbours;
 
 public:
-    vector<Node *> nodes;
     bool open = false;
     float localGoal;
     float GlobalGoal;
@@ -32,19 +31,19 @@ public:
     void setisVisited(bool visited);
     //! \brief Fonction permettant de récupérer la valeur de isVisited
     //! \return isVisited
-    bool getisVisited();
+    const bool& getisVisited() const;
     //! \brief Fonction permettant de modifier la valeur de isObstacle
     //! \param obstacle valeur booléenne
     void setisObstacle(bool obstacle);
     //! \brief Fonction permettant de récupérer la valeur de isObstacle
     //! \return isObstacle
-    bool getisObstacle();
+    const bool& getisObstacle() const;
     //! \brief Fonction permettant de modifier la valeur de parent
     //! \param parent pointeur sur un noeud
     void setParent(Node *parent);
     //! \brief Fonction permettant de récupérer la valeur de parent
     //! \return parent
-    Node *getParent();
+    Node *getParent() const;
     //! \brief Fonction permettant de modifier la valeur de VecNeighbours
     //! \param VecNeighbours vecteur de pointeurs sur des nodes
     void setVecNeighbours(vector<Node *> VecNeighbours);
@@ -56,7 +55,7 @@ public:
     void setNodepos(Vec2 pos);
     //! \brief Fonction permettant de récupérer la valeur de Nodepos
     //! \return Nodepos
-    Vec2 getNodepos();
+    const Vec2& getNodepos() const;
 };
 
 #endif
