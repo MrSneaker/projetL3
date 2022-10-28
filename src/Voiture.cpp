@@ -15,7 +15,7 @@ Voiture::Voiture(Utilisateur U)
 {
     position = Vec2(0, 0);
     TargetPosition = Vec2(0, 0);
-    speed = 10;
+    speed = 2;
     Is_in = false;
     Is_parked = false;
     Is_pathfind = false;
@@ -39,6 +39,7 @@ Voiture::~Voiture()
 void Voiture::MoveRight()
 {
     position.x += speed;
+    isMoving = true;
     setAngle(270);
 }
 
@@ -46,6 +47,7 @@ void Voiture::MoveRight()
 void Voiture::MoveLeft()
 {
     position.x -= speed;
+    isMoving = true;
     setAngle(90);
 }
 
@@ -53,6 +55,7 @@ void Voiture::MoveLeft()
 void Voiture::MoveUp()
 {
     position.y += speed;
+    isMoving = true;
     setAngle(0);
 }
 
@@ -60,6 +63,7 @@ void Voiture::MoveUp()
 void Voiture::MoveDown()
 {
     position.y -= speed;
+    isMoving = true;
     setAngle(180);
 }
 
@@ -103,6 +107,7 @@ bool Voiture::MoveToTargetPosition()
 {
     if (pathTab.size() > 0)
     {
+
         Node *Current = pathTab[pathTab.size() - 1];
         if (Current->getNodepos().x * 10 + 5 > position.x)
         {
@@ -129,7 +134,7 @@ bool Voiture::MoveToTargetPosition()
             pathTab.pop_back();
         }
     }
-    
+    isMoving = false;
     return true;
     
 }
@@ -203,7 +208,7 @@ Message Voiture::managingConversation(Message *aMessage) const
                 else if (responseType != "LAST_OFFER")
                 {
 
-                    double chosenPriceTimes100 = reducedUserMaxPrice + deltaSup / 3 * 100;
+                    double chosenPriceTimes100 = (reducedUserMaxPrice + deltaSup / 3) * 100;
                     double roundedChosenPriceTimes100 = ceil (chosenPriceTimes100);
                     double chosenPriceMinusOneCentime = roundedChosenPriceTimes100 / 100;
                     /* Les 3 lignes ci-dessus permettent d'affecter la valeur reducedUserMaxPrice + deltaSup / 3

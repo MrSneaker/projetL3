@@ -266,7 +266,7 @@ Message Parking::managingConversation(Message *aMessage) const
 
                 else if (responseType != "LAST_OFFER")
                 {
-                    double chosenPriceTimes100 = startingPrice - deltaSup / 2 * 100;
+                    double chosenPriceTimes100 = (startingPrice - deltaSup / 2) * 100;
                     double roundedChosenPriceTimes100 = floor (chosenPriceTimes100);
                     double chosenPricePlusOneCentime = roundedChosenPriceTimes100 / 100;
                     /* Les 3 lignes ci-dessus permettent d'affecter la valeur startingPrice - deltaSup / 2

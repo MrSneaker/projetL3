@@ -33,6 +33,8 @@ private:
 public:
     Utilisateur User; // Utilisateur de la voiture
     int indice;
+    bool isMoving = false;
+    bool derement = true;
 
     Voiture();
 
