@@ -124,13 +124,31 @@ private:
 
 
 
+    double successPercentage;
+    // - Pourcentage de réussite des négociations du Parking
+
+    // - Ratio, en pourcentage, du nombre de négociations du Parking ayant abouti
+    // à un "ACCEPT" de la part de la Voiture, sur le nombre total de négociations
+    // du Parking.
+
+    // - A intervalles réguliers, le parking considerera cette donnée membre
+    // pour éventuellement modifier son minPrice et son startingPrice
+    // (fonction membre reconsiderPrices).
+
+    // TO DO : par la suite, pour reconsidérer ses prix, il faudra aussi que le
+    // Parking prenne en compte l'issue de ses "deuxièmes" conversations,
+    // celles dans lesquelles la Voiture et le Parking s'annoncent mutuellement
+    // s'ils se sont choisis ou non.
+
+
+
 
 
 
 public:
 
 
-    // CONSTRUCTEUR et DESTRUCTEUR
+    // CONSTRUCTEURS et DESTRUCTEUR
 
     //! \brief Constructeur parametre de la class parking
     //! \param position position du parking (position du rectangle en haut a gauche)
@@ -218,6 +236,9 @@ public:
     //! \brief ajoute une place au nombre de places dispo
     void incrementNbAvailablePlaces();
 
+    //! \brief met à jour le pourcentage de réussite des négociations du Parking
+    void updateSuccessPercentage ();
+
 
 
 
@@ -250,6 +271,12 @@ public:
     //! \brief  - ACCEPT
     //! \brief  - REJECT
     Message managingConversation (Message * aMessage) const;
+
+
+
+    //! \brief consideration de la donnée membre successPercentage
+    //! \brief puis modification éventuelle de minPrice et startingPrice en conséquence.
+    void reconsiderPrices ();
 
 
 
