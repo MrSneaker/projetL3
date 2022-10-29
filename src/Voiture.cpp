@@ -4,11 +4,9 @@
 #include <string.h>
 #include <math.h>
 
-
 // Constructeur de la classe Voiture
 Voiture::Voiture()
 {
-
 }
 
 Voiture::Voiture(Utilisateur U)
@@ -27,7 +25,7 @@ Voiture::Voiture(Utilisateur U)
     User = U;
     nbFinishedConv = 0;
     pathTab.clear();
-    nbEndedConversations = 0;
+    nbFinishedConv = 0;
 }
 
 // Destructeur de la classe Voiture
@@ -68,13 +66,13 @@ void Voiture::setAngle(int new_angle)
     angle = new_angle;
 }
 
-const int& Voiture::getAngle() const
+const int &Voiture::getAngle() const
 {
     return angle;
 }
 
 // Renvoie la position (x;y) de la voiture
-const Vec2& Voiture::get_position() const
+const Vec2 &Voiture::get_position() const
 {
     return position;
 }
@@ -91,7 +89,7 @@ void Voiture::setTargetPosition(Vec2 new_pos)
     TargetPosition = new_pos;
 }
 
-const Vec2& Voiture::getTargetPosition() const
+const Vec2 &Voiture::getTargetPosition() const
 {
     return TargetPosition;
 }
@@ -129,9 +127,8 @@ bool Voiture::MoveToTargetPosition()
             pathTab.pop_back();
         }
     }
-    
+
     return true;
-    
 }
 
 Message Voiture::managingConversation(Message *aMessage) const
@@ -204,7 +201,7 @@ Message Voiture::managingConversation(Message *aMessage) const
                 {
 
                     double chosenPriceTimes100 = reducedUserMaxPrice + deltaSup / 3 * 100;
-                    double roundedChosenPriceTimes100 = ceil (chosenPriceTimes100);
+                    double roundedChosenPriceTimes100 = ceil(chosenPriceTimes100);
                     double chosenPriceMinusOneCentime = roundedChosenPriceTimes100 / 100;
                     /* Les 3 lignes ci-dessus permettent d'affecter la valeur reducedUserMaxPrice + deltaSup / 3
                     à chosenPriceMinusOneCentime, mais arrondie au centime (i.e. au centième) supérieur. On fait cela car
@@ -215,7 +212,6 @@ Message Voiture::managingConversation(Message *aMessage) const
                     /* On ajoute 1 centime au prix pour être sûr que ce dernier ne stagne pas. */
 
                     responseType = "COUNTER_OFFER";
-                
                 }
             }
 
@@ -270,7 +266,6 @@ Message Voiture::managingConversation(Message *aMessage) const
 
             chosenPrice = -1;
             responseType = "REJECT";
-
         }
 
         unsigned int MessageNum = aMessage->getMessageNumber() + 1;
@@ -293,11 +288,21 @@ Message Voiture::managingConversation(Message *aMessage) const
     }
 }
 
-
-
-
-
-
+float Voiture::bestPrice(vector<float> tabPrice)
+{
+    float min = 999999999;
+    float tmp = 0;
+    for (int i = 0; i < tabPrice.size(); i++)
+    {
+        if (tabPrice[i] < min)
+        {
+            if (tabPrice[i] != tmp)
+                min = tabPrice[i];
+        }
+        tmp = tabPrice[i];
+    }
+    return min;
+}
 
 bool Voiture::isPriceOk(double price, Utilisateur User) const
 {
@@ -321,12 +326,12 @@ void Voiture::UserGetInfos()
     std::cout << "Prix max : " << User.getMaxPrice() << std::endl;
 }
 
-const float& Voiture::getSpeed() const 
+const float &Voiture::getSpeed() const
 {
     return speed;
 }
 
-const int& Voiture::getNbFinishedConv() const
+const int &Voiture::getNbFinishedConv() const
 {
     return nbFinishedConv;
 }
@@ -341,7 +346,7 @@ void Voiture::setIs_in(bool new_is_in)
     Is_in = new_is_in;
 }
 
-const bool& Voiture::getIs_in() const 
+const bool &Voiture::getIs_in() const
 {
     return Is_in;
 }
@@ -351,7 +356,7 @@ void Voiture::setIs_parked(bool new_is_parked)
     Is_parked = new_is_parked;
 }
 
-const bool& Voiture::getIs_parked() const 
+const bool &Voiture::getIs_parked() const
 {
     return Is_parked;
 }
@@ -361,7 +366,7 @@ void Voiture::setParking(int new_parking)
     parking = new_parking;
 }
 
-const int& Voiture::getParking() const
+const int &Voiture::getParking() const
 {
     return parking;
 }
@@ -370,7 +375,7 @@ void Voiture::setIs_pathfind(bool new_is_pathfind)
     Is_pathfind = new_is_pathfind;
 }
 
-const bool& Voiture::getIs_pathfind() const 
+const bool &Voiture::getIs_pathfind() const
 {
     return Is_pathfind;
 }
@@ -382,7 +387,7 @@ void Voiture::setPlace(int new_place)
 }
 
 // get place
-const int& Voiture::getPlace() const
+const int &Voiture::getPlace() const
 {
     return place;
 }
@@ -394,7 +399,7 @@ void Voiture::setwidth(int new_width)
 }
 
 // get Width
-const int& Voiture::getwidth() const
+const int &Voiture::getwidth() const
 {
     return width;
 }
@@ -406,7 +411,7 @@ void Voiture::setheight(int new_height)
 }
 
 // get Height
-const int& Voiture::getheight() const
+const int &Voiture::getheight() const
 {
     return height;
 }
@@ -420,7 +425,6 @@ void Voiture::incrementNbFinishedConv()
 {
     nbFinishedConv++;
 }
-
 
 // -----------------------------------------------------------------------------------------------
 // Test de regression la classe Voiture

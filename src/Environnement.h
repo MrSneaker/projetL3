@@ -90,14 +90,16 @@ public:
     //! \brief 0 = case libre, 1 = case obstacle
     void getMap();
 
-    // on créé une conv quand on veut communiquer.
+    //! \brief on créé une conv quand on veut communiquer.
     int createConv();
 
-    // pour suppr une conv après utilisation
+    int chosenPark(vector<Conversation *> conv, Voiture v);
+
+    //! \brief pour suppr une conv après utilisation
     void deleteConv(int ind);
 
-    // pour réaliser la conversation.
-    void conversation(Voiture v, Parking p);
+    //! \brief pour réaliser la conversation.
+    void conversation(Voiture v);
 
     //! \brief Test de regression de la classe Environnement
     void test_regresion();

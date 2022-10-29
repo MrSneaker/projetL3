@@ -181,8 +181,8 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
 
 void Environnement::initUser()
 {
-	float price = (float)(random(20, 60) / 10);	  // on simule des floats en divisants par 10.
-	unsigned int id = conducteurs.size(); // Marche pas si on supprime un utilisateur du tableau et qu'on en rajoute un.
+	float price = (float)(random(20, 60) / 10); // on simule des floats en divisants par 10.
+	unsigned int id = conducteurs.size();		// Marche pas si on supprime un utilisateur du tableau et qu'on en rajoute un.
 	string name = "Paulo - " + to_string(id);
 
 	// On attribue à l'utilisateur (que l'on crée juste après) un entier initial aléatoire (entre 0 et 5)
@@ -305,26 +305,23 @@ void Environnement::Environnement_play()
 	// int prevtemp = current_time;
 	// current_time = temps;
 	// int deltatime = (current_time - prevtemp);
-	
+
 	// if((deltatime) == 5000)
 	// {
 	// 	AddVoiture();
 	// }
 	for (int i = 0; i < voitures.size(); i++)
 	{
-		//Astar(voitures[i], 4700, GetNodeIndbyPos(voitures[i].getTargetPosition()));
+		// Astar(voitures[i], 4700, GetNodeIndbyPos(voitures[i].getTargetPosition()));
 
 		voitures[i].MoveToTargetPosition();
-		for (int j = 0; j < parkings.size(); j++)
+		if (voitures[i].getNbFinishedConv() < 1)
 		{
-			if (voitures[i].getNbFinishedConv() < 3)
+			thread convThread(&Environnement::conversation, this, voitures[i]);
+			if (convThread.joinable())
 			{
-				thread convThread(&Environnement::conversation, this, voitures[i], parkings[j]);
-				if (convThread.joinable())
-				{
-					voitures[i].incrementNbFinishedConv();
-					convThread.join();
-				}
+				voitures[i].incrementNbFinishedConv();
+				convThread.join();
 			}
 		}
 	}
@@ -358,15 +355,56 @@ void Environnement::deleteConv(int ind)
 	conv.erase(conv.begin() + ind);
 }
 
-void Environnement::conversation(Voiture v, Parking p)
+void Environnement::conversation(Voiture v)
 {
-	int indConv = createConv();
-	bool isFinished = conv.at(indConv)->manageConv(p, v);
-	if (isFinished)
+	int indConv[parkings.size()];
+	for (int i = 0; i < parkings.size(); i++)
 	{
-		conv.at(indConv)->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(p.getId()));
-		deleteConv(indConv);
+		indConv[i] = createConv();
+		bool isFinished = conv.at(indConv[i])->manageConv(parkings[i], v);
+		if (isFinished)
+		{
+			conv.at(indConv[i])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[i].getId()));
+		}
 	}
+	chosenPark(conv, v);
+	for (int j = 0; j < parkings.size(); j++)
+	{
+		deleteConv(indConv[parkings.size() - 1 - j]);
+	}
+}
+
+int Environnement::chosenPark(vector<Conversation *> c, Voiture v)
+{
+	string bestSender = "";
+	int idBest;
+	vector<float> tabPrice;
+	for (int i = 0; i < c.size(); i++)
+	{
+		if (c.at(i)->getConv().at(c.at(i)->getConv().size() - 1).getSubject() == "ACCEPT")
+			tabPrice.push_back(c.at(i)->getConv().at(c.at(i)->getConv().size() - 1).getPrice());
+	}
+	float best = v.bestPrice(tabPrice);
+	for (int j = 0; j < c.size(); j++)
+	{
+		float tmp = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getPrice();
+		if (best == tmp)
+		{
+			bestSender = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getSender();
+		}
+	}
+	const char *charbestSender = bestSender.c_str();
+	while (*charbestSender)
+	{
+		if ((*charbestSender >= '0') && (*charbestSender <= '9'))
+
+		{
+			idBest = atoi(charbestSender);
+		}
+
+		charbestSender++;
+	}
+	return idBest;
 }
 
 void Environnement::test_regresion()
@@ -396,10 +434,7 @@ void Environnement::test_regresion()
 
 	for (int i = 0; i < E.voitures.size(); i++)
 	{
-		for (int j = 0; j < E.parkings.size(); j++)
-		{
-			E.conversation(E.voitures.at(i), E.parkings.at(j));
-		}
+		E.conversation(E.voitures.at(i));
 	}
 
 	/*// Affiche les infos du noeud 47

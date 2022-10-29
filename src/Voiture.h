@@ -28,7 +28,6 @@ private:
     // float batterie; // batterie de la voiture
     // Couleur couleur; // Couleur de la voiture
     vector<Node *> pathTab; // tableau des noeuds du chemin
-    unsigned int nbEndedConversations; // nombre de conversations achevées
 
 public:
     Utilisateur User; // Utilisateur de la voiture
@@ -75,6 +74,7 @@ public:
     //! \brief  - REJECT
     Message managingConversation(Message *aMessage) const;
 
+    //! \brief incrémente le nombre de conversation fini de 1.
     void incrementNbFinishedConv();
 
     //! \brief Modifie la position de la cible (parking / place / sortie)
@@ -142,8 +142,11 @@ public:
 
     vector<Node *> &getpathTab();
 
+    float bestPrice(vector<float> tabPrice);
+
     //! \brief Test de regression la classe Voiture
     void test_regresion();
+
 };
 
 #endif
