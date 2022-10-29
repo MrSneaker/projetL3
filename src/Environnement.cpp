@@ -369,7 +369,7 @@ void Environnement::Environnement_play()
         {
             if (voitures[i].getNbFinishedConv() < 1)
             {
-                thread convThread(&Environnement::conversation, this, voitures[i], parkings[j]);
+                thread convThread(&Environnement::conversation, this, voitures[i]);
                 if (convThread.joinable())
                 {
                     voitures[i].incrementNbFinishedConv();
