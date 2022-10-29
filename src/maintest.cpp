@@ -40,8 +40,8 @@ int main(){
     //Place P1;
     //P1.test_regresion();
 
-    //Conversation c;
-    //c.testRegression();
+    Conversation c;
+    c.testRegression();
     //cout<<"Temps de calcul = "<<end-begin<<" secondes"<<endl;
     return 0;
 }

@@ -160,20 +160,20 @@ void Affichage::AffichagePlateau()
     //     }
     // }
 
-    for (int i = 0; i < environnement.voitures.size(); i++)
-    {
-        for (int j = 0; j < environnement.voitures[i].getpathTab().size(); j++)
-        {
-            SDL_Rect rect;
-            rect.x = environnement.voitures[i].getpathTab()[j]->getNodepos().x * 10;
-            rect.y = environnement.voitures[i].getpathTab()[j]->getNodepos().y * 10;
-            rect.w = 10;
-            rect.h = 10;
-            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-            SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
-            SDL_RenderFillRect(renderer, &rect);
-        }
-    }
+    // for (int i = 0; i < environnement.voitures.size(); i++)
+    // {
+    //     for (int j = 0; j < environnement.voitures[i].getpathTab().size(); j++)
+    //     {
+    //         SDL_Rect rect;
+    //         rect.x = environnement.voitures[i].getpathTab()[j]->getNodepos().x * 10;
+    //         rect.y = environnement.voitures[i].getpathTab()[j]->getNodepos().y * 10;
+    //         rect.w = 10;
+    //         rect.h = 10;
+    //         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    //         SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
+    //         SDL_RenderFillRect(renderer, &rect);
+    //     }
+    // }
 
     //------------------ Affiche menu ------------------
     SDL_Rect Menu;
@@ -200,25 +200,13 @@ void Affichage::AffichageSimulation()
 
     while (display)
     {
-
-        // Met le jeu en pause pdt 10ms pour avoir quelquechose comme 100fps
-
-        // // Affiche les fps dans la console
-        // frames++;
-        // totalFrames++;
+         // Affiche les fps dans la console
         
-        // // fonction de frametime
-        // prevtime = currenttime;
-        // currenttime = SDL_GetTicks();
-        // deltatime = (currenttime - prevtime) / 1000.f;
-        // frametime += deltatime;
-        // environnement.temps = 0;
-        // int temps1;
         
-        // //===============Afficher le temps===================================================
+        //===============Afficher le temps===================================================
 
-        // // récup le temps toute les nanosecondes
-        // environnement.temps = SDL_GetTicks() - beginTick;
+        environnement.temps = ((SDL_GetTicks() - beginTick)); // récup le temps toute les secondes
+
        
 
 
@@ -258,7 +246,6 @@ void Affichage::AffichageSimulation()
                     display = false;
                     break;
                 case SDLK_SPACE:
-                    environnement.AddVoiture();
                     lanceSim = true;
                     break;
                 }
@@ -302,15 +289,6 @@ void Affichage::AffichageSimulation()
             {
                 environnement.voitures[i].setwidth(20);
                 environnement.voitures[i].setheight(30);
-            }
-        }
-        if (lanceSim == true)
-        {
-            for (int i = 0; i < environnement.voitures.size(); i++)
-            {
-                environnement.Astar(environnement.voitures[i], 4700, environnement.GetNodeIndbyPos(environnement.voitures[i].getTargetPosition()));
-
-                lanceSim = false;
             }
         }
 

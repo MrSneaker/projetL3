@@ -5,7 +5,7 @@
 Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice, int DIMX, int DIMY, int id)
     : pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice),
       startingPrice(startPrice), nbAvailablePlaces(numberOfPlaces),
-      isFull(false), nbTotalVisits(0), DIMX(DIMX), DIMY(DIMY), idP(id)
+      isFull(false), nbTotalVisits(0), DIMX(DIMX), DIMY(DIMY), idP(id), successPercentage (100)
 {
 
     initPlace(1, 1, position.x + 1, position.y + 1);
@@ -105,6 +105,14 @@ void Parking::incrementNbAvailablePlaces()
 {
     nbAvailablePlaces++;
     IsFull();
+}
+
+void Parking::updateSuccessPercentage ()
+{
+    // TO DO : implémenter cette fonction. Son implémentation dépendera de
+    //         la manière dont sont stockés le nombre de négociations du Parking
+    //         ayant abouti à un "ACCEPT" de la part de la Voiture, ainsi que le
+    //         nombre total de négociations du Parking.
 }
 
 void Parking::setMinPrice(float minimumPrice)
@@ -266,7 +274,7 @@ Message Parking::managingConversation(Message *aMessage) const
 
                 else if (responseType != "LAST_OFFER")
                 {
-                    double chosenPriceTimes100 = startingPrice - deltaSup / 2 * 100;
+                    double chosenPriceTimes100 = (startingPrice - deltaSup / 2) * 100;
                     double roundedChosenPriceTimes100 = floor (chosenPriceTimes100);
                     double chosenPricePlusOneCentime = roundedChosenPriceTimes100 / 100;
                     /* Les 3 lignes ci-dessus permettent d'affecter la valeur startingPrice - deltaSup / 2
@@ -358,6 +366,20 @@ Message Parking::managingConversation(Message *aMessage) const
         // car la voiture ne fait qu'avertir le parking qu'elle veut démarrer une négociation avec lui.
 
         return newMessage;
+    }
+}
+
+
+
+
+
+
+void Parking::reconsiderPrices ()
+{
+    if (successPercentage < 80) {
+        float reduction = (80 - successPercentage)/100 * minPrice;
+        setMinPrice (minPrice - reduction);
+        setStartingPrice (startingPrice - reduction);
     }
 }
 

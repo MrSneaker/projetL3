@@ -32,7 +32,13 @@ private:
     Node *endNode;
     Node *currentNode;
     bool endNodeReached = false;
-    int step = 0;
+    unsigned int frames = 0;
+    float frametime = 0.f;
+    unsigned int prevtime = 0;
+    unsigned int currenttime = 0;
+    float deltaTime = 0.f;
+
+
 
     // on veut gérer les convs dynamiquement
     vector<Conversation *> conv;
@@ -100,6 +106,12 @@ public:
 
     //! \brief pour réaliser la conversation.
     void conversation(Voiture v);
+
+    //Fonction qui permet de revoyer l'indice d'une place d'un des 3 parkings sauf si celui-ci est plein et que la place est prise
+    int getPlaceInd(int parkingInd);
+
+    int getParkingInd();
+
 
     //! \brief Test de regression de la classe Environnement
     void test_regresion();
