@@ -206,7 +206,7 @@ Message Voiture::managingConversation(Message *aMessage) const
                 {
 
                     double chosenPriceTimes100 = (reducedUserMaxPrice + deltaSup / 3) * 100;
-                    double roundedChosenPriceTimes100 = ceil (chosenPriceTimes100);
+                    double roundedChosenPriceTimes100 = ceil(chosenPriceTimes100);
                     double chosenPriceMinusOneCentime = roundedChosenPriceTimes100 / 100;
                     /* Les 3 lignes ci-dessus permettent d'affecter la valeur reducedUserMaxPrice + deltaSup / 3
                     à chosenPriceMinusOneCentime, mais arrondie au centime (i.e. au centième) supérieur. On fait cela car
@@ -291,6 +291,36 @@ Message Voiture::managingConversation(Message *aMessage) const
 
         return newMessage;
     }
+}
+
+Message Voiture::confirmConversation(Message *aMessage, int indPrOK) const
+{
+    string senderString = "User_" + to_string(User.getId());
+    string recipientString = aMessage->getSender();
+    unsigned int messageNum = aMessage->getMessageNumber() + 1;
+    double price = aMessage->getPrice();
+    string subject;
+    int indPr;
+    const char *charSender = recipientString.c_str();
+    while (*charSender)
+    {
+        if ((*charSender >= '0') && (*charSender <= '9'))
+
+        {
+            indPr = atoi(charSender);
+        }
+
+        charSender++;
+    }
+    if (indPr == indPrOK)
+    {
+        subject = "CONFIRM_ACCEPT";
+    }
+    else
+    {
+        subject = "RENOUNCE";
+    }
+    return Message(messageNum,price,subject,senderString,recipientString);
 }
 
 float Voiture::bestPrice(vector<float> tabPrice)

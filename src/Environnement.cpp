@@ -325,7 +325,7 @@ void Environnement::updateStateVoiture()
                 if (voitures[i].derement == true)
                 {
                     parkings[voitures[i].getParking()].decrementNbAvailablePlaces();
-                    //cout << "Nb place libre : " << parkings[voitures[i].getParking()].getNbAvailablePlaces() << endl;
+                    // cout << "Nb place libre : " << parkings[voitures[i].getParking()].getNbAvailablePlaces() << endl;
                     voitures[i].derement = false;
                 }
 
@@ -361,7 +361,7 @@ void Environnement::Environnement_play()
         }
         if (voitures[i].getpathTab().size() == 0 && voitures[i].getIs_parked() == false)
         {
-            //cout << "La voiture " << i << " n'a pas de chemin" << endl;
+            // cout << "La voiture " << i << " n'a pas de chemin" << endl;
             RemoveVoiture(i);
         }
         voitures[i].MoveToTargetPosition();
@@ -410,54 +410,56 @@ void Environnement::deleteConv(int ind)
 
 void Environnement::conversation(Voiture v)
 {
-	int indConv[parkings.size()];
-	for (int i = 0; i < parkings.size(); i++)
-	{
-		indConv[i] = createConv();
-		bool isFinished = conv.at(indConv[i])->manageConv(parkings[i], v);
-		if (isFinished)
-		{
-			conv.at(indConv[i])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[i].getId()));
-		}
-	}
-	chosenPark(conv, v);
-	for (int j = 0; j < parkings.size(); j++)
-	{
-		deleteConv(indConv[parkings.size() - 1 - j]);
-	}
+    int indConv[parkings.size()];
+    bool isFinished = false;
+    for (int i = 0; i < parkings.size(); i++)
+    {
+        indConv[i] = createConv();
+        isFinished = conv.at(indConv[i])->manageConv(parkings[i], v);
+    }
+    int indPchosen = chosenPark(conv, v);
+    for (int j = 0; j < parkings.size(); j++)
+    {
+        conv.at(indConv[parkings.size() - 1 - j])->sendConfirmation(v,indPchosen);
+        if (isFinished)
+        {
+            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[j].getId()));
+        }
+        deleteConv(indConv[parkings.size() - 1 - j]);
+    }
 }
 
 int Environnement::chosenPark(vector<Conversation *> c, Voiture v)
 {
-	string bestSender = "";
-	int idBest;
-	vector<float> tabPrice;
-	for (int i = 0; i < c.size(); i++)
-	{
-		if (c.at(i)->getConv().at(c.at(i)->getConv().size() - 1).getSubject() == "ACCEPT")
-			tabPrice.push_back(c.at(i)->getConv().at(c.at(i)->getConv().size() - 1).getPrice());
-	}
-	float best = v.bestPrice(tabPrice);
-	for (int j = 0; j < c.size(); j++)
-	{
-		float tmp = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getPrice();
-		if (best == tmp)
-		{
-			bestSender = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getSender();
-		}
-	}
-	const char *charbestSender = bestSender.c_str();
-	while (*charbestSender)
-	{
-		if ((*charbestSender >= '0') && (*charbestSender <= '9'))
+    string bestSender = "";
+    int idBest;
+    vector<float> tabPrice;
+    for (int i = 0; i < c.size(); i++)
+    {
+        if (c.at(i)->getConv().at(c.at(i)->getConv().size() - 1).getSubject() == "ACCEPT")
+            tabPrice.push_back(c.at(i)->getConv().at(c.at(i)->getConv().size() - 1).getPrice());
+    }
+    float best = v.bestPrice(tabPrice);
+    for (int j = 0; j < c.size(); j++)
+    {
+        float tmp = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getPrice();
+        if (best == tmp)
+        {
+            bestSender = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getSender();
+        }
+    }
+    const char *charbestSender = bestSender.c_str();
+    while (*charbestSender)
+    {
+        if ((*charbestSender >= '0') && (*charbestSender <= '9'))
 
-		{
-			idBest = atoi(charbestSender);
-		}
+        {
+            idBest = atoi(charbestSender);
+        }
 
-		charbestSender++;
-	}
-	return idBest;
+        charbestSender++;
+    }
+    return idBest;
 }
 
 void Environnement::test_regresion()
@@ -485,10 +487,10 @@ void Environnement::test_regresion()
     assert(E.conv.size() == 0);
     cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
 
-	for (int i = 0; i < E.voitures.size(); i++)
-	{
-		E.conversation(E.voitures.at(i));
-	}
+    for (int i = 0; i < E.voitures.size(); i++)
+    {
+        E.conversation(E.voitures.at(i));
+    }
 
     /*// Affiche les infos du noeud 47
     cout << "Noeud 47 : " << endl;

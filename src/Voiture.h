@@ -76,6 +76,8 @@ public:
     //! \brief  - REJECT
     Message managingConversation(Message *aMessage) const;
 
+    Message confirmConversation(Message *aMessage,int indPrOK) const;
+
     //! \brief incrémente le nombre de conversation fini de 1.
     void incrementNbFinishedConv();
 

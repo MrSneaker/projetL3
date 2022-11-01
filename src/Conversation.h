@@ -46,6 +46,8 @@ public:
     //! \param v une voiture.
     void sendMessageVoiture(Voiture v);
 
+    void sendConfirmation(Voiture v, int indPrOK);
+
     //! \brief Fait appel à manageConversation dans Parking pour écrire un message approprié à l'état de la conversation.
     //! \param p un parking.
     void sendMessageParking(Parking p);
