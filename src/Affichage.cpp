@@ -227,12 +227,8 @@ void Affichage::AffichageSimulation()
             }
         }
         if (ispress == true)
-        {
-                    if (isapress == true)
-                    {
-                        cout<<"X : "<<XC<<" Y : "<<YC<<endl;
-                        environnement.AddVoiture();
-                    }
+        {   
+            //Actions:
 
             isapress = false;
             ispress = false;

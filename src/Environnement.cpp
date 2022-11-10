@@ -377,12 +377,12 @@ void Environnement::Environnement_play()
     deltaTime = (currenttime - prevtime) / 1000.f;
     frametime += deltaTime;
     frameParkTime += deltaTime;
-    // Affiche une voiture toutes les 10 secondes un seul fois
-    // if (frametime == 5.0f)
-    // {
-    //     AddVoiture();
-    //     frametime = 0;
-    // }
+    //Affiche une voiture toutes les 10 secondes un seul fois
+    if (frametime >= 5.0f)
+    {
+        AddVoiture();
+        frametime = 0;
+    }
 
     for (int i = 0; i < voitures.size(); i++)
     {
@@ -397,6 +397,7 @@ void Environnement::Environnement_play()
         {
             //la voiture sort du parking
             voitures[i].setIs_parked(false);
+
             int Exit = GetEntry();
             Astar(voitures[i], GetNodeIndbyPos(voitures[i].get_position()), Exit);
             voitures[i].changetraj = true;
