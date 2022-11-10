@@ -34,9 +34,11 @@ private:
     bool endNodeReached = false;
     unsigned int frames = 0;
     float frametime = 0.f;
+    float frameParkTime = 0.f;
     unsigned int prevtime = 0;
     unsigned int currenttime = 0;
     float deltaTime = 0.f;
+
 
 
 
@@ -45,7 +47,7 @@ private:
 
 public:
     string map[DimWindowX / tailleCase * DimWindowY / tailleCase];
-    vector<Node *> nodes;
+    
     vector<Voiture> voitures;
     vector<Parking> parkings;
     vector<Utilisateur> conducteurs;
@@ -68,10 +70,12 @@ public:
     ~Environnement();
 
     //! \brief Fonction permettant de retourner la position d'une case a partir de son indice
-    Vec2 GetPosbyNodeInd(int indiceCase);
+    Vec2 GetPosbyNodeInd(int indiceCase) const; 
 
     //! \brief Fonction permettant de retourner l'indice d'une case a partir de sa position
-    int GetNodeIndbyPos(Vec2 pos);
+    int GetNodeIndbyPos(Vec2 pos) const;
+
+    const int GetEntry();
 
     //! \brief Initialisation d'un utilisateur, puis ajout dans le tableau de conducteurs.
     void initUser();

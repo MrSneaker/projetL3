@@ -31,3 +31,11 @@ Vec2 Vec2::operator*(Vec2 New_vec)
     result.y = this->y * New_vec.y;
     return result;
 }
+
+Vec2 Vec2::operator*(float New_float)
+{
+    Vec2 result;
+    result.x = this->x * New_float;
+    result.y = this->y * New_float;
+    return result;
+}

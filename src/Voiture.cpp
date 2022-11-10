@@ -17,11 +17,14 @@ Voiture::Voiture(Utilisateur U)
     Is_in = false;
     Is_parked = false;
     Is_pathfind = false;
+    changetraj = false;
     parking = 0;
     place = 0;
     width = 1;
     height = 2;
     indice = 0;
+    startTimer = 0;
+    timer = 0;
     User = U;
     nbFinishedConv = 0;
     pathTab.clear();

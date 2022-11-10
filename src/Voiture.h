@@ -34,6 +34,10 @@ public:
     int indice;
     bool isMoving = false;
     bool derement = true;
+    float timer;
+    float startTimer;
+    bool dejaspawn = false;
+    bool changetraj = false;
 
     Voiture();
 
