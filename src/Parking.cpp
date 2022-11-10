@@ -5,7 +5,7 @@
 Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice, int DIMX, int DIMY, int id)
     : pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice),
       startingPrice(startPrice), nbAvailablePlaces(numberOfPlaces),
-      isFull(false), nbTotalVisits(0), DIMX(DIMX), DIMY(DIMY), idP(id), successPercentage (100)
+      isFull(false), nbTotalVisits(0), DIMX(DIMX), DIMY(DIMY), idP(id), successPercentage(100), profit(0)
 {
 
     initPlace(1, 1, position.x + 1, position.y + 1);
@@ -44,6 +44,11 @@ int Parking::getMinPrice() const
 int Parking::getStartingPrice() const
 {
     return startingPrice;
+}
+
+const double &Parking::getProfit() const
+{
+    return profit;
 }
 
 const int &Parking::getDIMX() const
@@ -107,7 +112,7 @@ void Parking::incrementNbAvailablePlaces()
     IsFull();
 }
 
-void Parking::updateSuccessPercentage ()
+void Parking::updateSuccessPercentage()
 {
     // TO DO : implémenter cette fonction. Son implémentation dépendera de
     //         la manière dont sont stockés le nombre de négociations du Parking
@@ -124,10 +129,6 @@ void Parking::setStartingPrice(float startPrice)
 {
 
     startingPrice = startPrice;
-}
-
-void Parking::setConversationsTab()
-{
 }
 
 void Parking::addUsersTab(Utilisateur unUtilisateur)
@@ -159,11 +160,11 @@ void Parking::incrementNbTotalVisits()
     nbTotalVisits++;
 }
 
-void Parking::incrementNbVisitsTab(Utilisateur *unUtilisateur)
+void Parking::incrementNbVisitsTab(Utilisateur unUtilisateur)
 {
     for (int i = 0; i < usersTab.size(); i++)
     {
-        if (usersTab.at(i).second.getId() == unUtilisateur->getId())
+        if (usersTab.at(i).second.getId() == unUtilisateur.getId())
         {
             usersTab.at(i).first++;
         }
@@ -275,7 +276,7 @@ Message Parking::managingConversation(Message *aMessage) const
                 else if (responseType != "LAST_OFFER")
                 {
                     double chosenPriceTimes100 = (startingPrice - deltaSup / 2) * 100;
-                    double roundedChosenPriceTimes100 = floor (chosenPriceTimes100);
+                    double roundedChosenPriceTimes100 = floor(chosenPriceTimes100);
                     double chosenPricePlusOneCentime = roundedChosenPriceTimes100 / 100;
                     /* Les 3 lignes ci-dessus permettent d'affecter la valeur startingPrice - deltaSup / 2
                     à chosenPricePlusOneCentime, mais arrondie au centime (i.e. au centième) inférieur. On fait cela car
@@ -369,26 +370,60 @@ Message Parking::managingConversation(Message *aMessage) const
     }
 }
 
-
-
-
-
-
-void Parking::reconsiderPrices ()
+Message Parking::confirmConversation(Message *aMessage)
 {
-    if (successPercentage < 80) {
-        float reduction = (80 - successPercentage)/100 * minPrice;
-        setMinPrice (minPrice - reduction);
-        setStartingPrice (startingPrice - reduction);
+    string senderString = "Car_Park_" + to_string(getId());
+    string recipientString = aMessage->getSender();
+    unsigned int messageNum = aMessage->getMessageNumber() + 1;
+    double price = aMessage->getPrice();
+    string subject;
+
+    if (aMessage->getSubject() == "CONFIRM_ACCEPT")
+    {
+        subject = "OK_TO_PARK";
+        unsigned int idU = extractIntFromString(recipientString);
+        for (int i = 0; i < usersTab.size(); i++)
+        {
+            if (usersTab[i].first == idU)
+            {
+                incrementNbVisitsTab(usersTab[i].second);
+            }
+        }
+        profit += price;
+    }
+    else
+    {
+        subject = "ABORT";
+    }
+    return Message(messageNum,price,subject,senderString,recipientString);
+}
+
+void Parking::reconsiderPrices()
+{
+    if (successPercentage < 80)
+    {
+        float reduction = (80 - successPercentage) / 100 * minPrice;
+        setMinPrice(minPrice - reduction);
+        setStartingPrice(startingPrice - reduction);
     }
 }
 
+int Parking::extractIntFromString(string aString) const
+{
+    const char *charString = aString.c_str();
+    int anInt;
+    while (*charString)
+    {
+        if ((*charString >= '0') && (*charString <= '9'))
 
+        {
+            anInt = atoi(charString);
+        }
 
-
-
-
-
+        charString++;
+    }
+    return anInt;
+}
 
 void Parking::testRegression()
 {
@@ -417,8 +452,8 @@ void Parking::testRegression()
     p1.addUsersTab(u1);
     assert(p1.usersTab.size() == 2);
     assert(p1.usersTab.at(0).second.getId() == 1);
-    p1.incrementNbVisitsTab(&u1);
-    p1.incrementNbVisitsTab(&u1);
+    p1.incrementNbVisitsTab(u1);
+    p1.incrementNbVisitsTab(u1);
     assert(p1.getUsersTab().at(0).first == 2);
     assert(p1.nbTotalVisits == 2);
 }

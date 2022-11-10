@@ -42,6 +42,8 @@ public:
 
     ~Voiture();
 
+    int extractIntFromString(string aString) const;
+
     //! \brief Déplace la voiture vers la droite
     void MoveRight();
 

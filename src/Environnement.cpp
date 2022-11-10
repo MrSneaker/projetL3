@@ -20,6 +20,7 @@ int Environnement::random(int min, int max) // fonction permettant de renvoyer u
 
 Environnement::Environnement()
 {
+    removeLogs();
     initNodes();
     initParkings();
 }
@@ -203,8 +204,8 @@ void Environnement::initParkings()
     // Créer 3 parkings et les ajouter dans le tableau de parkings
     Parking p1(Vec2(1, 1), 180, 2, 4.5, 42, 36, 0);
 
-    Parking p2(Vec2(57, 1), 180, 3, 3.5, 42, 36, 1);
-    Parking p3(Vec2(1, 52), 240, 5, 6, 98, 27, 2);
+    Parking p2(Vec2(57, 1), 180, 99, 99, 42, 36, 1);
+    Parking p3(Vec2(1, 52), 240, 99, 99, 98, 27, 2);
     parkings.push_back(p1);
     parkings.push_back(p2);
     parkings.push_back(p3);
@@ -284,7 +285,7 @@ void Environnement::updateStateVoiture()
 
             int VoiturePosX = voitures[i].get_position().x;   // Position de la voiture en x
             int VoiturePosY = voitures[i].get_position().y;   // Position de la voiture en y
-            int TargetParkPosX = parkings[j].getPos().x * 10; // Position de la parking en x
+            int TargetParkPosX = parkings[j].getPos().x * 10; // Position du parking en x
             int TargetParkPosY = parkings[j].getPos().y * 10; // Position du parking en y
 
             // Si la voiture est dans l'enceinte du parking
@@ -418,9 +419,10 @@ void Environnement::conversation(Voiture v)
         isFinished = conv.at(indConv[i])->manageConv(parkings[i], v);
     }
     int indPchosen = chosenPark(conv, v);
+    changeTarget(v, indPchosen);
     for (int j = 0; j < parkings.size(); j++)
     {
-        conv.at(indConv[parkings.size() - 1 - j])->sendConfirmation(v,indPchosen);
+        conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j],v, indPchosen);
         if (isFinished)
         {
             conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[j].getId()));
@@ -448,18 +450,27 @@ int Environnement::chosenPark(vector<Conversation *> c, Voiture v)
             bestSender = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getSender();
         }
     }
-    const char *charbestSender = bestSender.c_str();
-    while (*charbestSender)
-    {
-        if ((*charbestSender >= '0') && (*charbestSender <= '9'))
-
-        {
-            idBest = atoi(charbestSender);
-        }
-
-        charbestSender++;
-    }
+    idBest = v.extractIntFromString(bestSender);
     return idBest;
+}
+
+void Environnement::changeTarget(Voiture v, int indPr)
+{
+    cout << "target pos x 1: " << v.getTargetPosition().x << endl;
+    cout << "target pos y 1: " << v.getTargetPosition().y << endl;
+    cout << "indicePark : " << indPr << endl;
+    unsigned int indicePlace = getPlaceInd(indPr);
+    cout << "indicePlace : " << indicePlace << endl;
+    Vec2 Placepos = parkings[indPr].getPlacesTab()[indicePlace].getPos();
+    v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place.
+    v.setPlace(indicePlace);
+    cout << "target pos x 2: " << v.getTargetPosition().x << endl;
+    cout << "target pos y 2: " << v.getTargetPosition().y << endl;
+}
+
+void Environnement::removeLogs()
+{
+    //filesystem::remove_all("data/logs"); MARCHE PAS.
 }
 
 void Environnement::test_regresion()

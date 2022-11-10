@@ -68,10 +68,18 @@ void Conversation::sendMessageParking(Parking p)
     conv.push_back(toSend);
 }
 
-void Conversation::sendConfirmation(Voiture v, int indPrOK)
+void Conversation::sendConfirmationV(Voiture v, int indPrOK)
 {
     Message toSend;
     toSend = v.confirmConversation(&conv.at(conv.size() - 1), indPrOK);
+    conv.push_back(toSend);
+}
+
+void Conversation::sendConfirmationP(Parking p)
+{
+    this_thread::sleep_for(chrono::milliseconds(5));
+    Message toSend;
+    toSend = p.confirmConversation(&conv.at(conv.size() - 1));
     conv.push_back(toSend);
 }
 
@@ -102,6 +110,20 @@ bool Conversation::manageConv(Parking p, Voiture v)
         conv_mutex.lock();
     }
     return true;
+}
+
+void Conversation::manageConfirm(Parking p, Voiture v, int indPrOK)
+{
+    voiture = thread(&Conversation::sendConfirmationV, this, v, indPrOK);
+    parking = thread(&Conversation::sendConfirmationP, this, p);
+    if (voiture.joinable())
+    {
+        voiture.join();
+    }
+    if (parking.joinable())
+    {
+        parking.join();
+    }
 }
 
 bool Conversation::stockConv(const string &fileName)

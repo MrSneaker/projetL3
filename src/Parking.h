@@ -87,7 +87,7 @@ private:
 
 
     vector<pair<unsigned int, const Utilisateur>> usersTab;
-    // - Tableau dynamique 1D de pointeurs sur Utilisateur
+    // - Tableau dynamique 1D d' Utilisateur et de leur id.
 
     // - Quand un Utilisateur se gare dans le parking,
     // un pointeur sur cet Utilisateur est créé et ajouté au tableau.
@@ -140,10 +140,7 @@ private:
     // celles dans lesquelles la Voiture et le Parking s'annoncent mutuellement
     // s'ils se sont choisis ou non.
 
-
-
-
-
+    double profit;
 
 public:
 
@@ -177,6 +174,8 @@ public:
     int getMinPrice() const;
 
     int getStartingPrice () const;
+
+    const double &getProfit() const;
 
     const int &getId() const;
 
@@ -213,13 +212,8 @@ public:
 
     void setStartingPrice(float startPrice);
 
-    void setConversationsTab();
-    // Pas encore sûrs qu'on va l'utiliser
-    // (cf commentaire de la donnée membre conversationsTab)
-    // (TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre)
-
     //! \brief ajoute un utilisateur au tableau userTab en vérifiant que celui-ci n'existe pas déjà dans le tableau.
-    //! \param unUtilisateur pointeur sur un utilisateur.
+    //! \param unUtilisateur un utilisateur.
     void addUsersTab(Utilisateur unUtilisateur);
     
 
@@ -227,7 +221,7 @@ public:
 
     //! \brief incrémente le nombre de visites de l'utilisateur en paramètre de 1 à chaque appel.
     //! \param unUtilisateur pointeur sur un utilisateur.
-    void incrementNbVisitsTab(Utilisateur* unUtilisateur);
+    void incrementNbVisitsTab(Utilisateur unUtilisateur);
     
 
     //! \brief enleve une place au nombre de places dispo
@@ -272,13 +266,15 @@ public:
     //! \brief  - REJECT
     Message managingConversation (Message * aMessage) const;
 
+    //! \brief confirme la transaction ou non en fonction de la réponse de la voiture, fais les opérations en conséquence.
+    Message confirmConversation(Message *aMessage);
 
 
     //! \brief consideration de la donnée membre successPercentage
     //! \brief puis modification éventuelle de minPrice et startingPrice en conséquence.
     void reconsiderPrices ();
 
-
+    int extractIntFromString(string aString) const;
 
     // TEST DE REGRESSION
 

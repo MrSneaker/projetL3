@@ -8,6 +8,7 @@
 #include "vec2.h"
 #include "Node.h"
 #include "Conversation.h"
+#include <filesystem>
 #include <vector>
 #include <iostream>
 #include <math.h>
@@ -107,11 +108,15 @@ public:
     //! \brief pour réaliser la conversation.
     void conversation(Voiture v);
 
+    //! \brief supprime le dossier de logs avant nouvelle itération.
+    void removeLogs();
+
     //Fonction qui permet de revoyer l'indice d'une place d'un des 3 parkings sauf si celui-ci est plein et que la place est prise
     int getPlaceInd(int parkingInd);
 
     int getParkingInd();
 
+    void changeTarget(Voiture v, int indPr);
 
     //! \brief Test de regression de la classe Environnement
     void test_regresion();

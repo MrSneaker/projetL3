@@ -42,11 +42,15 @@ public:
     //! \param v une voiture.
     bool manageConv(Parking p, Voiture v);
 
+    void manageConfirm(Parking p, Voiture v,int indPrOK);
+
     //! \brief Fait appel à manageConversation dans Voiture pour écrire un message approprié à l'état de la conversation.
     //! \param v une voiture.
     void sendMessageVoiture(Voiture v);
 
-    void sendConfirmation(Voiture v, int indPrOK);
+    void sendConfirmationV(Voiture v, int indPrOK);
+
+    void sendConfirmationP(Parking p);
 
     //! \brief Fait appel à manageConversation dans Parking pour écrire un message approprié à l'état de la conversation.
     //! \param p un parking.

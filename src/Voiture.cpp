@@ -301,17 +301,7 @@ Message Voiture::confirmConversation(Message *aMessage, int indPrOK) const
     double price = aMessage->getPrice();
     string subject;
     int indPr;
-    const char *charSender = recipientString.c_str();
-    while (*charSender)
-    {
-        if ((*charSender >= '0') && (*charSender <= '9'))
-
-        {
-            indPr = atoi(charSender);
-        }
-
-        charSender++;
-    }
+    indPr = extractIntFromString(recipientString);
     if (indPr == indPrOK)
     {
         subject = "CONFIRM_ACCEPT";
@@ -320,12 +310,12 @@ Message Voiture::confirmConversation(Message *aMessage, int indPrOK) const
     {
         subject = "RENOUNCE";
     }
-    return Message(messageNum,price,subject,senderString,recipientString);
+    return Message(messageNum, price, subject, senderString, recipientString);
 }
 
 float Voiture::bestPrice(vector<float> tabPrice)
 {
-    float min = 999999999;
+    float min = tabPrice[0];
     float tmp = 0;
     for (int i = 0; i < tabPrice.size(); i++)
     {
@@ -459,6 +449,23 @@ vector<Node *> &Voiture::getpathTab()
 void Voiture::incrementNbFinishedConv()
 {
     nbFinishedConv++;
+}
+
+int Voiture::extractIntFromString(string aString) const
+{
+    const char *charString = aString.c_str();
+    int anInt;
+    while (*charString)
+    {
+        if ((*charString >= '0') && (*charString <= '9'))
+
+        {
+            anInt = atoi(charString);
+        }
+
+        charString++;
+    }
+    return anInt;
 }
 
 // -----------------------------------------------------------------------------------------------
