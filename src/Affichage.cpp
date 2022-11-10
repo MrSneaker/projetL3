@@ -134,32 +134,6 @@ void Affichage::AffichagePlateau()
         }
     }
 
-    // Affiche si la case est un obstacle ou non
-    // for (int x = 0; x < DimWindowX / tailleCase; x++)
-    // {
-    //     for (int y = 0; y < DimWindowY / tailleCase; y++)
-    //     {
-
-    //         SDL_Rect rect;
-    //         rect.x = environnement.nodes[x + DimWindowX / tailleCase * y]->getNodepos().x * 10;
-    //         rect.y = environnement.nodes[x + DimWindowX / tailleCase * y]->getNodepos().y * 10;
-    //         rect.w = 10;
-    //         rect.h = 10;
-    //         if (environnement.nodes[x + DimWindowX / tailleCase * y]->getisObstacle() == true)
-    //         {
-    //             SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    //             SDL_SetRenderDrawColor(renderer, 255, 0, 0, 100);
-    //             SDL_RenderDrawRect(renderer, &rect);
-    //         }
-    //         else
-    //         {
-    //             SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    //             SDL_SetRenderDrawColor(renderer, 0, 255, 0, 100);
-    //             SDL_RenderDrawRect(renderer, &rect);
-    //         }
-    //     }
-    // }
-
     // for (int i = 0; i < environnement.voitures.size(); i++)
     // {
     //     for (int j = 0; j < environnement.voitures[i].getpathTab().size(); j++)
@@ -253,24 +227,8 @@ void Affichage::AffichageSimulation()
             }
         }
         if (ispress == true)
-        {
-            for (int i = 0; i < environnement.nodes.size(); i++)
-            {
-                if (XC >= environnement.nodes[i]->getNodepos().x * 10 && XC <= environnement.nodes[i]->getNodepos().x * 10 + 10 && YC >= environnement.nodes[i]->getNodepos().y * 10 && YC <= environnement.nodes[i]->getNodepos().y * 10 + 10)
-                {
-                    if (isapress == true)
-                    {
-                        if (environnement.nodes[i]->getisObstacle() == true)
-                        {
-                            cout << "noeud : " << i << " est bien un obstacle" << endl;
-                        }
-                        else
-                        {
-                            cout << "noeud : " << i << " n'est pas un obstacle" << endl;
-                        }
-                    }
-                }
-            }
+        {   
+            //Actions:
 
             isapress = false;
             ispress = false;

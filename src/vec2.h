@@ -21,6 +21,10 @@ public:
     //! \brief Surcharge de l'opérateur *
     //! \param New_vec : vecteur à multiplier
     Vec2 operator*(Vec2 New_vec);
+
+    //! \brief Surcharge de l'opérateur *
+    //! \param New_float : float à multiplier
+    Vec2 operator*(float New_float);
 };
 
 #endif
