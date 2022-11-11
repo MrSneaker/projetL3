@@ -30,18 +30,24 @@ class Affichage{
         Image UpRoad;
         Image DownRoad;
 
-        int PauseX = 50;
-        int PauseY = 830;
-        int PauseW = 43;
-        int PauseH = 55;
+        unsigned int  PauseX = 50;
+        unsigned int  PauseY = 830;
+        unsigned int  PauseW = 43;
+        unsigned int  PauseH = 55;
         Image Pause;
         Image Play;
 
-        int SpeedUpX = 150;
-        int SpeedUpY = 830;
-        int SpeedUpW = 43;
-        int SpeedUpH = 55;
+        unsigned int  SpeedUpX = 150;
+        unsigned int  SpeedUpY = 830;
+        unsigned int  SpeedUpW = 43;
+        unsigned int  SpeedUpH = 55;
         Image SpeedUp;
+
+        unsigned int  ExitX = 853;
+        unsigned int  ExitY = 830;
+        unsigned int  ExitW = 132;
+        unsigned int  ExitH = 55;
+        Image Exit;
 
 
         SDL_Rect Place;

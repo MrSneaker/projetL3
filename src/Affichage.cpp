@@ -113,6 +113,8 @@ void Affichage::InitAffichage()
     Play.loadFromFile("img/Play.png", renderer);
     // Donne à speedup une image
     SpeedUp.loadFromFile("img/SpeedUp.png", renderer);
+    // Donne à Exit une image
+    Exit.loadFromFile("img/Exit.png", renderer);
 }
 
 void Affichage::AffichagePlateau()
@@ -185,7 +187,7 @@ void Affichage::AffichagePlateau()
     //     }
     // }
 
-    //------------------ Affiche menu ------------------------------------------
+    //------------------ Affiche menu ----------------------------------------------------
     SDL_Rect Menu;
     Menu.x = 0;
     Menu.y = 800;
@@ -220,11 +222,10 @@ void Affichage::AffichagePlateau()
 
     // Affichage du bouton speed
     SpeedUp.draw(renderer, SpeedUpX, SpeedUpY, SpeedUpW, SpeedUpH, 0);
-    //--------------------------------------------------------------------------
 
     // SDL_RenderDrawLine(renderer, 0, 857.5, 1000, 857.5);
 
-    //------------------ Affiche le temps ---------------------------------------------------
+    // Affichage du temps 
     AfficherTexte(font_default, "", "", int(environnement.Secondes), 566, 845.5, 0, 0, 0);
     // Si Minutes > 0 afficher Minutes
     if (environnement.Minutes > 0)
@@ -251,6 +252,10 @@ void Affichage::AffichagePlateau()
         AfficherTexte(font_default, ":", "", 0, 422, 845.5, 0, 0, 0);
         AfficherTexte(font_default, "", "", int(environnement.Mois), 390, 845.5, 0, 0, 0);
     }
+
+    // Boutton Exit
+    Exit.draw(renderer, ExitX, ExitY, ExitW, ExitH, 0);
+
     //---------------------------------------------------------------------------------------
 }
 
@@ -303,9 +308,15 @@ void Affichage::AffichageSimulation()
                     SpeedUpW = 43 + 5;      // on ajoute 5 de chaque coté
                     SpeedUpH = 55 + 5;      // on ajoute 5 de chaque coté
                 }
+                else if (Xm > 853 && Xm < 985 && Ym > 815 && Ym < 885)
+                {
+                    ExitX = 853 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
+                    ExitY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
+                    ExitW = 132 + 5;      // on ajoute 5 de chaque coté
+                    ExitH = 55 + 5;      // on ajoute 5 de chaque coté
+                }
                 else
                 {
-                    // on revient au valeur de base, sinon le bouton reste grandi
                     PauseX = 50;
                     PauseY = 830;
                     PauseW = 43;
@@ -314,7 +325,12 @@ void Affichage::AffichageSimulation()
                     SpeedUpY = 830;
                     SpeedUpW = 43;
                     SpeedUpH = 55;
+                    ExitX = 853;
+                    ExitY = 830;
+                    ExitW = 132;
+                    ExitH = 55;
                 }
+                
 
                 break;
             case SDL_MOUSEBUTTONDOWN:
@@ -370,6 +386,13 @@ void Affichage::AffichageSimulation()
             if (XC > 150 && XC < 215 && YC > 815 && YC < 885)
             {
                 environnement.SpeedUp = !environnement.SpeedUp;
+            }
+            //--------------------------------------------------
+
+            //------------------ Bouton Exit ------------------
+            if (XC > 853 && XC < 985 && YC > 815 && YC < 885)
+            {
+                display = false;
             }
             //--------------------------------------------------
 
