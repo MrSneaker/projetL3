@@ -20,10 +20,40 @@ Affichage::~Affichage()
     UpRoad.~Image();
     DownRoad.~Image();
     Voiture.~Image();
+    Pause.~Image();
+    Play.~Image();
+    SpeedUp.~Image();
 
     TTF_Quit();
 
     SDL_Quit();
+}
+
+// Affiche du texte selon l'entrée
+void Affichage::AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, int r, int g, int b)
+{
+
+    // return;
+    SDL_Color color = {r, g, b};
+    const char *text = Msg.c_str();
+
+    if (Msg == "")
+    {
+        ostringstream Val;
+        Val << Valeur;
+        string val = MsgWithValeur + Val.str();
+        text = val.c_str();
+    }
+
+    SDL_Surface *surface = TTF_RenderText_Solid(font, text, color);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+    int w, h = 24;
+    SDL_QueryTexture(texture, NULL, NULL, &w, &h);
+    SDL_Rect dstrect = {x, y, w, h};
+    SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
 }
 
 void Affichage::InitAffichage()
@@ -35,7 +65,7 @@ void Affichage::InitAffichage()
         exit(1);
     }
 
-    window = SDL_CreateWindow("Park Simulation", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DimWindowX, DimWindowY + 50, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("Park Simulation", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DimWindowX, DimWindowY + 100, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == NULL)
     {
         std::cout << "Erreur lors de la creation de la fenetre : " << SDL_GetError() << std::endl;
@@ -66,7 +96,6 @@ void Affichage::InitAffichage()
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(renderer, 238, 230, 211, 255);
     SDL_RenderClear(renderer);
 
     // Donne au parkings une image
@@ -76,7 +105,14 @@ void Affichage::InitAffichage()
     // Donne aux routes une image
     UpRoad.loadFromFile("img/UpRoad.png", renderer);
     DownRoad.loadFromFile("img/DownRoad.png", renderer);
+    // Donne à voiture une image
     Voiture.loadFromFile("img/Voiture1.png", renderer);
+    // Donne à pause une image
+    Pause.loadFromFile("img/Pause.png", renderer);
+    // Donne à play une image
+    Play.loadFromFile("img/Play.png", renderer);
+    // Donne à speedup une image
+    SpeedUp.loadFromFile("img/SpeedUp.png", renderer);
 }
 
 void Affichage::AffichagePlateau()
@@ -154,9 +190,39 @@ void Affichage::AffichagePlateau()
     Menu.x = 0;
     Menu.y = 800;
     Menu.w = 1000;
-    Menu.h = 50;
-    SDL_SetRenderDrawColor(renderer, 193, 163, 163, 255);
+    Menu.h = 100;
+    SDL_SetRenderDrawColor(renderer, 255, 234, 177, 255);
     SDL_RenderFillRect(renderer, &Menu);
+    SDL_Rect Banner;
+    Banner.x = 0;
+    Banner.y = 800;
+    Banner.w = 1000;
+    Banner.h = 10;
+    SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
+    SDL_RenderFillRect(renderer, &Banner);
+    SDL_Rect Banner2;
+    Banner2.x = 0;
+    Banner2.y = 810;
+    Banner2.w = 1000;
+    Banner2.h = 5;
+    SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
+    SDL_RenderFillRect(renderer, &Banner2);
+
+    // Affichage du bouton pause
+    if (environnement.Pause == false)
+    {
+        Pause.draw(renderer, PauseX, PauseY, PauseW, PauseH, 0);
+    }
+    else
+    {
+        Play.draw(renderer, PauseX, PauseY, PauseW, PauseH, 0);
+    }
+
+    // Affichage du bouton speed
+    SpeedUp.draw(renderer, SpeedUpX, SpeedUpY, SpeedUpW, SpeedUpH, 0);
+    //--------------------------------------------------
+
+    AfficherTexte(font_default, "", "", int(environnement.TempsEcoule), 900, 838, 0, 0, 0);
 }
 
 void Affichage::AffichageSimulation()
@@ -167,6 +233,7 @@ void Affichage::AffichageSimulation()
     int x = 0;
     int y = 0;
     bool isapress = false;
+    bool speedUp = false;
 
     float beginTick = SDL_GetTicks();
 
@@ -174,15 +241,8 @@ void Affichage::AffichageSimulation()
 
     while (display)
     {
-         // Affiche les fps dans la console
-        
-        
-        //===============Afficher le temps===================================================
 
         environnement.temps = ((SDL_GetTicks() - beginTick)); // récup le temps toute les secondes
-
-       
-
 
         AffichagePlateau();
         environnement.Environnement_play();
@@ -199,6 +259,33 @@ void Affichage::AffichageSimulation()
             case SDL_MOUSEMOTION:
                 Xm = event.motion.x;
                 Ym = event.motion.y;
+                // si la souris est sur le bouton pause / play
+                if (Xm > 50 && Xm < 115 && Ym > 815 && Ym < 885)
+                {
+                    PauseX = 50 - 5 / 2;  // on decale le bouton de la moitier la largueur ajouté -> plus propre
+                    PauseY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
+                    PauseW = 43 + 5;      // on ajoute 5 de chaque coté
+                    PauseH = 55 + 5;      // on ajoute 5 de chaque coté
+                }
+                else if (Xm > 150 && Xm < 215 && Ym > 815 && Ym < 885)
+                {
+                    SpeedUpX = 150 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
+                    SpeedUpY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
+                    SpeedUpW = 43 + 5;      // on ajoute 5 de chaque coté
+                    SpeedUpH = 55 + 5;      // on ajoute 5 de chaque coté
+                }
+                else
+                {
+                    // on revient au valeur de base, sinon le bouton reste grandi
+                    PauseX = 50;
+                    PauseY = 830;
+                    PauseW = 43;
+                    PauseH = 55;
+                    SpeedUpX = 150;
+                    SpeedUpY = 830;
+                    SpeedUpW = 43;
+                    SpeedUpH = 55;
+                }
 
                 break;
             case SDL_MOUSEBUTTONDOWN:
@@ -218,24 +305,49 @@ void Affichage::AffichageSimulation()
                 {
                 case SDLK_ESCAPE:
                     display = false;
+
                     break;
                 case SDLK_SPACE:
-                    lanceSim = true;
+                    environnement.SpeedUp = !environnement.SpeedUp;
                     break;
                 }
                 break;
             }
         }
         if (ispress == true)
-        {   
-            //Actions:
+        {
+            //------------------ Bouton pause ------------------
+            if (XC > 50 && XC < 115 && YC > 815 && YC < 885)
+            {
+                environnement.Pause = !environnement.Pause;
+            }
+            //--------------------------------------------------
 
-            isapress = false;
+            //------------------Info Utilisateur------------------
+            if (environnement.Pause == true)
+            {
+                for (int i = 0; i < environnement.voitures.size(); i++)
+                {
+                    if (XC > environnement.voitures[i].get_position().x - 5 && XC < environnement.voitures[i].get_position().x + 5 && YC > environnement.voitures[i].get_position().y - 5 && YC < environnement.voitures[i].get_position().y + 5)
+                    {
+                        cout << "voiture : " << i << " touchée" << endl;
+                        // TODO : Afficher les infos de l'utilisateur qui est dans la voiture
+                    }
+                }
+            }
+            //----------------------------------------------------
+
+            //------------------ Bouton speed ------------------
+            if (XC > 150 && XC < 215 && YC > 815 && YC < 885)
+            {
+                environnement.SpeedUp = !environnement.SpeedUp;
+            }
+            //--------------------------------------------------
+
             ispress = false;
         }
 
         // Si la valeur Is_in de la voiture est true on modifie la taille de la voiture
-        // TODO : Faire en sorte que chaques voitures changent de taille independament
         for (int i = 0; i < environnement.voitures.size(); i++)
         {
             if (environnement.voitures[i].getIs_in())
@@ -250,7 +362,6 @@ void Affichage::AffichageSimulation()
             }
         }
 
-        SDL_SetRenderDrawColor(renderer, 238, 230, 211, 255);
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
     }

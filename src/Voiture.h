@@ -37,7 +37,7 @@ public:
     float timer;
     float startTimer;
     bool dejaspawn = false;
-    bool changetraj = false;
+    bool ChangeTrajToExit = false;
 
     Voiture();
 

@@ -17,7 +17,7 @@ Voiture::Voiture(Utilisateur U)
     Is_in = false;
     Is_parked = false;
     Is_pathfind = false;
-    changetraj = false;
+    ChangeTrajToExit = false;
     parking = 0;
     place = 0;
     width = 1;
@@ -101,21 +101,19 @@ const Vec2 &Voiture::getTargetPosition() const
     return TargetPosition;
 }
 
-// // Déplace la voiture vers la position de la cible (parking / place / sortie)
-// // On changer la position de la cible quand la voiture entre dans le parking
-// // Nouvelle position cible = position place de parking etc.
+//Fonction qui fait avancer la voiture en suivant le chemin
 bool Voiture::MoveToTargetPosition()
 {
     if (pathTab.size() > 0)
     {
 
         Node *Current = pathTab[pathTab.size() - 1];
-        if (Current->getNodepos().x * 10 + 5 > position.x)
+        if (Current->getNodepos().x * 10 +5 > position.x)
         {
             MoveRight();
             return false;
         }
-        else if (Current->getNodepos().x * 10 + 5 < position.x)
+        else if (Current->getNodepos().x * 10 +5 < position.x)
         {
             MoveLeft();
             return false;

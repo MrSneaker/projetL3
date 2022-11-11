@@ -7,6 +7,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
+#include <string>
+#include <sstream>
 
 #define DimWindowX 1000
 #define DimWindowY 800
@@ -27,6 +29,19 @@ class Affichage{
         Image P3;
         Image UpRoad;
         Image DownRoad;
+
+        int PauseX = 50;
+        int PauseY = 830;
+        int PauseW = 43;
+        int PauseH = 55;
+        Image Pause;
+        Image Play;
+
+        int SpeedUpX = 150;
+        int SpeedUpY = 830;
+        int SpeedUpW = 43;
+        int SpeedUpH = 55;
+        Image SpeedUp;
 
 
         SDL_Rect Place;
@@ -64,8 +79,14 @@ class Affichage{
         vector<SDL_Rect> VoituresRect; // Tableau des rectangles des voitures (Pour plus tard)
         Affichage();
         ~Affichage();
+
+        void AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, int r, int g, int b);
+
         void InitAffichage();
+
         void AffichagePlateau();
+
+        void AffichageMenu();
 
         void AffichageSimulation();
 

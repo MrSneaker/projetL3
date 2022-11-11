@@ -29,16 +29,15 @@ private:
     float speed;
 
     // Noeud de départ et d'arrivée
-    Node *startNode;
-    Node *endNode;
-    Node *currentNode;
+
     bool endNodeReached = false;
     unsigned int frames = 0;
-    float frametime = 0.f;
     float frameParkTime = 0.f;
     unsigned int prevtime = 0;
     unsigned int currenttime = 0;
     float deltaTime = 0.f;
+    float frametime = 0.f;
+
 
 
 
@@ -53,14 +52,11 @@ public:
     vector<Parking> parkings;
     vector<Utilisateur> conducteurs;
     unsigned int temps;
+    float TempsEcoule = 0.f;
+    bool Pause = false;
+    bool SpeedUp = false;
 
-    void initNodes();
-    void resetNodes(Voiture &v);
-    void setNodes(unsigned int startInd, unsigned int endInd);
     void Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd);
-    void trackPath();
-    vector<Node *> pathTab;  // tableau des noeuds du chemin
-    vector<Node *> openList; // liste des noeuds à visiter
 
     //! \brief Fonction revoyant un nombre aléatoire en deux valeurs
     //! \param min valeur minimale
