@@ -46,14 +46,14 @@ int Environnement::GetNodeIndbyPos(Vec2 pos) const
 
 const int Environnement::GetEntry()
 {
-    //En renvoie le noeud d'une des 3 entrées aléatoirement
+    // En renvoie le noeud d'une des 3 entrées aléatoirement
     int entry = random(0, 3);
     switch (entry)
     {
     case 0:
         return 4700;
         break;
-    case 1: 
+    case 1:
         return 4299;
         break;
     case 2:
@@ -65,11 +65,39 @@ const int Environnement::GetEntry()
     }
 }
 
+void Environnement::ClockTime()
+{
+    if (TempsEcoule >= 1.f)
+    {
+        Secondes++;
+        TempsEcoule = 0.f;
+    }
+    if (Secondes >= 60)
+    {
+        Minutes++;
+        Secondes = 0;
+    }
+    if (Minutes >= 60)
+    {
+        Heures++;
+        Minutes = 0;
+    }
+    if (Heures >= 24)
+    {
+        Jours++;
+        Heures = 0;
+    }
+    if (Jours >= 30)
+    {
+        Mois++;
+        Jours = 0;
+    }
+}
+
 void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd)
 {
     vector<Node *> nodes;
 
-    
     for (int x = 0; x < DimWindowX / tailleCase; x++)
     {
         for (int y = 0; y < DimWindowY / tailleCase; y++)
@@ -107,7 +135,6 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     openList.clear();
     v.getpathTab().clear();
     v.setIs_pathfind(false);
-
 
     Node *currentNode;
     Node *StartNode = nodes[StartInd];
@@ -194,7 +221,7 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     v.setIs_pathfind(true);
 
     openList.clear();
-    if(v.getIs_parked()==true)
+    if (v.getIs_parked() == true)
     {
         for (int i = 0; i < nodes.size(); i++)
         {
@@ -276,7 +303,7 @@ void Environnement::AddVoiture()
     V.indice = voitures.size(); // TODO : Faire en sorte qu'ont ai un nombre fini d'utilisateur qui tourne en boucle
 
     int Entry = GetEntry();
-    V.set_position(GetPosbyNodeInd(Entry) + Vec2(5, 5)); 
+    V.set_position(GetPosbyNodeInd(Entry) + Vec2(5, 5));
 
     unsigned int indiceParking = getParkingInd();
     unsigned int indicePlace = getPlaceInd(indiceParking);
@@ -291,7 +318,7 @@ void Environnement::AddVoiture()
     voitures.push_back(V); // Ajout de la voiture dans le tableau de voitures
 
     Astar(voitures.back(), Entry, GetNodeIndbyPos(voitures.back().getTargetPosition())); // on lance l'algorithme A* pour trouver le chemin
-    //cout<<"Voiture "<<voitures.back().indice<<"getparktime : "<<voitures.back().User.getParkTime()<<endl;
+    // cout<<"Voiture "<<voitures.back().indice<<"getparktime : "<<voitures.back().User.getParkTime()<<endl;
     voitures.back().dejaspawn = true;
     for (int i = 0; i < parkings.size(); i++)
     {
@@ -311,38 +338,38 @@ void Environnement::updateStateVoiture()
     for (int i = 0; i < voitures.size(); i++)
     {
         // On met à jour l'état de la place ou la voiture se trouve -> pour que quand elle passe sur une place et ne reste pas considere comme non libre
-        //parkings[voitures[i].getParking()].getPlacesTab()[voitures[i].getPlace()].setIsTaken(false);
+        // parkings[voitures[i].getParking()].getPlacesTab()[voitures[i].getPlace()].setIsTaken(false);
         bool inParking = false; // booléen qui permet de savoir si la voiture est dans un parking ou non
         bool isInPlace = false; // booléen qui permet de savoir si la voiture est dans une place ou non
         int parkingInd = voitures[i].getParking();
         int placeInd = voitures[i].getPlace();
 
-            int VoiturePosX = voitures[i].get_position().x;   // Position de la voiture en x
-            int VoiturePosY = voitures[i].get_position().y;   // Position de la voiture en y
-            int TargetParkPosX = parkings[parkingInd].getPos().x * 10; // Position de la parking en x
-            int TargetParkPosY = parkings[parkingInd].getPos().y * 10; // Position du parking en y
+        int VoiturePosX = voitures[i].get_position().x;            // Position de la voiture en x
+        int VoiturePosY = voitures[i].get_position().y;            // Position de la voiture en y
+        int TargetParkPosX = parkings[parkingInd].getPos().x * 10; // Position de la parking en x
+        int TargetParkPosY = parkings[parkingInd].getPos().y * 10; // Position du parking en y
 
-            // Si la voiture est dans l'enceinte du parking
-            if (VoiturePosX >= TargetParkPosX && VoiturePosX <= TargetParkPosX + parkings[parkingInd].getDIMX() * 10 && VoiturePosY >= TargetParkPosY && VoiturePosY <= TargetParkPosY + parkings[parkingInd].getDIMY() * 10)
+        // Si la voiture est dans l'enceinte du parking
+        if (VoiturePosX >= TargetParkPosX && VoiturePosX <= TargetParkPosX + parkings[parkingInd].getDIMX() * 10 && VoiturePosY >= TargetParkPosY && VoiturePosY <= TargetParkPosY + parkings[parkingInd].getDIMY() * 10)
+        {
+
+            // cout << "Voiture " << i << " est dans le parking " << j << endl;
+            inParking = true;                                                                    // La voiture est dans un parking
+            int TargetPlacePosX = parkings[parkingInd].getPlacesTab()[placeInd].getPos().x * 10; // Position de la place en x
+            int TargetPlacePosY = parkings[parkingInd].getPlacesTab()[placeInd].getPos().y * 10; // Position de la place en y
+
+            // Si la voiture est dans l'enceinte de la place
+            if (VoiturePosX >= TargetPlacePosX && VoiturePosX <= TargetPlacePosX + 10 && VoiturePosY >= TargetPlacePosY && VoiturePosY <= TargetPlacePosY + 20)
             {
+                // parkings[parkingInd].getPlacesTab()[placeInd].setIsTaken(true); // on met à jour l'état de la place
 
-                // cout << "Voiture " << i << " est dans le parking " << j << endl;
-                inParking = true;          // La voiture est dans un parking
-                int TargetPlacePosX = parkings[parkingInd].getPlacesTab()[placeInd].getPos().x * 10; // Position de la place en x
-                int TargetPlacePosY = parkings[parkingInd].getPlacesTab()[placeInd].getPos().y * 10; // Position de la place en y
+                // unsigned int NoeudPlace = GetNodeIndbyPos(Vec2(TargetPlacePosX, TargetPlacePosY));
+                // nodes[NoeudPlace]->setisObstacle(true);       // on met à jour l'état du noeud
+                // nodes[NoeudPlace + 100]->setisObstacle(true); // on met à jour l'état du noeud
 
-                // Si la voiture est dans l'enceinte de la place
-                if (VoiturePosX >= TargetPlacePosX && VoiturePosX <= TargetPlacePosX + 10 && VoiturePosY >= TargetPlacePosY && VoiturePosY <= TargetPlacePosY + 20)
-                {
-                    //parkings[parkingInd].getPlacesTab()[placeInd].setIsTaken(true); // on met à jour l'état de la place
-
-                    // unsigned int NoeudPlace = GetNodeIndbyPos(Vec2(TargetPlacePosX, TargetPlacePosY));
-                    // nodes[NoeudPlace]->setisObstacle(true);       // on met à jour l'état du noeud
-                    // nodes[NoeudPlace + 100]->setisObstacle(true); // on met à jour l'état du noeud
-
-                    isInPlace = true; // La voiture est dans une place
-                }
+                isInPlace = true; // La voiture est dans une place
             }
+        }
 
         if (inParking)
         {
@@ -371,22 +398,24 @@ void Environnement::updateStateVoiture()
 // Boucle de jeu
 void Environnement::Environnement_play()
 {
-        prevtime = currenttime;
-        currenttime = temps;
-    if(Pause == false)
+
+    prevtime = currenttime;
+    currenttime = temps;
+    if (Pause == false)
     {
         // fonction de frametime
         deltaTime = (currenttime - prevtime) / 1000.f;
 
-        if(SpeedUp == true)
+        if (SpeedUp == true)
         {
             deltaTime *= 4;
-
+            //Minutes +=1;
         }
 
         frametime += deltaTime;
         TempsEcoule += deltaTime;
         frameParkTime += deltaTime;
+        ClockTime();
         //Affiche une voiture toutes les 5 secondes un seul fois
         if (frametime >= 5.0f)
         {
@@ -396,20 +425,18 @@ void Environnement::Environnement_play()
 
         for (int i = 0; i < voitures.size(); i++)
         {
-            if(voitures[i].getIs_parked() == true && (frameParkTime - voitures[i].startTimer) >= voitures[i].User.getParkTime()*10 && voitures[i].ChangeTrajToExit == false)
+            if (voitures[i].getIs_parked() == true && (frameParkTime - voitures[i].startTimer) >= voitures[i].User.getParkTime() * 10 && voitures[i].ChangeTrajToExit == false)
             {
-                //la voiture sort du parking
+                // la voiture sort du parking
                 voitures[i].setIs_parked(false);
 
                 int Exit = GetEntry();
                 Astar(voitures[i], GetNodeIndbyPos(voitures[i].get_position()), Exit);
                 voitures[i].ChangeTrajToExit = true;
-
-
             }
-            if(voitures[i].getIs_parked() == false && voitures[i].ChangeTrajToExit == true)
+            if (voitures[i].getIs_parked() == false && voitures[i].ChangeTrajToExit == true)
             {
-                if(voitures[i].getpathTab().size() == 0)
+                if (voitures[i].getpathTab().size() == 0)
                 {
                     RemoveVoiture(i);
                 }
@@ -473,7 +500,7 @@ void Environnement::conversation(Voiture v)
     changeTarget(v, indPchosen);
     for (int j = 0; j < parkings.size(); j++)
     {
-        conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j],v, indPchosen);
+        conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j], v, indPchosen);
         if (isFinished)
         {
             conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[j].getId()));
@@ -507,18 +534,17 @@ int Environnement::chosenPark(vector<Conversation *> c, Voiture v)
 
 void Environnement::changeTarget(Voiture v, int indPr)
 {
-    //cout << "indicePark : " << indPr << endl;
+    // cout << "indicePark : " << indPr << endl;
     unsigned int indicePlace = getPlaceInd(indPr);
-    //cout << "indicePlace : " << indicePlace << endl;
+    // cout << "indicePlace : " << indicePlace << endl;
     Vec2 Placepos = parkings[indPr].getPlacesTab()[indicePlace].getPos();
     v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place.
     v.setPlace(indicePlace);
-
 }
 
 void Environnement::removeLogs()
 {
-    //filesystem::remove_all("data/logs"); MARCHE PAS.
+    // filesystem::remove_all("data/logs"); MARCHE PAS.
 }
 
 void Environnement::test_regresion()

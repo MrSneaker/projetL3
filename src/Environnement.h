@@ -55,6 +55,11 @@ public:
     float TempsEcoule = 0.f;
     bool Pause = false;
     bool SpeedUp = false;
+    int Secondes = 0;
+    int Minutes = 0;
+    int Heures = 0;
+    int Jours = 0;
+    int Mois = 0;
 
     void Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd);
 
@@ -73,6 +78,9 @@ public:
     int GetNodeIndbyPos(Vec2 pos) const;
 
     const int GetEntry();
+
+    //! \brief Fonction horloge
+    void ClockTime();
 
     //! \brief Initialisation d'un utilisateur, puis ajout dans le tableau de conducteurs.
     void initUser();

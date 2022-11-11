@@ -35,13 +35,13 @@ void Affichage::AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, 
 
     // return;
     SDL_Color color = {r, g, b};
-    const char *text = Msg.c_str();
+    const char *text = Msg.c_str(); // convertir string en char
 
     if (Msg == "")
     {
-        ostringstream Val;
-        Val << Valeur;
-        string val = MsgWithValeur + Val.str();
+        ostringstream Val;                      // convertir float en string
+        Val << Valeur;                          //
+        string val = MsgWithValeur + Val.str(); // concatener les deux strings
         text = val.c_str();
     }
 
@@ -185,7 +185,7 @@ void Affichage::AffichagePlateau()
     //     }
     // }
 
-    //------------------ Affiche menu ------------------
+    //------------------ Affiche menu ------------------------------------------
     SDL_Rect Menu;
     Menu.x = 0;
     Menu.y = 800;
@@ -220,9 +220,38 @@ void Affichage::AffichagePlateau()
 
     // Affichage du bouton speed
     SpeedUp.draw(renderer, SpeedUpX, SpeedUpY, SpeedUpW, SpeedUpH, 0);
-    //--------------------------------------------------
+    //--------------------------------------------------------------------------
 
-    AfficherTexte(font_default, "", "", int(environnement.TempsEcoule), 900, 838, 0, 0, 0);
+    // SDL_RenderDrawLine(renderer, 0, 857.5, 1000, 857.5);
+
+    //------------------ Affiche le temps ---------------------------------------------------
+    AfficherTexte(font_default, "", "", int(environnement.Secondes), 566, 845.5, 0, 0, 0);
+    // Si Minutes > 0 afficher Minutes
+    if (environnement.Minutes > 0)
+    {
+        AfficherTexte(font_default, ":", "", 0, 554, 845.5, 0, 0, 0);
+        AfficherTexte(font_default, "", "", int(environnement.Minutes), 522, 845.5, 0, 0, 0);
+    }
+    // Si Heures > 0 afficher Heures
+    if (environnement.Heures > 0)
+    {
+        AfficherTexte(font_default, ":", "", 0, 510, 845.5, 0, 0, 0);
+        AfficherTexte(font_default, "", "", int(environnement.Heures), 478, 845.5, 0, 0, 0);
+    }
+    // Si Jours > 0 afficher Jours
+    if (environnement.Jours > 0)
+    {
+        AfficherTexte(font_default, ":", "", 0, 466, 845.5, 0, 0, 0);
+        AfficherTexte(font_default, "", "", int(environnement.Jours), 434, 845.5, 0, 0, 0);
+    }
+
+    // Si Mois > 0 afficher Mois
+    if (environnement.Mois > 0)
+    {
+        AfficherTexte(font_default, ":", "", 0, 422, 845.5, 0, 0, 0);
+        AfficherTexte(font_default, "", "", int(environnement.Mois), 390, 845.5, 0, 0, 0);
+    }
+    //---------------------------------------------------------------------------------------
 }
 
 void Affichage::AffichageSimulation()
