@@ -38,7 +38,6 @@ private:
     unsigned int currenttime = 0;
     float deltaTime = 0.f;
     float frametime = 0.f;
-    float frame = 0.f;
 
 
 
@@ -80,6 +79,7 @@ public:
     int GetNodeIndbyPos(Vec2 pos) const;
 
     const int GetEntry();
+
     const int GetExit();
 
     //! \brief Fonction horloge

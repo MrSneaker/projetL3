@@ -175,6 +175,7 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     StartNode->GlobalGoal = heuristic(StartNode, EndNode);
 
     openList.push_back(StartNode);
+
     while (!openList.empty() && currentNode != EndNode && v.getIs_pathfind() == false)
     {
         while (!openList.empty() && openList.front()->getisVisited())
@@ -236,7 +237,7 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
 void Environnement::initUser()
 {
     double price = (double)(random(20, 60) / 10); // on simule des floats en divisants par 10.
-    unsigned int id = conducteurs.size();       // Marche pas si on supprime un utilisateur du tableau et qu'on en rajoute un.
+    unsigned int id = conducteurs.size();         // Marche pas si on supprime un utilisateur du tableau et qu'on en rajoute un.
     string name = "Paulo - " + to_string(id);
 
     // On attribue à l'utilisateur (que l'on crée juste après) un entier initial aléatoire (entre 0 et 5)
@@ -318,7 +319,7 @@ int Environnement::getPlaceInd(int parkingInd)
         return ind;
     else
         getPlaceInd(parkingInd);
-    if (parkings[parkingInd].getNbAvailablePlaces() == 0) 
+    if (parkings[parkingInd].getNbAvailablePlaces() == 0)
         return -1;
 }
 
@@ -366,7 +367,6 @@ const int Environnement::GetExit()
 
 void Environnement::AddVoiture()
 {
-    cout<<"??"<<endl;
     initUser();
     Voiture V(conducteurs[conducteurs.size() - 1]);
     V.indice = voitures.size(); // TODO : Faire en sorte qu'ont ai un nombre fini d'utilisateur qui tourne en boucle
@@ -511,12 +511,10 @@ void Environnement::Environnement_play()
         frametime += deltaTime;
         TempsEcoule += deltaTime;
         frameParkTime += deltaTime;
-        frame += deltaTime;
         ClockTime();
         // Affiche une voiture toutes les 5 secondes un seul fois
         if (frametime >= 5.0f)
         {
-            cout<<"alo"<<endl;
             AddVoiture();
             frametime = 0;
         }
@@ -532,7 +530,7 @@ void Environnement::Environnement_play()
                 Astar(voitures[i], GetNodeIndbyPos(voitures[i].get_position()), voitures[i].Exit);
                 voitures[i].ChangeTrajToExit = true;
             }
-            if(voitures[i].getpathTab().size() == 0 && voitures[i].getIs_parked() == false)
+            if (voitures[i].getpathTab().size() == 0 && voitures[i].getIs_parked() == false)
             {
                 RemoveVoiture(i);
             }
@@ -543,194 +541,197 @@ void Environnement::Environnement_play()
 
             if (!parkings[0].IsFull() && !parkings[1].IsFull() && !parkings[2].IsFull())
             {
+
                 for (int j = 0; j < parkings.size(); j++)
                 {
-                    conversation(voitures[i]);
-                    voitures[i].incrementNbFinishedConv();
-                    changeTarget(voitures[i], voitures[i].getParking());
+                    if (voitures[i].getNbFinishedConv() < 1)
+                    {
+                        conversation(voitures[i]);
+                        voitures[i].incrementNbFinishedConv();
+                        changeTarget(voitures[i], voitures[i].getParking());
+                    }
                 }
             }
-            voitures[i].MoveToTargetPosition();
-        }
-    }
-
-    updateStateVoiture();
-}
-
-void Environnement::getMap()
-{
-    ifstream MaMap("map.txt", ios::in);
-    int i = 0;
-    if (MaMap)
-    {
-        while (getline(MaMap, map[i], '\n'))
-        {
-            i++;
-        }
-        MaMap.close();
-    }
-}
-
-int Environnement::createConv()
-{
-    Conversation *newConv = new Conversation;
-    conv.push_back(newConv);
-    return conv.size() - 1;
-}
-
-void Environnement::deleteConv(int ind)
-{
-    delete conv.at(ind);
-    conv.erase(conv.begin() + ind);
-}
-
-void Environnement::conversation(Voiture &v)
-{
-    int indConv[parkings.size()];
-    bool isFinished = false;
-    for (int i = 0; i < parkings.size(); i++)
-    {
-        indConv[i] = createConv();
-        isFinished = conv.at(indConv[i])->manageConv(parkings[i], v);
-    }
-    v.setParking(chosenPark(conv, v));
-    for (int j = 0; j < parkings.size(); j++)
-    {
-        conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j], v, v.getParking());
-        if (isFinished)
-        {
-            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[j].getId()));
-        }
-        deleteConv(indConv[parkings.size() - 1 - j]);
-    }
-}
-
-int Environnement::chosenPark(vector<Conversation *> c, Voiture v)
-{
-    string bestSender = "";
-    int idBest;
-    vector<float> tabPrice;
-    for (int i = 0; i < c.size(); i++)
-    {
-        if (c.at(i)->getConv().at(c.at(i)->getConv().size() - 1).getSubject() == "ACCEPT")
-            tabPrice.push_back(c.at(i)->getConv().at(c.at(i)->getConv().size() - 1).getPrice());
-    }
-    if (tabPrice.size() != 0)
-    {
-        float best = v.bestPrice(tabPrice);
-        for (int j = 0; j < c.size(); j++)
-        {
-            float tmp = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getPrice();
-            if (best == tmp)
-            {
-                bestSender = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getSender();
+                voitures[i].MoveToTargetPosition();
             }
         }
-        idBest = v.extractIntFromString(bestSender);
-    }
-    else
-        idBest = -1;
-    return idBest;
-}
-
-void Environnement::changeTarget(Voiture &v, int indPr)
-{
-    if (indPr != -1)
-    {
-        v.setParking(indPr);
-        v.setPlace(getPlaceInd(indPr));
-        Vec2 Placepos = parkings[indPr].getPlacesTab()[v.getPlace()].getPos();
-        v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place.
-        Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition()));
-    }
-    else
-    {
-        int Exit = GetEntry();
-        Astar(v, GetNodeIndbyPos(v.get_position()), Exit);
-        v.ChangeTrajToExit = true;
-    }
-}
-
-void Environnement::removeLogs()
-{
-    if (std::filesystem::exists("data/logs/Conversation U0P0.txt"))
-        system("rm data/logs/*");
-}
-
-void Environnement::test_regresion()
-{
-
-    // test de regression de la classe Environnement
-    Environnement E;
-
-    assert(E.parkings.size() == 3);
-    cout << "Test de regression de la fonction initParking() : OK" << endl;
-
-    for (int i = 0; i < 10; i++)
-    {
-        E.AddVoiture();
-    }
-    assert(E.voitures.size() == 10);
-    E.RemoveVoiture(0);
-    assert(E.voitures.size() == 9);
-
-    cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
-
-    int a = E.createConv();
-    assert(E.conv.size() == 1);
-    E.deleteConv(a);
-    assert(E.conv.size() == 0);
-    cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
-
-    for (int i = 0; i < E.voitures.size(); i++)
-    {
-        E.conversation(E.voitures.at(i));
+        updateStateVoiture();
     }
 
-    /*// Affiche les infos du noeud 47
-    cout << "Noeud 47 : " << endl;
-    cout << "Position : " << E.nodes[47]->getNodepos().x << " " << E.nodes[47]->getNodepos().y << endl;
-    cout << "fcost : " << E.nodes[47]->getFcost() << endl;
-    cout << "gcost : " << E.nodes[47]->getGcost() << endl;
-    cout << "hcost : " << E.nodes[47]->getHcost() << endl;
-
-    // Affiche les infos du noeud 4299
-    cout << "Noeud 4299 : " << endl;
-    cout << "Position : " << E.nodes[4299]->getNodepos().x << " " << E.nodes[4299]->getNodepos().y << endl;
-    cout << "fcost : " << E.nodes[4299]->getFcost() << endl;
-    cout << "gcost : " << E.nodes[4299]->getGcost() << endl;
-    cout << "hcost : " << E.nodes[4299]->getHcost() << endl;
-    */
-
-    // cout << "Longueur de la map : " << map[0].length() << endl;
-    // cout<<"map[][] : "<<map[42][99]<<endl;
-    // affiche le pathTab en mode texxte sur la map
-    //  for(int i=0; i<E.pathTab.size(); i++)
-    //  {
-    //  	map[E.pathTab[i]->getNodepos().y][E.pathTab[i]->getNodepos().x] = '#';
-    //  }
-    //  cout << "Longueur de la map : " << map[0].length() << endl;
-    //  cout<<"map[][] : "<<map[42][99]<<endl;
-    //  affiche le pathTab en mode texxte sur la map
-    //   for(int i=0; i<E.pathTab.size(); i++)
-    //   {
-    //   	map[E.pathTab[i]->getNodepos().y][E.pathTab[i]->getNodepos().x] = '#';
-    //   }
-
-    E.AddVoiture();
-    E.AddVoiture();
-
-    for (int i = 0; i < E.voitures.size(); i++)
+    void Environnement::getMap()
     {
-        cout << "Voiture " << i << " : "
-             << "pathTab.size() : " << E.voitures[i].getpathTab().size() << endl;
-        E.Astar(E.voitures[i], 47, 1721);
-        cout << "la" << endl;
-        cout << "Voiture : " << i << " : "
-             << " getpathTab() size : " << E.voitures[0].getpathTab().size() << endl;
-        for (int j = 0; j < E.voitures[i].getpathTab().size(); j++)
+        ifstream MaMap("map.txt", ios::in);
+        int i = 0;
+        if (MaMap)
         {
-            cout << "Noeud " << j << " : " << E.voitures[i].getpathTab()[j]->getNodepos().x << " " << E.voitures[i].getpathTab()[j]->getNodepos().y << endl;
+            while (getline(MaMap, map[i], '\n'))
+            {
+                i++;
+            }
+            MaMap.close();
         }
     }
-}
+
+    int Environnement::createConv()
+    {
+        Conversation *newConv = new Conversation;
+        conv.push_back(newConv);
+        return conv.size() - 1;
+    }
+
+    void Environnement::deleteConv(int ind)
+    {
+        delete conv.at(ind);
+        conv.erase(conv.begin() + ind);
+    }
+
+    void Environnement::conversation(Voiture & v)
+    {
+        int indConv[parkings.size()];
+        bool isFinished = false;
+        for (int i = 0; i < parkings.size(); i++)
+        {
+            indConv[i] = createConv();
+            isFinished = conv.at(indConv[i])->manageConv(parkings[i], v);
+        }
+        v.setParking(chosenPark(conv, v));
+        for (int j = 0; j < parkings.size(); j++)
+        {
+            conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j], v, v.getParking());
+            if (isFinished)
+            {
+                conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[j].getId()));
+            }
+            deleteConv(indConv[parkings.size() - 1 - j]);
+        }
+    }
+
+    int Environnement::chosenPark(vector<Conversation *> c, Voiture v)
+    {
+        string bestSender = "";
+        int idBest;
+        vector<float> tabPrice;
+        for (int i = 0; i < c.size(); i++)
+        {
+            if (c.at(i)->getConv().at(c.at(i)->getConv().size() - 1).getSubject() == "ACCEPT")
+                tabPrice.push_back(c.at(i)->getConv().at(c.at(i)->getConv().size() - 1).getPrice());
+        }
+        if (tabPrice.size() != 0)
+        {
+            float best = v.bestPrice(tabPrice);
+            for (int j = 0; j < c.size(); j++)
+            {
+                float tmp = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getPrice();
+                if (best == tmp)
+                {
+                    bestSender = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getSender();
+                }
+            }
+            idBest = v.extractIntFromString(bestSender);
+        }
+        else
+            idBest = -1;
+        return idBest;
+    }
+
+    void Environnement::changeTarget(Voiture & v, int indPr)
+    {
+        if (indPr != -1)
+        {
+            v.setParking(indPr);
+            v.setPlace(getPlaceInd(indPr));
+            Vec2 Placepos = parkings[indPr].getPlacesTab()[v.getPlace()].getPos();
+            v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place.
+            Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition()));
+        }
+        else
+        {
+            int Exit = GetExit();
+            Astar(v, GetNodeIndbyPos(v.get_position()), Exit);
+            v.ChangeTrajToExit = true;
+        }
+    }
+
+    void Environnement::removeLogs()
+    {
+        if (std::filesystem::exists("data/logs/Conversation U0P0.txt"))
+            system("rm data/logs/*");
+    }
+
+    void Environnement::test_regresion()
+    {
+
+        // test de regression de la classe Environnement
+        Environnement E;
+
+        assert(E.parkings.size() == 3);
+        cout << "Test de regression de la fonction initParking() : OK" << endl;
+
+        for (int i = 0; i < 10; i++)
+        {
+            E.AddVoiture();
+        }
+        assert(E.voitures.size() == 10);
+        E.RemoveVoiture(0);
+        assert(E.voitures.size() == 9);
+
+        cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
+
+        int a = E.createConv();
+        assert(E.conv.size() == 1);
+        E.deleteConv(a);
+        assert(E.conv.size() == 0);
+        cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
+
+        for (int i = 0; i < E.voitures.size(); i++)
+        {
+            E.conversation(E.voitures.at(i));
+        }
+
+        /*// Affiche les infos du noeud 47
+        cout << "Noeud 47 : " << endl;
+        cout << "Position : " << E.nodes[47]->getNodepos().x << " " << E.nodes[47]->getNodepos().y << endl;
+        cout << "fcost : " << E.nodes[47]->getFcost() << endl;
+        cout << "gcost : " << E.nodes[47]->getGcost() << endl;
+        cout << "hcost : " << E.nodes[47]->getHcost() << endl;
+
+        // Affiche les infos du noeud 4299
+        cout << "Noeud 4299 : " << endl;
+        cout << "Position : " << E.nodes[4299]->getNodepos().x << " " << E.nodes[4299]->getNodepos().y << endl;
+        cout << "fcost : " << E.nodes[4299]->getFcost() << endl;
+        cout << "gcost : " << E.nodes[4299]->getGcost() << endl;
+        cout << "hcost : " << E.nodes[4299]->getHcost() << endl;
+        */
+
+        // cout << "Longueur de la map : " << map[0].length() << endl;
+        // cout<<"map[][] : "<<map[42][99]<<endl;
+        // affiche le pathTab en mode texxte sur la map
+        //  for(int i=0; i<E.pathTab.size(); i++)
+        //  {
+        //  	map[E.pathTab[i]->getNodepos().y][E.pathTab[i]->getNodepos().x] = '#';
+        //  }
+        //  cout << "Longueur de la map : " << map[0].length() << endl;
+        //  cout<<"map[][] : "<<map[42][99]<<endl;
+        //  affiche le pathTab en mode texxte sur la map
+        //   for(int i=0; i<E.pathTab.size(); i++)
+        //   {
+        //   	map[E.pathTab[i]->getNodepos().y][E.pathTab[i]->getNodepos().x] = '#';
+        //   }
+
+        E.AddVoiture();
+        E.AddVoiture();
+
+        for (int i = 0; i < E.voitures.size(); i++)
+        {
+            cout << "Voiture " << i << " : "
+                 << "pathTab.size() : " << E.voitures[i].getpathTab().size() << endl;
+            E.Astar(E.voitures[i], 47, 1721);
+            cout << "la" << endl;
+            cout << "Voiture : " << i << " : "
+                 << " getpathTab() size : " << E.voitures[0].getpathTab().size() << endl;
+            for (int j = 0; j < E.voitures[i].getpathTab().size(); j++)
+            {
+                cout << "Noeud " << j << " : " << E.voitures[i].getpathTab()[j]->getNodepos().x << " " << E.voitures[i].getpathTab()[j]->getNodepos().y << endl;
+            }
+        }
+    }

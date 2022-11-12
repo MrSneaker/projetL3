@@ -289,44 +289,6 @@ void Affichage::AffichageSimulation()
             case SDL_MOUSEMOTION:
                 Xm = event.motion.x;
                 Ym = event.motion.y;
-                // si la souris est sur le bouton pause / play
-                if (Xm > 50 && Xm < 115 && Ym > 815 && Ym < 885)
-                {
-                    PauseX = 50 - 5 / 2;  // on decale le bouton de la moitier la largueur ajouté -> plus propre
-                    PauseY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
-                    PauseW = 43 + 5;      // on ajoute 5 de chaque coté
-                    PauseH = 55 + 5;      // on ajoute 5 de chaque coté
-                }
-                else if (Xm > 150 && Xm < 215 && Ym > 815 && Ym < 885)
-                {
-                    SpeedUpX = 150 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
-                    SpeedUpY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
-                    SpeedUpW = 43 + 5;      // on ajoute 5 de chaque coté
-                    SpeedUpH = 55 + 5;      // on ajoute 5 de chaque coté
-                }
-                else if (Xm > 853 && Xm < 985 && Ym > 815 && Ym < 885)
-                {
-                    ExitX = 853 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
-                    ExitY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
-                    ExitW = 132 + 5;     // on ajoute 5 de chaque coté
-                    ExitH = 55 + 5;      // on ajoute 5 de chaque coté
-                }
-                else
-                {
-                    PauseX = 50;
-                    PauseY = 830;
-                    PauseW = 43;
-                    PauseH = 55;
-                    SpeedUpX = 150;
-                    SpeedUpY = 830;
-                    SpeedUpW = 43;
-                    SpeedUpH = 55;
-                    ExitX = 853;
-                    ExitY = 830;
-                    ExitW = 132;
-                    ExitH = 55;
-                }
-
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 
