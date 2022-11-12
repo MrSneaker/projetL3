@@ -112,6 +112,12 @@ void Parking::incrementNbAvailablePlaces()
     IsFull();
 }
 
+void Parking::setNbAvailablePlaces(int nb)
+{
+    nbAvailablePlaces = nb;
+    IsFull();
+}
+
 void Parking::updateSuccessPercentage()
 {
     // TO DO : implémenter cette fonction. Son implémentation dépendera de
@@ -186,6 +192,12 @@ void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
         for (int j = 0; j < nbPlCol; j++)
         {
             Place p = Place(Vec2(PcornerX + j * 2, PcornerY + i * 3 + i), indPl);
+            if(isFull == true)
+            {
+                p.setIsReserved(true);
+                p.setIsTaken(true);
+
+            }
             placesTab.push_back(p);
             indPl++;
         }

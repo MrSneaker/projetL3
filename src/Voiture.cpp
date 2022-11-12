@@ -29,6 +29,7 @@ Voiture::Voiture(Utilisateur U)
     nbFinishedConv = 0;
     pathTab.clear();
     nbFinishedConv = 0;
+    Exit = 0;
 }
 
 // Destructeur de la classe Voiture

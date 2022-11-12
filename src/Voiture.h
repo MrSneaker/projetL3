@@ -38,6 +38,7 @@ public:
     float startTimer;
     bool dejaspawn = false;
     bool ChangeTrajToExit = false;
+    unsigned int Exit;
 
     Voiture();
 
