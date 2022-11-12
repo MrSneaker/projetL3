@@ -506,7 +506,7 @@ void Environnement::Environnement_play()
 
         if (SpeedUp == true)
         {
-            deltaTime *= 100;
+            deltaTime *= 5;
             // Minutes +=1;
         }
 
@@ -533,7 +533,10 @@ void Environnement::Environnement_play()
                 Astar(voitures[i], GetNodeIndbyPos(voitures[i].get_position()), voitures[i].Exit);
                 voitures[i].ChangeTrajToExit = true;
             }
-
+            if(voitures[i].getpathTab().size() == 0 && voitures[i].getIs_parked() == false)
+            {
+                RemoveVoiture(i);
+            }
             if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit)
             {
                 RemoveVoiture(i);

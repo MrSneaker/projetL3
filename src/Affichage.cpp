@@ -172,20 +172,20 @@ void Affichage::AffichagePlateau()
         }
     }
 
-    for (int i = 0; i < environnement.voitures.size(); i++)
-    {
-        for (int j = 0; j < environnement.voitures[i].getpathTab().size(); j++)
-        {
-            SDL_Rect rect;
-            rect.x = environnement.voitures[i].getpathTab()[j]->getNodepos().x * 10;
-            rect.y = environnement.voitures[i].getpathTab()[j]->getNodepos().y * 10;
-            rect.w = 10;
-            rect.h = 10;
-            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-            SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
-            SDL_RenderFillRect(renderer, &rect);
-        }
-    }
+    // for (int i = 0; i < environnement.voitures.size(); i++)
+    // {
+    //     for (int j = 0; j < environnement.voitures[i].getpathTab().size(); j++)
+    //     {
+    //         SDL_Rect rect;
+    //         rect.x = environnement.voitures[i].getpathTab()[j]->getNodepos().x * 10;
+    //         rect.y = environnement.voitures[i].getpathTab()[j]->getNodepos().y * 10;
+    //         rect.w = 10;
+    //         rect.h = 10;
+    //         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    //         SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
+    //         SDL_RenderFillRect(renderer, &rect);
+    //     }
+    // }
 
     //------------------ Affiche menu ----------------------------------------------------
     SDL_Rect Menu;
@@ -313,6 +313,7 @@ void Affichage::AffichageSimulation()
                     environnement.AddVoiture();
                     break;
                 case SDLK_p:
+
                     break;
                 }
                 break;
