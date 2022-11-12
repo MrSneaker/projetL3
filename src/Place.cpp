@@ -10,6 +10,7 @@ Place::Place(Vec2 p_pos, int p_indP)
     pos = p_pos;
     indP = p_indP;
     isTaken = false;
+    isReserved = false;
 }
 
 Place::~Place()
@@ -34,6 +35,16 @@ void Place::setIsTaken(bool new_isTaken)
 const bool& Place::getIsTaken() const
 {
     return isTaken;
+}
+
+void Place::setIsReserved(bool new_isReserved)
+{
+    isReserved = new_isReserved;
+}
+
+const bool& Place::getIsReserved() const
+{
+    return isReserved;
 }
 
 void Place::test_regresion()

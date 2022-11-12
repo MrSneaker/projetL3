@@ -154,6 +154,7 @@ public:
     //! \param startPrice Prix max que le parking propose -> A REVOIR
     Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice, int DIMX, int DIMY, int id);
     
+    
     Parking();
 
     ~Parking();
@@ -211,6 +212,8 @@ public:
     void setMinPrice(float minimumPrice);
 
     void setStartingPrice(float startPrice);
+
+    void setNbAvailablePlaces(int nbAvailablePlaces);
 
     //! \brief ajoute un utilisateur au tableau userTab en vérifiant que celui-ci n'existe pas déjà dans le tableau.
     //! \param unUtilisateur un utilisateur.

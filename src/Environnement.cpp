@@ -44,27 +44,6 @@ int Environnement::GetNodeIndbyPos(Vec2 pos) const
     return indiceCase;
 }
 
-const int Environnement::GetEntry()
-{
-    // En renvoie le noeud d'une des 3 entrées aléatoirement
-    int entry = random(0, 3);
-    switch (entry)
-    {
-    case 0:
-        return 4700;
-        break;
-    case 1:
-        return 4299;
-        break;
-    case 2:
-        return 47;
-        break;
-    default:
-        return 47;
-        break;
-    }
-}
-
 void Environnement::ClockTime()
 {
     if (TempsEcoule >= 1.f)
@@ -120,6 +99,27 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
                 nodes[x + y * DimWindowX / tailleCase]->setisObstacle(false);
         }
     }
+    // Si une place est prise elle devient un obstacle
+    for (int i = 0; i < parkings.size(); i++)
+    {
+        for (int j = 0; j < parkings[i].getPlacesTab().size(); j++)
+        {
+            unsigned int PlacePosX = parkings[i].getPlacesTab()[j].getPos().x * tailleCase;
+            unsigned int PlacePosY = parkings[i].getPlacesTab()[j].getPos().y * tailleCase;
+            unsigned int NoeudPlace = GetNodeIndbyPos(Vec2(PlacePosX, PlacePosY));
+            if (parkings[i].getPlacesTab()[j].getIsTaken() == true && parkings[i].getPlacesTab()[j].getIsReserved() == true)
+            {
+
+                nodes[NoeudPlace]->setisObstacle(true);       // on met à jour l'état du noeud
+                nodes[NoeudPlace + 100]->setisObstacle(true); // on met à jour l'état du noeud
+            }
+            else
+            {
+                nodes[NoeudPlace]->setisObstacle(false);       // on met à jour l'état du noeud
+                nodes[NoeudPlace + 100]->setisObstacle(false); // on met à jour l'état du noeud
+            }
+        }
+    }
 
     for (int x = 0; x < DimWindowX / tailleCase; x++)
     {
@@ -161,7 +161,8 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     }
     auto distance = [](Node *a, Node *b)
     {
-        return sqrtf((a->getNodepos().x - b->getNodepos().x) * (a->getNodepos().x - b->getNodepos().x) + (a->getNodepos().y - b->getNodepos().y) * (a->getNodepos().y - b->getNodepos().y));
+        return sqrtf((a->getNodepos().x - b->getNodepos().x) * (a->getNodepos().x - b->getNodepos().x) +
+                     (a->getNodepos().y - b->getNodepos().y) * (a->getNodepos().y - b->getNodepos().y));
     };
 
     auto heuristic = [distance](Node *a, Node *b)
@@ -256,9 +257,10 @@ void Environnement::initParkings()
 
     // Créer 3 parkings et les ajouter dans le tableau de parkings
     Parking p1(Vec2(1, 1), 180, 2, 4.5, 42, 36, 0);
-
     Parking p2(Vec2(57, 1), 180, 99, 99, 42, 36, 1);
+
     Parking p3(Vec2(1, 52), 240, 99, 99, 98, 27, 2);
+
     parkings.push_back(p1);
     parkings.push_back(p2);
     parkings.push_back(p3);
@@ -273,17 +275,38 @@ int Environnement::getParkingInd()
     case 0:
         if (parkings[0].getNbAvailablePlaces() != 0)
             return 0;
+        else
+        {
+            if (parkings[0].IsFull() && parkings[1].IsFull() && parkings[2].IsFull())
+                return -1;
+            else
+                return getParkingInd();
+        }
         break;
     case 1:
         if (parkings[1].getNbAvailablePlaces() != 0)
             return 1;
+        else
+        {
+            if (parkings[0].IsFull() && parkings[1].IsFull() && parkings[2].IsFull())
+                return -1;
+            else
+                return getParkingInd();
+        }
         break;
     case 2:
         if (parkings[2].getNbAvailablePlaces() != 0)
             return 2;
+        else
+        {
+            if (parkings[0].IsFull() && parkings[1].IsFull() && parkings[2].IsFull())
+                return -1;
+            else
+                return getParkingInd();
+        }
         break;
     default:
-        return 0;
+        return -1;
         break;
     }
 }
@@ -292,8 +315,56 @@ int Environnement::getPlaceInd(int parkingInd)
 {
     // retourne l'indice d'une place aléatoirement entre les places disponibles du parking
     // sauf si place déjà prise
-    int ind = random(0, parkings[parkingInd].getNbAvailablePlaces());
-    return ind;
+    int ind = random(0, parkings[parkingInd].getNbPlaces());
+
+    if (parkings[parkingInd].getPlacesTab()[ind].getIsReserved() == false)
+        return ind;
+    else
+        getPlaceInd(parkingInd);
+    if (parkings[parkingInd].getNbAvailablePlaces() == 0) 
+        return -1;
+}
+
+const int Environnement::GetEntry()
+{
+    // En renvoie le noeud d'une des 3 entrées aléatoirement
+    int entry = random(0, 3);
+    switch (entry)
+    {
+    case 0:
+        return 4700;
+        break;
+    case 1:
+        return 4299;
+        break;
+    case 2:
+        return 47;
+        break;
+    default:
+        return 0;
+        break;
+    }
+}
+
+const int Environnement::GetExit()
+{
+    // En renvoie le noeud d'une des 3 sorties aléatoirement
+    int exit = random(0, 3);
+    switch (exit)
+    {
+    case 0:
+        return 4200;
+        break;
+    case 1:
+        return 4799;
+        break;
+    case 2:
+        return 52;
+        break;
+    default:
+        return 52;
+        break;
+    }
 }
 
 void Environnement::AddVoiture()
@@ -305,15 +376,28 @@ void Environnement::AddVoiture()
     int Entry = GetEntry();
     V.set_position(GetPosbyNodeInd(Entry) + Vec2(5, 5));
 
-    unsigned int indiceParking = getParkingInd();
-    unsigned int indicePlace = getPlaceInd(indiceParking);
-    V.setParking(indiceParking);
-    V.setPlace(indicePlace);
+    int indiceParking = getParkingInd();
 
-    Vec2 Placepos = parkings[indiceParking].getPlacesTab()[indicePlace].getPos();
-    V.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place
-    // TODO : La target sera ce que renvoie la communication avec le parking
-    V.setPlace(indicePlace);
+    int indicePlace = getPlaceInd(indiceParking);
+
+    if (indiceParking != -1 && indicePlace != -1)
+    {
+        assert(indiceParking != -1 && indicePlace != -1);
+        V.setParking(indiceParking);
+        Vec2 Placepos = parkings[indiceParking].getPlacesTab()[indicePlace].getPos();
+        V.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place
+        // TODO : La target sera ce que renvoie la communication avec le parking
+        V.setPlace(indicePlace);
+        parkings[indiceParking].getPlacesTab()[indicePlace].setIsReserved(true);
+        parkings[indiceParking].decrementNbAvailablePlaces();
+    }
+    else
+    {
+        V.ChangeTrajToExit = true;
+        V.Exit = GetExit();
+        V.setTargetPosition(GetPosbyNodeInd(V.Exit) + Vec2(5, 5));
+    }
+
     V.startTimer = frameParkTime;
     voitures.push_back(V); // Ajout de la voiture dans le tableau de voitures
 
@@ -361,14 +445,11 @@ void Environnement::updateStateVoiture()
             // Si la voiture est dans l'enceinte de la place
             if (VoiturePosX >= TargetPlacePosX && VoiturePosX <= TargetPlacePosX + 10 && VoiturePosY >= TargetPlacePosY && VoiturePosY <= TargetPlacePosY + 20)
             {
-                // parkings[parkingInd].getPlacesTab()[placeInd].setIsTaken(true); // on met à jour l'état de la place
-
-                // unsigned int NoeudPlace = GetNodeIndbyPos(Vec2(TargetPlacePosX, TargetPlacePosY));
-                // nodes[NoeudPlace]->setisObstacle(true);       // on met à jour l'état du noeud
-                // nodes[NoeudPlace + 100]->setisObstacle(true); // on met à jour l'état du noeud
 
                 isInPlace = true; // La voiture est dans une place
             }
+            else
+                isInPlace = false; // La voiture n'est pas dans une place
         }
 
         if (inParking)
@@ -377,24 +458,41 @@ void Environnement::updateStateVoiture()
             if (isInPlace)
             {
                 voitures[i].setIs_parked(true);
+                parkings[parkingInd].getPlacesTab()[placeInd].setIsTaken(true); // on met à jour l'état de la place
                 // Decrementer de 1 le nombre de place libre du parking une seul fois
                 if (voitures[i].derement == true)
                 {
-                    parkings[voitures[i].getParking()].decrementNbAvailablePlaces();
                     voitures[i].startTimer = frameParkTime;
-                    // cout << "Nb place libre : " << parkings[voitures[i].getParking()].getNbAvailablePlaces() << endl;
+                    cout << "Parking : " << voitures[i].getParking() << " Nb place libre : " << parkings[voitures[i].getParking()].getNbAvailablePlaces() << endl;
                     voitures[i].derement = false;
                 }
 
                 voitures[i].setAngle(0);
             }
             else
+            {
+                parkings[parkingInd].getPlacesTab()[placeInd].setIsTaken(false); // on met à jour l'état de la place
                 voitures[i].setIs_parked(false);
+            }
         }
         else
             voitures[i].setIs_in(false);
+
+        // Si la valeur Is_in de la voiture est true on modifie la taille de la voiture
+
+        if (voitures[i].getIs_in())
+        {
+            voitures[i].setwidth(10);
+            voitures[i].setheight(20);
+        }
+        else
+        {
+            voitures[i].setwidth(20);
+            voitures[i].setheight(30);
+        }
     }
 }
+
 // Boucle de jeu
 void Environnement::Environnement_play()
 {
@@ -408,15 +506,16 @@ void Environnement::Environnement_play()
 
         if (SpeedUp == true)
         {
-            deltaTime *= 4;
-            //Minutes +=1;
+            deltaTime *= 100;
+            // Minutes +=1;
         }
 
         frametime += deltaTime;
         TempsEcoule += deltaTime;
         frameParkTime += deltaTime;
+        frame += deltaTime;
         ClockTime();
-        //Affiche une voiture toutes les 5 secondes un seul fois
+        // Affiche une voiture toutes les 5 secondes un seul fois
         if (frametime >= 5.0f)
         {
             AddVoiture();
@@ -430,33 +529,36 @@ void Environnement::Environnement_play()
                 // la voiture sort du parking
                 voitures[i].setIs_parked(false);
 
-                int Exit = GetEntry();
-                Astar(voitures[i], GetNodeIndbyPos(voitures[i].get_position()), Exit);
+                voitures[i].Exit = GetExit();
+                Astar(voitures[i], GetNodeIndbyPos(voitures[i].get_position()), voitures[i].Exit);
                 voitures[i].ChangeTrajToExit = true;
             }
-            if (voitures[i].getIs_parked() == false && voitures[i].ChangeTrajToExit == true)
+
+            if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit)
             {
-                if (voitures[i].getpathTab().size() == 0)
-                {
-                    RemoveVoiture(i);
-                }
+                RemoveVoiture(i);
             }
+
             voitures[i].MoveToTargetPosition();
 
-            for (int j = 0; j < parkings.size(); j++)
+            if (!parkings[0].IsFull() && !parkings[1].IsFull() && !parkings[2].IsFull())
             {
-                if (voitures[i].getNbFinishedConv() < 1)
+                for (int j = 0; j < parkings.size(); j++)
                 {
-                    thread convThread(&Environnement::conversation, this, voitures[i]);
-                    if (convThread.joinable())
+                    if (voitures[i].getNbFinishedConv() < 1)
                     {
-                        voitures[i].incrementNbFinishedConv();
-                        convThread.join();
+                        thread convThread(&Environnement::conversation, this, voitures[i]);
+                        if (convThread.joinable())
+                        {
+                            voitures[i].incrementNbFinishedConv();
+                            convThread.join();
+                        }
                     }
                 }
             }
         }
     }
+
     updateStateVoiture();
 }
 
@@ -532,14 +634,15 @@ int Environnement::chosenPark(vector<Conversation *> c, Voiture v)
     return idBest;
 }
 
-void Environnement::changeTarget(Voiture v, int indPr)
+void Environnement::changeTarget(Voiture &v, int indPr)
 {
-    // cout << "indicePark : " << indPr << endl;
-    unsigned int indicePlace = getPlaceInd(indPr);
-    // cout << "indicePlace : " << indicePlace << endl;
-    Vec2 Placepos = parkings[indPr].getPlacesTab()[indicePlace].getPos();
-    v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place.
-    v.setPlace(indicePlace);
+    v.setParking(indPr);
+    v.setPlace(getPlaceInd(indPr));
+    Vec2 Placepos = parkings[indPr].getPlacesTab()[v.getPlace()].getPos();
+    v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place
+    // TODO : La target sera ce que renvoie la communication avec le parking
+
+    Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition()));
 }
 
 void Environnement::removeLogs()

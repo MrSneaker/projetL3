@@ -9,6 +9,7 @@ private:
     Vec2 pos;
     int indP;
     bool isTaken;
+    bool isReserved;
 public:
     //! \brief constructeur de la place.
     Place();
@@ -24,6 +25,10 @@ public:
     void setIsTaken(bool new_isTaken);
 
     const bool& getIsTaken() const;
+
+    void setIsReserved(bool new_isReserved);
+
+    const bool& getIsReserved() const;
 
     void test_regresion();
     

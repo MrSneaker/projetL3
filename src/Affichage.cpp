@@ -172,20 +172,20 @@ void Affichage::AffichagePlateau()
         }
     }
 
-    // for (int i = 0; i < environnement.voitures.size(); i++)
-    // {
-    //     for (int j = 0; j < environnement.voitures[i].getpathTab().size(); j++)
-    //     {
-    //         SDL_Rect rect;
-    //         rect.x = environnement.voitures[i].getpathTab()[j]->getNodepos().x * 10;
-    //         rect.y = environnement.voitures[i].getpathTab()[j]->getNodepos().y * 10;
-    //         rect.w = 10;
-    //         rect.h = 10;
-    //         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    //         SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
-    //         SDL_RenderFillRect(renderer, &rect);
-    //     }
-    // }
+    for (int i = 0; i < environnement.voitures.size(); i++)
+    {
+        for (int j = 0; j < environnement.voitures[i].getpathTab().size(); j++)
+        {
+            SDL_Rect rect;
+            rect.x = environnement.voitures[i].getpathTab()[j]->getNodepos().x * 10;
+            rect.y = environnement.voitures[i].getpathTab()[j]->getNodepos().y * 10;
+            rect.w = 10;
+            rect.h = 10;
+            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
+            SDL_RenderFillRect(renderer, &rect);
+        }
+    }
 
     //------------------ Affiche menu ----------------------------------------------------
     SDL_Rect Menu;
@@ -225,7 +225,7 @@ void Affichage::AffichagePlateau()
 
     // SDL_RenderDrawLine(renderer, 0, 857.5, 1000, 857.5);
 
-    // Affichage du temps 
+    // Affichage du temps
     AfficherTexte(font_default, "", "", int(environnement.Secondes), 566, 845.5, 0, 0, 0);
     // Si Minutes > 0 afficher Minutes
     if (environnement.Minutes > 0)
@@ -262,11 +262,7 @@ void Affichage::AffichagePlateau()
 void Affichage::AffichageSimulation()
 {
     bool display = true;
-    int lanceSim = false;
     bool ispress = false;
-    int x = 0;
-    int y = 0;
-    bool isapress = false;
     bool speedUp = false;
 
     float beginTick = SDL_GetTicks();
@@ -293,53 +289,14 @@ void Affichage::AffichageSimulation()
             case SDL_MOUSEMOTION:
                 Xm = event.motion.x;
                 Ym = event.motion.y;
-                // si la souris est sur le bouton pause / play
-                if (Xm > 50 && Xm < 115 && Ym > 815 && Ym < 885)
-                {
-                    PauseX = 50 - 5 / 2;  // on decale le bouton de la moitier la largueur ajouté -> plus propre
-                    PauseY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
-                    PauseW = 43 + 5;      // on ajoute 5 de chaque coté
-                    PauseH = 55 + 5;      // on ajoute 5 de chaque coté
-                }
-                else if (Xm > 150 && Xm < 215 && Ym > 815 && Ym < 885)
-                {
-                    SpeedUpX = 150 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
-                    SpeedUpY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
-                    SpeedUpW = 43 + 5;      // on ajoute 5 de chaque coté
-                    SpeedUpH = 55 + 5;      // on ajoute 5 de chaque coté
-                }
-                else if (Xm > 853 && Xm < 985 && Ym > 815 && Ym < 885)
-                {
-                    ExitX = 853 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
-                    ExitY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
-                    ExitW = 132 + 5;      // on ajoute 5 de chaque coté
-                    ExitH = 55 + 5;      // on ajoute 5 de chaque coté
-                }
-                else
-                {
-                    PauseX = 50;
-                    PauseY = 830;
-                    PauseW = 43;
-                    PauseH = 55;
-                    SpeedUpX = 150;
-                    SpeedUpY = 830;
-                    SpeedUpW = 43;
-                    SpeedUpH = 55;
-                    ExitX = 853;
-                    ExitY = 830;
-                    ExitW = 132;
-                    ExitH = 55;
-                }
-                
-
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                ispress = true;
+                
                 if (event.button.button == SDL_BUTTON_LEFT)
                 {
                     XC = event.button.x;
                     YC = event.button.y;
-                    isapress = true;
+                    ispress = true;
                 }
                 break;
             case SDL_QUIT:
@@ -353,12 +310,52 @@ void Affichage::AffichageSimulation()
 
                     break;
                 case SDLK_SPACE:
-                    environnement.SpeedUp = !environnement.SpeedUp;
+                    environnement.AddVoiture();
+                    break;
+                case SDLK_p:
                     break;
                 }
                 break;
             }
         }
+        // si la souris est sur le bouton pause / play
+        if (Xm > 50 && Xm < 115 && Ym > 815 && Ym < 885)
+        {
+            PauseX = 50 - 5 / 2;  // on decale le bouton de la moitier la largueur ajouté -> plus propre
+            PauseY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
+            PauseW = 43 + 5;      // on ajoute 5 de chaque coté
+            PauseH = 55 + 5;      // on ajoute 5 de chaque coté
+        }
+        else if (Xm > 150 && Xm < 215 && Ym > 815 && Ym < 885)
+        {
+            SpeedUpX = 150 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
+            SpeedUpY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
+            SpeedUpW = 43 + 5;      // on ajoute 5 de chaque coté
+            SpeedUpH = 55 + 5;      // on ajoute 5 de chaque coté
+        }
+        else if (Xm > 853 && Xm < 985 && Ym > 815 && Ym < 885)
+        {
+            ExitX = 853 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
+            ExitY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
+            ExitW = 132 + 5;     // on ajoute 5 de chaque coté
+            ExitH = 55 + 5;      // on ajoute 5 de chaque coté
+        }
+        else
+        {
+            PauseX = 50;
+            PauseY = 830;
+            PauseW = 43;
+            PauseH = 55;
+            SpeedUpX = 150;
+            SpeedUpY = 830;
+            SpeedUpW = 43;
+            SpeedUpH = 55;
+            ExitX = 853;
+            ExitY = 830;
+            ExitW = 132;
+            ExitH = 55;
+        }
+
         if (ispress == true)
         {
             //------------------ Bouton pause ------------------
@@ -397,21 +394,6 @@ void Affichage::AffichageSimulation()
             //--------------------------------------------------
 
             ispress = false;
-        }
-
-        // Si la valeur Is_in de la voiture est true on modifie la taille de la voiture
-        for (int i = 0; i < environnement.voitures.size(); i++)
-        {
-            if (environnement.voitures[i].getIs_in())
-            {
-                environnement.voitures[i].setwidth(10);
-                environnement.voitures[i].setheight(20);
-            }
-            else
-            {
-                environnement.voitures[i].setwidth(20);
-                environnement.voitures[i].setheight(30);
-            }
         }
 
         SDL_RenderPresent(renderer);
