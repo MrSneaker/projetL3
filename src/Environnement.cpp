@@ -174,7 +174,6 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     StartNode->GlobalGoal = heuristic(StartNode, EndNode);
 
     openList.push_back(StartNode);
-
     while (!openList.empty() && currentNode != EndNode && v.getIs_pathfind() == false)
     {
         while (!openList.empty() && openList.front()->getisVisited())
@@ -255,12 +254,11 @@ void Environnement::initParkings()
     // Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir
 
     // Créer 3 parkings et les ajouter dans le tableau de parkings
-    Parking p1(Vec2(1, 1), 180, 2, 4.5, 42, 36, 0);
-
-    Parking p2(Vec2(57, 1), 180, 99, 99, 42, 36, 1);
-    Parking p3(Vec2(1, 52), 240, 99, 99, 98, 27, 2);
-    parkings.push_back(p1);
+    Parking p2(Vec2(1, 1), 180, 3.5, 7, 42, 36, 0);
+    Parking p1(Vec2(57, 1), 180, 4.5, 5, 42, 36, 1);
+    Parking p3(Vec2(1, 52), 240, 4, 6, 98, 27, 2);
     parkings.push_back(p2);
+    parkings.push_back(p1);
     parkings.push_back(p3);
 }
 
@@ -409,14 +407,14 @@ void Environnement::Environnement_play()
         if (SpeedUp == true)
         {
             deltaTime *= 4;
-            //Minutes +=1;
+            // Minutes +=1;
         }
 
         frametime += deltaTime;
         TempsEcoule += deltaTime;
         frameParkTime += deltaTime;
         ClockTime();
-        //Affiche une voiture toutes les 5 secondes un seul fois
+        // Affiche une voiture toutes les 5 secondes un seul fois
         if (frametime >= 5.0f)
         {
             AddVoiture();
@@ -441,20 +439,17 @@ void Environnement::Environnement_play()
                     RemoveVoiture(i);
                 }
             }
-            voitures[i].MoveToTargetPosition();
 
             for (int j = 0; j < parkings.size(); j++)
             {
                 if (voitures[i].getNbFinishedConv() < 1)
                 {
-                    thread convThread(&Environnement::conversation, this, voitures[i]);
-                    if (convThread.joinable())
-                    {
-                        voitures[i].incrementNbFinishedConv();
-                        convThread.join();
-                    }
+                    conversation(voitures[i]);
+                    voitures[i].incrementNbFinishedConv();
+                    changeTarget(voitures[i], voitures[i].getParking());
                 }
             }
+            voitures[i].MoveToTargetPosition();
         }
     }
     updateStateVoiture();
@@ -487,7 +482,7 @@ void Environnement::deleteConv(int ind)
     conv.erase(conv.begin() + ind);
 }
 
-void Environnement::conversation(Voiture v)
+void Environnement::conversation(Voiture &v)
 {
     int indConv[parkings.size()];
     bool isFinished = false;
@@ -496,11 +491,10 @@ void Environnement::conversation(Voiture v)
         indConv[i] = createConv();
         isFinished = conv.at(indConv[i])->manageConv(parkings[i], v);
     }
-    int indPchosen = chosenPark(conv, v);
-    changeTarget(v, indPchosen);
+    v.setParking(chosenPark(conv, v));
     for (int j = 0; j < parkings.size(); j++)
     {
-        conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j], v, indPchosen);
+        conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j], v, v.getParking());
         if (isFinished)
         {
             conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[j].getId()));
@@ -519,32 +513,46 @@ int Environnement::chosenPark(vector<Conversation *> c, Voiture v)
         if (c.at(i)->getConv().at(c.at(i)->getConv().size() - 1).getSubject() == "ACCEPT")
             tabPrice.push_back(c.at(i)->getConv().at(c.at(i)->getConv().size() - 1).getPrice());
     }
-    float best = v.bestPrice(tabPrice);
-    for (int j = 0; j < c.size(); j++)
+    if (tabPrice.size() != 0)
     {
-        float tmp = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getPrice();
-        if (best == tmp)
+        float best = v.bestPrice(tabPrice);
+        for (int j = 0; j < c.size(); j++)
         {
-            bestSender = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getSender();
+            float tmp = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getPrice();
+            if (best == tmp)
+            {
+                bestSender = c.at(j)->getConv().at(c.at(j)->getConv().size() - 1).getSender();
+            }
         }
+        idBest = v.extractIntFromString(bestSender);
     }
-    idBest = v.extractIntFromString(bestSender);
+    else
+        idBest = -1;
     return idBest;
 }
 
-void Environnement::changeTarget(Voiture v, int indPr)
+void Environnement::changeTarget(Voiture &v, int indPr)
 {
-    // cout << "indicePark : " << indPr << endl;
-    unsigned int indicePlace = getPlaceInd(indPr);
-    // cout << "indicePlace : " << indicePlace << endl;
-    Vec2 Placepos = parkings[indPr].getPlacesTab()[indicePlace].getPos();
-    v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place.
-    v.setPlace(indicePlace);
+    if (indPr != -1)
+    {
+        v.setParking(indPr);
+        v.setPlace(getPlaceInd(indPr));
+        Vec2 Placepos = parkings[indPr].getPlacesTab()[v.getPlace()].getPos();
+        v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place.
+        Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition()));
+    }
+    else
+    {
+        int Exit = GetEntry();
+        Astar(v, GetNodeIndbyPos(v.get_position()), Exit);
+        v.ChangeTrajToExit = true;
+    }
 }
 
 void Environnement::removeLogs()
 {
-    // filesystem::remove_all("data/logs"); MARCHE PAS.
+    if (std::filesystem::exists("data/logs/Conversation U0P0.txt"))
+        system("rm data/logs/*");
 }
 
 void Environnement::test_regresion()

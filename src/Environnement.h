@@ -9,6 +9,7 @@
 #include "Node.h"
 #include "Conversation.h"
 #include <filesystem>
+#include <dirent.h>
 #include <vector>
 #include <iostream>
 #include <math.h>
@@ -114,7 +115,7 @@ public:
     void deleteConv(int ind);
 
     //! \brief pour réaliser la conversation.
-    void conversation(Voiture v);
+    void conversation(Voiture &v);
 
     //! \brief supprime le dossier de logs avant nouvelle itération.
     void removeLogs();
@@ -124,7 +125,7 @@ public:
 
     int getParkingInd();
 
-    void changeTarget(Voiture v, int indPr);
+    void changeTarget(Voiture &v, int indPr);
 
     //! \brief Test de regression de la classe Environnement
     void test_regresion();

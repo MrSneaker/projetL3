@@ -316,7 +316,7 @@ Message Voiture::confirmConversation(Message *aMessage, int indPrOK) const
 
 float Voiture::bestPrice(vector<float> tabPrice)
 {
-    float min = tabPrice[0];
+    float min = tabPrice.at(0);
     float tmp = 0;
     for (int i = 0; i < tabPrice.size(); i++)
     {

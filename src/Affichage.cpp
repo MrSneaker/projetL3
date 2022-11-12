@@ -172,20 +172,20 @@ void Affichage::AffichagePlateau()
         }
     }
 
-    // for (int i = 0; i < environnement.voitures.size(); i++)
-    // {
-    //     for (int j = 0; j < environnement.voitures[i].getpathTab().size(); j++)
-    //     {
-    //         SDL_Rect rect;
-    //         rect.x = environnement.voitures[i].getpathTab()[j]->getNodepos().x * 10;
-    //         rect.y = environnement.voitures[i].getpathTab()[j]->getNodepos().y * 10;
-    //         rect.w = 10;
-    //         rect.h = 10;
-    //         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    //         SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
-    //         SDL_RenderFillRect(renderer, &rect);
-    //     }
-    // }
+    //for (int i = 0; i < environnement.voitures.size(); i++)
+    //{
+    //    for (int j = 0; j < environnement.voitures[i].getpathTab().size(); j++)
+    //    {
+    //        SDL_Rect rect;
+    //        rect.x = environnement.voitures[i].getpathTab()[j]->getNodepos().x * 10;
+    //        rect.y = environnement.voitures[i].getpathTab()[j]->getNodepos().y * 10;
+    //        rect.w = 10;
+    //        rect.h = 10;
+    //        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    //        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
+    //        SDL_RenderFillRect(renderer, &rect);
+    //    }
+    //}
 
     //------------------ Affiche menu ----------------------------------------------------
     SDL_Rect Menu;
@@ -225,7 +225,7 @@ void Affichage::AffichagePlateau()
 
     // SDL_RenderDrawLine(renderer, 0, 857.5, 1000, 857.5);
 
-    // Affichage du temps 
+    // Affichage du temps
     AfficherTexte(font_default, "", "", int(environnement.Secondes), 566, 845.5, 0, 0, 0);
     // Si Minutes > 0 afficher Minutes
     if (environnement.Minutes > 0)
@@ -312,7 +312,7 @@ void Affichage::AffichageSimulation()
                 {
                     ExitX = 853 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
                     ExitY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
-                    ExitW = 132 + 5;      // on ajoute 5 de chaque coté
+                    ExitW = 132 + 5;     // on ajoute 5 de chaque coté
                     ExitH = 55 + 5;      // on ajoute 5 de chaque coté
                 }
                 else
@@ -330,7 +330,6 @@ void Affichage::AffichageSimulation()
                     ExitW = 132;
                     ExitH = 55;
                 }
-                
 
                 break;
             case SDL_MOUSEBUTTONDOWN:
