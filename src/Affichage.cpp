@@ -20,6 +20,8 @@ Affichage::~Affichage()
     UpRoad.~Image();
     DownRoad.~Image();
     Voiture.~Image();
+    Voiture2.~Image();
+    Voiture3.~Image();
     Pause.~Image();
     Play.~Image();
     SpeedUp.~Image();
@@ -90,6 +92,15 @@ void Affichage::InitAffichage()
         exit(1);
     }
 
+    font_UserCard = TTF_OpenFont("font/arial.ttf", 12);
+
+    if (font_UserCard == nullptr)
+    {
+        cout << "Failed to load img/Arial.ttf in 12 SDL_TTF Error: " << TTF_GetError() << endl;
+        SDL_Quit();
+        exit(1);
+    }
+
     // Fonction qui permet de load des images
     IMG_Init(IMG_INIT_PNG);
 
@@ -107,6 +118,8 @@ void Affichage::InitAffichage()
     DownRoad.loadFromFile("img/DownRoad.png", renderer);
     // Donne à voiture une image
     Voiture.loadFromFile("img/Voiture1.png", renderer);
+    Voiture2.loadFromFile("img/Voiture2.png", renderer);
+    Voiture3.loadFromFile("img/Voiture3.png", renderer);
     // Donne à pause une image
     Pause.loadFromFile("img/Pause.png", renderer);
     // Donne à play une image
@@ -133,17 +146,27 @@ void Affichage::AffichagePlateau()
     DownRoad.draw(renderer, 0, 390, 1000, 120, 0);
 
     //------------------ Affiche les voitures ------------------
-    // Avec l'anlge
+    // Avec l'angle
     for (int i = 0; i < environnement.voitures.size(); i++)
     {
-
         unsigned int w = environnement.voitures[i].getwidth();
         unsigned int h = environnement.voitures[i].getheight();
         unsigned int x = environnement.voitures[i].get_position().x - w / 2;
         unsigned int y = environnement.voitures[i].get_position().y - h / 2;
         int angle = environnement.voitures[i].getAngle();
 
-        Voiture.draw(renderer, x, y, w, h, angle);
+        switch (environnement.voitures[i].CarColor)
+        {
+        case 0:
+            Voiture.draw(renderer, x, y, w, h, angle);
+            break;
+        case 1:
+            Voiture2.draw(renderer, x, y, w, h, angle);
+            break;
+        case 2:
+            Voiture3.draw(renderer, x, y, w, h, angle);
+            break;
+        }
     }
 
     //------------------ Affiche les places de chaques parkings ------------------
@@ -172,8 +195,8 @@ void Affichage::AffichagePlateau()
         }
     }
 
-    //for (int i = 0; i < environnement.voitures.size(); i++)
-    //{
+    // for (int i = 0; i < environnement.voitures.size(); i++)
+    // {
     //    for (int j = 0; j < environnement.voitures[i].getpathTab().size(); j++)
     //    {
     //        SDL_Rect rect;
@@ -185,7 +208,7 @@ void Affichage::AffichagePlateau()
     //        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
     //        SDL_RenderFillRect(renderer, &rect);
     //    }
-    //}
+    // }
 
     //------------------ Affiche menu ----------------------------------------------------
     SDL_Rect Menu;
@@ -259,11 +282,44 @@ void Affichage::AffichagePlateau()
     //---------------------------------------------------------------------------------------
 }
 
+int Affichage::AffichageUserCard(unsigned int Vind)
+{
+
+    SDL_Rect UserCard;
+    UserCard.x = environnement.voitures[Vind].get_position().x;
+    UserCard.y = environnement.voitures[Vind].get_position().y-150;
+    UserCard.w = 100;
+    UserCard.h = 150;
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderFillRect(renderer, &UserCard);
+
+    //on affiche son nom
+    AfficherTexte(font_UserCard, environnement.voitures[Vind].User.getName(), "", 0, UserCard.x + 10, UserCard.y + 10, 0, 0, 0);
+    //on affiche son Age 
+    AfficherTexte(font_UserCard, "", "Age: ", environnement.voitures[Vind].User.getAge(), UserCard.x + 10, UserCard.y + 30, 0, 0, 0);
+    //on affiche son temps de stationnement
+    AfficherTexte(font_UserCard, "", "ParkTime: ", environnement.voitures[Vind].User.getParkTime(), UserCard.x + 10, UserCard.y + 50, 0, 0, 0);
+    //on affiche son prix max
+    AfficherTexte(font_UserCard, "", "Prix max: ", environnement.voitures[Vind].User.getMaxPrice(), UserCard.x + 10, UserCard.y + 70, 0, 0, 0);
+
+
+    //Si on clic en haut a droite de la carte on la supprime
+    AfficherTexte(font_UserCard, "X", "", 0, UserCard.x + 90, UserCard.y, 0, 0, 0);
+    if(XC > UserCard.x + 90 && XC < UserCard.x + 100 && YC > UserCard.y && YC < UserCard.y + 10)
+    {
+        return -1;
+    }
+
+    return 0;
+}
+
 void Affichage::AffichageSimulation()
 {
     bool display = true;
     bool ispress = false;
     bool speedUp = false;
+    bool DisplayUserCard = false;
+    int CarInd = 0;
 
     float beginTick = SDL_GetTicks();
 
@@ -277,9 +333,6 @@ void Affichage::AffichageSimulation()
         AffichagePlateau();
         environnement.Environnement_play();
 
-        int Xm, Ym;
-        int XC, YC;
-
         // Gestion des evenements
         while (SDL_PollEvent(&event))
         {
@@ -291,7 +344,7 @@ void Affichage::AffichageSimulation()
                 Ym = event.motion.y;
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                
+
                 if (event.button.button == SDL_BUTTON_LEFT)
                 {
                     XC = event.button.x;
@@ -371,10 +424,30 @@ void Affichage::AffichageSimulation()
             {
                 for (int i = 0; i < environnement.voitures.size(); i++)
                 {
-                    if (XC > environnement.voitures[i].get_position().x - 5 && XC < environnement.voitures[i].get_position().x + 5 && YC > environnement.voitures[i].get_position().y - 5 && YC < environnement.voitures[i].get_position().y + 5)
+                    int VX = environnement.voitures[i].get_position().x;
+                    int VY = environnement.voitures[i].get_position().y;
+                    int VW = environnement.voitures[i].getwidth();
+                    int VH = environnement.voitures[i].getheight();
+                    // Si on clique sur une voiture
+                    if (environnement.voitures[i].getAngle() == 90 || environnement.voitures[i].getAngle() == 270)
                     {
-                        cout << "voiture : " << i << " touchée" << endl;
-                        // TODO : Afficher les infos de l'utilisateur qui est dans la voiture
+                        if (XC > VX - VH / 2 && XC < VX + VH / 2 && YC > VY - VW / 2 && YC < VY + VW / 2)
+                        {
+                            cout<<"voiture "<<i<<endl;
+                            DisplayUserCard = true;
+                            CarInd = i;
+                        }
+
+                    }
+                    else
+                    {
+                        if (XC > VX - VW / 2 && XC < VX + VW / 2 && YC > VY - VH / 2 && YC < VY + VH / 2)
+                        {
+                            cout << "Voiture : " << i << endl;
+                            DisplayUserCard = true;
+                            CarInd = i;
+                        }
+
                     }
                 }
             }
@@ -395,6 +468,12 @@ void Affichage::AffichageSimulation()
             //--------------------------------------------------
 
             ispress = false;
+        }
+
+        if(DisplayUserCard == true)
+        {
+            if(AffichageUserCard(CarInd) == -1)
+                DisplayUserCard = false;
         }
 
         SDL_RenderPresent(renderer);

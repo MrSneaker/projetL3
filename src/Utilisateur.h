@@ -16,6 +16,8 @@ private:
     float ParkTime;
     unsigned int id;
     string name;
+    unsigned int Age;
+
     
 
 public:
@@ -40,6 +42,11 @@ public:
     void setParkTime(float u_ParkTime);
     //! \brief renvoie le nom de l'utilisateur sous forme de string.
     string getName() const;
+    //! \brief renvoie l'age de l'utilisateur.
+    unsigned int getAge() const;
+    //! \brief Modifie l'age de l'utilisateur.
+    //! \param u_Age age de l'utilisateur.
+    unsigned int setAge(unsigned int u_Age);
     //! \brief test de régression de la classe utilisateur.
     void testRegression();
     //! \brief Renvoie un temps de stationnement aléatoire en fonction de pourcentage de temps de stationnement.

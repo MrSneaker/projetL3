@@ -8,6 +8,7 @@ Utilisateur::Utilisateur()
     name = "default";
     maxPrice = 0;
     ParkTime = 0;
+    Age = 0;
 }
 
 Utilisateur::~Utilisateur()
@@ -37,15 +38,28 @@ const unsigned int& Utilisateur::getId() const
     return id;
 }
 
+string Utilisateur::getName() const
+{
+    return name;
+}
+
+unsigned int Utilisateur::getAge() const
+{
+    return Age;
+}
+
+
+unsigned int Utilisateur::setAge(unsigned int u_Age)
+{
+    Age = u_Age;
+}
+
+
 float Utilisateur::getParkTime() const
 {
     return ParkTime;
 }
 
-string Utilisateur::getName() const
-{
-    return name;
-}
 
 void Utilisateur::setParkTime(float u_ParkTime)
 {

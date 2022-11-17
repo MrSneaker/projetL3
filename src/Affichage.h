@@ -24,6 +24,8 @@ class Affichage{
         //------------------------------- IMAGE -----------------------------------
       
         Image Voiture;
+        Image Voiture2;
+        Image Voiture3;
         Image P1;
         Image P2;
         Image P3;
@@ -57,9 +59,12 @@ class Affichage{
 
         //------------------------------- TEXT -----------------------------------
         TTF_Font *font_default;
+        TTF_Font *font_UserCard;
 
         int X = 0;
         int Y = 0;
+        int Xm, Ym;
+        int XC, YC;
 
         
         //Utile pour le temps et les frames
@@ -93,6 +98,8 @@ class Affichage{
         void AffichagePlateau();
 
         void AffichageMenu();
+
+        int AffichageUserCard(unsigned int Vind);
 
         void AffichageSimulation();
 

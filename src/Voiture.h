@@ -39,6 +39,7 @@ public:
     bool dejaspawn = false;
     bool ChangeTrajToExit = false;
     unsigned int Exit;
+    unsigned int CarColor;
 
     Voiture();
 

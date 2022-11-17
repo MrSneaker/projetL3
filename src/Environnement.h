@@ -16,6 +16,7 @@
 #include <string>
 #include <fstream>
 #include <thread>
+#include <filesystem>
 
 #define DimWindowX 1000
 #define DimWindowY 800
