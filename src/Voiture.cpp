@@ -28,7 +28,6 @@ Voiture::Voiture(Utilisateur U)
     User = U;
     nbFinishedConv = 0;
     pathTab.clear();
-    nbFinishedConv = 0;
     Exit = 0;
 }
 

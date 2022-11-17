@@ -531,17 +531,14 @@ void Environnement::Environnement_play()
                 RemoveVoiture(i);
             }
 
-            if (!parkings[0].IsFull() && !parkings[1].IsFull() && !parkings[2].IsFull())
+            
+            for (int j = 0; j < parkings.size(); j++)
             {
-
-                for (int j = 0; j < parkings.size(); j++)
+                if (voitures[i].getNbFinishedConv() < 1)
                 {
-                    if (voitures[i].getNbFinishedConv() < 1)
-                    {
-                        conversation(voitures[i]);
-                        voitures[i].incrementNbFinishedConv();
-                        changeTarget(voitures[i], voitures[i].getParking());
-                    }
+                    conversation(voitures[i]);
+                    voitures[i].incrementNbFinishedConv();
+                    changeTarget(voitures[i], voitures[i].getParking());
                 }
             }
 

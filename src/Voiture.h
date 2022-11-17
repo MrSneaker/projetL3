@@ -22,7 +22,7 @@ private:
     bool Is_pathfind;    // true si la voiture a trouvé un chemin
     int parking;         // numéro du parking dans lequel la voiture est garée
     int place;           // numéro de la place dans lequel la voiture est garée
-    int nbFinishedConv;  // nombre de conversation finis par voiture. 
+    int nbFinishedConv;  // nombre de conversations finies par voiture. 
     int width;         // largeur de la voiture
     int height;        // hauteur de la voiture
     // float batterie; // batterie de la voiture
@@ -86,7 +86,7 @@ public:
 
     Message confirmConversation(Message *aMessage,int indPrOK) const;
 
-    //! \brief incrémente le nombre de conversation fini de 1.
+    //! \brief incrémente le nombre de conversations finies de 1.
     void incrementNbFinishedConv();
 
     //! \brief Modifie la position de la cible (parking / place / sortie)

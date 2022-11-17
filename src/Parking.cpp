@@ -5,7 +5,9 @@
 Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice, int DIMX, int DIMY, int id)
     : pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice),
       startingPrice(startPrice), nbAvailablePlaces(numberOfPlaces),
-      isFull(false), nbTotalVisits(0), DIMX(DIMX), DIMY(DIMY), idP(id), successPercentage(100), profit(0)
+      isFull(false), nbTotalVisits(0), DIMX(DIMX), DIMY(DIMY), idP(id),
+      successPercentage(100), profit(0), nbFinishedConv(0),
+      nbAgreementsOnPrice (0)
 {
 
     initPlace(1, 1, position.x + 1, position.y + 1);
@@ -118,12 +120,15 @@ void Parking::setNbAvailablePlaces(int nb)
     IsFull();
 }
 
+/* PEUT-ETRE PAS UTILE, A VOIR
+void Parking::incrementNbNegociations() {
+    nbNegociations++;
+}
+*/
+
 void Parking::updateSuccessPercentage()
 {
-    // TO DO : implémenter cette fonction. Son implémentation dépendera de
-    //         la manière dont sont stockés le nombre de négociations du Parking
-    //         ayant abouti à un "ACCEPT" de la part de la Voiture, ainsi que le
-    //         nombre total de négociations du Parking.
+    successPercentage = (nbAgreementsOnPrice + nbTotalVisits) / 2 / nbFinishedConv * 100;
 }
 
 void Parking::setMinPrice(float minimumPrice)
@@ -216,7 +221,7 @@ bool Parking::isPriceOk(double price) const
         return false;
 }
 
-Message Parking::managingConversation(Message *aMessage) const
+Message Parking::managingConversation(Message *aMessage)
 {
 
     string senderString = "Car_park_" + to_string(getId());
@@ -283,6 +288,8 @@ Message Parking::managingConversation(Message *aMessage) const
                     // Ce n'est pas un accord engageant. En effet, si par la suite, dans une conversation parallèle,
                     // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
                     // elle n'ira pas dans le parking A.
+
+                    nbAgreementsOnPrice++;
                 }
 
                 else if (responseType != "LAST_OFFER")
@@ -309,6 +316,14 @@ Message Parking::managingConversation(Message *aMessage) const
 
                     chosenPrice = proposedCarPrice;
                     responseType = "ACCEPT";
+                    // [SUGGGESTION :] Cela veut dire que le parking acceptera forcément la voiture S'IL A ENCORE
+                    // DE LA PLACE quand la voiture arrivera à son entrée, et ce au prix chosenPrice.
+                    // En revanche, cela ne veut pas dire que la voiture va aller dans ce parking (appelons-le "parking A").
+                    // Ce n'est pas un accord engageant. En effet, si par la suite, dans une conversation parallèle,
+                    // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
+                    // elle n'ira pas dans le parking A.
+
+                    nbAgreementsOnPrice++;
                 }
             }
         }
@@ -327,6 +342,8 @@ Message Parking::managingConversation(Message *aMessage) const
                 // Ce n'est pas un accord engageant. En effet, si par la suite, dans une conversation parallèle,
                 // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
                 // elle n'ira pas dans le parking A.
+
+                nbAgreementsOnPrice++;
             }
 
             else
@@ -349,9 +366,13 @@ Message Parking::managingConversation(Message *aMessage) const
             // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
             // elle n'ira pas dans le parking A.
 
+            nbAgreementsOnPrice++;
+
             // TO DO : il faudra appeler une fonction qui fait que le parking stocke l'adresse de l'utilisateur
             //         pour savoir que, si ce dernier arrive à son entrée, la négociation a déjà été faite et le prix
             //         décidé.
+
+            
         }
 
         if (sentType == "REJECT")
@@ -407,6 +428,9 @@ Message Parking::confirmConversation(Message *aMessage)
     {
         subject = "ABORT";
     }
+
+    nbFinishedConv++;
+    
     return Message(messageNum,price,subject,senderString,recipientString);
 }
 

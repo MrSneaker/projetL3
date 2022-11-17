@@ -127,20 +127,40 @@ private:
     double successPercentage;
     // - Pourcentage de réussite des négociations du Parking
 
-    // - Ratio, en pourcentage, du nombre de négociations du Parking ayant abouti
-    // à un "ACCEPT" de la part de la Voiture, sur le nombre total de négociations
-    // du Parking.
+    // - Ratio, en pourcentage, des valeurs suivantes :
+    //      ---> La MOYENNE de 2 valeurs :
+    //              --> nbAgreementsOnPrice
+    //              --> nbTotalVisits
+    //      SUR :
+    //      ---> nbFinishedConv
+    //
+    //   Cette donnée vaut donc : (nbAgreementsOnPrice + nbTotalVisits) / 2 / nbFinishedConv * 100
 
     // - A intervalles réguliers, le parking considerera cette donnée membre
     // pour éventuellement modifier son minPrice et son startingPrice
     // (fonction membre reconsiderPrices).
 
-    // TO DO : par la suite, pour reconsidérer ses prix, il faudra aussi que le
-    // Parking prenne en compte l'issue de ses "deuxièmes" conversations,
-    // celles dans lesquelles la Voiture et le Parking s'annoncent mutuellement
-    // s'ils se sont choisis ou non.
+
 
     double profit;
+
+
+
+    int nbFinishedConv;
+    // - Nombre de négociations effectuées par le parking depuis le début de la simulation.
+
+    // - Cette donnée rentre dans le calcul de successPercentage.
+
+
+
+    unsigned int nbAgreementsOnPrice;
+    // - Nombre de négociations dans lesquelles le parking et une voiture se sont mis
+    // d'accord sur le prix.
+
+    // - Il faudra utiliser cette donnée dans la reconsidération des prix du parking.
+
+
+
 
 public:
 
@@ -205,10 +225,6 @@ public:
 
     // MUTATEURS
 
-    // void setPlacesTab ();
-    // TO DO : Je dois la finir et voir quel(s) paramètre(s) lui mettre
-
-
     void setMinPrice(float minimumPrice);
 
     void setStartingPrice(float startPrice);
@@ -233,7 +249,12 @@ public:
     //! \brief ajoute une place au nombre de places dispo
     void incrementNbAvailablePlaces();
 
-    //! \brief met à jour le pourcentage de réussite des négociations du Parking
+    /* PEUT-ÊTRE PAS UTILE, A VOIR
+    //! \brief incrémente de 1 le nombre de négociations effectuées par le parking.
+    void incrementNbFinishedConv();
+    */
+
+    //! \brief Met à jour le pourcentage de réussite des négociations du Parking.
     void updateSuccessPercentage ();
 
 
@@ -267,13 +288,15 @@ public:
     //! \brief  - LAST_OFFER
     //! \brief  - ACCEPT
     //! \brief  - REJECT
-    Message managingConversation (Message * aMessage) const;
+    Message managingConversation (Message * aMessage);
 
-    //! \brief confirme la transaction ou non en fonction de la réponse de la voiture, fais les opérations en conséquence.
+    //! \brief - Confirme la transaction ou non en fonction de la réponse de la voiture, fait les opérations en conséquence.
+    //! \brief - Cette fonction est appelée pour toute négociation, on y incrémente donc notamment le nombre de négociations
+    //! \brief effectuées par le parking.
     Message confirmConversation(Message *aMessage);
 
 
-    //! \brief consideration de la donnée membre successPercentage
+    //! \brief Consideration de la donnée membre successPercentage
     //! \brief puis modification éventuelle de minPrice et startingPrice en conséquence.
     void reconsiderPrices ();
 
