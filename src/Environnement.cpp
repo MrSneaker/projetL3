@@ -649,8 +649,8 @@ void Environnement::changeTarget(Voiture &v, int indPr)
 
 void Environnement::removeLogs()
 {
-    // if (std::filesystem::exists("data/logs/Conversation U0P0.txt"))
-    //     system("rm data/logs/*");
+    if (std::filesystem::exists("data/logs/Conversation U0P0.txt"))
+        system("rm data/logs/*");
 }
 
 void Environnement::test_regresion()
