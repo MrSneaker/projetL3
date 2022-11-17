@@ -8,6 +8,7 @@
 #include "vec2.h"
 #include "Node.h"
 #include "Conversation.h"
+#include "Graph.h"
 #include <filesystem>
 #include <dirent.h>
 #include <vector>

@@ -102,19 +102,21 @@ const Vec2 &Voiture::getTargetPosition() const
     return TargetPosition;
 }
 
-//Fonction qui fait avancer la voiture en suivant le chemin
+// Fonction qui fait avancer la voiture en suivant le chemin
 bool Voiture::MoveToTargetPosition()
 {
+    Node *Current = new Node;
     if (pathTab.size() > 0)
     {
-
-        Node *Current = pathTab[pathTab.size() - 1];
-        if (Current->getNodepos().x * 10 +5 > position.x)
+        assert(pathTab[pathTab.size() - 1] != nullptr);
+        Current = pathTab[pathTab.size() - 1];
+        cout << "nodeposx : " << Current->getNodepos().x << endl;
+        if (Current->getNodepos().x * 10 + 5 > position.x)
         {
             MoveRight();
             return false;
         }
-        else if (Current->getNodepos().x * 10 +5 < position.x)
+        else if (Current->getNodepos().x * 10 + 5 < position.x)
         {
             MoveLeft();
             return false;
@@ -134,6 +136,7 @@ bool Voiture::MoveToTargetPosition()
             pathTab.pop_back();
         }
     }
+    delete Current;
     isMoving = false;
     return true;
 }
