@@ -149,10 +149,9 @@ public:
 
     //! \brief Constructeur parametre de la class parking
     //! \param position position du parking (position du rectangle en haut a gauche)
-    //! \param numberOfPlaces Nombre de palces disponible dans le parking
     //! \param minimumPrice Prix minimum d'acceptance par minutes que le  parking peut accepté -> A REVOIR
     //! \param startPrice Prix max que le parking propose -> A REVOIR
-    Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice, int DIMX, int DIMY, int id);
+    Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, int DimY, int id);
     
     
     Parking();
@@ -243,7 +242,7 @@ public:
     // AUTRES FONCTIONS
 
     //! \brief initialisation de toutes les places de parkings (positions, etc..).
-    void initPlace(int nbPlaceLi, int nbPlaceCol, int PcornerX, int PcornerY);
+    void initPlace(int PcornerX, int PcornerY);
 
     //! \brief vérifie qu'un prix donné est acceptable ou non, avec une marge arbitraire. Renvoie un booléen.
     //! \param price prix à vérifier

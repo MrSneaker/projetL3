@@ -24,7 +24,10 @@ Affichage::~Affichage()
     Voiture3.~Image();
     Pause.~Image();
     Play.~Image();
+    Exit.~Image();
     SpeedUp.~Image();
+    UserCard.~Image();
+    ParkSheet.~Image();
 
     TTF_Quit();
 
@@ -32,7 +35,7 @@ Affichage::~Affichage()
 }
 
 // Affiche du texte selon l'entrée
-void Affichage::AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, int r, int g, int b)
+void Affichage::AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, int r, int g, int b, int a)
 {
 
     // return;
@@ -47,7 +50,8 @@ void Affichage::AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, 
         text = val.c_str();
     }
 
-    SDL_Surface *surface = TTF_RenderText_Solid(font, text, color);
+    SDL_Surface *surface = TTF_RenderText_Blended(font, text, color);
+    SDL_SetSurfaceAlphaMod(surface, a);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
     int w, h = 24;
     SDL_QueryTexture(texture, NULL, NULL, &w, &h);
@@ -128,6 +132,10 @@ void Affichage::InitAffichage()
     SpeedUp.loadFromFile("img/SpeedUp.png", renderer);
     // Donne à Exit une image
     Exit.loadFromFile("img/Exit.png", renderer);
+    // Donne à UserCard une image
+    UserCard.loadFromFile("img/UserCard.png", renderer);
+    // Donne à ParkSheet une image
+    ParkSheet.loadFromFile("img/ParkSheet.png", renderer);
 }
 
 void Affichage::AffichagePlateau()
@@ -136,10 +144,13 @@ void Affichage::AffichagePlateau()
 
     // ------------------ Affiche l'image des parkings ------------------
 
-    P1.draw(renderer, environnement.parkings[0].getPos().x * 10 - 10, environnement.parkings[0].getPos().y * 10 - 10, 440, 390, 0);
-    P2.draw(renderer, environnement.parkings[1].getPos().x * 10 - 10, environnement.parkings[1].getPos().y * 10 - 10, 440, 390, 0);
+    P1.draw(renderer, environnement.parkings[0].getPos().x * 10 - 10, environnement.parkings[0].getPos().y * 10 - 10,
+            environnement.parkings[0].getDIMX() * 10, environnement.parkings[0].getDIMY() * 10 + 10, 0);
+    P2.draw(renderer, environnement.parkings[1].getPos().x * 10 - 10, environnement.parkings[1].getPos().y * 10 - 10,
+            environnement.parkings[1].getDIMX() * 10, environnement.parkings[1].getDIMY() * 10 + 10, 0);
 
-    P3.draw(renderer, environnement.parkings[2].getPos().x * 10 - 10, environnement.parkings[2].getPos().y * 10 - 10, 1000, 290, 0);
+    P3.draw(renderer, environnement.parkings[2].getPos().x * 10 - 10, environnement.parkings[2].getPos().y * 10 - 10,
+            environnement.parkings[2].getDIMX() * 10, environnement.parkings[2].getDIMY() * 10, 0);
     //------------------ Affiche les routes ------------------
 
     UpRoad.draw(renderer, 440, 0, 120, 400, 0);
@@ -249,35 +260,46 @@ void Affichage::AffichagePlateau()
     // SDL_RenderDrawLine(renderer, 0, 857.5, 1000, 857.5);
 
     // Affichage du temps
-    AfficherTexte(font_default, "", "", int(environnement.Secondes), 566, 845.5, 0, 0, 0);
+    AfficherTexte(font_default, "", "", int(environnement.Secondes), 566, 845.5, 0, 0, 0, 255);
     // Si Minutes > 0 afficher Minutes
     if (environnement.Minutes > 0)
     {
-        AfficherTexte(font_default, ":", "", 0, 554, 845.5, 0, 0, 0);
-        AfficherTexte(font_default, "", "", int(environnement.Minutes), 522, 845.5, 0, 0, 0);
+        AfficherTexte(font_default, ":", "", 0, 554, 845.5, 0, 0, 0, 255);
+        AfficherTexte(font_default, "", "", int(environnement.Minutes), 522, 845.5, 0, 0, 0, 255);
     }
     // Si Heures > 0 afficher Heures
     if (environnement.Heures > 0)
     {
-        AfficherTexte(font_default, ":", "", 0, 510, 845.5, 0, 0, 0);
-        AfficherTexte(font_default, "", "", int(environnement.Heures), 478, 845.5, 0, 0, 0);
+        AfficherTexte(font_default, ":", "", 0, 510, 845.5, 0, 0, 0, 255);
+        AfficherTexte(font_default, "", "", int(environnement.Heures), 478, 845.5, 0, 0, 0, 255);
     }
     // Si Jours > 0 afficher Jours
     if (environnement.Jours > 0)
     {
-        AfficherTexte(font_default, ":", "", 0, 466, 845.5, 0, 0, 0);
-        AfficherTexte(font_default, "", "", int(environnement.Jours), 434, 845.5, 0, 0, 0);
+        AfficherTexte(font_default, ":", "", 0, 466, 845.5, 0, 0, 0, 255);
+        AfficherTexte(font_default, "", "", int(environnement.Jours), 434, 845.5, 0, 0, 0, 255);
     }
 
     // Si Mois > 0 afficher Mois
     if (environnement.Mois > 0)
     {
-        AfficherTexte(font_default, ":", "", 0, 422, 845.5, 0, 0, 0);
-        AfficherTexte(font_default, "", "", int(environnement.Mois), 390, 845.5, 0, 0, 0);
+        AfficherTexte(font_default, ":", "", 0, 422, 845.5, 0, 0, 0, 255);
+        AfficherTexte(font_default, "", "", int(environnement.Mois), 390, 845.5, 0, 0, 0, 255);
     }
 
     // Boutton Exit
     Exit.draw(renderer, ExitX, ExitY, ExitW, ExitH, 0);
+
+    if(environnement.Pause == true){
+        for(int i=0; i<environnement.parkings.size(); i++)
+        {
+            int x = environnement.parkings[i].getPos().x * 10 + environnement.parkings[i].getDIMX() * 10-60;
+            int y = environnement.parkings[i].getPos().y * 10 + environnement.parkings[i].getDIMY() * 10-60;
+            int w = 40;
+            int h = 50;
+            ParkSheet.draw(renderer, x, y, w, h, 0);
+        }
+    }
 
     //---------------------------------------------------------------------------------------
 }
@@ -285,32 +307,68 @@ void Affichage::AffichagePlateau()
 int Affichage::AffichageUserCard(unsigned int Vind)
 {
 
-    SDL_Rect UserCard;
-    UserCard.x = environnement.voitures[Vind].get_position().x;
-    UserCard.y = environnement.voitures[Vind].get_position().y-150;
-    UserCard.w = 100;
-    UserCard.h = 150;
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(renderer, &UserCard);
+    SDL_Rect User_Card;
+    if (environnement.voitures[Vind].get_position().x + 250 > 1000)
+    {
+        User_Card.x = environnement.voitures[Vind].get_position().x - 250;
+    }
+    else
+    {
+        User_Card.x = environnement.voitures[Vind].get_position().x;
+    }
+    if (environnement.voitures[Vind].get_position().y - 150 < 0)
+    {
+        User_Card.y = environnement.voitures[Vind].get_position().y;
+    }
+    else
+        User_Card.y = environnement.voitures[Vind].get_position().y - 150;
+    User_Card.w = 250;
+    User_Card.h = 150;
+    UserCard.draw(renderer, User_Card.x, User_Card.y, User_Card.w, User_Card.h, 0);
 
-    //on affiche son nom
-    AfficherTexte(font_UserCard, environnement.voitures[Vind].User.getName(), "", 0, UserCard.x + 10, UserCard.y + 10, 0, 0, 0);
-    //on affiche son Age 
-    AfficherTexte(font_UserCard, "", "Age: ", environnement.voitures[Vind].User.getAge(), UserCard.x + 10, UserCard.y + 30, 0, 0, 0);
-    //on affiche son temps de stationnement
-    AfficherTexte(font_UserCard, "", "ParkTime: ", environnement.voitures[Vind].User.getParkTime(), UserCard.x + 10, UserCard.y + 50, 0, 0, 0);
-    //on affiche son prix max
-    AfficherTexte(font_UserCard, "", "Prix max: ", environnement.voitures[Vind].User.getMaxPrice(), UserCard.x + 10, UserCard.y + 70, 0, 0, 0);
+    // on affiche son nom
+    AfficherTexte(font_UserCard, environnement.voitures[Vind].User.getName(), "", 0, User_Card.x + 125, User_Card.y + 50, 0, 0, 0, 255);
+    // on affiche son Age
+    AfficherTexte(font_UserCard, "", "Age: ", environnement.voitures[Vind].User.getAge(), User_Card.x + 125, User_Card.y + 70, 0, 0, 0, 255);
+    // on affiche son temps de stationnement
+    AfficherTexte(font_UserCard, "", "ParkTime: ", environnement.voitures[Vind].User.getParkTime(), User_Card.x + 125, User_Card.y + 90, 0, 0, 0, 255);
+    // on affiche son prix max
+    AfficherTexte(font_UserCard, "", "Prix max: ", environnement.voitures[Vind].User.getMaxPrice(), User_Card.x + 125, User_Card.y + 110, 0, 0, 0, 255);
 
-
-    //Si on clic en haut a droite de la carte on la supprime
-    AfficherTexte(font_UserCard, "X", "", 0, UserCard.x + 90, UserCard.y, 0, 0, 0);
-    if(XC > UserCard.x + 90 && XC < UserCard.x + 100 && YC > UserCard.y && YC < UserCard.y + 10)
+    // Si on clic en haut a droite de la carte on la supprime
+    AfficherTexte(font_UserCard, "X", "", 0, User_Card.x + 230, User_Card.y + 10, 0, 0, 0, 255);
+    if (XC > User_Card.x + 230 && XC < User_Card.x + 240 && YC > User_Card.y + 10 && YC < User_Card.y + 20)
     {
         return -1;
     }
 
     return 0;
+}
+
+int Affichage::AffichageParkingCard(unsigned int ParkInd)
+{
+    SDL_Rect rect;
+    rect.x = environnement.parkings[ParkInd].getPos().x * 10;
+    rect.y = environnement.parkings[ParkInd].getPos().y * 10;
+    rect.w = environnement.parkings[ParkInd].getDIMX() * 10 - 20;
+    rect.h = environnement.parkings[ParkInd].getDIMY() * 10 - 20;
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 120);
+    SDL_RenderFillRect(renderer, &rect);
+
+    // on affiche son id
+    AfficherTexte(font_default, "", "ID: ", environnement.parkings[ParkInd].getId(), rect.x + 10, rect.y + 10, 255, 255, 255, 180);
+    // on affiche son prix min
+    AfficherTexte(font_default, "", "Prix min: ", environnement.parkings[ParkInd].getMinPrice(), rect.x + 10, rect.y + 40, 255, 255, 255, 180);
+    // on affiche son nombre de places restantes / total
+    AfficherTexte(font_default, "", "Places: ", environnement.parkings[ParkInd].getNbAvailablePlaces(), rect.x + 10, rect.y + 70, 255, 255, 255, 180);
+    AfficherTexte(font_default, "", " / ", environnement.parkings[ParkInd].getNbPlaces(), rect.x + 142, rect.y + 70, 255, 255, 255, 180);
+
+    // Si on sors de la carte on la supprime
+    if (Xm < rect.x || Xm > rect.x + rect.w || Ym < rect.y || Ym > rect.y + rect.h+10)
+    {
+        return -1;
+    }
 }
 
 void Affichage::AffichageSimulation()
@@ -319,7 +377,9 @@ void Affichage::AffichageSimulation()
     bool ispress = false;
     bool speedUp = false;
     bool DisplayUserCard = false;
+    bool DisplayParkingCard = false;
     int CarInd = 0;
+    int ParkInd = 0;
 
     float beginTick = SDL_GetTicks();
 
@@ -363,7 +423,9 @@ void Affichage::AffichageSimulation()
 
                     break;
                 case SDLK_SPACE:
-                    environnement.AddVoiture();
+                    // Clear la console
+                    // printf("\33[H\33[2J");
+                    // environnement.AddVoiture();
                     break;
                 case SDLK_p:
 
@@ -433,11 +495,10 @@ void Affichage::AffichageSimulation()
                     {
                         if (XC > VX - VH / 2 && XC < VX + VH / 2 && YC > VY - VW / 2 && YC < VY + VW / 2)
                         {
-                            cout<<"voiture "<<i<<endl;
+                            cout << "voiture " << i << endl;
                             DisplayUserCard = true;
                             CarInd = i;
                         }
-
                     }
                     else
                     {
@@ -447,7 +508,18 @@ void Affichage::AffichageSimulation()
                             DisplayUserCard = true;
                             CarInd = i;
                         }
-
+                    }
+                }
+                for (int i = 0; i < environnement.parkings.size(); i++)
+                {
+                    int InfoParkX = environnement.parkings[i].getPos().x * 10 + environnement.parkings[i].getDIMX() * 10 - 60;
+                    int InfoParkY = environnement.parkings[i].getPos().y * 10 + environnement.parkings[i].getDIMY() * 10 - 60;
+                    int InfoParkW = 40;
+                    int InfoParkH = 50;
+                    if(XC > InfoParkX && XC < InfoParkX + InfoParkW && YC > InfoParkY && YC < InfoParkY + InfoParkH){
+                        cout << "Parking : " << i << endl;
+                        DisplayParkingCard = true;
+                        ParkInd = i;
                     }
                 }
             }
@@ -470,10 +542,15 @@ void Affichage::AffichageSimulation()
             ispress = false;
         }
 
-        if(DisplayUserCard == true)
+        if (DisplayUserCard == true)
         {
-            if(AffichageUserCard(CarInd) == -1)
+            if (AffichageUserCard(CarInd) == -1)
                 DisplayUserCard = false;
+        }
+        if (DisplayParkingCard == true)
+        {
+            if (AffichageParkingCard(ParkInd) == -1)
+                DisplayParkingCard = false;
         }
 
         SDL_RenderPresent(renderer);

@@ -2,13 +2,21 @@
 
 // CONSTRUCTEUR et DESTRUCTEUR
 
-Parking::Parking(Vec2 position, int numberOfPlaces, float minimumPrice, float startPrice, int DIMX, int DIMY, int id)
-    : pos(position), nbPlaces(numberOfPlaces), minPrice(minimumPrice),
-      startingPrice(startPrice), nbAvailablePlaces(numberOfPlaces),
-      isFull(false), nbTotalVisits(0), DIMX(DIMX), DIMY(DIMY), idP(id), successPercentage(100), profit(0)
+Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, int DimY, int id)
 {
-
-    initPlace(1, 1, position.x + 1, position.y + 1);
+    pos = (position);
+    minPrice = (minimumPrice);
+    startingPrice = (startPrice);
+    isFull = (false);
+    nbTotalVisits = (0);
+    DIMX = DimX;
+    DIMY = DimY;
+    nbPlaces = ((DIMX/2-1) * (DIMY/4));
+    nbAvailablePlaces = (nbPlaces);
+    idP = (id);
+    successPercentage = (100);
+    profit = (0);
+    initPlace(position.x + 1, position.y + 1);
 }
 
 Parking::Parking()
@@ -103,6 +111,7 @@ const Vec2 &Parking::getPos() const
 void Parking::decrementNbAvailablePlaces()
 {
     nbAvailablePlaces--;
+    cout<<"nbAvailablePlaces = "<<nbAvailablePlaces<<endl;
     IsFull();
 }
 
@@ -178,26 +187,19 @@ void Parking::incrementNbVisitsTab(Utilisateur unUtilisateur)
     incrementNbTotalVisits();
 }
 
-void Parking::initPlace(int nbPlLigne, int nbPlCol, int PcornerX, int PcornerY)
+void Parking::initPlace(int PcornerX, int PcornerY)
 {
     int indPl = 1;
 
-    nbPlCol = DIMX / 2 - 1; //(DIMX-2)*(DIMY-2) / nbPlaces;
-    nbPlLigne = DIMY / 4;   // On divise par 4 car les places font 2 de hauteur et qu'il y'en a 1 toutes les 2 lignes
+    int nbPlCol = DIMX / 2 - 1; //(DIMX-2)*(DIMY-2) / nbPlaces;
+    int nbPlLigne = DIMY / 4;   // On divise par 4 car les places font 2 de hauteur et qu'il y'en a 1 toutes les 2 lignes
     // On en repalera dans la semaine Mateo mais dcp la les places sont constuite en fonction de la taille du parking pour le remplir en entier
     // Et non pas du nombre de place
-
     for (int i = 0; i < nbPlLigne; i++)
     {
         for (int j = 0; j < nbPlCol; j++)
         {
             Place p = Place(Vec2(PcornerX + j * 2, PcornerY + i * 3 + i), indPl);
-            if(isFull == true)
-            {
-                p.setIsReserved(true);
-                p.setIsTaken(true);
-
-            }
             placesTab.push_back(p);
             indPl++;
         }
@@ -399,6 +401,7 @@ Message Parking::confirmConversation(Message *aMessage)
             if (usersTab[i].first == idU)
             {
                 incrementNbVisitsTab(usersTab[i].second);
+                
             }
         }
         profit += price;
@@ -407,7 +410,7 @@ Message Parking::confirmConversation(Message *aMessage)
     {
         subject = "ABORT";
     }
-    return Message(messageNum,price,subject,senderString,recipientString);
+    return Message(messageNum, price, subject, senderString, recipientString);
 }
 
 void Parking::reconsiderPrices()
@@ -439,7 +442,7 @@ int Parking::extractIntFromString(string aString) const
 
 void Parking::testRegression()
 {
-    Parking p1(Vec2(1, 1), 180, 0.4, 0.4, 40, 36, 1);
+    Parking p1(Vec2(1, 1), 0.4, 0.4, 40, 36, 1);
 
     // test de la focntion getPlacesTab
     assert(p1.getPlacesTab().size() == p1.placesTab.size());

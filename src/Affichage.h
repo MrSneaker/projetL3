@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <cstdlib>
 
 #define DimWindowX 1000
 #define DimWindowY 800
@@ -31,6 +32,8 @@ class Affichage{
         Image P3;
         Image UpRoad;
         Image DownRoad;
+        Image UserCard;
+        Image ParkSheet;
 
         unsigned int  PauseX = 50;
         unsigned int  PauseY = 830;
@@ -91,7 +94,7 @@ class Affichage{
         Affichage();
         ~Affichage();
 
-        void AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, int r, int g, int b);
+        void AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, int r, int g, int b, int a);
 
         void InitAffichage();
 
@@ -100,6 +103,8 @@ class Affichage{
         void AffichageMenu();
 
         int AffichageUserCard(unsigned int Vind);
+
+        int AffichageParkingCard(unsigned int Parkind);
 
         void AffichageSimulation();
 

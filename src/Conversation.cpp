@@ -166,7 +166,7 @@ void Conversation::testRegression()
     Utilisateur u(3.5, 14, "paulo-test");
     Utilisateur u1(6, 15, "paulo-test2");
     Utilisateur u2(2, 16, "paulo-test3");
-    Parking p({10, 10}, 100, 3, 4, 10, 10, 4);
+    Parking p({10, 10}, 3, 4, 10, 10, 4);
     Voiture v(u);
     Voiture v1(u1);
     Voiture v2(u2);

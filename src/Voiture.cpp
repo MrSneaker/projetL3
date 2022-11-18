@@ -13,7 +13,7 @@ Voiture::Voiture(Utilisateur U)
 {
     position = Vec2(0, 0);
     TargetPosition = Vec2(0, 0);
-    speed = 2;
+    speed = 10;
     Is_in = false;
     Is_parked = false;
     Is_pathfind = false;
@@ -105,10 +105,12 @@ const Vec2 &Voiture::getTargetPosition() const
 //Fonction qui fait avancer la voiture en suivant le chemin
 bool Voiture::MoveToTargetPosition()
 {
+    Node *Current = new Node();
+    
     if (pathTab.size() > 0)
     {
 
-        Node *Current = pathTab[pathTab.size() - 1];
+        Current = pathTab[pathTab.size() - 1];
         if (Current->getNodepos().x * 10 +5 > position.x)
         {
             MoveRight();
@@ -134,6 +136,7 @@ bool Voiture::MoveToTargetPosition()
             pathTab.pop_back();
         }
     }
+    delete Current;
     isMoving = false;
     return true;
 }
