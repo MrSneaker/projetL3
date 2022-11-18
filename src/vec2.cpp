@@ -39,3 +39,15 @@ Vec2 Vec2::operator*(float New_float)
     result.y = this->y * New_float;
     return result;
 }
+
+const bool Vec2::operator!=(const Vec2 New_vec) const
+{
+    if (this->x != New_vec.x || this->y != New_vec.y)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}

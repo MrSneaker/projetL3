@@ -25,6 +25,11 @@ public:
     //! \brief Surcharge de l'opérateur *
     //! \param New_float : float à multiplier
     Vec2 operator*(float New_float);
+
+    //! \brief Surcharge de l'opérateur !=
+    //! \param New_vec : vecteur à comparer
+    const bool operator!=(const Vec2 New_vec) const ;
+
 };
 
 #endif

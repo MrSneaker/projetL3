@@ -23,8 +23,6 @@ Environnement::Environnement()
     removeLogs();
     getMap();
     initParkings();
-    // Affichelongueurde map
-    cout << "Longueur de map : " << map->size() << endl;
 }
 
 Environnement::~Environnement()
@@ -215,6 +213,10 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     }
     //---------------------------------TrackPath---------------------------------
     Node *current = EndNode; // on commence par le EndNode car on remonte le chemin
+    if(current->getParent() == nullptr)
+    {
+        cout<<"Pas de parent"<<endl;
+    }
     while (current->getParent() != nullptr && v.getIs_pathfind() == false)
     {
         v.getpathTab().push_back(current); // on ajoute le noeud courant au chemin pour le tracer
@@ -259,9 +261,9 @@ void Environnement::initParkings()
     // Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir
 
     // Créer 3 parkings et les ajouter dans le tableau de parkings
-    Parking p2(Vec2(1, 1), 180, 3.5, 7, 42, 36, 0);
-    Parking p1(Vec2(57, 1), 180, 4.5, 5, 42, 36, 1);
-    Parking p3(Vec2(1, 52), 240, 4, 6, 98, 27, 2);
+    Parking p2(Vec2(1, 1), 3.5, 7, 44, 38, 0);  // p0
+    Parking p1(Vec2(57, 1), 0.5, 5, 44, 38, 1); // p1
+    Parking p3(Vec2(1, 52), 4, 6, 100, 29, 2); // p2
     parkings.push_back(p2);
     parkings.push_back(p1);
     parkings.push_back(p3);
@@ -322,7 +324,7 @@ int Environnement::getPlaceInd(int parkingInd)
         return ind;
     else
         getPlaceInd(parkingInd);
-    if (parkings[parkingInd].getNbAvailablePlaces() == 0)
+    if (parkings[parkingInd].getNbAvailablePlaces() == 0 && !parkings[parkingInd].IsFull())
         return -1;
 }
 
@@ -384,7 +386,7 @@ void Environnement::AddVoiture()
     V.User.setParkTime(200000000);
 
     V.startTimer = frameParkTime;
-    voitures.push_back(V); // Ajout de la voiture dans le tableau de voitures
+    voitures.push_back(V); // Ajout de la voiture dans le tableau de voiture
 
     Astar(voitures.back(), Entry, GetNodeIndbyPos(voitures.back().getTargetPosition())); // on lance l'algorithme A* pour trouver le chemin
 
@@ -447,7 +449,7 @@ void Environnement::updateStateVoiture()
                 if (voitures[i].derement == true)
                 {
                     voitures[i].startTimer = frameParkTime;
-                    cout << "Parking : " << voitures[i].getParking() << " Nb place libre : " << parkings[voitures[i].getParking()].getNbAvailablePlaces() << endl;
+                    //cout << "Parking : " << voitures[i].getParking() << " Nb place libre : " << parkings[voitures[i].getParking()].getNbAvailablePlaces() << endl;
                     voitures[i].derement = false;
                 }
 
@@ -513,6 +515,7 @@ void Environnement::Environnement_play()
 
         for (int i = 0; i < voitures.size(); i++)
         {
+            
             if (voitures[i].getIs_parked() == true && (frameParkTime - voitures[i].startTimer) >= voitures[i].User.getParkTime() * 10 && voitures[i].ChangeTrajToExit == false)
             {
                 // la voiture sort du parking
@@ -522,9 +525,10 @@ void Environnement::Environnement_play()
                 Astar(voitures[i], GetNodeIndbyPos(voitures[i].get_position()), voitures[i].Exit);
                 voitures[i].ChangeTrajToExit = true;
             }
-            if (voitures[i].getpathTab().size() == 0 && voitures[i].getIs_parked() == false)
+            if (voitures[i].getpathTab().size() == 0 && voitures[i].getIs_parked() == false && voitures[i].isMoving == false)
             {
-                RemoveVoiture(i);
+                cout << "Erreur : La voiture " << i << " n'a pas de trajet" << endl;
+                //RemoveVoiture(i);
             }
             if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit)
             {
@@ -625,7 +629,7 @@ int Environnement::chosenPark(vector<Conversation *> c, Voiture v)
 
 void Environnement::changeTarget(Voiture &v, int indPr)
 {
-    if (indPr != -1)
+    if (indPr != -1 && parkings[indPr].IsFull() == false)
     {
         v.setParking(indPr);
         v.setPlace(getPlaceInd(indPr));
@@ -637,8 +641,8 @@ void Environnement::changeTarget(Voiture &v, int indPr)
     }
     else
     {
-        int Exit = GetExit();
-        Astar(v, GetNodeIndbyPos(v.get_position()), Exit);
+        v.Exit = GetExit();
+        Astar(v, GetNodeIndbyPos(v.get_position()), v.Exit);
         v.ChangeTrajToExit = true;
     }
 }

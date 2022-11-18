@@ -27,9 +27,9 @@ int main(){
     //Simulation.Environnement_play();
     //Simulation.test_regresion();
 
-    //Affichage aff;
+    Affichage aff;
 
-    //Graph.AffichageSimulation();
+    aff.AffichageSimulation();
 
     time_t end = time(NULL);
 
