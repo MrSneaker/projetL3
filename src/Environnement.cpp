@@ -485,7 +485,7 @@ void Environnement::updateStateVoiture()
     }
 }
 
-void Environnement::updateStateCarPark()
+void Environnement::updateStateCarParks()
 {
     // On parcourt le tableau de Parkings
     for (int i = 0; i < parkings.size(); i++)
@@ -502,6 +502,7 @@ void Environnement::Environnement_play()
     prevtime = currenttime;
     currenttime = temps;
     bool aConversationHasEnded = false;
+
     if (Pause == false)
     {
         // fonction de frametime
@@ -553,8 +554,9 @@ void Environnement::Environnement_play()
                 conversation(voitures[i]);
                 voitures[i].incrementNbFinishedConv();
 
-                for (int j = 0; j < parkings.size(); j++)
+                for (int j = 0; j < parkings.size(); j++) {
                     parkings[j].incrementNbFinishedConv();
+                }
                     
                 changeTarget(voitures[i], voitures[i].getParking());
                 aConversationHasEnded = true;
@@ -567,7 +569,7 @@ void Environnement::Environnement_play()
     updateStateVoiture();
 
     if (aConversationHasEnded)
-        updateStateCarPark();
+        updateStateCarParks();
         
 }
 

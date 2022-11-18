@@ -103,7 +103,7 @@ public:
     void updateStateVoiture();
 
     //! \brief Update les caractéristiques de chaque parking (dont ses prix).
-    void updateStateCarPark();
+    void updateStateCarParks();
 
     //! \brief Boucle de jeu
     void Environnement_play();

@@ -456,11 +456,13 @@ void Parking::reconsiderPrices()
         setMinPrice(minPrice - reduction);
         setStartingPrice(startingPrice - reduction);
     }
-    cout << "Parking " << idP << " : nbAgreementsOnPrice : " << nbAgreementsOnPrice << endl;
-    cout << "Parking " << idP << " : nbTotalVisits : " << nbTotalVisits << endl;
-    cout << "Parking " << idP << " : nbFinishedConv : " << nbFinishedConv << endl;
-    cout << "Parking " << idP << " : successPercentage : " << successPercentage << endl;
-    cout << "Parking " << idP << " : profit : " << profit << endl;
+
+    cout << "Parking " << idP + 1 << " : nbAgreementsOnPrice : " << nbAgreementsOnPrice << endl;
+    cout << "Parking " << idP + 1 << " : nbTotalVisits : " << nbTotalVisits << endl;
+    cout << "Parking " << idP + 1 << " : nbFinishedConv : " << nbFinishedConv << endl;
+    cout << "Parking " << idP + 1 << " : successPercentage : " << successPercentage << endl;
+    cout << "Parking " << idP + 1 << " : profit : " << profit << endl;
+
     cout << endl << endl << endl;
 }
 
