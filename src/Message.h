@@ -61,29 +61,44 @@ private:
 
 
 public:
+
     //! \brief constructeur par défaut du message
     Message();
+
     //! \brief 1er constructeur à paramètres du message
     //! \brief Utilisé pour créer le 1er message d'une conversation
     Message(string aSender, string aRecipient);
+
     //! \brief 2e constructeur à paramètres du message
     //! \brief Utilisé pour créer tout les messages qui ne sont pas
     //! \brief le 1er message d'une conversation
-    Message(unsigned int eMessageNumber, float aPrice, string aSubject, string aSender, string aRecipient);
+    Message(unsigned int eMessageNumber, float aPrice, string aSubject,
+            string aSender, string aRecipient);
+
+    //! \brief Constructeur par copie
+    Message (const Message & aMessage);
+
     //! \brief destructeur du message
     ~Message();
+
     //! \brief procédure de récupération du numéro du message
     const unsigned int& getMessageNumber() const;
+
     //! \brief procédure de récupération de l'objet du message
     const string& getSubject() const;
+
     //! \brief procédure de récupération de la date du message
     clock_t getDate() const;
+
     //! \brief procédure de récupération du tarif indiqué dans le message
     float getPrice() const;
+
     //! \brief procédure de récupération de l'expéditeur du message
     const string &getSender() const;
+
     //! \brief procédure de récupération du destinataire du message
     const string &getRecipient() const;
+
 
     void test_regresion();
 };

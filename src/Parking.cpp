@@ -140,15 +140,22 @@ void Parking::setNbAvailablePlaces(int nb)
     IsFull();
 }
 
-/* PEUT-ETRE PAS UTILE, A VOIR
-void Parking::incrementNbNegociations() {
-    nbNegociations++;
+void Parking::incrementNbAgreementsOnPrice () {
+    nbAgreementsOnPrice++;
 }
-*/
+
+void Parking::incrementNbFinishedConv() {
+    nbFinishedConv++;
+}
+
+void Parking::updateProfit (double aPrice) {
+    profit =+ aPrice;
+}
 
 void Parking::updateSuccessPercentage()
 {
-    successPercentage = (nbAgreementsOnPrice + nbTotalVisits) / 2 / nbFinishedConv * 100;
+    if (nbFinishedConv > 0)
+        successPercentage = (nbAgreementsOnPrice + nbTotalVisits) / 2 / nbFinishedConv * 100;
 }
 
 void Parking::setMinPrice(float minimumPrice)
@@ -241,7 +248,7 @@ bool Parking::isPriceOk(double price) const
         return false;
 }
 
-Message Parking::managingConversation(Message *aMessage)
+Message Parking::managingConversation(Message *aMessage) const
 {
 
     string senderString = "Car_park_" + to_string(getId());
@@ -309,7 +316,6 @@ Message Parking::managingConversation(Message *aMessage)
                     // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
                     // elle n'ira pas dans le parking A.
 
-                    nbAgreementsOnPrice++;
                 }
 
                 else if (responseType != "LAST_OFFER")
@@ -343,7 +349,6 @@ Message Parking::managingConversation(Message *aMessage)
                     // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
                     // elle n'ira pas dans le parking A.
 
-                    nbAgreementsOnPrice++;
                 }
             }
         }
@@ -363,7 +368,6 @@ Message Parking::managingConversation(Message *aMessage)
                 // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
                 // elle n'ira pas dans le parking A.
 
-                nbAgreementsOnPrice++;
             }
 
             else
@@ -386,7 +390,6 @@ Message Parking::managingConversation(Message *aMessage)
             // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
             // elle n'ira pas dans le parking A.
 
-            nbAgreementsOnPrice++;
 
             // TO DO : il faudra appeler une fonction qui fait que le parking stocke l'adresse de l'utilisateur
             //         pour savoir que, si ce dernier arrive à son entrée, la négociation a déjà été faite et le prix
@@ -423,6 +426,12 @@ Message Parking::managingConversation(Message *aMessage)
     }
 }
 
+
+
+
+
+
+
 Message Parking::confirmConversation(Message *aMessage)
 {
     string senderString = "Car_Park_" + to_string(getId());
@@ -433,36 +442,45 @@ Message Parking::confirmConversation(Message *aMessage)
 
     if (aMessage->getSubject() == "CONFIRM_ACCEPT")
     {
-        subject = "OK_TO_PARK";
-        unsigned int idU = extractIntFromString(recipientString);
-        for (int i = 0; i < usersTab.size(); i++)
-        {
-            if (usersTab[i].first == idU)
-            {
-                incrementNbVisitsTab(usersTab[i].second);
-                
-            }
+        if (nbAvailablePlaces > 0) {
+            subject = "OK_TO_PARK";
         }
-        profit += price;
+        else {
+            subject = "NO_MORE_SPOTS";
+            price = -1;
+        }
     }
+
     else
     {
         subject = "ABORT";
+        price = -1;
     }
-
-    nbFinishedConv++;
     
-    return Message(messageNum,price,subject,senderString,recipientString);
+    return Message(messageNum, price, subject, senderString, recipientString);
 }
+
+
+
+
+
 
 void Parking::reconsiderPrices()
 {
     if (successPercentage < 80)
     {
-        float reduction = (80 - successPercentage) / 100 * minPrice;
+        double reduction = (80 - successPercentage) / 100 * minPrice;
         setMinPrice(minPrice - reduction);
         setStartingPrice(startingPrice - reduction);
     }
+
+    cout << "Parking " << idP + 1 << " : nbAgreementsOnPrice : " << nbAgreementsOnPrice << endl;
+    cout << "Parking " << idP + 1 << " : nbTotalVisits : " << nbTotalVisits << endl;
+    cout << "Parking " << idP + 1 << " : nbFinishedConv : " << nbFinishedConv << endl;
+    cout << "Parking " << idP + 1 << " : successPercentage : " << successPercentage << endl;
+    cout << "Parking " << idP + 1 << " : profit : " << profit << endl;
+
+    cout << endl << endl << endl;
 }
 
 int Parking::extractIntFromString(string aString) const
