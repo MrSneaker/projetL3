@@ -62,6 +62,21 @@ const double &Parking::getProfit() const
     return profit;
 }
 
+const vector<pair<double,double>> &Parking::getDataProfit() const
+{
+    return dataProfit;
+}
+
+const vector<pair<double,double>> &Parking::getDataStartingPrice() const
+{
+    return dataStartingPrice;
+}
+
+const vector<pair<double,double>> &Parking::getDataNbPlaceTaken() const
+{
+    return dataNbPlaceTaken;
+}
+
 const int &Parking::getDIMX() const
 {
     return DIMX;
@@ -88,11 +103,6 @@ bool Parking::IsFull()
         isFull = false;
     }
     return isFull;
-}
-
-vector<int> Parking::getConversationsTab() const
-{
-    return conversationsTab;
 }
 
 const vector<pair<unsigned int, const Utilisateur>> &Parking::getUsersTab() const
@@ -174,6 +184,13 @@ void Parking::addUsersTab(Utilisateur unUtilisateur)
     }
     if (addOk) // si addOk est vraie en fin de procédure, on ajoute alors l'utilisateur.
         usersTab.push_back(make_pair(0, unUtilisateur));
+}
+
+void Parking::addToData(double currentTime)
+{
+    dataProfit.push_back(make_pair(currentTime,profit));
+    dataStartingPrice.push_back(make_pair(currentTime,startingPrice));
+    dataNbPlaceTaken.push_back(make_pair(currentTime,(nbPlaces-nbAvailablePlaces)));
 }
 
 void Parking::incrementNbTotalVisits()

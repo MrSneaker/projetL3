@@ -144,7 +144,9 @@ private:
 
     double profit;
 
-
+    vector<pair<double,double>> dataProfit;
+    vector<pair<double,double>> dataStartingPrice;
+    vector<pair<double,double>> dataNbPlaceTaken;
 
     int nbFinishedConv;
     // - Nombre de négociations effectuées par le parking depuis le début de la simulation.
@@ -199,9 +201,11 @@ public:
 
     const int &getId() const;
 
-    vector<int> getConversationsTab() const;
-    // Pas encore sûrs qu'on va l'utiliser
-    // (cf commentaire de la donnée membre conversationsTab)
+    const vector<pair<double,double>> &getDataProfit() const;
+
+    const vector<pair<double,double>> &getDataStartingPrice() const;
+
+    const vector<pair<double,double>> &getDataNbPlaceTaken() const;
 
     const vector<pair<unsigned int,const Utilisateur>> &getUsersTab() const;
 
@@ -234,6 +238,7 @@ public:
     //! \param unUtilisateur un utilisateur.
     void addUsersTab(Utilisateur unUtilisateur);
     
+    void addToData(double currentTime);
 
     void incrementNbTotalVisits();
 

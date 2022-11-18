@@ -213,9 +213,9 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     }
     //---------------------------------TrackPath---------------------------------
     Node *current = EndNode; // on commence par le EndNode car on remonte le chemin
-    if(current->getParent() == nullptr)
+    if (current->getParent() == nullptr)
     {
-        cout<<"Pas de parent"<<endl;
+        cout << "Pas de parent" << endl;
     }
     while (current->getParent() != nullptr && v.getIs_pathfind() == false)
     {
@@ -263,7 +263,7 @@ void Environnement::initParkings()
     // Créer 3 parkings et les ajouter dans le tableau de parkings
     Parking p2(Vec2(1, 1), 3.5, 7, 44, 38, 0);  // p0
     Parking p1(Vec2(57, 1), 0.5, 5, 44, 38, 1); // p1
-    Parking p3(Vec2(1, 52), 4, 6, 100, 29, 2); // p2
+    Parking p3(Vec2(1, 52), 4, 6, 100, 29, 2);  // p2
     parkings.push_back(p2);
     parkings.push_back(p1);
     parkings.push_back(p3);
@@ -449,7 +449,7 @@ void Environnement::updateStateVoiture()
                 if (voitures[i].derement == true)
                 {
                     voitures[i].startTimer = frameParkTime;
-                    //cout << "Parking : " << voitures[i].getParking() << " Nb place libre : " << parkings[voitures[i].getParking()].getNbAvailablePlaces() << endl;
+                    // cout << "Parking : " << voitures[i].getParking() << " Nb place libre : " << parkings[voitures[i].getParking()].getNbAvailablePlaces() << endl;
                     voitures[i].derement = false;
                 }
 
@@ -515,7 +515,7 @@ void Environnement::Environnement_play()
 
         for (int i = 0; i < voitures.size(); i++)
         {
-            
+
             if (voitures[i].getIs_parked() == true && (frameParkTime - voitures[i].startTimer) >= voitures[i].User.getParkTime() * 10 && voitures[i].ChangeTrajToExit == false)
             {
                 // la voiture sort du parking
@@ -528,7 +528,7 @@ void Environnement::Environnement_play()
             if (voitures[i].getpathTab().size() == 0 && voitures[i].getIs_parked() == false && voitures[i].isMoving == false)
             {
                 cout << "Erreur : La voiture " << i << " n'a pas de trajet" << endl;
-                //RemoveVoiture(i);
+                RemoveVoiture(i);
             }
             if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit)
             {
@@ -651,6 +651,49 @@ void Environnement::removeLogs()
 {
     if (std::filesystem::exists("data/logs/Conversation U0P0.txt"))
         system("rm data/logs/*");
+}
+
+int Environnement::searchMax(vector<int> tab)
+{
+    int max = tab.at(0);
+    int tmp = 0;
+    for (int i = 0; i < tab.size(); i++)
+    {
+        if (tab[i] > max)
+        {
+            if (tab[i] != tmp)
+                max = tab[i];
+        }
+        tmp = tab[i];
+    }
+    return max;
+}
+
+void Environnement::makeGraph(int choice)
+{
+    vector<int> profitSize;
+    vector<int> startingPriceSize;
+    vector<int> placeTakenSize;
+    for (int i = 0; i < parkings.size(); i++)
+    {
+        profitSize.push_back(parkings[i].getDataProfit().size());
+        startingPriceSize.push_back(parkings[i].getDataStartingPrice().size());
+        placeTakenSize.push_back(parkings[i].getDataNbPlaceTaken().size());
+    }
+    switch (choice)
+    {
+    case 0:
+        Graph(parkings[0].getDataProfit(), parkings[1].getDataProfit(), parkings[2].getDataProfit(), "Profit parking ", 0, 0, TempsEcoule, searchMax(profitSize));
+        break;
+    case 1:
+        Graph(parkings[0].getDataStartingPrice(), parkings[1].getDataStartingPrice(), parkings[2].getDataStartingPrice(), "Evolution prix de départ parking ", 0, 0, TempsEcoule, searchMax(startingPriceSize));
+        break;
+    case 2:
+        Graph(parkings[0].getDataNbPlaceTaken(), parkings[1].getDataNbPlaceTaken(), parkings[2].getDataNbPlaceTaken(), "Nombres de places occupées parking ", 0, 0, TempsEcoule, searchMax(placeTakenSize));
+        break;
+    default:
+        break;
+    }
 }
 
 void Environnement::test_regresion()
