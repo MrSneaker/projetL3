@@ -102,6 +102,9 @@ public:
     //! \brief Update le status de chaque voiture.
     void updateStateVoiture();
 
+    //! \brief Update les caractéristiques de chaque parking (dont ses prix).
+    void updateStateCarPark();
+
     //! \brief Boucle de jeu
     void Environnement_play();
 

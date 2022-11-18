@@ -261,9 +261,9 @@ void Environnement::initParkings()
     // Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir
 
     // Créer 3 parkings et les ajouter dans le tableau de parkings
-    Parking p2(Vec2(1, 1), 3.5, 7, 44, 38, 0);  // p0
-    Parking p1(Vec2(57, 1), 0.5, 5, 44, 38, 1); // p1
-    Parking p3(Vec2(1, 52), 4, 6, 100, 29, 2); // p2
+    Parking p2(Vec2(1, 1), 3, 7, 44, 38, 0);  // p0
+    Parking p1(Vec2(57, 1), 8, 12, 44, 38, 1); // p1
+    Parking p3(Vec2(1, 52), 4, 8, 100, 29, 2); // p2
     parkings.push_back(p2);
     parkings.push_back(p1);
     parkings.push_back(p3);
@@ -485,12 +485,23 @@ void Environnement::updateStateVoiture()
     }
 }
 
+void Environnement::updateStateCarPark()
+{
+    // On parcourt le tableau de Parkings
+    for (int i = 0; i < parkings.size(); i++)
+    {
+        parkings [i].updateSuccessPercentage ();
+        parkings [i].reconsiderPrices ();
+    }
+}
+
 // Boucle de jeu
 void Environnement::Environnement_play()
 {
 
     prevtime = currenttime;
     currenttime = temps;
+    bool aConversationHasEnded = false;
     if (Pause == false)
     {
         // fonction de frametime
@@ -535,28 +546,29 @@ void Environnement::Environnement_play()
                 RemoveVoiture(i);
             }
 
-            for (int j = 0; j < parkings.size(); j++)
-
             
-            for (int j = 0; j < parkings.size(); j++)
+            
+            if (voitures[i].getNbFinishedConv() < 1)
             {
-                if (voitures[i].getNbFinishedConv() < 1)
-                if (voitures[i].getNbFinishedConv() < 1)
-                {
+                conversation(voitures[i]);
+                voitures[i].incrementNbFinishedConv();
+
+                for (int j = 0; j < parkings.size(); j++)
+                    parkings[j].incrementNbFinishedConv();
                     
-                    conversation(voitures[i]);
-                    voitures[i].incrementNbFinishedConv();
-                    changeTarget(voitures[i], voitures[i].getParking());
-                    conversation(voitures[i]);
-                    voitures[i].incrementNbFinishedConv();
-                    changeTarget(voitures[i], voitures[i].getParking());
-                }
+                changeTarget(voitures[i], voitures[i].getParking());
+                aConversationHasEnded = true;
             }
 
             voitures[i].MoveToTargetPosition();
         }
     }
+
     updateStateVoiture();
+
+    if (aConversationHasEnded)
+        updateStateCarPark();
+        
 }
 
 void Environnement::getMap()
@@ -598,11 +610,18 @@ void Environnement::conversation(Voiture &v)
     v.setParking(chosenPark(conv, v));
     for (int j = 0; j < parkings.size(); j++)
     {
-        conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j], v, v.getParking());
+        conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j],
+                                                                 v, v.getParking());
         if (isFinished)
         {
-            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[j].getId()));
+            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U"
+                                                                 + to_string(v.User.getId())
+                                                                 + "P"
+                                                                 + to_string(parkings[j].getId()));
+
+            conv.at(indConv[parkings.size() - 1 - j])->updateStateCarParkAfterConv (parkings[parkings.size() - 1 - j]);
         }
+
         deleteConv(indConv[parkings.size() - 1 - j]);
     }
 }

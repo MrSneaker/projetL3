@@ -313,6 +313,7 @@ Message Voiture::confirmConversation(Message *aMessage, int indPrOK) const
     else
     {
         subject = "RENOUNCE";
+        price = -1;
     }
     return Message(messageNum, price, subject, senderString, recipientString);
 }
