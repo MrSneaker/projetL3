@@ -37,7 +37,8 @@ private:
     unsigned int frames = 0;
     float frameParkTime = 0.f;
     unsigned int prevtime = 0;
-    unsigned int currenttime = 0;
+    unsigned int currentTime = 0;
+    unsigned int realTime;
     float deltaTime = 0.f;
     float frametime = 0.f;
 

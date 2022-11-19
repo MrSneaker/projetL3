@@ -13,7 +13,7 @@ Voiture::Voiture(Utilisateur U)
 {
     position = Vec2(0, 0);
     TargetPosition = Vec2(0, 0);
-    speed = 10;
+    speed = 5;
     Is_in = false;
     Is_parked = false;
     Is_pathfind = false;
@@ -105,12 +105,12 @@ const Vec2 &Voiture::getTargetPosition() const
 bool Voiture::MoveToTargetPosition()
 {
     Node *Current = new Node();
-    
+
     if (pathTab.size() > 0)
     {
 
         Current = pathTab[pathTab.size() - 1];
-        if (Current->getNodepos().x * 10 +5 > position.x)
+        if (Current->getNodepos().x * 10 + 5 > position.x)
         {
             MoveRight();
             return false;
@@ -270,7 +270,7 @@ Message Voiture::managingConversation(Message *aMessage) const
             //         vers le parking lui ayant proposé le meilleur prix.
         }
 
-        if (sentType == "REJECT")
+        if (sentType == "REJECT" || sentType == "NO_MORE_SPOTS")
         {
 
             chosenPrice = -1;

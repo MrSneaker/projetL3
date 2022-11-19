@@ -426,6 +426,9 @@ void Affichage::AffichageSimulation()
                     // Clear la console
                     // printf("\33[H\33[2J");
                     // environnement.AddVoiture();
+                    environnement.makeGraph(0);
+                    environnement.makeGraph(1);
+                    environnement.makeGraph(2);
                     break;
                 case SDLK_p:
 

@@ -44,7 +44,7 @@ int main(){
     //c.testRegression();
     //cout<<"Temps de calcul = "<<end-begin<<" secondes"<<endl;
 
-    Graph g;
-    g.test_regression();
+    //Graph g;
+    //g.test_regression();
     return 0;
 }

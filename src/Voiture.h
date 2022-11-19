@@ -33,6 +33,7 @@ public:
     Utilisateur User; // Utilisateur de la voiture
     int indice;
     bool isMoving = false;
+    bool exist = true;
     bool derement = true;
     float timer;
     float startTimer;

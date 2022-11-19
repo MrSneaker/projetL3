@@ -68,7 +68,8 @@ void Conversation::sendMessageParking(Parking p)
     conv.push_back(toSend);
 }
 
-void Conversation::updateStateCarParkAfterConv (Parking & p) {
+void Conversation::updateStateCarParkAfterConv(Parking &p)
+{
 
     // Si les threads sont terminés, on peut consulter leur conversation
     // pour voir si on doit incrémenter nbAgreementsOnPrice
@@ -76,35 +77,23 @@ void Conversation::updateStateCarParkAfterConv (Parking & p) {
     if (voiture.joinable() == false && parking.joinable() == false)
     {
 
-        Message* lastMessageOfConv = new Message (conv.at(conv.size() - 1));
-        Message* antepenultimateMessageOfConv = new Message (conv.at(conv.size() - 3));
+        Message lastMessageOfConv = conv.at(conv.size() - 1);
 
-        if (antepenultimateMessageOfConv -> getSubject() == "ACCEPT")
+        if (lastMessageOfConv.getSubject() == "OK_TO_PARK")
+        {
             p.incrementNbAgreementsOnPrice();
-
-
-
-        if (lastMessageOfConv -> getSubject() == "OK_TO_PARK") {
-
-            unsigned int idU = p.extractIntFromString(lastMessageOfConv -> getSender());
+            unsigned int idU = p.extractIntFromString(lastMessageOfConv.getSender());
             for (int i = 0; i < p.getUsersTab().size(); i++)
             {
-                if (p.getUsersTab()[i].first == idU)
+                if (p.getUsersTab()[i].second.getId() == idU)
                 {
                     p.incrementNbVisitsTab(p.getUsersTab()[i].second);
-                    
                 }
             }
 
-            p.updateProfit(lastMessageOfConv -> getPrice());
-
+            p.updateProfit(lastMessageOfConv.getPrice());
         }
-
-
-        delete lastMessageOfConv;
-        delete antepenultimateMessageOfConv;
     }
-
 }
 
 void Conversation::sendConfirmationV(Voiture v, int indPrOK)

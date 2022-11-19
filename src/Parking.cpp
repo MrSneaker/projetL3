@@ -11,7 +11,7 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     nbTotalVisits = (0);
     DIMX = DimX;
     DIMY = DimY;
-    nbPlaces = ((DIMX/2-1) * (DIMY/4));
+    nbPlaces = ((DIMX / 2 - 1) * (DIMY / 4));
     nbAvailablePlaces = (nbPlaces);
     idP = (id);
     successPercentage = (100);
@@ -19,7 +19,6 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     nbFinishedConv = 0;
     nbAgreementsOnPrice = 0;
     initPlace(position.x + 1, position.y + 1);
-    
 }
 
 Parking::Parking()
@@ -62,17 +61,17 @@ const double &Parking::getProfit() const
     return profit;
 }
 
-const vector<pair<double,double>> &Parking::getDataProfit() const
+const vector<pair<double, double>> &Parking::getDataProfit() const
 {
     return dataProfit;
 }
 
-const vector<pair<double,double>> &Parking::getDataStartingPrice() const
+const vector<pair<double, double>> &Parking::getDataStartingPrice() const
 {
     return dataStartingPrice;
 }
 
-const vector<pair<double,double>> &Parking::getDataNbPlaceTaken() const
+const vector<pair<double, double>> &Parking::getDataNbPlaceTaken() const
 {
     return dataNbPlaceTaken;
 }
@@ -124,7 +123,7 @@ const Vec2 &Parking::getPos() const
 void Parking::decrementNbAvailablePlaces()
 {
     nbAvailablePlaces--;
-    cout<<"nbAvailablePlaces = "<<nbAvailablePlaces<<endl;
+    cout << "nbAvailablePlaces = " << nbAvailablePlaces << endl;
     IsFull();
 }
 
@@ -140,22 +139,25 @@ void Parking::setNbAvailablePlaces(int nb)
     IsFull();
 }
 
-void Parking::incrementNbAgreementsOnPrice () {
+void Parking::incrementNbAgreementsOnPrice()
+{
     nbAgreementsOnPrice++;
 }
 
-void Parking::incrementNbFinishedConv() {
+void Parking::incrementNbFinishedConv()
+{
     nbFinishedConv++;
 }
 
-void Parking::updateProfit (double aPrice) {
-    profit =+ aPrice;
+void Parking::updateProfit(double aPrice)
+{
+    profit += aPrice;
 }
 
 void Parking::updateSuccessPercentage()
 {
     if (nbFinishedConv > 0)
-        successPercentage = (nbAgreementsOnPrice + nbTotalVisits) / 2 / nbFinishedConv * 100;
+        successPercentage = (nbAgreementsOnPrice * 100 / nbFinishedConv);
 }
 
 void Parking::setMinPrice(float minimumPrice)
@@ -195,9 +197,9 @@ void Parking::addUsersTab(Utilisateur unUtilisateur)
 
 void Parking::addToData(double currentTime)
 {
-    dataProfit.push_back(make_pair(currentTime,profit));
-    dataStartingPrice.push_back(make_pair(currentTime,startingPrice));
-    dataNbPlaceTaken.push_back(make_pair(currentTime,(nbPlaces-nbAvailablePlaces)));
+    dataProfit.push_back(make_pair(currentTime, profit));
+    dataStartingPrice.push_back(make_pair(currentTime, startingPrice));
+    dataNbPlaceTaken.push_back(make_pair(currentTime, (nbPlaces - nbAvailablePlaces)));
 }
 
 void Parking::incrementNbTotalVisits()
@@ -315,7 +317,6 @@ Message Parking::managingConversation(Message *aMessage) const
                     // Ce n'est pas un accord engageant. En effet, si par la suite, dans une conversation parallèle,
                     // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
                     // elle n'ira pas dans le parking A.
-
                 }
 
                 else if (responseType != "LAST_OFFER")
@@ -348,7 +349,6 @@ Message Parking::managingConversation(Message *aMessage) const
                     // Ce n'est pas un accord engageant. En effet, si par la suite, dans une conversation parallèle,
                     // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
                     // elle n'ira pas dans le parking A.
-
                 }
             }
         }
@@ -367,7 +367,6 @@ Message Parking::managingConversation(Message *aMessage) const
                 // Ce n'est pas un accord engageant. En effet, si par la suite, dans une conversation parallèle,
                 // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
                 // elle n'ira pas dans le parking A.
-
             }
 
             else
@@ -375,6 +374,12 @@ Message Parking::managingConversation(Message *aMessage) const
                 chosenPrice = -1;
                 responseType = "REJECT";
             }
+        }
+
+        if (nbAvailablePlaces == 0)
+        {
+            responseType = "NO_MORE_SPOTS";
+            chosenPrice = -1;
         }
 
         if (sentType == "ACCEPT")
@@ -390,12 +395,9 @@ Message Parking::managingConversation(Message *aMessage) const
             // la voiture se met d'accord avec un autre parking pour une offre moins chère avant d'atteindre le parking A,
             // elle n'ira pas dans le parking A.
 
-
             // TO DO : il faudra appeler une fonction qui fait que le parking stocke l'adresse de l'utilisateur
             //         pour savoir que, si ce dernier arrive à son entrée, la négociation a déjà été faite et le prix
             //         décidé.
-
-            
         }
 
         if (sentType == "REJECT")
@@ -426,12 +428,6 @@ Message Parking::managingConversation(Message *aMessage) const
     }
 }
 
-
-
-
-
-
-
 Message Parking::confirmConversation(Message *aMessage)
 {
     string senderString = "Car_Park_" + to_string(getId());
@@ -442,13 +438,7 @@ Message Parking::confirmConversation(Message *aMessage)
 
     if (aMessage->getSubject() == "CONFIRM_ACCEPT")
     {
-        if (nbAvailablePlaces > 0) {
-            subject = "OK_TO_PARK";
-        }
-        else {
-            subject = "NO_MORE_SPOTS";
-            price = -1;
-        }
+        subject = "OK_TO_PARK";
     }
 
     else
@@ -456,22 +446,24 @@ Message Parking::confirmConversation(Message *aMessage)
         subject = "ABORT";
         price = -1;
     }
-    
+
     return Message(messageNum, price, subject, senderString, recipientString);
 }
 
-
-
-
-
-
 void Parking::reconsiderPrices()
 {
-    if (successPercentage < 80)
+    if (successPercentage < 50)
     {
-        double reduction = (80 - successPercentage) / 100 * minPrice;
+        double reduction = (50 - successPercentage) / 100 * minPrice;
+        cout << "reduction : " << reduction << endl;
         setMinPrice(minPrice - reduction);
         setStartingPrice(startingPrice - reduction);
+    }
+    else if (successPercentage > 70)
+    {
+        double augmentation = 1.50;
+        setMinPrice(augmentation * minPrice);
+        setStartingPrice(augmentation * startingPrice);
     }
 
     cout << "Parking " << idP + 1 << " : nbAgreementsOnPrice : " << nbAgreementsOnPrice << endl;
@@ -479,8 +471,12 @@ void Parking::reconsiderPrices()
     cout << "Parking " << idP + 1 << " : nbFinishedConv : " << nbFinishedConv << endl;
     cout << "Parking " << idP + 1 << " : successPercentage : " << successPercentage << endl;
     cout << "Parking " << idP + 1 << " : profit : " << profit << endl;
+    cout << "Parking " << idP + 1 << " : startingPrice : " << startingPrice << endl;
+    cout << "Parking " << idP + 1 << " : minPrice : " << minPrice << endl;
 
-    cout << endl << endl << endl;
+    cout << endl
+         << endl
+         << endl;
 }
 
 int Parking::extractIntFromString(string aString) const
