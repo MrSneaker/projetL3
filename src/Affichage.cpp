@@ -601,9 +601,6 @@ void Affichage::AffichageSimulation()
                     // Clear la console
                     // printf("\33[H\33[2J");
                     // environnement.AddVoiture();
-                    environnement.makeGraph(0);
-                    environnement.makeGraph(1);
-                    environnement.makeGraph(2);
                     break;
                 case SDLK_p:
 
@@ -739,6 +736,33 @@ void Affichage::AffichageSimulation()
                     MenuArrowH = 20;
                     DisplayGraphMenu = true;
                 }
+
+                //-------------------------------------------------Graphs-------------------------------------------------
+                if (DisplayGraphMenu)
+                {
+                    // Si on clic sur le boutton pour afficher le menu deroulant des graphs
+                    if (XC > 5 && XC < 205 && YC > 5 && YC < 45)
+                    {
+                        DisplayUnrolledMenu = !DisplayUnrolledMenu;
+                    }
+
+                    // Si on clic sur le boutton 1 pour afficher le graph Profit
+                    if (XC > 5 && XC < 205 && YC > 45 && YC < 85 && DisplayUnrolledMenu)
+                    {
+                        environnement.makeGraph(0);
+                    }
+                    // Si on clic sur le boutton 2 pour afficher le graph Prix
+                    else if (XC > 5 && XC < 205 && YC > 85 && YC < 125 && DisplayUnrolledMenu)
+                    {
+                        environnement.makeGraph(1);
+                    }
+                    // Si on clic sur le boutton 3 pour afficher le graph Nb places
+                    else if (XC > 5 && XC < 205 && YC > 125 && YC < 165 && DisplayUnrolledMenu)
+                    {
+                        environnement.makeGraph(2);
+                    }
+                }
+                //--------------------------------------------------------------------------------------------------------
             }
             //----------------------------------------------------
 
@@ -756,53 +780,37 @@ void Affichage::AffichageSimulation()
             }
             //--------------------------------------------------
 
-            //-------------------------------------------------Graphs-------------------------------------------------
-            if (DisplayGraphMenu)
-            {
-                // Si on clic sur le boutton pour afficher le menu deroulant des graphs
-                if (XC > 5 && XC < 205 && YC > 5 && YC < 45)
-                {
-                    DisplayUnrolledMenu = !DisplayUnrolledMenu;
-                }
-
-                // Si on clic sur le boutton 1 pour afficher le graph Profit
-                if (XC > 5 && XC < 205 && YC > 45 && YC < 85 && DisplayUnrolledMenu)
-                {
-                    // TODO Creer une feneetre avec le graphique du profit
-                    cout << "Profit" << endl;
-                }
-                // Si on clic sur le boutton 2 pour afficher le graph Prix
-                else if (XC > 5 && XC < 205 && YC > 85 && YC < 125 && DisplayUnrolledMenu)
-                {
-                    // TODO Creer une feneetre avec le graphique de l'evolution du prix
-                    cout << "Prix" << endl;
-                }
-                // Si on clic sur le boutton 3 pour afficher le graph Nb places
-                else if (XC > 5 && XC < 205 && YC > 125 && YC < 165 && DisplayUnrolledMenu)
-                {
-                    // TODO Creer une feneetre avec le graphique de l'evolution du nombre de places
-                    cout << "Nombre de places" << endl;
-                }
-            }
-            //--------------------------------------------------------------------------------------------------------
-
             ispress = false;
         }
 
-        if (DisplayUserCard == true)
+        if (environnement.Pause)
         {
-            if (AffichageUserCard(CarInd) == -1)
-                DisplayUserCard = false;
+            if (DisplayUserCard == true)
+            {
+                if (AffichageUserCard(CarInd) == -1)
+                    DisplayUserCard = false;
+            }
+            if (DisplayParkingCard == true)
+            {
+                if (AffichageParkingCard(ParkInd) == -1)
+                    DisplayParkingCard = false;
+            }
+            if (DisplayGraphMenu == true)
+            {
+                if (AffichageGraphMenu() == -1)
+                    DisplayGraphMenu = false;
+            }
         }
-        if (DisplayParkingCard == true)
-        {
-            if (AffichageParkingCard(ParkInd) == -1)
-                DisplayParkingCard = false;
-        }
-        if (DisplayGraphMenu == true)
-        {
-            if (AffichageGraphMenu() == -1)
-                DisplayGraphMenu = false;
+        else 
+        {   
+            // Si on est plus en pause, on cache tout et remet a la position de base les boutons
+            DisplayUserCard = false;
+            DisplayParkingCard = false;
+            DisplayGraphMenu = false;
+            DisplayUnrolledMenu = false;
+            MenuArrowAngle = 0;
+            MenuArrowX = 470;
+            MenuArrowY = 20;
         }
 
         SDL_RenderPresent(renderer);
