@@ -28,6 +28,8 @@ Affichage::~Affichage()
     SpeedUp.~Image();
     UserCard.~Image();
     ParkSheet.~Image();
+    Clock.~Image();
+    Calendar.~Image();
 
     TTF_Quit();
 
@@ -53,7 +55,8 @@ void Affichage::AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, 
     SDL_Surface *surface = TTF_RenderText_Blended(font, text, color);
     SDL_SetSurfaceAlphaMod(surface, a);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-    int w, h = 24;
+    int w = w;
+    int h = h;
     SDL_QueryTexture(texture, NULL, NULL, &w, &h);
     SDL_Rect dstrect = {x, y, w, h};
     SDL_RenderCopy(renderer, texture, NULL, &dstrect);
@@ -96,11 +99,29 @@ void Affichage::InitAffichage()
         exit(1);
     }
 
+    font_Time = TTF_OpenFont("font/arial.ttf", 18);
+
+    if (font_Time == nullptr)
+    {
+        cout << "Failed to load img/Arial.ttf in 18 SDL_TTF Error: " << TTF_GetError() << endl;
+        SDL_Quit();
+        exit(1);
+    }
+
     font_UserCard = TTF_OpenFont("font/arial.ttf", 12);
 
     if (font_UserCard == nullptr)
     {
         cout << "Failed to load img/Arial.ttf in 12 SDL_TTF Error: " << TTF_GetError() << endl;
+        SDL_Quit();
+        exit(1);
+    }
+
+    font_Calendar = TTF_OpenFont("font/arial.ttf", 9);
+
+    if (font_Calendar == nullptr)
+    {
+        cout << "Failed to load img/Arial.ttf in 9 SDL_TTF Error: " << TTF_GetError() << endl;
         SDL_Quit();
         exit(1);
     }
@@ -136,6 +157,12 @@ void Affichage::InitAffichage()
     UserCard.loadFromFile("img/UserCard.png", renderer);
     // Donne à ParkSheet une image
     ParkSheet.loadFromFile("img/ParkSheet.png", renderer);
+    // Donne à Clock une image
+    Clock.loadFromFile("img/Clock.png", renderer);
+    // Donne à Calendar une image
+    Calendar.loadFromFile("img/Calendar.png", renderer);
+    // Donne à MenuArrow une image
+    MenuArrow.loadFromFile("img/MenuArrow.png", renderer);
 }
 
 void Affichage::AffichagePlateau()
@@ -233,14 +260,14 @@ void Affichage::AffichagePlateau()
     Banner.x = 0;
     Banner.y = 800;
     Banner.w = 1000;
-    Banner.h = 10;
+    Banner.h = 8;
     SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
     SDL_RenderFillRect(renderer, &Banner);
     SDL_Rect Banner2;
     Banner2.x = 0;
-    Banner2.y = 810;
+    Banner2.y = 808;
     Banner2.w = 1000;
-    Banner2.h = 5;
+    Banner2.h = 3;
     SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
     SDL_RenderFillRect(renderer, &Banner2);
 
@@ -257,48 +284,72 @@ void Affichage::AffichagePlateau()
     // Affichage du bouton speed
     SpeedUp.draw(renderer, SpeedUpX, SpeedUpY, SpeedUpW, SpeedUpH, 0);
 
-    // SDL_RenderDrawLine(renderer, 0, 857.5, 1000, 857.5);
-
     // Affichage du temps
-    AfficherTexte(font_default, "", "", int(environnement.Secondes), 566, 845.5, 0, 0, 0, 255);
-    // Si Minutes > 0 afficher Minutes
-    if (environnement.Minutes > 0)
-    {
-        AfficherTexte(font_default, ":", "", 0, 554, 845.5, 0, 0, 0, 255);
-        AfficherTexte(font_default, "", "", int(environnement.Minutes), 522, 845.5, 0, 0, 0, 255);
-    }
-    // Si Heures > 0 afficher Heures
-    if (environnement.Heures > 0)
-    {
-        AfficherTexte(font_default, ":", "", 0, 510, 845.5, 0, 0, 0, 255);
-        AfficherTexte(font_default, "", "", int(environnement.Heures), 478, 845.5, 0, 0, 0, 255);
-    }
-    // Si Jours > 0 afficher Jours
-    if (environnement.Jours > 0)
-    {
-        AfficherTexte(font_default, ":", "", 0, 466, 845.5, 0, 0, 0, 255);
-        AfficherTexte(font_default, "", "", int(environnement.Jours), 434, 845.5, 0, 0, 0, 255);
-    }
 
+    Calendar.draw(renderer, 442, 808, 48, 40, 0);
     // Si Mois > 0 afficher Mois
     if (environnement.Mois > 0)
     {
-        AfficherTexte(font_default, ":", "", 0, 422, 845.5, 0, 0, 0, 255);
-        AfficherTexte(font_default, "", "", int(environnement.Mois), 390, 845.5, 0, 0, 0, 255);
+        AfficherTexte(font_Time, "", "", int(environnement.Mois), 456, 822, 0, 0, 0, 255);
+    }
+    else
+    {
+        AfficherTexte(font_Time, "00", "", 0, 456, 822, 0, 0, 0, 255);
+    }
+
+    AfficherTexte(font_Calendar, "MONTH", "", 0, 449, 847, 0, 0, 0, 255);
+
+    Calendar.draw(renderer, 510, 808, 48, 40, 0);
+    // Si Jours > 0 afficher Jours
+    if (environnement.Jours > 0)
+    {
+        AfficherTexte(font_Time, "", "", int(environnement.Jours), 524, 822, 0, 0, 0, 255);
+    }
+    else
+    {
+        AfficherTexte(font_Time, "00", "", 0, 524, 822, 0, 0, 0, 255);
+    }
+    AfficherTexte(font_Calendar, "DAY", "", 0, 525, 847, 0, 0, 0, 255);
+
+    Clock.draw(renderer, 450, 848, 100, 62, 0);
+
+    AfficherTexte(font_Time, "", " : ", int(environnement.Secondes), 509, 868, 255, 0, 0, 255);
+
+    // Si Minutes > 0 afficher Minutes
+    if (environnement.Minutes > 0)
+    {
+        AfficherTexte(font_Time, "", " : ", int(environnement.Minutes), 476.5, 868, 255, 0, 0, 255);
+    }
+    else
+    {
+        AfficherTexte(font_Time, " : 00", "", 0, 476.5, 868, 255, 0, 0, 255);
+    }
+
+    // Si Heures > 0 afficher Heures
+    if (environnement.Heures > 0)
+    {
+        AfficherTexte(font_Time, "", "", int(environnement.Heures), 458, 868, 255, 0, 0, 255);
+    }
+    else
+    {
+        AfficherTexte(font_Time, "00", "", 0, 458, 868, 255, 0, 0, 255);
     }
 
     // Boutton Exit
     Exit.draw(renderer, ExitX, ExitY, ExitW, ExitH, 0);
 
-    if(environnement.Pause == true){
-        for(int i=0; i<environnement.parkings.size(); i++)
+    if (environnement.Pause == true)
+    {
+        for (int i = 0; i < environnement.parkings.size(); i++)
         {
-            int x = environnement.parkings[i].getPos().x * 10 + environnement.parkings[i].getDIMX() * 10-60;
-            int y = environnement.parkings[i].getPos().y * 10 + environnement.parkings[i].getDIMY() * 10-60;
+            int x = environnement.parkings[i].getPos().x * 10 + environnement.parkings[i].getDIMX() * 10 - 60;
+            int y = environnement.parkings[i].getPos().y * 10 + environnement.parkings[i].getDIMY() * 10 - 60;
             int w = 40;
             int h = 50;
             ParkSheet.draw(renderer, x, y, w, h, 0);
         }
+
+        MenuArrow.draw(renderer, MenuArrowX, MenuArrowY, MenuArrowW, MenuArrowH, MenuArrowAngle);
     }
 
     //---------------------------------------------------------------------------------------
@@ -365,10 +416,133 @@ int Affichage::AffichageParkingCard(unsigned int ParkInd)
     AfficherTexte(font_default, "", " / ", environnement.parkings[ParkInd].getNbPlaces(), rect.x + 142, rect.y + 70, 255, 255, 255, 180);
 
     // Si on sors de la carte on la supprime
-    if (Xm < rect.x || Xm > rect.x + rect.w || Ym < rect.y || Ym > rect.y + rect.h+10)
+    if (Xm < rect.x || Xm > rect.x + rect.w || Ym < rect.y || Ym > rect.y + rect.h + 10)
     {
         return -1;
     }
+    return 0;
+}
+
+int Affichage::AffichageGraphMenu()
+{
+
+    // On affiche la barre de menu
+    SDL_Rect MenuBar;
+    MenuBar.x = 0;
+    MenuBar.y = 0;
+    MenuBar.w = 1000;
+    MenuBar.h = 50;
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, 20, 20, 20, 200);
+    SDL_RenderFillRect(renderer, &MenuBar);
+
+    // On affiche le boutton de menu deroulant des graphiques
+    SDL_Rect GraphMenu;
+    GraphMenu.x = 5;
+    GraphMenu.y = 5;
+    GraphMenu.w = 200;
+    GraphMenu.h = 40;
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, 220, 220, 220, 200);
+    SDL_RenderFillRect(renderer, &GraphMenu);
+    AfficherTexte(font_default, "GRAPHIQUES >", "", 0, 15, 13, 0, 0, 0, 255);
+    // Hover sur le boutton
+    if (Xm > 5 && Xm < 205 && Ym > 5 && Ym < 45)
+    {
+        SDL_Rect GraphMenuHover;
+        GraphMenuHover.x = 5;
+        GraphMenuHover.y = 5;
+        GraphMenuHover.w = 200;
+        GraphMenuHover.h = 40;
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawColor(renderer, 20, 20, 20, 100);
+        SDL_RenderFillRect(renderer, &GraphMenuHover);
+    }
+
+    if (DisplayUnrolledMenu)
+    {
+        //----------------------------------Boutton 1---------------------------------------------------------
+
+        // On affiche le boutton 1 de menu deroulant des graphiques (Profit)
+        SDL_Rect Button1;
+        Button1.x = 5;
+        Button1.y = 45;
+        Button1.w = 200;
+        Button1.h = 40;
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawColor(renderer, 220, 220, 220, 200);
+        SDL_RenderFillRect(renderer, &Button1);
+        AfficherTexte(font_default, "PROFIT", "", 0, 15, 53, 0, 0, 0, 255);
+        // Hover sur le boutton
+        if (Xm > 5 && Xm < 205 && Ym > 45 && Ym < 85)
+        {
+            SDL_Rect Button1Hover;
+            Button1Hover.x = 5;
+            Button1Hover.y = 45;
+            Button1Hover.w = 200;
+            Button1Hover.h = 40;
+            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderDrawColor(renderer, 20, 20, 20, 100);
+            SDL_RenderFillRect(renderer, &Button1Hover);
+        }
+
+        //----------------------------------Boutton 2---------------------------------------------------------
+
+        // On affiche le boutton 2 de menu deroulant des graphiques (Prix)
+        SDL_Rect Button2;
+        Button2.x = 5;
+        Button2.y = 85;
+        Button2.w = 200;
+        Button2.h = 40;
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawColor(renderer, 220, 220, 220, 200);
+        SDL_RenderFillRect(renderer, &Button2);
+        AfficherTexte(font_default, "PRIX", "", 0, 15, 93, 0, 0, 0, 255);
+        // Hover sur le boutton
+        if (Xm > 5 && Xm < 205 && Ym > 85 && Ym < 125)
+        {
+            SDL_Rect Button2Hover;
+            Button2Hover.x = 5;
+            Button2Hover.y = 85;
+            Button2Hover.w = 200;
+            Button2Hover.h = 40;
+            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderDrawColor(renderer, 20, 20, 20, 100);
+            SDL_RenderFillRect(renderer, &Button2Hover);
+        }
+
+        //----------------------------------Boutton 3---------------------------------------------------------
+
+        // On affiche le boutton 3 de menu deroulant des graphiques (NombreDePlaces)
+        SDL_Rect Button3;
+        Button3.x = 5;
+        Button3.y = 125;
+        Button3.w = 200;
+        Button3.h = 40;
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawColor(renderer, 220, 220, 220, 200);
+        SDL_RenderFillRect(renderer, &Button3);
+        AfficherTexte(font_default, "NB PLACES", "", 0, 15, 133, 0, 0, 0, 255);
+        // Hover sur le boutton
+        if (Xm > 5 && Xm < 205 && Ym > 125 && Ym < 165)
+        {
+            SDL_Rect Button3Hover;
+            Button3Hover.x = 5;
+            Button3Hover.y = 125;
+            Button3Hover.w = 200;
+            Button3Hover.h = 40;
+            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderDrawColor(renderer, 20, 20, 20, 100);
+            SDL_RenderFillRect(renderer, &Button3Hover);
+        }
+    }
+
+    if (XC > 470 && XC < 530 && YC > 60 && YC < 80)
+    {
+        return -1;
+    }
+
+    return 0;
 }
 
 void Affichage::AffichageSimulation()
@@ -378,6 +552,7 @@ void Affichage::AffichageSimulation()
     bool speedUp = false;
     bool DisplayUserCard = false;
     bool DisplayParkingCard = false;
+    bool DisplayGraphMenu = false;
     int CarInd = 0;
     int ParkInd = 0;
 
@@ -435,47 +610,74 @@ void Affichage::AffichageSimulation()
             }
         }
         // si la souris est sur le bouton pause / play
-        if (Xm > 50 && Xm < 115 && Ym > 815 && Ym < 885)
+        if (Xm > 50 && Xm < 93 && Ym > 826 && Ym < 881)
         {
             PauseX = 50 - 5 / 2;  // on decale le bouton de la moitier la largueur ajouté -> plus propre
-            PauseY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
+            PauseY = 826 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
             PauseW = 43 + 5;      // on ajoute 5 de chaque coté
             PauseH = 55 + 5;      // on ajoute 5 de chaque coté
         }
-        else if (Xm > 150 && Xm < 215 && Ym > 815 && Ym < 885)
+        else if (Xm > 150 && Xm < 193 && Ym > 826 && Ym < 881)
         {
             SpeedUpX = 150 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
-            SpeedUpY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
+            SpeedUpY = 826 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
             SpeedUpW = 43 + 5;      // on ajoute 5 de chaque coté
             SpeedUpH = 55 + 5;      // on ajoute 5 de chaque coté
         }
-        else if (Xm > 853 && Xm < 985 && Ym > 815 && Ym < 885)
+        else if (Xm > 853 && Xm < 985 && Ym > 826 && Ym < 881)
         {
             ExitX = 853 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
-            ExitY = 830 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
+            ExitY = 826 - 5 / 2; // on decale le bouton de la moitier la hauteur ajouté
             ExitW = 132 + 5;     // on ajoute 5 de chaque coté
             ExitH = 55 + 5;      // on ajoute 5 de chaque coté
+        }
+        else if (Xm > 470 && Xm < 530 && Ym > 20 && Ym < 40 && environnement.Pause == true && !DisplayGraphMenu)
+        {
+            MenuArrowX = 470 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
+            MenuArrowY = 20 - 5 / 2;  // on decale le bouton de la moitier la hauteur ajouté
+            MenuArrowW = 60 + 5;      // on ajoute 5 de chaque coté
+            MenuArrowH = 20 + 5;      // on ajoute 5 de chaque coté
+        }
+        else if (Xm > 470 && Xm < 530 && Ym > 60 && Ym < 80 && environnement.Pause == true && DisplayGraphMenu)
+        {
+            MenuArrowX = 470 - 5 / 2; // on decale le bouton de la moitier la largueur ajouté -> plus propre
+            MenuArrowY = 60 - 5 / 2;  // on decale le bouton de la moitier la hauteur ajouté
+            MenuArrowW = 60 + 5;      // on ajoute 5 de chaque coté
+            MenuArrowH = 20 + 5;      // on ajoute 5 de chaque coté
         }
         else
         {
             PauseX = 50;
-            PauseY = 830;
+            PauseY = 826;
             PauseW = 43;
             PauseH = 55;
             SpeedUpX = 150;
-            SpeedUpY = 830;
+            SpeedUpY = 826;
             SpeedUpW = 43;
             SpeedUpH = 55;
             ExitX = 853;
-            ExitY = 830;
+            ExitY = 826;
             ExitW = 132;
             ExitH = 55;
+            MenuArrowX = 470;
+            if (DisplayGraphMenu)
+            {
+                MenuArrowY = 20 + 40;
+                MenuArrowAngle = 180;
+            }
+            else
+            {
+                MenuArrowY = 20;
+                MenuArrowAngle = 0;
+            }
+            MenuArrowW = 60;
+            MenuArrowH = 20;
         }
 
         if (ispress == true)
         {
             //------------------ Bouton pause ------------------
-            if (XC > 50 && XC < 115 && YC > 815 && YC < 885)
+            if (XC > 50 && XC < 93 && YC > 826 && YC < 881)
             {
                 environnement.Pause = !environnement.Pause;
             }
@@ -510,34 +712,76 @@ void Affichage::AffichageSimulation()
                         }
                     }
                 }
+                // Si on clique sur la ParkSheet pour afficher les infos du parkings
                 for (int i = 0; i < environnement.parkings.size(); i++)
                 {
                     int InfoParkX = environnement.parkings[i].getPos().x * 10 + environnement.parkings[i].getDIMX() * 10 - 60;
                     int InfoParkY = environnement.parkings[i].getPos().y * 10 + environnement.parkings[i].getDIMY() * 10 - 60;
                     int InfoParkW = 40;
                     int InfoParkH = 50;
-                    if(XC > InfoParkX && XC < InfoParkX + InfoParkW && YC > InfoParkY && YC < InfoParkY + InfoParkH){
+                    if (XC > InfoParkX && XC < InfoParkX + InfoParkW && YC > InfoParkY && YC < InfoParkY + InfoParkH)
+                    {
                         cout << "Parking : " << i << endl;
                         DisplayParkingCard = true;
                         ParkInd = i;
                     }
                 }
+
+                // Si on clique sur la fleche pour afficher le menu des graphs
+                if (XC > 470 && XC < 530 && YC > 20 && YC < 40)
+                {
+                    MenuArrowX = 470;
+                    MenuArrowY = 20 + 60;
+                    MenuArrowW = 60;
+                    MenuArrowH = 20;
+                    DisplayGraphMenu = true;
+                }
             }
             //----------------------------------------------------
 
             //------------------ Bouton speed ------------------
-            if (XC > 150 && XC < 215 && YC > 815 && YC < 885)
+            if (XC > 150 && XC < 193 && YC > 826 && YC < 881)
             {
                 environnement.SpeedUp = !environnement.SpeedUp;
             }
             //--------------------------------------------------
 
             //------------------ Bouton Exit ------------------
-            if (XC > 853 && XC < 985 && YC > 815 && YC < 885)
+            if (XC > 853 && XC < 985 && YC > 826 && YC < 881)
             {
                 display = false;
             }
             //--------------------------------------------------
+
+            //-------------------------------------------------Graphs-------------------------------------------------
+            if (DisplayGraphMenu)
+            {
+                // Si on clic sur le boutton pour afficher le menu deroulant des graphs
+                if (XC > 5 && XC < 205 && YC > 5 && YC < 45)
+                {
+                    DisplayUnrolledMenu = !DisplayUnrolledMenu;
+                }
+
+                // Si on clic sur le boutton 1 pour afficher le graph Profit
+                if (XC > 5 && XC < 205 && YC > 45 && YC < 85 && DisplayUnrolledMenu)
+                {
+                    // TODO Creer une feneetre avec le graphique du profit
+                    cout << "Profit" << endl;
+                }
+                // Si on clic sur le boutton 2 pour afficher le graph Prix
+                else if (XC > 5 && XC < 205 && YC > 85 && YC < 125 && DisplayUnrolledMenu)
+                {
+                    // TODO Creer une feneetre avec le graphique de l'evolution du prix
+                    cout << "Prix" << endl;
+                }
+                // Si on clic sur le boutton 3 pour afficher le graph Nb places
+                else if (XC > 5 && XC < 205 && YC > 125 && YC < 165 && DisplayUnrolledMenu)
+                {
+                    // TODO Creer une feneetre avec le graphique de l'evolution du nombre de places
+                    cout << "Nombre de places" << endl;
+                }
+            }
+            //--------------------------------------------------------------------------------------------------------
 
             ispress = false;
         }
@@ -551,6 +795,11 @@ void Affichage::AffichageSimulation()
         {
             if (AffichageParkingCard(ParkInd) == -1)
                 DisplayParkingCard = false;
+        }
+        if (DisplayGraphMenu == true)
+        {
+            if (AffichageGraphMenu() == -1)
+                DisplayGraphMenu = false;
         }
 
         SDL_RenderPresent(renderer);

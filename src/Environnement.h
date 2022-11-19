@@ -40,16 +40,12 @@ private:
     float deltaTime = 0.f;
     float frametime = 0.f;
 
-
-
-
-
     // on veut gérer les convs dynamiquement
     vector<Conversation *> conv;
 
 public:
     string map[DimWindowX / tailleCase * DimWindowY / tailleCase];
-    
+
     vector<Voiture> voitures;
     vector<Parking> parkings;
     vector<Utilisateur> conducteurs;
@@ -74,7 +70,7 @@ public:
     ~Environnement();
 
     //! \brief Fonction permettant de retourner la position d'une case a partir de son indice
-    Vec2 GetPosbyNodeInd(int indiceCase) const; 
+    Vec2 GetPosbyNodeInd(int indiceCase) const;
 
     //! \brief Fonction permettant de retourner l'indice d'une case a partir de sa position
     int GetNodeIndbyPos(Vec2 pos) const;
@@ -123,7 +119,7 @@ public:
     //! \brief supprime le dossier de logs avant nouvelle itération.
     void removeLogs();
 
-    //Fonction qui permet de revoyer l'indice d'une place d'un des 3 parkings sauf si celui-ci est plein et que la place est prise
+    // Fonction qui permet de revoyer l'indice d'une place d'un des 3 parkings sauf si celui-ci est plein et que la place est prise
     int getPlaceInd(int parkingInd);
 
     int getParkingInd();

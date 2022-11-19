@@ -21,18 +21,17 @@ int main(){
     //Utilisateur u;
     //u.testRegression(); 
     
-    time_t begin = time(NULL);
-    Environnement Simulation;
+    // time_t begin = time(NULL);
+    // Environnement Simulation;
 
-    //Simulation.Environnement_play();
-    //Simulation.test_regresion();
+    // //Simulation.Environnement_play();
+    // //Simulation.test_regresion();
 
     Affichage Graph;
 
     Graph.AffichageSimulation();
 
-    time_t end = time(NULL);
-
+    // time_t end = time(NULL)
 
     //Parking p1;
     //p1.testRegression();
