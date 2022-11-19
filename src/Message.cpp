@@ -16,6 +16,15 @@ Message::Message () : messageNumber (0), date (clock ()), price (-21),
                       sender ("UNKNOWN SENDER"),
                       recipient ("UNKNOWN RECIPIENT") {}
 
+Message::Message (const Message & aMessage) : messageNumber (aMessage.messageNumber),
+                                              date (aMessage.date),
+                                              price (aMessage.price),
+                                              subject (aMessage.subject),
+                                              sender (aMessage.sender),
+                                              recipient (aMessage.recipient)
+{
+}
+
 Message::~Message () {}
 
 const unsigned int& Message::getMessageNumber() const {

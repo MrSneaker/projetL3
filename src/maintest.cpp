@@ -21,15 +21,15 @@ int main(){
     //Utilisateur u;
     //u.testRegression(); 
     
-    // time_t begin = time(NULL);
-    // Environnement Simulation;
+    time_t begin = time(NULL);
+    //Environnement Simulation;
 
     // //Simulation.Environnement_play();
     // //Simulation.test_regresion();
 
-    Affichage Graph;
+    Affichage aff;
 
-    Graph.AffichageSimulation();
+    aff.AffichageSimulation();
 
     // time_t end = time(NULL)
 
@@ -42,5 +42,8 @@ int main(){
     //Conversation c;
     //c.testRegression();
     //cout<<"Temps de calcul = "<<end-begin<<" secondes"<<endl;
+
+    //Graph g;
+    //g.test_regression();
     return 0;
 }

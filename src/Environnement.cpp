@@ -261,12 +261,12 @@ void Environnement::initParkings()
     // Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir
 
     // Créer 3 parkings et les ajouter dans le tableau de parkings
-    Parking p2(Vec2(1, 1), 3.5, 7, 44, 38, 0);  // p0
-    Parking p1(Vec2(57, 1), 0.5, 5, 44, 38, 1); // p1
-    Parking p3(Vec2(1, 52), 4, 6, 100, 29, 2);  // p2
-    parkings.push_back(p2);
+    Parking p0(Vec2(1, 1), 3, 7, 44, 38, 0);   // p0
+    Parking p1(Vec2(57, 1), 8, 12, 44, 38, 1); // p1
+    Parking p2(Vec2(1, 52), 4, 8, 100, 29, 2); // p2
+    parkings.push_back(p0);
     parkings.push_back(p1);
-    parkings.push_back(p3);
+    parkings.push_back(p2);
 }
 
 int Environnement::getParkingInd()
@@ -383,7 +383,7 @@ void Environnement::AddVoiture()
 
     V.Exit = GetExit();
     V.setTargetPosition(GetPosbyNodeInd(V.Exit) + Vec2(5, 5));
-    V.User.setParkTime(200000000);
+    V.User.setParkTime(20);
 
     V.startTimer = frameParkTime;
     voitures.push_back(V); // Ajout de la voiture dans le tableau de voiture
@@ -485,17 +485,31 @@ void Environnement::updateStateVoiture()
     }
 }
 
+void Environnement::updateStateCarParks()
+{
+    cout << "lol" << endl;
+    // On parcourt le tableau de Parkings
+    for (int i = 0; i < parkings.size(); i++)
+    {
+        parkings[i].updateSuccessPercentage();
+        parkings[i].reconsiderPrices();
+        parkings[i].addToData(realTime);
+    }
+}
+
 // Boucle de jeu
 void Environnement::Environnement_play()
 {
 
-    prevtime = currenttime;
-    currenttime = temps;
+    prevtime = currentTime;
+    currentTime = temps;
+    bool aConversationHasEnded = false;
+
     if (Pause == false)
     {
         // fonction de frametime
-        deltaTime = (currenttime - prevtime) / 1000.f;
-
+        deltaTime = (currentTime - prevtime) / 1000.f;
+        realTime = clock() / CLOCKS_PER_SEC;
         if (SpeedUp == true)
         {
             deltaTime *= 5;
@@ -528,30 +542,36 @@ void Environnement::Environnement_play()
             if (voitures[i].getpathTab().size() == 0 && voitures[i].getIs_parked() == false && voitures[i].isMoving == false)
             {
                 cout << "Erreur : La voiture " << i << " n'a pas de trajet" << endl;
-                // RemoveVoiture(i);
+                RemoveVoiture(i);
             }
             if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit)
             {
+                voitures[i].exist = false;
                 RemoveVoiture(i);
             }
 
-            for (int j = 0; j < parkings.size(); j++)
+            if (voitures[i].getNbFinishedConv() < 1)
             {
+                conversation(voitures[i]);
+                voitures[i].incrementNbFinishedConv();
 
-                if (voitures[i].getNbFinishedConv() < 1)
+                for (int j = 0; j < parkings.size(); j++)
                 {
-
-                    conversation(voitures[i]);
-                    voitures[i].incrementNbFinishedConv();
-                    changeTarget(voitures[i], voitures[i].getParking());
-                    ;
+                    parkings[j].incrementNbFinishedConv();
                 }
-            }
 
-            voitures[i].MoveToTargetPosition();
+                changeTarget(voitures[i], voitures[i].getParking());
+                aConversationHasEnded = true;
+            }
+            if (voitures[i].exist)
+                voitures[i].MoveToTargetPosition();
         }
     }
+
     updateStateVoiture();
+
+    if (aConversationHasEnded)
+        updateStateCarParks();
 }
 
 void Environnement::getMap()
@@ -596,8 +616,11 @@ void Environnement::conversation(Voiture &v)
         conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j], v, v.getParking());
         if (isFinished)
         {
-            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[j].getId()));
+            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[parkings.size() - 1 - j].getId()));
+
+            conv.at(indConv[parkings.size() - 1 - j])->updateStateCarParkAfterConv(parkings[parkings.size() - 1 - j]);
         }
+
         deleteConv(indConv[parkings.size() - 1 - j]);
     }
 }
@@ -654,6 +677,49 @@ void Environnement::removeLogs()
 {
     if (std::filesystem::exists("data/logs/Conversation U0P0.txt"))
         system("rm data/logs/*");
+}
+
+int Environnement::searchMax(vector<int> tab)
+{
+    int max = tab.at(0);
+    int tmp = 0;
+    for (int i = 0; i < tab.size(); i++)
+    {
+        if (tab[i] > max)
+        {
+            if (tab[i] != tmp)
+                max = tab[i];
+        }
+        tmp = tab[i];
+    }
+    return max;
+}
+
+void Environnement::makeGraph(int choice)
+{
+    vector<int> profitSize;
+    vector<int> startingPriceSize;
+    vector<int> placeTakenSize;
+    for (int i = 0; i < parkings.size(); i++)
+    {
+        profitSize.push_back(parkings[i].getDataProfit().size());
+        startingPriceSize.push_back(parkings[i].getDataStartingPrice().size());
+        placeTakenSize.push_back(parkings[i].getDataNbPlaceTaken().size());
+    }
+    switch (choice)
+    {
+    case 0:
+        Graph(parkings[0].getDataProfit(), parkings[1].getDataProfit(), parkings[2].getDataProfit(), "Profit parking ", 0, 0, realTime, searchMax(profitSize));
+        break;
+    case 1:
+        Graph(parkings[0].getDataStartingPrice(), parkings[1].getDataStartingPrice(), parkings[2].getDataStartingPrice(), "Evolution prix de départ parking ", 0, 0, realTime, searchMax(startingPriceSize));
+        break;
+    case 2:
+        Graph(parkings[0].getDataNbPlaceTaken(), parkings[1].getDataNbPlaceTaken(), parkings[2].getDataNbPlaceTaken(), "Nombres de places occupées parking ", 0, 0, realTime, searchMax(placeTakenSize));
+        break;
+    default:
+        break;
+    }
 }
 
 void Environnement::test_regresion()

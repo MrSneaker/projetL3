@@ -63,9 +63,37 @@ void Conversation::sendMessageParking(Parking p)
 
     if (sub == "ACCEPT" || sub == "REJECT" || sub == "UNKNOWN SUBJECT" || sub == "INVALID_TYPE")
     {
-        convOK = false;
+        convOK = false; // à "faux", ce qui veut dire que la conversation ne va pas se poursuivre.
     }
     conv.push_back(toSend);
+}
+
+void Conversation::updateStateCarParkAfterConv(Parking &p)
+{
+
+    // Si les threads sont terminés, on peut consulter leur conversation
+    // pour voir si on doit incrémenter nbAgreementsOnPrice
+    // et nbTotalVisits de p.
+    if (voiture.joinable() == false && parking.joinable() == false)
+    {
+
+        Message lastMessageOfConv = conv.at(conv.size() - 1);
+
+        if (lastMessageOfConv.getSubject() == "OK_TO_PARK")
+        {
+            p.incrementNbAgreementsOnPrice();
+            unsigned int idU = p.extractIntFromString(lastMessageOfConv.getSender());
+            for (int i = 0; i < p.getUsersTab().size(); i++)
+            {
+                if (p.getUsersTab()[i].second.getId() == idU)
+                {
+                    p.incrementNbVisitsTab(p.getUsersTab()[i].second);
+                }
+            }
+
+            p.updateProfit(lastMessageOfConv.getPrice());
+        }
+    }
 }
 
 void Conversation::sendConfirmationV(Voiture v, int indPrOK)
@@ -128,7 +156,7 @@ void Conversation::manageConfirm(Parking p, Voiture v, int indPrOK)
 
 bool Conversation::stockConv(const string &fileName)
 {
-    // si les threads sont terminés, on peut stocker leur conversation.
+    // Si les threads sont terminés, on peut stocker leur conversation.
     if (voiture.joinable() == false && parking.joinable() == false)
     {
         // nom du fichier.

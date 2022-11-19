@@ -8,6 +8,7 @@
 #include "vec2.h"
 #include "Node.h"
 #include "Conversation.h"
+#include "Graph.h"
 #include <filesystem>
 #include <dirent.h>
 #include <vector>
@@ -36,7 +37,8 @@ private:
     unsigned int frames = 0;
     float frameParkTime = 0.f;
     unsigned int prevtime = 0;
-    unsigned int currenttime = 0;
+    unsigned int currentTime = 0;
+    unsigned int realTime;
     float deltaTime = 0.f;
     float frametime = 0.f;
 
@@ -98,6 +100,9 @@ public:
     //! \brief Update le status de chaque voiture.
     void updateStateVoiture();
 
+    //! \brief Update les caractéristiques de chaque parking (dont ses prix).
+    void updateStateCarParks();
+
     //! \brief Boucle de jeu
     void Environnement_play();
 
@@ -119,12 +124,16 @@ public:
     //! \brief supprime le dossier de logs avant nouvelle itération.
     void removeLogs();
 
-    // Fonction qui permet de revoyer l'indice d'une place d'un des 3 parkings sauf si celui-ci est plein et que la place est prise
+    int searchMax(vector<int> tab);
+
+    //Fonction qui permet de revoyer l'indice d'une place d'un des 3 parkings sauf si celui-ci est plein et que la place est prise
     int getPlaceInd(int parkingInd);
 
     int getParkingInd();
 
     void changeTarget(Voiture &v, int indPr);
+
+    void makeGraph(int choice);
 
     //! \brief Test de regression de la classe Environnement
     void test_regresion();

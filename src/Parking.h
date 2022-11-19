@@ -144,7 +144,9 @@ private:
 
     double profit;
 
-
+    vector<pair<double,double>> dataProfit;
+    vector<pair<double,double>> dataStartingPrice;
+    vector<pair<double,double>> dataNbPlaceTaken;
 
     int nbFinishedConv;
     // - Nombre de négociations effectuées par le parking depuis le début de la simulation.
@@ -199,9 +201,11 @@ public:
 
     const int &getId() const;
 
-    vector<int> getConversationsTab() const;
-    // Pas encore sûrs qu'on va l'utiliser
-    // (cf commentaire de la donnée membre conversationsTab)
+    const vector<pair<double,double>> &getDataProfit() const;
+
+    const vector<pair<double,double>> &getDataStartingPrice() const;
+
+    const vector<pair<double,double>> &getDataNbPlaceTaken() const;
 
     const vector<pair<unsigned int,const Utilisateur>> &getUsersTab() const;
 
@@ -230,10 +234,11 @@ public:
 
     void setNbAvailablePlaces(int nbAvailablePlaces);
 
-    //! \brief ajoute un utilisateur au tableau userTab en vérifiant que celui-ci n'existe pas déjà dans le tableau.
+    //! \brief ajoute un utilisateur au tableau usersTab en vérifiant que celui-ci n'existe pas déjà dans le tableau.
     //! \param unUtilisateur un utilisateur.
     void addUsersTab(Utilisateur unUtilisateur);
     
+    void addToData(double currentTime);
 
     void incrementNbTotalVisits();
 
@@ -248,10 +253,16 @@ public:
     //! \brief ajoute une place au nombre de places dispo
     void incrementNbAvailablePlaces();
 
-    /* PEUT-ÊTRE PAS UTILE, A VOIR
-    //! \brief incrémente de 1 le nombre de négociations effectuées par le parking.
+    //! \brief Incrémente le nombre de négociations dans lesquelles
+    //! \brief le parking et une voiture se sont mis d'accord sur le prix.
+    void incrementNbAgreementsOnPrice ();
+
+    //! \brief Incrémente de 1 le nombre de négociations effectuées par le parking.
     void incrementNbFinishedConv();
-    */
+
+    //! \brief Ajoute au profit (du parking) la valeur
+    //! \brief (prix de la place louée à une voiture) passée en paramètre.
+    void updateProfit (double aPrice);
 
     //! \brief Met à jour le pourcentage de réussite des négociations du Parking.
     void updateSuccessPercentage ();
@@ -287,7 +298,7 @@ public:
     //! \brief  - LAST_OFFER
     //! \brief  - ACCEPT
     //! \brief  - REJECT
-    Message managingConversation (Message * aMessage);
+    Message managingConversation (Message * aMessage) const;
 
     //! \brief - Confirme la transaction ou non en fonction de la réponse de la voiture, fait les opérations en conséquence.
     //! \brief - Cette fonction est appelée pour toute négociation, on y incrémente donc notamment le nombre de négociations
