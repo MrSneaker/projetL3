@@ -108,6 +108,17 @@ void Affichage::InitAffichage()
         exit(1);
     }
 
+    font_UserCardBold = TTF_OpenFont("font/arial.ttf", 12);
+
+    if (font_UserCardBold == nullptr)
+    {
+        cout << "Failed to load img/Arial.ttf in 12 SDL_TTF Error: " << TTF_GetError() << endl;
+        SDL_Quit();
+        exit(1);
+    }
+
+    TTF_SetFontStyle(font_UserCardBold, TTF_STYLE_BOLD);
+
     font_UserCard = TTF_OpenFont("font/arial.ttf", 12);
 
     if (font_UserCard == nullptr)
@@ -377,17 +388,27 @@ int Affichage::AffichageUserCard(unsigned int Vind)
     User_Card.h = 150;
     UserCard.draw(renderer, User_Card.x, User_Card.y, User_Card.w, User_Card.h, 0);
 
+    // on affiche son prenom
+    AfficherTexte(font_UserCardBold, "Name: ", "", 0, User_Card.x + 125, User_Card.y + 30, 0, 0, 0, 255);
+    AfficherTexte(font_UserCard, environnement.voitures[Vind].User.getName(), "", 0, User_Card.x + 165, User_Card.y + 30, 0, 0, 0, 255);
     // on affiche son nom
-    AfficherTexte(font_UserCard, environnement.voitures[Vind].User.getName(), "", 0, User_Card.x + 125, User_Card.y + 50, 0, 0, 0, 255);
+    AfficherTexte(font_UserCardBold, "Surname: ", "", 0, User_Card.x + 125, User_Card.y + 50, 0, 0, 0, 255);
+    AfficherTexte(font_UserCard, environnement.voitures[Vind].User.getSurname(), "", 0, User_Card.x + 183, User_Card.y + 50, 0, 0, 0, 255);
     // on affiche son Age
-    AfficherTexte(font_UserCard, "", "Age: ", environnement.voitures[Vind].User.getAge(), User_Card.x + 125, User_Card.y + 70, 0, 0, 0, 255);
+    AfficherTexte(font_UserCardBold, "Age: ", "", 0, User_Card.x + 125, User_Card.y + 70, 0, 0, 0, 255);
+    AfficherTexte(font_UserCard, "", "", environnement.voitures[Vind].User.getAge(), User_Card.x + 155, User_Card.y + 70, 0, 0, 0, 255);
     // on affiche son temps de stationnement
-    AfficherTexte(font_UserCard, "", "ParkTime: ", environnement.voitures[Vind].User.getParkTime(), User_Card.x + 125, User_Card.y + 90, 0, 0, 0, 255);
+    AfficherTexte(font_UserCardBold, "ParkTime: ", "", 0, User_Card.x + 125, User_Card.y + 90, 0, 0, 0, 255);
+    AfficherTexte(font_UserCard, "", "", environnement.voitures[Vind].User.getParkTime(), User_Card.x + 183, User_Card.y + 90, 0, 0, 0, 255);
     // on affiche son prix max
-    AfficherTexte(font_UserCard, "", "Prix max: ", environnement.voitures[Vind].User.getMaxPrice(), User_Card.x + 125, User_Card.y + 110, 0, 0, 0, 255);
+    AfficherTexte(font_UserCardBold, "PrixMax: ", "", 0, User_Card.x + 125, User_Card.y + 110, 0, 0, 0, 255);
+    AfficherTexte(font_UserCard, "", "", environnement.voitures[Vind].User.getMaxPrice(), User_Card.x + 175, User_Card.y + 110, 0, 0, 0, 255);
+    // on affiche son id
+    AfficherTexte(font_UserCardBold, "ID: ", "", 0, User_Card.x + 190, User_Card.y + 110, 0, 0, 0, 255);
+    AfficherTexte(font_UserCard, "", "", environnement.voitures[Vind].User.getId(), User_Card.x + 208, User_Card.y + 110, 0, 0, 0, 255);
 
     // Si on clic en haut a droite de la carte on la supprime
-    AfficherTexte(font_UserCard, "X", "", 0, User_Card.x + 230, User_Card.y + 10, 0, 0, 0, 255);
+    AfficherTexte(font_UserCardBold, "X", "", 0, User_Card.x + 230, User_Card.y + 10, 0, 0, 0, 255);
     if (XC > User_Card.x + 230 && XC < User_Card.x + 240 && YC > User_Card.y + 10 && YC < User_Card.y + 20)
     {
         return -1;
@@ -411,9 +432,12 @@ int Affichage::AffichageParkingCard(unsigned int ParkInd)
     AfficherTexte(font_default, "", "ID: ", environnement.parkings[ParkInd].getId(), rect.x + 10, rect.y + 10, 255, 255, 255, 180);
     // on affiche son prix min
     AfficherTexte(font_default, "", "Prix min: ", environnement.parkings[ParkInd].getMinPrice(), rect.x + 10, rect.y + 40, 255, 255, 255, 180);
+    // on affiche son starting price
+    AfficherTexte(font_default, "Prix de depart: ", "", 0, rect.x + 10, rect.y + 70, 255, 255, 255, 180);
+    AfficherTexte(font_default, "", "", environnement.parkings[ParkInd].getStartingPrice(), rect.x + 170, rect.y + 70, 255, 255, 255, 180);
     // on affiche son nombre de places restantes / total
-    AfficherTexte(font_default, "", "Places: ", environnement.parkings[ParkInd].getNbAvailablePlaces(), rect.x + 10, rect.y + 70, 255, 255, 255, 180);
-    AfficherTexte(font_default, "", " / ", environnement.parkings[ParkInd].getNbPlaces(), rect.x + 142, rect.y + 70, 255, 255, 255, 180);
+    AfficherTexte(font_default, "", "Places: ", environnement.parkings[ParkInd].getNbAvailablePlaces(), rect.x + 10, rect.y + 100, 255, 255, 255, 180);
+    AfficherTexte(font_default, "", " / ", environnement.parkings[ParkInd].getNbPlaces(), rect.x + 142, rect.y + 100, 255, 255, 255, 180);
 
     // Si on sors de la carte on la supprime
     if (Xm < rect.x || Xm > rect.x + rect.w || Ym < rect.y || Ym > rect.y + rect.h + 10)
@@ -595,12 +619,11 @@ void Affichage::AffichageSimulation()
                 {
                 case SDLK_ESCAPE:
                     display = false;
-
                     break;
                 case SDLK_SPACE:
                     // Clear la console
                     // printf("\33[H\33[2J");
-                    // environnement.AddVoiture();
+                    environnement.AddVoiture();
                     break;
                 case SDLK_p:
 

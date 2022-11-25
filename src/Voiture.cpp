@@ -13,7 +13,7 @@ Voiture::Voiture(Utilisateur U)
 {
     position = Vec2(0, 0);
     TargetPosition = Vec2(0, 0);
-    speed = 5;
+    speed = 2;
     Is_in = false;
     Is_parked = false;
     Is_pathfind = false;
@@ -109,7 +109,7 @@ bool Voiture::MoveToTargetPosition()
     if (pathTab.size() > 0)
     {
 
-        Current = pathTab[pathTab.size() - 1];
+        Current = pathTab[pathTab.size() - 1]; // On récupère le dernier noeud du chemin
         if (Current->getNodepos().x * 10 + 5 > position.x)
         {
             MoveRight();
@@ -482,7 +482,7 @@ void Voiture::test_regresion()
 
     // test constructeur avec parametre
     std::cout << "Test constructeur avec parametre" << std::endl;
-    Utilisateur u1(2.54, 34, "Zidane");
+    Utilisateur u1(2.54, 34, "Zidane", "Zinedine", 1, 2);
     Voiture v1(u1);
     v1.User.setParkTime(2);
     assert(v1.User.getId() == 34);
@@ -581,7 +581,7 @@ void Voiture::test_regresion()
 
     // Test de la fonction isPriceOk()
     std::cout << "Test de la fonction isPriceOk()" << std::endl;
-    Utilisateur u(2.54, 0, "lol");
+    Utilisateur u(2.54, 0, "Zidane", "Zinedine", 1, 2);
     Voiture v2(u);
     bool test = isPriceOk(3, User);
     assert(test == true);

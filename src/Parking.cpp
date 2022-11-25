@@ -123,7 +123,6 @@ const Vec2 &Parking::getPos() const
 void Parking::decrementNbAvailablePlaces()
 {
     nbAvailablePlaces--;
-    cout << "nbAvailablePlaces = " << nbAvailablePlaces << endl;
     IsFull();
 }
 
@@ -455,7 +454,7 @@ void Parking::reconsiderPrices()
     if (successPercentage < 50)
     {
         double reduction = (50 - successPercentage) / 100 * minPrice;
-        cout << "reduction : " << reduction << endl;
+        //cout << "reduction : " << reduction << endl;
         setMinPrice(minPrice - reduction);
         setStartingPrice(startingPrice - reduction);
     }
@@ -466,17 +465,17 @@ void Parking::reconsiderPrices()
         setStartingPrice(augmentation * startingPrice);
     }
 
-    cout << "Parking " << idP + 1 << " : nbAgreementsOnPrice : " << nbAgreementsOnPrice << endl;
-    cout << "Parking " << idP + 1 << " : nbTotalVisits : " << nbTotalVisits << endl;
-    cout << "Parking " << idP + 1 << " : nbFinishedConv : " << nbFinishedConv << endl;
-    cout << "Parking " << idP + 1 << " : successPercentage : " << successPercentage << endl;
-    cout << "Parking " << idP + 1 << " : profit : " << profit << endl;
-    cout << "Parking " << idP + 1 << " : startingPrice : " << startingPrice << endl;
-    cout << "Parking " << idP + 1 << " : minPrice : " << minPrice << endl;
+    // cout << "Parking " << idP + 1 << " : nbAgreementsOnPrice : " << nbAgreementsOnPrice << endl;
+    // cout << "Parking " << idP + 1 << " : nbTotalVisits : " << nbTotalVisits << endl;
+    // cout << "Parking " << idP + 1 << " : nbFinishedConv : " << nbFinishedConv << endl;
+    // cout << "Parking " << idP + 1 << " : successPercentage : " << successPercentage << endl;
+    // cout << "Parking " << idP + 1 << " : profit : " << profit << endl;
+    // cout << "Parking " << idP + 1 << " : startingPrice : " << startingPrice << endl;
+    // cout << "Parking " << idP + 1 << " : minPrice : " << minPrice << endl;
 
-    cout << endl
-         << endl
-         << endl;
+    // cout << endl
+    //      << endl
+    //      << endl;
 }
 
 int Parking::extractIntFromString(string aString) const
@@ -516,8 +515,8 @@ void Parking::testRegression()
     cout << "Etat de la place 1 : " << p1.getPlacesTab()[0].getIsTaken() << endl;
     assert(p1.getPlacesTab()[0].getIsTaken() == p1.placesTab[0].getIsTaken());
 
-    Utilisateur u1(2.5, 1, "paulo-1");
-    Utilisateur u2(2.5, 2, "paulo-2");
+    Utilisateur u1(2.5, 1, "paulo-1"," pilo", 20, 2); 
+    Utilisateur u2(2.5, 2, "paulo-2"," pilo", 20, 2);
     p1.addUsersTab(u1);
     p1.addUsersTab(u2);
     p1.addUsersTab(u1);

@@ -22,11 +22,75 @@ Environnement::Environnement()
 {
     removeLogs();
     getMap();
+    getUser();
     initParkings();
+    ng::instance().load("./resources"); // chargement des ressources pour les noms
+}
+
+bool Environnement::checkId(int id, string filename)
+{
+    vector<int> doublons;
+    ifstream fichier("data/User.txt", ios::in);
+    if (fichier)
+    {
+        string ligne; // une variable pour stocker les lignes lues
+        // on extrait les lignes une à une
+        while (getline(fichier, ligne))
+        {
+            stringstream ss(ligne); // on crée un flux à partir de la ligne lue
+            string token;           // une variable pour stocker les mots lus
+            vector<string> tokens;  // un tableau pour stocker les mots lus
+            // on extrait les mots un a un
+            while (getline(ss, token, ','))
+            {
+                tokens.push_back(token); // on ajoute le mot lu au tableau
+            }
+            int id = stoi(tokens[0]);
+            doublons.push_back(id);
+        }
+        fichier.close();
+
+        // on verifie que dans le vector il n'y a pas de doublons
+        for (int i = 0; i < doublons.size(); i++)
+        {
+            for (int j = i + 1; j < doublons.size(); j++)
+            {
+                if (doublons[i] == doublons[j])
+                {
+                    doubleUser.push_back(doublons[i]);
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+    else
+    {
+        cerr << "Impossible d'ouvrir le fichier !" << endl;
+    }
 }
 
 Environnement::~Environnement()
 {
+    saveUser();
+    if (checkId(0, "data/User.txt"))
+    {
+        cout << "ok" << endl;
+        // Affiche les doublon qui sont stockés dans le vector doubleUser
+    }
+    else
+    {
+        cout << "pas ok" << endl;
+        for (int i = 0; i < doubleUser.size(); i++)
+        {
+
+            cout << "Doublon : " << doubleUser[i] << endl;
+        }
+    }
+
+    tmpsavedConducteurs.clear(); // suppression des conducteurs temporaires
+    savedConducteurs.clear();    // suppression des conducteurs sauvegardés
 }
 
 Vec2 Environnement::GetPosbyNodeInd(int indiceCase) const
@@ -238,19 +302,200 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     }
 }
 
-void Environnement::initUser()
+void Environnement::saveUser()
 {
-    double price = (double)(random(20, 60) / 10); // on simule des floats en divisants par 10.
-    unsigned int id = conducteurs.size();         // Marche pas si on supprime un utilisateur du tableau et qu'on en rajoute un.
-    string name = "Paulo - " + to_string(id);
+    int i = 0;
+    // on ouvre le fichier en mode écritur
+    ofstream fichier("data/User.txt", ios::app);
+    // on vérifie que l'ouverture a réussi
+    if (fichier)
+    {
+        while (i < tmpsavedConducteurs.size())
+        {
+            for (auto &C : tmpsavedConducteurs)
+            {
+                // Si le conducteur est deja enregistré
+                // on écrit dans le fichier
+                fichier << C.getId() << ",";
+                fichier << C.getName() << ",";
+                fichier << C.getSurname() << ",";
+                fichier << C.getMaxPrice() << ",";
+                fichier << C.getAge() << ",";
+                fichier << C.getParkTime() << ";";
 
-    // On attribue à l'utilisateur (que l'on crée juste après) un entier initial aléatoire (entre 0 et 5)
-    // de visites de chaque parking (on simule ainsi le passé)
-    // avec les changements cela doit être fait avec les procédures dans parkings.. mais à ce moment là uniquement au premiere ajout de l'utilisateur.
+                i++;
+                fichier << endl;
+            }
+        }
 
-    Utilisateur u(price, id, name);
-    u.setAge(random(18, 80));
-    conducteurs.push_back(u);
+        fichier.close();
+    }
+    else
+    {
+        cerr << "Impossible d'ouvrir le fichier !" << endl;
+    }
+}
+
+void Environnement::getUser()
+{
+    int i = 0;
+    ifstream fichier("data/User.txt", ios::in);
+    if (fichier)
+    {
+        string ligne; // une variable pour stocker les lignes lues
+        // on extrait les lignes une à une
+        while (getline(fichier, ligne) && i < 721)
+        {
+            stringstream ss(ligne); // on crée un flux à partir de la ligne lue
+            string token;           // une variable pour stocker les mots lus
+            vector<string> tokens;  // un tableau pour stocker les mots lus
+            // on extrait les mots un a un
+            while (getline(ss, token, ','))
+            {
+                tokens.push_back(token); // on ajoute le mot lu au tableau
+            }
+            int id = stoi(tokens[0]);
+            string name = tokens[1];
+            string surname = tokens[2];
+            float maxPrice = stof(tokens[3]);
+            int age = stoi(tokens[4]);
+            float parkTime = stof(tokens[5]);
+            savedConducteurs.push_back(Utilisateur(maxPrice, id, name, surname, age, parkTime)); // on ajoute le conducteur au tableau de conducteurs enregistrés
+            nbUserSaved++;
+            i++;
+        }
+        fichier.close();
+    }
+    else
+    {
+        cerr << "Impossible d'ouvrir le fichier !" << endl;
+    }
+}
+
+float Environnement::randomParkTime()
+{
+    float new_Parktime = 0;
+    // On simule un pourcentage qui définie le temps de stationnement de l'utilisateur.
+    float res = rand() % 100;
+
+    // Si le pourcentage est inferieur à 20, on met le temps de stationnement entre 15 minutes et 1 heure
+    if (res <= 20)
+    {
+        new_Parktime = (rand() % 45 + 15);
+        new_Parktime = new_Parktime / 60;
+    }
+    // Si le pourcentage est inferieur à 50 et supperieur a 10, on met le temps de stationnement entre 1 et 5 heures
+    else if (res <= 50)
+    {
+        new_Parktime = (rand() % 240 + 60) / 60;
+    }
+    // Si le pourcentage est supperieur a 50, on met le temps de stationnement entre 5 et 12 heures
+    else
+    {
+        new_Parktime = (rand() % 420 + 300) / 60;
+    }
+
+    return new_Parktime;
+}
+
+int Environnement::CreateRandomId()
+{
+    int id = 0;
+    bool idAlreadyUsed = false;
+    do
+    {
+        id = random(0, 70000);
+        // On vérifie que l'id n'est pas déjà utilisé
+        for (auto &C : SimuConducteurs)
+        {
+            // Si l'id est déjà utilisé, on en crée un nouveau
+            if (C.getId() == id)
+            {
+                id = random(0, 70000);
+                idAlreadyUsed = true;
+            }
+            else
+            {
+                idAlreadyUsed = false;
+            }
+        }
+    } while (idAlreadyUsed == true);
+
+    return id;
+}
+
+void Environnement::initUser(bool quitif)
+{
+    int pourcentage = 0;
+    nbUserSaved = savedConducteurs.size();
+
+    // Si il y'a des conducteurs enregistrés dans le fichier
+    if (!savedConducteurs.empty() && quitif == false)
+    {
+        int randomNUM = random(0, nbUserSaved); // On choisit un conducteur au hasard dans le tableau de conducteurs enregistrés
+        // Si l'utilisateur est deja apparu dans la simulation on le recupere
+        if (savedConducteurs[randomNUM].AlreadySpawned == true)
+        {
+
+            // On simule un pourcentage pour dire que si il est déja apparu dans la simulation, il a une chance de n% de revenir
+            pourcentage = rand() % 100;
+            if (pourcentage <= 20)
+            {
+                cout << "1 -------- User i : " << savedConducteurs[randomNUM].getId() << " alreaduSpawned : " << savedConducteurs[randomNUM].AlreadySpawned << endl;
+                cout << "pourcentage : " << pourcentage << endl;
+                savedConducteurs[randomNUM].AlreadySpawned = true;            // On dit que le conducteur est deja apparu dans la simulation
+                conducteurs.push_back(savedConducteurs[randomNUM]);           // on ajoute le conducteur au tableau de conducteurs
+                savedConducteurs.erase(savedConducteurs.begin() + randomNUM); // On supprime le conducteur du tableau de conducteurs enregistrés
+                savedConducteurs.shrink_to_fit();                             // On réduit la taille du tableau
+                SimuConducteurs.push_back(conducteurs[0]);                    // On ajoute le conducteur au tableau de conducteurs totale de la simulation
+                nbUserCreated++;
+            }
+            // sinon on rappele la fonction pour qu'elle crée un nouveau conducteur
+            else
+                (initUser(true));
+        }
+        // Sinon on le récupère des utilisateurs enregistré et on le fait apparaitre pour la première fois dans cette simu
+        else
+        {
+            cout << "2 ------- User i : " << savedConducteurs[randomNUM].getId() << " alreaduSpawned : " << savedConducteurs[randomNUM].AlreadySpawned << endl;
+            savedConducteurs[randomNUM].AlreadySpawned = true;            // On dit que le conducteur est deja apparu dans la simulation
+            conducteurs.push_back(savedConducteurs[randomNUM]);           // on ajoute le conducteur au tableau de conducteurs
+            savedConducteurs.erase(savedConducteurs.begin() + randomNUM); // On supprime le conducteur aléatoire du tableau
+            SimuConducteurs.push_back(conducteurs[0]);                    // On ajoute le conducteur au tableau de conducteurs de la simulation
+            savedConducteurs.shrink_to_fit();                             // On réduit la taille du tableau
+            nbUserCreated++;                                              // On incremente le nombre de conducteurs créés
+        }
+    }
+    // Si tout les conducteurs enregistés ont été créer ou qu'il n'y a pas encore de conducteurs enregistrés
+    else
+    {
+        cout << "3------------------------------------------------------------------------------------------------------" << endl;
+        double price = (double)(random(20, 60) / 10); // on simule des floats en divisants par 10.
+
+        int id = CreateRandomId(); // On crée un id aléatoire différent de ceux déjà utilisés
+
+        wstring Rname = ng::instance().get_name(ng::gender::any, ng::culture::french); // on récupère un nom aléatoire dans la liste de noms
+        string name(Rname.begin(), Rname.end());                                       // on convertit le wstring en string
+
+        wstring Rsurname = ng::instance().get_surname(ng::culture::french); // on récupère un prénom aléatoire dans la liste de prénoms
+        string surname(Rsurname.begin(), Rsurname.end());                   // on convertit le wstring en string
+
+        // TODO:
+        //  On attribue à l'utilisateur (que l'on crée juste après) un entier initial aléatoire (entre 0 et 5)
+        //  de visites de chaque parking (on simule ainsi le passé)
+        //  avec les changements cela doit être fait avec les procédures dans parkings.. mais à ce moment là uniquement au premiere ajout de l'utilisateur.
+
+        int age = random(18, 80); // on simule un age aléatoire entre 18 et 80 ans
+
+        float parkTime = randomParkTime(); // on simule un temps de stationnement aléatoire
+
+        Utilisateur u(price, id, name, surname, age, parkTime);
+        u.AlreadySpawned = true;
+        nbUserCreated++;                  // On incremente le nombre de conducteurs créés
+        conducteurs.push_back(u);         // on ajoute l'utilisateur dans le tableau des conducteurs
+        SimuConducteurs.push_back(u);     // on ajoute l'utilisateur dans le tableau des conducteurs de la simulation
+        tmpsavedConducteurs.push_back(u); // on ajoute l'utilisateur dans le tableau des conducteurs qui sont apparu dans la simulation
+    }
 }
 
 // TODO : Création d'utilisateur avec nom différent
@@ -267,51 +512,6 @@ void Environnement::initParkings()
     parkings.push_back(p0);
     parkings.push_back(p1);
     parkings.push_back(p2);
-}
-
-int Environnement::getParkingInd()
-{
-    // retourne l'indice d'un parking aléatoirement entre les 3
-    int ind = random(0, 3);
-    switch (ind)
-    {
-    case 0:
-        if (parkings[0].getNbAvailablePlaces() != 0)
-            return 0;
-        else
-        {
-            if (parkings[0].IsFull() && parkings[1].IsFull() && parkings[2].IsFull())
-                return -1;
-            else
-                return getParkingInd();
-        }
-        break;
-    case 1:
-        if (parkings[1].getNbAvailablePlaces() != 0)
-            return 1;
-        else
-        {
-            if (parkings[0].IsFull() && parkings[1].IsFull() && parkings[2].IsFull())
-                return -1;
-            else
-                return getParkingInd();
-        }
-        break;
-    case 2:
-        if (parkings[2].getNbAvailablePlaces() != 0)
-            return 2;
-        else
-        {
-            if (parkings[0].IsFull() && parkings[1].IsFull() && parkings[2].IsFull())
-                return -1;
-            else
-                return getParkingInd();
-        }
-        break;
-    default:
-        return -1;
-        break;
-    }
 }
 
 int Environnement::getPlaceInd(int parkingInd)
@@ -372,7 +572,7 @@ const int Environnement::GetExit()
 
 void Environnement::AddVoiture()
 {
-    initUser();
+    initUser(false);
     Voiture V(conducteurs[conducteurs.size() - 1]);
     V.indice = voitures.size(); // TODO : Faire en sorte qu'ont ai un nombre fini d'utilisateur qui tourne en boucle
 
@@ -383,7 +583,6 @@ void Environnement::AddVoiture()
 
     V.Exit = GetExit();
     V.setTargetPosition(GetPosbyNodeInd(V.Exit) + Vec2(5, 5));
-    V.User.setParkTime(20);
 
     V.startTimer = frameParkTime;
     voitures.push_back(V); // Ajout de la voiture dans le tableau de voiture
@@ -400,7 +599,11 @@ void Environnement::AddVoiture()
 
 void Environnement::RemoveVoiture(int numVoiture)
 {
+    // Supprime la voiture du tableau de voiture
     voitures.erase(voitures.begin() + numVoiture);
+    voitures.shrink_to_fit();                            // On réduit la taille du tableau de voiture
+    conducteurs.erase(conducteurs.begin() + numVoiture); // On supprime l'utilisateur du tableau des conducteurs
+    conducteurs.shrink_to_fit();                         // On réduit la taille du tableau des conducteurs
 }
 
 void Environnement::updateStateVoiture()
@@ -462,7 +665,6 @@ void Environnement::updateStateVoiture()
                 if (voitures[i].derement == false)
                 {
                     parkings[parkingInd].incrementNbAvailablePlaces();
-                    cout << "Parking : " << voitures[i].getParking() << " Nb place libre : " << parkings[voitures[i].getParking()].getNbAvailablePlaces() << endl;
                     voitures[i].derement = true;
                 }
             }
@@ -487,7 +689,6 @@ void Environnement::updateStateVoiture()
 
 void Environnement::updateStateCarParks()
 {
-    cout << "lol" << endl;
     // On parcourt le tableau de Parkings
     for (int i = 0; i < parkings.size(); i++)
     {
@@ -542,12 +743,16 @@ void Environnement::Environnement_play()
             if (voitures[i].getpathTab().size() == 0 && voitures[i].getIs_parked() == false && voitures[i].isMoving == false)
             {
                 cout << "Erreur : La voiture " << i << " n'a pas de trajet" << endl;
+                voitures[i].exist = false;
                 RemoveVoiture(i);
+                break;
             }
             if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit)
             {
                 voitures[i].exist = false;
+                savedConducteurs.push_back(voitures[i].User);
                 RemoveVoiture(i);
+                break;
             }
 
             if (voitures[i].getNbFinishedConv() < 1)
@@ -728,29 +933,29 @@ void Environnement::test_regresion()
     // test de regression de la classe Environnement
     Environnement E;
 
-    assert(E.parkings.size() == 3);
-    cout << "Test de regression de la fonction initParking() : OK" << endl;
+    // assert(E.parkings.size() == 3);
+    // cout << "Test de regression de la fonction initParking() : OK" << endl;
 
-    for (int i = 0; i < 10; i++)
-    {
-        E.AddVoiture();
-    }
-    assert(E.voitures.size() == 10);
-    E.RemoveVoiture(0);
-    assert(E.voitures.size() == 9);
+    // for (int i = 0; i < 10; i++)
+    // {
+    //     E.AddVoiture();
+    // }
+    // assert(E.voitures.size() == 10);
+    // E.RemoveVoiture(0);
+    // assert(E.voitures.size() == 9);
 
-    cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
+    // cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
 
-    int a = E.createConv();
-    assert(E.conv.size() == 1);
-    E.deleteConv(a);
-    assert(E.conv.size() == 0);
-    cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
+    // int a = E.createConv();
+    // assert(E.conv.size() == 1);
+    // E.deleteConv(a);
+    // assert(E.conv.size() == 0);
+    // cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
 
-    for (int i = 0; i < E.voitures.size(); i++)
-    {
-        E.conversation(E.voitures.at(i));
-    }
+    // for (int i = 0; i < E.voitures.size(); i++)
+    // {
+    //     E.conversation(E.voitures.at(i));
+    // }
 
     /*// Affiche les infos du noeud 47
     cout << "Noeud 47 : " << endl;
@@ -782,20 +987,65 @@ void Environnement::test_regresion()
     //   	map[E.pathTab[i]->getNodepos().y][E.pathTab[i]->getNodepos().x] = '#';
     //   }
 
+    // E.AddVoiture();
+    // E.AddVoiture();
+
+    // for (int i = 0; i < E.voitures.size(); i++)
+    // {
+    //     cout << "Voiture " << i << " : "
+    //          << "pathTab.size() : " << E.voitures[i].getpathTab().size() << endl;
+    //     E.Astar(E.voitures[i], 47, 1721);
+    //     cout << "la" << endl;
+    //     cout << "Voiture : " << i << " : "
+    //          << " getpathTab() size : " << E.voitures[0].getpathTab().size() << endl;
+    //     for (int j = 0; j < E.voitures[i].getpathTab().size(); j++)
+    //     {
+    //         cout << "Noeud " << j << " : " << E.voitures[i].getpathTab()[j]->getNodepos().x << " " << E.voitures[i].getpathTab()[j]->getNodepos().y << endl;
+    //     }
+    // }
+
+    cout << "Test de regression de la fonction saveUser()" << endl;
     E.AddVoiture();
     E.AddVoiture();
 
-    for (int i = 0; i < E.voitures.size(); i++)
+    E.saveUser();
+
+    // On verifie que les utilisateurs sont bien sauvegardés dans le fichier
+    ifstream fichier("data/User.txt", ios::in); // on ouvre le fichier en lecture
+
+    vector<string> data;
+    string tmp;
+    if (fichier)
     {
-        cout << "Voiture " << i << " : "
-             << "pathTab.size() : " << E.voitures[i].getpathTab().size() << endl;
-        E.Astar(E.voitures[i], 47, 1721);
-        cout << "la" << endl;
-        cout << "Voiture : " << i << " : "
-             << " getpathTab() size : " << E.voitures[0].getpathTab().size() << endl;
-        for (int j = 0; j < E.voitures[i].getpathTab().size(); j++)
+        string ligne;
+        int i = 0;
+        while (getline(fichier, ligne))
         {
-            cout << "Noeud " << j << " : " << E.voitures[i].getpathTab()[j]->getNodepos().x << " " << E.voitures[i].getpathTab()[j]->getNodepos().y << endl;
+            cout << "Ligne " << i << " : " << ligne << endl;
+
+            data.push_back(ligne);
+            i++;
         }
+        fichier.close();
     }
+    else
+    {
+        cerr << "Impossible d'ouvrir le fichier !" << endl;
+    }
+
+    assert(E.savedConducteurs.size() == 2);
+    cout << "E.savedConducteurs.size() : " << E.savedConducteurs.size() << endl;
+    // affiche les donnée stockées dans le tableau data
+    cout << "data.size() : " << data.size() << endl;
+    for (int i = 0; i < data.size(); i++)
+    {
+        cout << "data[" << i << "] : " << data[i] << endl;
+    }
+
+    cout << "test de regression de la fonction saveUser() : OK" << endl;
+
+    // test de regression de la fonction getUser()
+    E.getUser();
+    assert(E.savedConducteurs.size() == 2);
+    cout << "E.savedConducteurs.size() : " << E.savedConducteurs.size() << endl;
 }

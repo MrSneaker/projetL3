@@ -9,6 +9,7 @@
 #include "Node.h"
 #include "Conversation.h"
 #include "Graph.h"
+#include "namegen.hpp"
 #include <filesystem>
 #include <dirent.h>
 #include <vector>
@@ -23,6 +24,7 @@
 #define DimWindowY 800
 #define tailleCase 10
 
+using ng = dasmig::ng;
 using namespace std;
 
 class Environnement
@@ -48,9 +50,13 @@ private:
 public:
     string map[DimWindowX / tailleCase * DimWindowY / tailleCase];
 
-    vector<Voiture> voitures;
-    vector<Parking> parkings;
-    vector<Utilisateur> conducteurs;
+    vector<Voiture> voitures; // liste des voitures
+    vector<Parking> parkings; // liste des parkings
+    vector<Utilisateur> conducteurs; // liste des conducteurs
+    vector<Utilisateur> savedConducteurs; // liste des conducteurs enregistrés dans le fichier
+    vector<Utilisateur> tmpsavedConducteurs; // liste des conducteurs qui seront enregistrés à la fin de la simulation
+    vector<int> doubleUser; // liste des conducteurs qui ont été enregistrés deux fois
+    vector<Utilisateur> SimuConducteurs; // liste des conducteurs qui sont utilisés dans la simulation
     unsigned int temps;
     float TempsEcoule = 0.f;
     bool Pause = false;
@@ -60,6 +66,8 @@ public:
     int Heures = 0;
     int Jours = 0;
     int Mois = 0;
+    int nbUserCreated = 0;
+    int nbUserSaved = 0;
 
     void Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd);
 
@@ -84,8 +92,13 @@ public:
     //! \brief Fonction horloge
     void ClockTime();
 
+    //! \brief Fonction permettant de retourner un temps de stationnement aléatoire
+    float randomParkTime();
     //! \brief Initialisation d'un utilisateur, puis ajout dans le tableau de conducteurs.
-    void initUser();
+    void initUser(bool quitif);
+
+    //! \brief Fonction permettant de créer un id aléatoire pour un utilisateur sans qu'il y ait de doublons
+    int CreateRandomId();
 
     //! \brief Initialisation des parkings
     void initParkings();
@@ -134,6 +147,13 @@ public:
     void changeTarget(Voiture &v, int indPr);
 
     void makeGraph(int choice);
+
+    void saveUser();
+
+    void getUser();
+
+    //Fonction qui verifie qu'il ny'a pas de doublons d'id dans le fichier user.txt
+    bool checkId(int id, string filename);
 
     //! \brief Test de regression de la classe Environnement
     void test_regresion();
