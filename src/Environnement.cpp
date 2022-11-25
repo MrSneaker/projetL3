@@ -488,11 +488,17 @@ void Environnement::updateStateVoiture()
 void Environnement::updateStateCarParks()
 {
     cout << "lol" << endl;
+
     // On parcourt le tableau de Parkings
     for (int i = 0; i < parkings.size(); i++)
     {
+        // On met à jour le pourcentage de réussite des négociations du Parking.
         parkings[i].updateSuccessPercentage();
+
+        // On met (ou pas, c'est géré par la fonction) à jour l'intervalle de
+        // prix du Parking.
         parkings[i].reconsiderPrices();
+
         parkings[i].addToData(realTime);
     }
 }
@@ -503,6 +509,12 @@ void Environnement::Environnement_play()
 
     prevtime = currentTime;
     currentTime = temps;
+
+    /* Booléen que l'on passera à vrai s'il y a eu,
+    durant le passage dans cette fonction, au moins une
+    conversation entre un Parking et une Voiture. Si le booléen
+    est vrai à la fin de la	fonction, on appellera updateStateCarParks
+    de Environnement. */
     bool aConversationHasEnded = false;
 
     if (Pause == false)
@@ -616,8 +628,13 @@ void Environnement::conversation(Voiture &v)
         conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j], v, v.getParking());
         if (isFinished)
         {
-            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[parkings.size() - 1 - j].getId()));
+            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U"
+                                                                 + to_string(v.User.getId())
+                                                                 + "P"
+                                                                 + to_string(parkings[parkings.size() - 1 - j].getId()));
 
+            // On met à jour les données membres incrementNbTotalVisitsFor10LastConv,
+            // nbTotalVisits et profit du Parking.
             conv.at(indConv[parkings.size() - 1 - j])->updateStateCarParkAfterConv(parkings[parkings.size() - 1 - j]);
         }
 

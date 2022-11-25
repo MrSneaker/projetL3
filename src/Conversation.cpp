@@ -72,7 +72,7 @@ void Conversation::updateStateCarParkAfterConv(Parking &p)
 {
 
     // Si les threads sont terminés, on peut consulter leur conversation
-    // pour voir si on doit incrémenter nbAgreementsOnPrice
+    // pour voir si on doit incrémenter incrementNbTotalVisitsFor10LastConv
     // et nbTotalVisits de p.
     if (voiture.joinable() == false && parking.joinable() == false)
     {
@@ -81,7 +81,7 @@ void Conversation::updateStateCarParkAfterConv(Parking &p)
 
         if (lastMessageOfConv.getSubject() == "OK_TO_PARK")
         {
-            p.incrementNbAgreementsOnPrice();
+            p.incrementNbTotalVisitsFor10LastConv();
             unsigned int idU = p.extractIntFromString(lastMessageOfConv.getSender());
             for (int i = 0; i < p.getUsersTab().size(); i++)
             {

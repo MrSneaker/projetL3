@@ -17,7 +17,7 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     successPercentage = (100);
     profit = (0);
     nbFinishedConv = 0;
-    nbAgreementsOnPrice = 0;
+    nbTotalVisitsFor10LastConv = 0;
     initPlace(position.x + 1, position.y + 1);
 }
 
@@ -139,9 +139,9 @@ void Parking::setNbAvailablePlaces(int nb)
     IsFull();
 }
 
-void Parking::incrementNbAgreementsOnPrice()
+void Parking::incrementNbTotalVisitsFor10LastConv()
 {
-    nbAgreementsOnPrice++;
+    incrementNbTotalVisitsFor10LastConv++;
 }
 
 void Parking::incrementNbFinishedConv()
@@ -157,7 +157,7 @@ void Parking::updateProfit(double aPrice)
 void Parking::updateSuccessPercentage()
 {
     if (nbFinishedConv > 0)
-        successPercentage = (nbAgreementsOnPrice * 100 / nbFinishedConv);
+        successPercentage = (incrementNbTotalVisitsFor10LastConv * 100 / nbFinishedConv);
 }
 
 void Parking::setMinPrice(float minimumPrice)
@@ -466,7 +466,8 @@ void Parking::reconsiderPrices()
         setStartingPrice(augmentation * startingPrice);
     }
 
-    cout << "Parking " << idP + 1 << " : nbAgreementsOnPrice : " << nbAgreementsOnPrice << endl;
+    cout << "Parking " << idP + 1 << " : incrementNbTotalVisitsFor10LastConv : "
+         << incrementNbTotalVisitsFor10LastConv << endl;
     cout << "Parking " << idP + 1 << " : nbTotalVisits : " << nbTotalVisits << endl;
     cout << "Parking " << idP + 1 << " : nbFinishedConv : " << nbFinishedConv << endl;
     cout << "Parking " << idP + 1 << " : successPercentage : " << successPercentage << endl;
