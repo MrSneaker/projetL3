@@ -9,7 +9,6 @@
 #include "Node.h"
 #include "Conversation.h"
 #include "Graph.h"
-#include "namegen.hpp"
 #include <filesystem>
 #include <dirent.h>
 #include <vector>
@@ -24,7 +23,6 @@
 #define DimWindowY 800
 #define tailleCase 10
 
-using ng = dasmig::ng;
 using namespace std;
 
 class Environnement
@@ -46,6 +44,15 @@ private:
 
     // on veut gérer les convs dynamiquement
     vector<Conversation *> conv;
+    vector<Utilisateur> SimuConducteurs; // liste des conducteurs qui sont utilisés dans la simulation
+    vector<Utilisateur> tmpsavedConducteurs; // liste des conducteurs qui seront enregistrés à la fin de la simulation
+    vector<Utilisateur> savedConducteurs; // liste des conducteurs enregistrés dans le fichier
+    int nbUserCreated = 0;
+    int nbUserSaved = 0;
+
+    vector<string> m_NameList;
+    vector<string> f_NameList;
+    vector<string> SurnameList;
 
 public:
     string map[DimWindowX / tailleCase * DimWindowY / tailleCase];
@@ -53,10 +60,7 @@ public:
     vector<Voiture> voitures; // liste des voitures
     vector<Parking> parkings; // liste des parkings
     vector<Utilisateur> conducteurs; // liste des conducteurs
-    vector<Utilisateur> savedConducteurs; // liste des conducteurs enregistrés dans le fichier
-    vector<Utilisateur> tmpsavedConducteurs; // liste des conducteurs qui seront enregistrés à la fin de la simulation
     vector<int> doubleUser; // liste des conducteurs qui ont été enregistrés deux fois
-    vector<Utilisateur> SimuConducteurs; // liste des conducteurs qui sont utilisés dans la simulation
     unsigned int temps;
     float TempsEcoule = 0.f;
     bool Pause = false;
@@ -66,8 +70,6 @@ public:
     int Heures = 0;
     int Jours = 0;
     int Mois = 0;
-    int nbUserCreated = 0;
-    int nbUserSaved = 0;
 
     void Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd);
 
@@ -156,6 +158,16 @@ public:
 
     //Fonction qui verifie qu'il ny'a pas de doublons d'id dans le fichier user.txt
     bool checkId(int id, string filename);
+
+    //! \brief Fonction qui récupère les noms et prénoms dans les fichiers txt
+    void getNames_SurnamesFromFile();
+
+    //! \brief Fonction qui retourne un nom aléatoire
+    //! \param gender "m" = male | "f" = female | [vide] = aleatoire
+    string getName(string gender = "any");
+
+    //! \brief Fonction qui retourne un prénom aléatoire
+    string getSurname();
 
     //! \brief Test de regression de la classe Environnement
     void test_regresion();
