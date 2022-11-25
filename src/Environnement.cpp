@@ -23,8 +23,8 @@ Environnement::Environnement()
     removeLogs();
     getMap();
     getUser();
+    getNames_SurnamesFromFile();
     initParkings();
-    ng::instance().load("./resources"); // chargement des ressources pour les noms
 }
 
 bool Environnement::checkId(int id, string filename)
@@ -344,7 +344,7 @@ void Environnement::getUser()
     {
         string ligne; // une variable pour stocker les lignes lues
         // on extrait les lignes une à une
-        while (getline(fichier, ligne) && i < 721)
+        while (getline(fichier, ligne))
         {
             stringstream ss(ligne); // on crée un flux à partir de la ligne lue
             string token;           // une variable pour stocker les mots lus
@@ -362,13 +362,66 @@ void Environnement::getUser()
             float parkTime = stof(tokens[5]);
             savedConducteurs.push_back(Utilisateur(maxPrice, id, name, surname, age, parkTime)); // on ajoute le conducteur au tableau de conducteurs enregistrés
             nbUserSaved++;
-            i++;
         }
         fichier.close();
     }
     else
     {
         cerr << "Impossible d'ouvrir le fichier !" << endl;
+    }
+}
+
+void Environnement::getNames_SurnamesFromFile()
+{
+    ifstream FemaleNamesFile("resources/female.names", ios::in);
+    if (FemaleNamesFile)
+    {
+        string ligne; // une variable pour stocker les lignes lues
+        // on stocke les noms de femmes dans le vecteur f_NameList
+        while (getline(FemaleNamesFile, ligne))
+        {
+            f_NameList.push_back(ligne);
+        }
+
+        FemaleNamesFile.close();
+    }
+    else
+    {
+        cerr << "Impossible d'ouvrir le fichier : <female.names> !" << endl;
+    }
+
+    ifstream MaleNamesFile("resources/male.names", ios::in);
+    if (MaleNamesFile)
+    {
+        string ligne; // une variable pour stocker les lignes lues
+        // on stocke les noms d'hommes dans le vecteur m_NameList
+        while (getline(MaleNamesFile, ligne))
+        {
+            m_NameList.push_back(ligne);
+        }
+
+        MaleNamesFile.close();
+    }
+    else
+    {
+        cerr << "Impossible d'ouvrir le fichier : <male.names> !" << endl;
+    }
+
+    ifstream SurnamesFile("resources/sur.names", ios::in);
+    if (SurnamesFile)
+    {
+        string ligne; // une variable pour stocker les lignes lues
+        // on stocke les noms de famille dans le vecteur s_NameList
+        while (getline(SurnamesFile, ligne))
+        {
+            SurnameList.push_back(ligne);
+        }
+
+        SurnamesFile.close();
+    }
+    else
+    {
+        cerr << "Impossible d'ouvrir le fichier : <sur.names> !" << endl;
     }
 }
 
@@ -398,20 +451,44 @@ float Environnement::randomParkTime()
     return new_Parktime;
 }
 
+string Environnement::getName(string gender)
+{
+    string ReturnName;
+
+    int rand = random(0, 100);
+
+    if (rand <= 50)
+    {
+        ReturnName = f_NameList[random(0, f_NameList.size())];
+    }
+    else
+    {
+        ReturnName = m_NameList[random(0, m_NameList.size())];
+    }
+
+    return ReturnName;
+}
+
+string Environnement::getSurname()
+{
+    string ReturnSurname = SurnameList[random(0, SurnameList.size())];
+    return ReturnSurname;
+}
+
 int Environnement::CreateRandomId()
 {
     int id = 0;
     bool idAlreadyUsed = false;
     do
     {
-        id = random(0, 70000);
+        id = random(0, 7000);
         // On vérifie que l'id n'est pas déjà utilisé
         for (auto &C : SimuConducteurs)
         {
             // Si l'id est déjà utilisé, on en crée un nouveau
             if (C.getId() == id)
             {
-                id = random(0, 70000);
+                id = random(0, 7000);
                 idAlreadyUsed = true;
             }
             else
@@ -439,10 +516,8 @@ void Environnement::initUser(bool quitif)
 
             // On simule un pourcentage pour dire que si il est déja apparu dans la simulation, il a une chance de n% de revenir
             pourcentage = rand() % 100;
-            if (pourcentage <= 20)
+            if (pourcentage <= 30)
             {
-                cout << "1 -------- User i : " << savedConducteurs[randomNUM].getId() << " alreaduSpawned : " << savedConducteurs[randomNUM].AlreadySpawned << endl;
-                cout << "pourcentage : " << pourcentage << endl;
                 savedConducteurs[randomNUM].AlreadySpawned = true;            // On dit que le conducteur est deja apparu dans la simulation
                 conducteurs.push_back(savedConducteurs[randomNUM]);           // on ajoute le conducteur au tableau de conducteurs
                 savedConducteurs.erase(savedConducteurs.begin() + randomNUM); // On supprime le conducteur du tableau de conducteurs enregistrés
@@ -457,7 +532,6 @@ void Environnement::initUser(bool quitif)
         // Sinon on le récupère des utilisateurs enregistré et on le fait apparaitre pour la première fois dans cette simu
         else
         {
-            cout << "2 ------- User i : " << savedConducteurs[randomNUM].getId() << " alreaduSpawned : " << savedConducteurs[randomNUM].AlreadySpawned << endl;
             savedConducteurs[randomNUM].AlreadySpawned = true;            // On dit que le conducteur est deja apparu dans la simulation
             conducteurs.push_back(savedConducteurs[randomNUM]);           // on ajoute le conducteur au tableau de conducteurs
             savedConducteurs.erase(savedConducteurs.begin() + randomNUM); // On supprime le conducteur aléatoire du tableau
@@ -469,16 +543,13 @@ void Environnement::initUser(bool quitif)
     // Si tout les conducteurs enregistés ont été créer ou qu'il n'y a pas encore de conducteurs enregistrés
     else
     {
-        cout << "3------------------------------------------------------------------------------------------------------" << endl;
         double price = (double)(random(20, 60) / 10); // on simule des floats en divisants par 10.
 
         int id = CreateRandomId(); // On crée un id aléatoire différent de ceux déjà utilisés
 
-        wstring Rname = ng::instance().get_name(ng::gender::any, ng::culture::french); // on récupère un nom aléatoire dans la liste de noms
-        string name(Rname.begin(), Rname.end());                                       // on convertit le wstring en string
+        string name = getName();
 
-        wstring Rsurname = ng::instance().get_surname(ng::culture::french); // on récupère un prénom aléatoire dans la liste de prénoms
-        string surname(Rsurname.begin(), Rsurname.end());                   // on convertit le wstring en string
+        string surname = getSurname();
 
         // TODO:
         //  On attribue à l'utilisateur (que l'on crée juste après) un entier initial aléatoire (entre 0 et 5)
@@ -498,8 +569,6 @@ void Environnement::initUser(bool quitif)
     }
 }
 
-// TODO : Création d'utilisateur avec nom différent
-
 void Environnement::initParkings()
 {
     // Initialisation des parkings
@@ -507,7 +576,7 @@ void Environnement::initParkings()
 
     // Créer 3 parkings et les ajouter dans le tableau de parkings
     Parking p0(Vec2(1, 1), 3, 8, 44, 38, 0);   // p0
-    Parking p1(Vec2(57, 1), 3, 8, 44, 38, 1); // p1
+    Parking p1(Vec2(57, 1), 3, 8, 44, 38, 1);  // p1
     Parking p2(Vec2(1, 52), 3, 8, 100, 29, 2); // p2
     parkings.push_back(p0);
     parkings.push_back(p1);
@@ -574,7 +643,7 @@ void Environnement::AddVoiture()
 {
     initUser(false);
     Voiture V(conducteurs[conducteurs.size() - 1]);
-    V.indice = voitures.size(); // TODO : Faire en sorte qu'ont ai un nombre fini d'utilisateur qui tourne en boucle
+    V.indice = voitures.size();
 
     int Entry = GetEntry();
     V.set_position(GetPosbyNodeInd(Entry) + Vec2(5, 5));
@@ -583,8 +652,6 @@ void Environnement::AddVoiture()
 
     V.Exit = GetExit();
     V.setTargetPosition(GetPosbyNodeInd(V.Exit) + Vec2(5, 5));
-
-
 
     V.startTimer = frameParkTime;
     voitures.push_back(V); // Ajout de la voiture dans le tableau de voiture
@@ -712,7 +779,7 @@ void Environnement::Environnement_play()
     {
         // fonction de frametime
         deltaTime = (currentTime - prevtime) / 1000.f;
-        
+
         if (SpeedUp == true)
         {
             deltaTime *= 5;
@@ -928,12 +995,12 @@ void Environnement::makeGraph(int choice)
     for (int i = 0; i < 3; i++)
         tabMaxProfit.push_back(searchMaxInPair(parkings[i].getDataProfit()));
 
-    for(int i = 0; i<3; i++)
+    for (int i = 0; i < 3; i++)
         tabMaxPlace.push_back(searchMaxInPair(parkings[i].getDataNbPlaceTaken()));
-    
-    for(int i = 0; i<3; i++)
+
+    for (int i = 0; i < 3; i++)
         tabMaxPrice.push_back(searchMaxInPair(parkings[i].getDataStartingPrice()));
-    
+
     switch (choice)
     {
     case 0:
