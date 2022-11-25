@@ -148,15 +148,26 @@ void Parking::incrementNbFinishedConv()
     nbFinishedConv++;
 }
 
-void Parking::updateProfit(double aPrice)
+void Parking::updateProfit(double aPrice, float parkTime)
 {
-    profit += aPrice;
+    float realParkTime = (parkTime * 10);
+    float nbMinutesParked = realParkTime / 60;
+    profit += (aPrice * nbMinutesParked);
 }
 
 void Parking::updateSuccessPercentage()
 {
+    unsigned int lastNbFinishedConv = nbFinishedConv;
+    unsigned int lastNbAgreements = nbAgreementsOnPrice;
     if (nbFinishedConv > 0)
-        successPercentage = (nbAgreementsOnPrice * 100 / nbFinishedConv);
+    {
+        successPercentage = (lastNbAgreements * 100 / lastNbFinishedConv);
+    }
+    if (nbFinishedConv % 10 == 0)
+    {
+        nbAgreementsOnPrice = 0;
+        nbFinishedConv = 0;
+    }
 }
 
 void Parking::setMinPrice(float minimumPrice)
@@ -240,7 +251,7 @@ void Parking::initPlace(int PcornerX, int PcornerY)
 bool Parking::isPriceOk(double price) const
 {
 
-    bool ok = (price >= minPrice - 0.05 * minPrice);
+    bool ok = (price >= minPrice * 0.95);
     // On considère que le prix est acceptable s'il est au plus 5 % trop peu élevé.
 
     if (ok)
@@ -279,7 +290,7 @@ Message Parking::managingConversation(Message *aMessage) const
                 responseType = "LAST_OFFER";
             }
 
-            if (minPrice <= proposedCarPrice < startingPrice)
+            if ((minPrice <= proposedCarPrice) && (proposedCarPrice < startingPrice))
             {
 
                 /*
@@ -322,13 +333,13 @@ Message Parking::managingConversation(Message *aMessage) const
                 {
                     double chosenPriceTimes100 = (startingPrice - deltaSup / 2) * 100;
                     double roundedChosenPriceTimes100 = floor(chosenPriceTimes100);
-                    double chosenPricePlusOneCentime = roundedChosenPriceTimes100 / 100;
+                    double chosenPricePlusOneCent = roundedChosenPriceTimes100 / 100;
                     /* Les 3 lignes ci-dessus permettent d'affecter la valeur startingPrice - deltaSup / 2
                     à chosenPricePlusOneCentime, mais arrondie au centime (i.e. au centième) inférieur. On fait cela car
                     ça n'a pas de sens de proposer un prix plus précis qu'au centime près, et on arrondit
                     vers le bas car le but est que le parking diminue son prix (pour que la négociation avance !). */
 
-                    chosenPrice = chosenPricePlusOneCentime - 0.01;
+                    chosenPrice = chosenPricePlusOneCent - 0.01;
                     /* On retire 1 centime au prix pour être sûr que ce dernier ne stagne pas. */
 
                     responseType = "COUNTER_OFFER";
@@ -453,29 +464,31 @@ void Parking::reconsiderPrices()
 {
     if (successPercentage < 50)
     {
-        double reduction = (50 - successPercentage) / 100 * minPrice;
-        //cout << "reduction : " << reduction << endl;
-        setMinPrice(minPrice - reduction);
-        setStartingPrice(startingPrice - reduction);
+        bool limit = false;
+        double reductionStartPrice = (50 - successPercentage) / 100 * startingPrice;
+        // cout << "reductionStart : " << reductionStartPrice << endl;
+        if (startingPrice - reductionStartPrice >= minPrice)
+            setStartingPrice(startingPrice - reductionStartPrice);
+        else
+            limit = true;
+
+        if (limit)
+        {
+            setMinPrice(minPrice * 0.98);
+        }
+        // cout << "Parking " << idP + 1 << " : startingPrice : " << startingPrice << endl;
+        // cout << "Parking " << idP + 1 << " : minPrice : " << minPrice << endl;
     }
     else if (successPercentage > 70)
     {
-        double augmentation = 1.50;
+        double augmentation = 1.2;
         setMinPrice(augmentation * minPrice);
         setStartingPrice(augmentation * startingPrice);
     }
 
-    // cout << "Parking " << idP + 1 << " : nbAgreementsOnPrice : " << nbAgreementsOnPrice << endl;
-    // cout << "Parking " << idP + 1 << " : nbTotalVisits : " << nbTotalVisits << endl;
-    // cout << "Parking " << idP + 1 << " : nbFinishedConv : " << nbFinishedConv << endl;
-    // cout << "Parking " << idP + 1 << " : successPercentage : " << successPercentage << endl;
-    // cout << "Parking " << idP + 1 << " : profit : " << profit << endl;
-    // cout << "Parking " << idP + 1 << " : startingPrice : " << startingPrice << endl;
-    // cout << "Parking " << idP + 1 << " : minPrice : " << minPrice << endl;
-
-    // cout << endl
-    //      << endl
-    //      << endl;
+    /*cout << endl
+         << endl
+         << endl;*/
 }
 
 int Parking::extractIntFromString(string aString) const

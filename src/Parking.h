@@ -148,7 +148,7 @@ private:
     vector<pair<double,double>> dataStartingPrice;
     vector<pair<double,double>> dataNbPlaceTaken;
 
-    int nbFinishedConv;
+    unsigned int nbFinishedConv;
     // - Nombre de négociations effectuées par le parking depuis le début de la simulation.
 
     // - Cette donnée rentre dans le calcul de successPercentage.
@@ -160,7 +160,6 @@ private:
     // d'accord sur le prix.
 
     // - Il faudra utiliser cette donnée dans la reconsidération des prix du parking.
-
 
 
 
@@ -262,7 +261,7 @@ public:
 
     //! \brief Ajoute au profit (du parking) la valeur
     //! \brief (prix de la place louée à une voiture) passée en paramètre.
-    void updateProfit (double aPrice);
+    void updateProfit (double aPrice, float parkTime);
 
     //! \brief Met à jour le pourcentage de réussite des négociations du Parking.
     void updateSuccessPercentage ();
