@@ -160,7 +160,7 @@ Message Voiture::managingConversation(Message *aMessage) const
         {
             float userMaxPrice = User.getMaxPrice();
             float nbMessage = aMessage->getMessageNumber();
-            if (proposedParkPrice > userMaxPrice)
+            if (proposedParkPrice > userMaxPrice )
             {
                 chosenPrice = userMaxPrice;
                 responseType = "LAST_OFFER";

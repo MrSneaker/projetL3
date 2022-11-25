@@ -26,7 +26,7 @@ int Graph::createGraph()
     if (gp.good())
     {
         gp << "set xrange [" + to_string(xMin) + ":" + to_string(xMax) + "]\nset yrange [" + to_string(yMin) + ":" + to_string(yMax) + "]\n";
-        gp << "plot" << gp.file1d(data1) << "with lines title '"+graphName+"0"+"'," << gp.file1d(data2)<< "with lines title '"+graphName+"1"+"',"
+        gp << "plot" << gp.file1d(data1) << "with lines title '"+graphName+"1"+"'," << gp.file1d(data2)<< "with lines title '"+graphName+"2"+"',"
            << gp.file1d(data3) << "with lines title '"+graphName+"3"+"'," <<
         std::endl;
         ret = 0;

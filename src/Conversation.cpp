@@ -82,16 +82,18 @@ void Conversation::updateStateCarParkAfterConv(Parking &p)
         if (lastMessageOfConv.getSubject() == "OK_TO_PARK")
         {
             p.incrementNbAgreementsOnPrice();
+            float parkTime = 0;
             unsigned int idU = p.extractIntFromString(lastMessageOfConv.getSender());
             for (int i = 0; i < p.getUsersTab().size(); i++)
             {
                 if (p.getUsersTab()[i].second.getId() == idU)
                 {
+                    parkTime = p.getUsersTab()[i].second.getParkTime();
                     p.incrementNbVisitsTab(p.getUsersTab()[i].second);
                 }
             }
 
-            p.updateProfit(lastMessageOfConv.getPrice());
+            p.updateProfit(lastMessageOfConv.getPrice(), parkTime);
         }
     }
 }

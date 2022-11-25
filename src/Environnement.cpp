@@ -240,7 +240,7 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
 
 void Environnement::initUser()
 {
-    double price = (double)(random(20, 60) / 10); // on simule des floats en divisants par 10.
+    double price = (double)(random(20, 80) / 10); // on simule des floats en divisants par 10.
     unsigned int id = conducteurs.size();         // Marche pas si on supprime un utilisateur du tableau et qu'on en rajoute un.
     string name = "Paulo - " + to_string(id);
 
@@ -261,9 +261,9 @@ void Environnement::initParkings()
     // Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir
 
     // Créer 3 parkings et les ajouter dans le tableau de parkings
-    Parking p0(Vec2(1, 1), 3, 7, 44, 38, 0);   // p0
-    Parking p1(Vec2(57, 1), 8, 12, 44, 38, 1); // p1
-    Parking p2(Vec2(1, 52), 4, 8, 100, 29, 2); // p2
+    Parking p0(Vec2(1, 1), 3, 8, 44, 38, 0);   // p0
+    Parking p1(Vec2(57, 1), 3, 8, 44, 38, 1); // p1
+    Parking p2(Vec2(1, 52), 3, 8, 100, 29, 2); // p2
     parkings.push_back(p0);
     parkings.push_back(p1);
     parkings.push_back(p2);
@@ -383,7 +383,8 @@ void Environnement::AddVoiture()
 
     V.Exit = GetExit();
     V.setTargetPosition(GetPosbyNodeInd(V.Exit) + Vec2(5, 5));
-    V.User.setParkTime(20);
+
+
 
     V.startTimer = frameParkTime;
     voitures.push_back(V); // Ajout de la voiture dans le tableau de voiture
@@ -487,7 +488,6 @@ void Environnement::updateStateVoiture()
 
 void Environnement::updateStateCarParks()
 {
-    cout << "lol" << endl;
     // On parcourt le tableau de Parkings
     for (int i = 0; i < parkings.size(); i++)
     {
@@ -509,7 +509,7 @@ void Environnement::Environnement_play()
     {
         // fonction de frametime
         deltaTime = (currentTime - prevtime) / 1000.f;
-        realTime = clock() / CLOCKS_PER_SEC;
+        
         if (SpeedUp == true)
         {
             deltaTime *= 5;
@@ -519,6 +519,7 @@ void Environnement::Environnement_play()
         frametime += deltaTime;
         TempsEcoule += deltaTime;
         frameParkTime += deltaTime;
+        realTime += deltaTime;
         ClockTime();
         // Affiche une voiture toutes les 5 secondes un seul fois
         if (frametime >= 5.0f)
@@ -542,6 +543,7 @@ void Environnement::Environnement_play()
             if (voitures[i].getpathTab().size() == 0 && voitures[i].getIs_parked() == false && voitures[i].isMoving == false)
             {
                 cout << "Erreur : La voiture " << i << " n'a pas de trajet" << endl;
+                voitures[i].exist = false;
                 RemoveVoiture(i);
             }
             if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit)
@@ -550,7 +552,7 @@ void Environnement::Environnement_play()
                 RemoveVoiture(i);
             }
 
-            if (voitures[i].getNbFinishedConv() < 1)
+            if (voitures[i].getNbFinishedConv() < 1 && voitures[i].exist)
             {
                 conversation(voitures[i]);
                 voitures[i].incrementNbFinishedConv();
@@ -679,10 +681,26 @@ void Environnement::removeLogs()
         system("rm data/logs/*");
 }
 
-int Environnement::searchMax(vector<int> tab)
+double Environnement::searchMaxInPair(vector<pair<double, double>> tab)
 {
-    int max = tab.at(0);
-    int tmp = 0;
+    double max = tab.at(0).second;
+    double tmp = 0;
+    for (int i = 0; i < tab.size(); i++)
+    {
+        if (tab[i].second > max)
+        {
+            if (tab[i].second != tmp)
+                max = tab[i].second;
+        }
+        tmp = tab[i].second;
+    }
+    return max;
+}
+
+double Environnement::searchMax(vector<double> tab)
+{
+    double max = tab.at(0);
+    double tmp = 0;
     for (int i = 0; i < tab.size(); i++)
     {
         if (tab[i] > max)
@@ -697,25 +715,29 @@ int Environnement::searchMax(vector<int> tab)
 
 void Environnement::makeGraph(int choice)
 {
-    vector<int> profitSize;
-    vector<int> startingPriceSize;
-    vector<int> placeTakenSize;
-    for (int i = 0; i < parkings.size(); i++)
-    {
-        profitSize.push_back(parkings[i].getDataProfit().size());
-        startingPriceSize.push_back(parkings[i].getDataStartingPrice().size());
-        placeTakenSize.push_back(parkings[i].getDataNbPlaceTaken().size());
-    }
+
+    vector<double> tabMaxProfit;
+    vector<double> tabMaxPlace;
+    vector<double> tabMaxPrice;
+    for (int i = 0; i < 3; i++)
+        tabMaxProfit.push_back(searchMaxInPair(parkings[i].getDataProfit()));
+
+    for(int i = 0; i<3; i++)
+        tabMaxPlace.push_back(searchMaxInPair(parkings[i].getDataNbPlaceTaken()));
+    
+    for(int i = 0; i<3; i++)
+        tabMaxPrice.push_back(searchMaxInPair(parkings[i].getDataStartingPrice()));
+    
     switch (choice)
     {
     case 0:
-        Graph(parkings[0].getDataProfit(), parkings[1].getDataProfit(), parkings[2].getDataProfit(), "Profit parking ", 0, 0, realTime, searchMax(profitSize));
+        Graph(parkings[0].getDataProfit(), parkings[1].getDataProfit(), parkings[2].getDataProfit(), "Profit parking ", 0, 0, realTime, searchMax(tabMaxProfit));
         break;
     case 1:
-        Graph(parkings[0].getDataStartingPrice(), parkings[1].getDataStartingPrice(), parkings[2].getDataStartingPrice(), "Evolution prix de départ parking ", 0, 0, realTime, searchMax(startingPriceSize));
+        Graph(parkings[0].getDataStartingPrice(), parkings[1].getDataStartingPrice(), parkings[2].getDataStartingPrice(), "Evolution prix de départ parking ", 0, 0, realTime, searchMax(tabMaxPrice));
         break;
     case 2:
-        Graph(parkings[0].getDataNbPlaceTaken(), parkings[1].getDataNbPlaceTaken(), parkings[2].getDataNbPlaceTaken(), "Nombres de places occupées parking ", 0, 0, realTime, searchMax(placeTakenSize));
+        Graph(parkings[0].getDataNbPlaceTaken(), parkings[1].getDataNbPlaceTaken(), parkings[2].getDataNbPlaceTaken(), "Nombres de places occupées parking ", 0, 0, realTime, searchMax(tabMaxPlace));
         break;
     default:
         break;

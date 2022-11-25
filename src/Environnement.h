@@ -38,7 +38,7 @@ private:
     float frameParkTime = 0.f;
     unsigned int prevtime = 0;
     unsigned int currentTime = 0;
-    unsigned int realTime;
+    float realTime;
     float deltaTime = 0.f;
     float frametime = 0.f;
 
@@ -124,7 +124,9 @@ public:
     //! \brief supprime le dossier de logs avant nouvelle itération.
     void removeLogs();
 
-    int searchMax(vector<int> tab);
+    double searchMaxInPair(vector<pair<double,double>> tab);
+
+    double searchMax(vector<double> tab);
 
     //Fonction qui permet de revoyer l'indice d'une place d'un des 3 parkings sauf si celui-ci est plein et que la place est prise
     int getPlaceInd(int parkingInd);
