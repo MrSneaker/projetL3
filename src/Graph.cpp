@@ -25,7 +25,7 @@ Graph::Graph(vector<pair<double, double>> data1_, string graphName_, int xMin_, 
     yMax = yMax_;
     int r = createGraph();
     if (r == -1)
-        cerr << "error in an attempt of creating an instance of Graph.";
+        cerr << "error in an attempt of creating an instance of Graph." << endl;
 }
 
 Graph::~Graph()
@@ -39,6 +39,8 @@ Graph::Graph()
 int Graph::createGraph()
 {
     int ret;
+    if(yMax == 0)
+        cout<<"yMax is set to 0 "<<endl;
     if (gp.good())
     {
         gp << "set xrange [" + to_string(xMin) + ":" + to_string(xMax) + "]\nset yrange [" + to_string(yMin) + ":" + to_string(yMax) + "]\n";

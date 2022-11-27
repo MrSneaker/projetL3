@@ -15,7 +15,7 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     nbAvailablePlaces = (nbPlaces);
     idP = (id);
     successPercentage = (100);
-    profit = (0);
+    profit = 0;
     nbFinishedConv = 0;
     nbAgreementsOnPrice = 0;
     initPlace(position.x + 1, position.y + 1);
@@ -158,8 +158,13 @@ void Parking::incrementNbFinishedConv()
 void Parking::updateProfit(double aPrice, float parkTime)
 {
     float realParkTime = (parkTime * 10);
-    float nbMinutesParked = realParkTime / 60;
+    cout<<"parTime : "<<parkTime<<endl;
+    cout<<"realParkTime : "<<realParkTime<<endl;
+    double nbMinutesParked = (double) (realParkTime / 60);
+    cout<<"aPrice : "<<aPrice<<endl;
+    cout<<"nbMinutes : "<<nbMinutesParked<<endl;
     profit += (aPrice * nbMinutesParked);
+    cout<<profit<<endl;
 }
 
 void Parking::updateSuccessPercentage()

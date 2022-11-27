@@ -361,8 +361,13 @@ void Environnement::getUser()
             int age = stoi(tokens[4]);
             float parkTime = stof(tokens[5]);
             savedConducteurs.push_back(Utilisateur(maxPrice, id, name, surname, age, parkTime)); // on ajoute le conducteur au tableau de conducteurs enregistrés
+            for (int i = 0; i < parkings.size(); i++)
+            {
+                parkings[i].addUsersTab(savedConducteurs.back());
+            }
             nbUserSaved++;
         }
+
         fichier.close();
     }
     else
@@ -581,6 +586,11 @@ void Environnement::initParkings()
     parkings.push_back(p0);
     parkings.push_back(p1);
     parkings.push_back(p2);
+    for (int i = 0; i < parkings.size(); i++)
+    {
+        for (int j = 0; j < SimuConducteurs.size(); j++)
+            parkings[i].addUsersTab(SimuConducteurs[j]);
+    }
 }
 
 int Environnement::getPlaceInd(int parkingInd)
@@ -661,8 +671,7 @@ void Environnement::AddVoiture()
     voitures.back().dejaspawn = true;
     for (int i = 0; i < parkings.size(); i++)
     {
-        Utilisateur newUser = conducteurs[conducteurs.size() - 1];
-        parkings[i].addUsersTab(newUser);
+        parkings[i].addUsersTab(conducteurs[conducteurs.size() - 1]);
     }
 }
 
@@ -954,7 +963,8 @@ void Environnement::changeTarget(Voiture &v, int indPr)
 
 void Environnement::removeLogs()
 {
-    if (std::filesystem::exists("data/logs/Conversation U0P0.txt"))
+    ofstream file("data/logs/rmLogs");
+    if (std::filesystem::exists("data/logs/rmLogs"))
         system("rm data/logs/*");
 }
 
@@ -998,7 +1008,10 @@ void Environnement::makeGraph(int choice)
     vector<double> tabMaxPrice;
     for (int i = 0; i < 3; i++)
         if (!parkings[i].getDataProfit().empty())
+        {
             tabMaxProfit.push_back(searchMaxInPair(parkings[i].getDataProfit()));
+            cout << parkings[i].getProfit() << endl;
+        }
 
     for (int i = 0; i < 3; i++)
         if (!parkings[i].getDataNbPlaceTaken().empty())
@@ -1011,6 +1024,7 @@ void Environnement::makeGraph(int choice)
     switch (choice)
     {
     case 0:
+        cout << searchMax(tabMaxProfit) << endl;
         if (!tabMaxProfit.empty())
             Graph(parkings[0].getDataProfit(), parkings[1].getDataProfit(), parkings[2].getDataProfit(), "Profit parking ", 0, 0, realTime, searchMax(tabMaxProfit));
         break;
