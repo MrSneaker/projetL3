@@ -128,7 +128,6 @@ const double& Parking::getSuccessPourcentage() const
 void Parking::decrementNbAvailablePlaces()
 {
     nbAvailablePlaces--;
-    cout << "nbAvailablePlaces = " << nbAvailablePlaces << endl;
     IsFull();
 }
 
@@ -536,8 +535,8 @@ void Parking::testRegression()
     cout << "Etat de la place 1 : " << p1.getPlacesTab()[0].getIsTaken() << endl;
     assert(p1.getPlacesTab()[0].getIsTaken() == p1.placesTab[0].getIsTaken());
 
-    Utilisateur u1(2.5, 1, "paulo-1");
-    Utilisateur u2(2.5, 2, "paulo-2");
+    Utilisateur u1(2.5, 1, "paulo-1"," pilo", 20, 2); 
+    Utilisateur u2(2.5, 2, "paulo-2"," pilo", 20, 2);
     p1.addUsersTab(u1);
     p1.addUsersTab(u2);
     p1.addUsersTab(u1);

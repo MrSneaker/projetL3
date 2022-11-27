@@ -193,9 +193,9 @@ bool Conversation::stockConv(const string &fileName)
 void Conversation::testRegression()
 {
     Conversation c, c1, c2;
-    Utilisateur u(3.5, 14, "paulo-test");
-    Utilisateur u1(6, 15, "paulo-test2");
-    Utilisateur u2(2, 16, "paulo-test3");
+    Utilisateur u(3.5, 14, "paulo-test", "test", 5,2);
+    Utilisateur u1(6, 15, "paulo-test2", "test2", 6, 2);
+    Utilisateur u2(2, 16, "paulo-test3", "test3", 7, 2);
     Parking p({10, 10}, 3, 4, 10, 10, 4);
     Voiture v(u);
     Voiture v1(u1);

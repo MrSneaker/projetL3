@@ -16,19 +16,22 @@ private:
     float ParkTime;
     unsigned int id;
     string name;
+    string surname;
     unsigned int Age;
 
     
 
 public:
+    bool AlreadySpawned;
     //! \brief constructeur
     Utilisateur();
     //! \brief constructeur avec parametre
     //! \param u_maxPrice prix maximum que l'utilisateur est prêt à payer
     //! \param u_id identifiant de l'utilisateur
     //! \param u_name nom de l'utilisateur
+    //! \param u_surname prenom de l'utilisateur
     //! \param u_Parktime temps de stationnement de l'utilisateur
-    Utilisateur(double maxPrice, unsigned int id, string name);
+    Utilisateur(double maxPrice, unsigned int id, string name, string surname, unsigned int Age, float ParkTime);
     //! \brief destructeur.
     ~Utilisateur();
     //! \brief renvoie un float contenant le prix maximum que l'utilisateur pourrait payer.
@@ -42,6 +45,8 @@ public:
     void setParkTime(float u_ParkTime);
     //! \brief renvoie le nom de l'utilisateur sous forme de string.
     string getName() const;
+    //! \brief renvoie le prénom de l'utilisateur sous forme de string.
+    string getSurname() const;
     //! \brief renvoie l'age de l'utilisateur.
     unsigned int getAge() const;
     //! \brief Modifie l'age de l'utilisateur.
@@ -49,9 +54,6 @@ public:
     unsigned int setAge(unsigned int u_Age);
     //! \brief test de régression de la classe utilisateur.
     void testRegression();
-    //! \brief Renvoie un temps de stationnement aléatoire en fonction de pourcentage de temps de stationnement.
-    float randomParkTime();
-    //! 
 };
 
 #endif
