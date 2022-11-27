@@ -537,6 +537,31 @@ int Affichage::AffichageGraphMenu()
             SDL_SetRenderDrawColor(renderer, 20, 20, 20, 100);
             SDL_RenderFillRect(renderer, &Button3Hover);
         }
+
+        //----------------------------------Boutton 4---------------------------------------------------------
+
+        // On affiche le boutton 4 de menu deroulant des graphiques (SuccesMoyen)
+        SDL_Rect Button4;
+        Button4.x = 5;
+        Button4.y = 165;
+        Button4.w = 200;
+        Button4.h = 40;
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawColor(renderer, 220, 220, 220, 200);
+        SDL_RenderFillRect(renderer, &Button4);
+        AfficherTexte(font_default, "SUCC MOY", "", 0, 15, 173, 0, 0, 0, 255);
+        // Hover sur le boutton
+        if (Xm > 5 && Xm < 205 && Ym > 165 && Ym < 205)
+        {
+            SDL_Rect Button4Hover;
+            Button4Hover.x = 5;
+            Button4Hover.y = 165;
+            Button4Hover.w = 200;
+            Button4Hover.h = 40;
+            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderDrawColor(renderer, 20, 20, 20, 100);
+            SDL_RenderFillRect(renderer, &Button4Hover);
+        }
     }
 
     if (XC > 470 && XC < 530 && YC > 60 && YC < 80)
@@ -763,6 +788,10 @@ void Affichage::AffichageSimulation()
                     {
                         environnement.makeGraph(2);
                     }
+                    else if (XC > 5 && XC < 205 && YC > 165 && YC < 205 && DisplayUnrolledMenu)
+                    {
+                        environnement.makeGraph(3);
+                    }
                 }
                 //--------------------------------------------------------------------------------------------------------
             }
@@ -803,8 +832,8 @@ void Affichage::AffichageSimulation()
                     DisplayGraphMenu = false;
             }
         }
-        else 
-        {   
+        else
+        {
             // Si on est plus en pause, on cache tout et remet a la position de base les boutons
             DisplayUserCard = false;
             DisplayParkingCard = false;

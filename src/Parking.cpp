@@ -119,6 +119,11 @@ const Vec2 &Parking::getPos() const
     return pos;
 }
 
+const double& Parking::getSuccessPourcentage() const
+{
+    return successPercentage;
+}
+
 // MUTATEURS
 void Parking::decrementNbAvailablePlaces()
 {
@@ -142,11 +147,13 @@ void Parking::setNbAvailablePlaces(int nb)
 void Parking::incrementNbAgreementsOnPrice()
 {
     nbAgreementsOnPrice++;
+    lastNbAgreements++;
 }
 
 void Parking::incrementNbFinishedConv()
 {
     nbFinishedConv++;
+    lastNbFinishedConv++;
 }
 
 void Parking::updateProfit(double aPrice, float parkTime)
@@ -158,16 +165,16 @@ void Parking::updateProfit(double aPrice, float parkTime)
 
 void Parking::updateSuccessPercentage()
 {
-    unsigned int lastNbFinishedConv = nbFinishedConv;
-    unsigned int lastNbAgreements = nbAgreementsOnPrice;
+
     if (nbFinishedConv > 0)
     {
-        successPercentage = (lastNbAgreements * 100 / lastNbFinishedConv);
+        successPercentageLastConv = (lastNbAgreements * 100 / lastNbFinishedConv);
+        successPercentage = nbAgreementsOnPrice * 100 / nbFinishedConv;
     }
     if (nbFinishedConv % 10 == 0)
     {
-        nbAgreementsOnPrice = 0;
-        nbFinishedConv = 0;
+        lastNbAgreements = 0;
+        lastNbFinishedConv = 0;
     }
 }
 
@@ -463,7 +470,7 @@ Message Parking::confirmConversation(Message *aMessage)
 
 void Parking::reconsiderPrices()
 {
-    if (successPercentage < 50)
+    if (successPercentageLastConv < 50)
     {
         bool limit = false;
         double reductionStartPrice = (50 - successPercentage) / 100 * startingPrice;
@@ -480,7 +487,7 @@ void Parking::reconsiderPrices()
         // cout << "Parking " << idP + 1 << " : startingPrice : " << startingPrice << endl;
         // cout << "Parking " << idP + 1 << " : minPrice : " << minPrice << endl;
     }
-    else if (successPercentage > 70)
+    else if (successPercentageLastConv > 70)
     {
         double augmentation = 1.2;
         setMinPrice(augmentation * minPrice);

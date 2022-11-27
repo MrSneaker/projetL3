@@ -38,12 +38,14 @@ private:
     float frameParkTime = 0.f;
     unsigned int prevtime = 0;
     unsigned int currentTime = 0;
-    float realTime;
+    float realTime = 0.f;
     float deltaTime = 0.f;
     float frametime = 0.f;
 
     // on veut gérer les convs dynamiquement
     vector<Conversation *> conv;
+
+    vector<pair<double,double>> dataAvgSuccessPourcent;
 
 public:
     string map[DimWindowX / tailleCase * DimWindowY / tailleCase];

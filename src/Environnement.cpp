@@ -262,7 +262,7 @@ void Environnement::initParkings()
 
     // Créer 3 parkings et les ajouter dans le tableau de parkings
     Parking p0(Vec2(1, 1), 3, 8, 44, 38, 0);   // p0
-    Parking p1(Vec2(57, 1), 3, 8, 44, 38, 1); // p1
+    Parking p1(Vec2(57, 1), 3, 8, 44, 38, 1);  // p1
     Parking p2(Vec2(1, 52), 3, 8, 100, 29, 2); // p2
     parkings.push_back(p0);
     parkings.push_back(p1);
@@ -384,8 +384,6 @@ void Environnement::AddVoiture()
     V.Exit = GetExit();
     V.setTargetPosition(GetPosbyNodeInd(V.Exit) + Vec2(5, 5));
 
-
-
     V.startTimer = frameParkTime;
     voitures.push_back(V); // Ajout de la voiture dans le tableau de voiture
 
@@ -495,6 +493,9 @@ void Environnement::updateStateCarParks()
         parkings[i].reconsiderPrices();
         parkings[i].addToData(realTime);
     }
+
+    double avgSuccessPourcent = (double)(parkings[0].getSuccessPourcentage() + parkings[1].getSuccessPourcentage() + parkings[2].getSuccessPourcentage()) / 3;
+    dataAvgSuccessPourcent.push_back(make_pair(realTime, avgSuccessPourcent));
 }
 
 // Boucle de jeu
@@ -509,7 +510,7 @@ void Environnement::Environnement_play()
     {
         // fonction de frametime
         deltaTime = (currentTime - prevtime) / 1000.f;
-        
+
         if (SpeedUp == true)
         {
             deltaTime *= 5;
@@ -664,7 +665,8 @@ void Environnement::changeTarget(Voiture &v, int indPr)
         Vec2 Placepos = parkings[indPr].getPlacesTab()[v.getPlace()].getPos();
         v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5));        // on place la cible au milieu de la place.
         parkings[indPr].getPlacesTab()[v.getPlace()].setIsReserved(true); // la place est réservée, pour pas qu'une autre voiture puisse y aller.
-        parkings[indPr].decrementNbAvailablePlaces();                     // on décrémente le nombre de places disponibles.
+        if (v.derement)
+            parkings[indPr].decrementNbAvailablePlaces(); // on décrémente le nombre de places disponibles.
         Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition()));
     }
     else
@@ -720,24 +722,34 @@ void Environnement::makeGraph(int choice)
     vector<double> tabMaxPlace;
     vector<double> tabMaxPrice;
     for (int i = 0; i < 3; i++)
-        tabMaxProfit.push_back(searchMaxInPair(parkings[i].getDataProfit()));
+        if (!parkings[i].getDataProfit().empty())
+            tabMaxProfit.push_back(searchMaxInPair(parkings[i].getDataProfit()));
 
-    for(int i = 0; i<3; i++)
-        tabMaxPlace.push_back(searchMaxInPair(parkings[i].getDataNbPlaceTaken()));
-    
-    for(int i = 0; i<3; i++)
-        tabMaxPrice.push_back(searchMaxInPair(parkings[i].getDataStartingPrice()));
-    
+    for (int i = 0; i < 3; i++)
+        if (!parkings[i].getDataNbPlaceTaken().empty())
+            tabMaxPlace.push_back(searchMaxInPair(parkings[i].getDataNbPlaceTaken()));
+
+    for (int i = 0; i < 3; i++)
+        if (!parkings[i].getDataStartingPrice().empty())
+            tabMaxPrice.push_back(searchMaxInPair(parkings[i].getDataStartingPrice()));
+
     switch (choice)
     {
     case 0:
-        Graph(parkings[0].getDataProfit(), parkings[1].getDataProfit(), parkings[2].getDataProfit(), "Profit parking ", 0, 0, realTime, searchMax(tabMaxProfit));
+        if (!tabMaxProfit.empty())
+            Graph(parkings[0].getDataProfit(), parkings[1].getDataProfit(), parkings[2].getDataProfit(), "Profit parking ", 0, 0, realTime, searchMax(tabMaxProfit));
         break;
     case 1:
-        Graph(parkings[0].getDataStartingPrice(), parkings[1].getDataStartingPrice(), parkings[2].getDataStartingPrice(), "Evolution prix de départ parking ", 0, 0, realTime, searchMax(tabMaxPrice));
+        if (!tabMaxPrice.empty())
+            Graph(parkings[0].getDataStartingPrice(), parkings[1].getDataStartingPrice(), parkings[2].getDataStartingPrice(), "Evolution prix de départ parking ", 0, 0, realTime, searchMax(tabMaxPrice));
         break;
     case 2:
-        Graph(parkings[0].getDataNbPlaceTaken(), parkings[1].getDataNbPlaceTaken(), parkings[2].getDataNbPlaceTaken(), "Nombres de places occupées parking ", 0, 0, realTime, searchMax(tabMaxPlace));
+        if (!tabMaxPlace.empty())
+            Graph(parkings[0].getDataNbPlaceTaken(), parkings[1].getDataNbPlaceTaken(), parkings[2].getDataNbPlaceTaken(), "Nombres de places occupées parking ", 0, 0, realTime, searchMax(tabMaxPlace));
+        break;
+    case 3:
+        if (!dataAvgSuccessPourcent.empty())
+            Graph(dataAvgSuccessPourcent, "Pourcentage de succes moyen", 0, 0, realTime, searchMaxInPair(dataAvgSuccessPourcent));
         break;
     default:
         break;
