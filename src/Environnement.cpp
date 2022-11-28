@@ -3,8 +3,7 @@
 using namespace std;
 
 int Environnement::random(int min, int max) // fonction permettant de renvoyer un nombre aléatoire
-                                            // négatif ou positif en fonction des bornes fournies en paramètres.
-{
+{                                           // négatif ou positif en fonction des bornes fournies en paramètres.
     int res;
     if (max - min == 0) // pour éviter les erreurs fatales du à un modulo 0.
         return EXIT_FAILURE;
@@ -361,10 +360,6 @@ void Environnement::getUser()
             int age = stoi(tokens[4]);
             float parkTime = stof(tokens[5]);
             savedConducteurs.push_back(Utilisateur(maxPrice, id, name, surname, age, parkTime)); // on ajoute le conducteur au tableau de conducteurs enregistrés
-            for (int i = 0; i < parkings.size(); i++)
-            {
-                parkings[i].addUsersTab(savedConducteurs.back());
-            }
             nbUserSaved++;
         }
 
@@ -552,9 +547,9 @@ void Environnement::initUser(bool quitif)
 
         int id = CreateRandomId(); // On crée un id aléatoire différent de ceux déjà utilisés
 
-        string name = getName();
+        string name = getName(); // On crée un nom aléatoire
 
-        string surname = getSurname();
+        string surname = getSurname(); // On crée un prénom aléatoire
 
         // TODO:
         //  On attribue à l'utilisateur (que l'on crée juste après) un entier initial aléatoire (entre 0 et 5)
@@ -583,28 +578,27 @@ void Environnement::initParkings()
     Parking p0(Vec2(1, 1), 3, 8, 44, 38, 0);   // p0
     Parking p1(Vec2(57, 1), 3, 8, 44, 38, 1);  // p1
     Parking p2(Vec2(1, 52), 3, 8, 100, 29, 2); // p2
+
     parkings.push_back(p0);
     parkings.push_back(p1);
     parkings.push_back(p2);
-    for (int i = 0; i < parkings.size(); i++)
-    {
-        for (int j = 0; j < SimuConducteurs.size(); j++)
-            parkings[i].addUsersTab(SimuConducteurs[j]);
-    }
 }
 
 int Environnement::getPlaceInd(int parkingInd)
 {
-    // retourne l'indice d'une place aléatoirement entre les places disponibles du parking
-    // sauf si place déjà prise
+    // retourne l'indice d'une place aléatoirement entre les places disponibles du parking (recursive)
     int ind = random(0, parkings[parkingInd].getNbPlaces());
-
+    // si la place n'est pas reservée donc pas prise
     if (parkings[parkingInd].getPlacesTab()[ind].getIsReserved() == false)
+    {
         return ind;
+    }
+    // sinon si le parkings n'a plus de place disponible
+    else if (parkings[parkingInd].getNbAvailablePlaces() == 0 && !parkings[parkingInd].IsFull())
+        return -1;
+    // sinon on rappelle la fonction
     else
         getPlaceInd(parkingInd);
-    if (parkings[parkingInd].getNbAvailablePlaces() == 0 && !parkings[parkingInd].IsFull())
-        return -1;
 }
 
 const int Environnement::GetEntry()
@@ -653,6 +647,10 @@ void Environnement::AddVoiture()
 {
     initUser(false);
     Voiture V(conducteurs[conducteurs.size() - 1]);
+    for (int i = 0; i < parkings.size(); i++)
+    {
+        parkings[i].addUsersTab(conducteurs[conducteurs.size() - 1]);
+    }
     V.indice = voitures.size();
 
     int Entry = GetEntry();
@@ -667,18 +665,12 @@ void Environnement::AddVoiture()
     voitures.push_back(V); // Ajout de la voiture dans le tableau de voiture
 
     Astar(voitures.back(), Entry, GetNodeIndbyPos(voitures.back().getTargetPosition())); // on lance l'algorithme A* pour trouver le chemin
-
-    voitures.back().dejaspawn = true;
-    for (int i = 0; i < parkings.size(); i++)
-    {
-        parkings[i].addUsersTab(conducteurs[conducteurs.size() - 1]);
-    }
 }
 
 void Environnement::RemoveVoiture(int numVoiture)
 {
     // Supprime la voiture du tableau de voiture
-    voitures.erase(voitures.begin() + numVoiture);
+    voitures.erase(voitures.begin() + numVoiture);       // On supprime la voiture du tableau
     voitures.shrink_to_fit();                            // On réduit la taille du tableau de voiture
     conducteurs.erase(conducteurs.begin() + numVoiture); // On supprime l'utilisateur du tableau des conducteurs
     conducteurs.shrink_to_fit();                         // On réduit la taille du tableau des conducteurs
@@ -727,10 +719,11 @@ void Environnement::updateStateVoiture()
             {
                 voitures[i].setIs_parked(true);
                 parkings[parkingInd].getPlacesTab()[placeInd].setIsTaken(true); // on met à jour l'état de la place
+                // parkings[parkingInd].getPlacesTab()[placeInd].setIsReserved(true); // on met à jour l'état de la place
+
                 if (voitures[i].derement == true)
                 {
                     voitures[i].startTimer = frameParkTime;
-                    // cout << "Parking : " << voitures[i].getParking() << " Nb place libre : " << parkings[voitures[i].getParking()].getNbAvailablePlaces() << endl;
                     voitures[i].derement = false;
                 }
 
@@ -738,12 +731,16 @@ void Environnement::updateStateVoiture()
             }
             else
             {
-                parkings[parkingInd].getPlacesTab()[placeInd].setIsTaken(false); // on met à jour l'état de la place
-                voitures[i].setIs_parked(false);
+
+                // si la voiture quitte la place
                 if (voitures[i].derement == false)
                 {
-                    parkings[parkingInd].incrementNbAvailablePlaces();
-                    voitures[i].derement = true;
+                    voitures[i].startTimer = 0;
+                    parkings[parkingInd].getPlacesTab()[placeInd].setIsTaken(false);    // on met à jour l'état de la place
+                    parkings[parkingInd].getPlacesTab()[placeInd].setIsReserved(false); // on met à jour l'état de la place
+                    voitures[i].setIs_parked(false);                                    // on met à jour l'état de la voiture
+                    parkings[parkingInd].incrementNbAvailablePlaces();                  // on incrémente le nombre de place disponible
+                    voitures[i].derement = true;                                        // on met à jour le booléen
                 }
             }
         }
@@ -770,9 +767,9 @@ void Environnement::updateStateCarParks()
     // On parcourt le tableau de Parkings
     for (int i = 0; i < parkings.size(); i++)
     {
-        parkings[i].updateSuccessPercentage();
-        parkings[i].reconsiderPrices();
-        parkings[i].addToData(realTime);
+        parkings[i].updateSuccessPercentage(); // On met à jour le pourcentage de succès du parking
+        parkings[i].reconsiderPrices();        // On met à jour le prix des places
+        parkings[i].addToData(realTime);       // On ajoute les données du parking dans le tableau de données
     }
 
     double avgSuccessPourcent = (double)(parkings[0].getSuccessPourcentage() + parkings[1].getSuccessPourcentage() + parkings[2].getSuccessPourcentage()) / 3;
@@ -812,7 +809,6 @@ void Environnement::Environnement_play()
 
         for (int i = 0; i < voitures.size(); i++)
         {
-
             if (voitures[i].getIs_parked() == true && (frameParkTime - voitures[i].startTimer) >= voitures[i].User.getParkTime() * 10 && voitures[i].ChangeTrajToExit == false)
             {
                 // la voiture sort du parking
@@ -822,22 +818,14 @@ void Environnement::Environnement_play()
                 Astar(voitures[i], GetNodeIndbyPos(voitures[i].get_position()), voitures[i].Exit);
                 voitures[i].ChangeTrajToExit = true;
             }
-            if (voitures[i].getpathTab().size() == 0 && voitures[i].getIs_parked() == false && voitures[i].isMoving == false)
-            {
-                cout << "Erreur : La voiture " << i << " n'a pas de trajet" << endl;
-                voitures[i].exist = false;
-                RemoveVoiture(i);
-                break;
-            }
             if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit)
             {
-                voitures[i].exist = false;
-                savedConducteurs.push_back(voitures[i].User);
+                savedConducteurs.push_back(voitures[i].User); // on sauvegarde le conducteur pour qu'il puisse être réutilisé
                 RemoveVoiture(i);
                 break;
             }
 
-            if (voitures[i].getNbFinishedConv() < 1 && voitures[i].exist)
+            if (voitures[i].getNbFinishedConv() < 1)
             {
                 conversation(voitures[i]);
                 voitures[i].incrementNbFinishedConv();
@@ -850,11 +838,10 @@ void Environnement::Environnement_play()
                 changeTarget(voitures[i], voitures[i].getParking());
                 aConversationHasEnded = true;
             }
-            if (voitures[i].exist)
-                voitures[i].MoveToTargetPosition();
+
+            voitures[i].MoveToTargetPosition();
         }
     }
-
     updateStateVoiture();
 
     if (aConversationHasEnded)
@@ -944,11 +931,11 @@ void Environnement::changeTarget(Voiture &v, int indPr)
 {
     if (indPr != -1 && parkings[indPr].IsFull() == false)
     {
-        v.setParking(indPr);
-        v.setPlace(getPlaceInd(indPr));
-        Vec2 Placepos = parkings[indPr].getPlacesTab()[v.getPlace()].getPos();
-        v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5));        // on place la cible au milieu de la place.
-        parkings[indPr].getPlacesTab()[v.getPlace()].setIsReserved(true); // la place est réservée, pour pas qu'une autre voiture puisse y aller.
+        v.setParking(indPr);                                                   // on change la cible de la voiture
+        v.setPlace(getPlaceInd(indPr));                                        // on set la place dans voiture
+        Vec2 Placepos = parkings[indPr].getPlacesTab()[v.getPlace()].getPos(); // on récupère la position de la place
+        v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5));             // on place la cible au milieu de la place.
+        parkings[indPr].getPlacesTab()[v.getPlace()].setIsReserved(true);      // la place est réservée, pour pas qu'une autre voiture puisse y aller.
         if (v.derement)
             parkings[indPr].decrementNbAvailablePlaces(); // on décrémente le nombre de places disponibles.
         Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition()));
@@ -1010,7 +997,6 @@ void Environnement::makeGraph(int choice)
         if (!parkings[i].getDataProfit().empty())
         {
             tabMaxProfit.push_back(searchMaxInPair(parkings[i].getDataProfit()));
-            cout << parkings[i].getProfit() << endl;
         }
 
     for (int i = 0; i < 3; i++)

@@ -119,7 +119,7 @@ const Vec2 &Parking::getPos() const
     return pos;
 }
 
-const double& Parking::getSuccessPourcentage() const
+const double &Parking::getSuccessPourcentage() const
 {
     return successPercentage;
 }
@@ -158,13 +158,13 @@ void Parking::incrementNbFinishedConv()
 void Parking::updateProfit(double aPrice, float parkTime)
 {
     float realParkTime = (parkTime * 10);
-    cout<<"parTime : "<<parkTime<<endl;
-    cout<<"realParkTime : "<<realParkTime<<endl;
-    double nbMinutesParked = (double) (realParkTime / 60);
-    cout<<"aPrice : "<<aPrice<<endl;
-    cout<<"nbMinutes : "<<nbMinutesParked<<endl;
+    // cout<<"parTime : "<<parkTime<<endl;
+    // cout<<"realParkTime : "<<realParkTime<<endl;
+    double nbMinutesParked = (double)(realParkTime / 60);
+    // cout<<"aPrice : "<<aPrice<<endl;
+    // cout<<"nbMinutes : "<<nbMinutesParked<<endl;
     profit += (aPrice * nbMinutesParked);
-    cout<<profit<<endl;
+    // cout<<profit<<endl;
 }
 
 void Parking::updateSuccessPercentage()
@@ -195,6 +195,7 @@ void Parking::setStartingPrice(float startPrice)
 
 void Parking::addUsersTab(Utilisateur unUtilisateur)
 {
+
     bool addOk = false; // on initialise un bool sur false, bool qui définit si on ajoute ou non l'utilisateur.
     if (usersTab.size() == 0)
     {
@@ -505,18 +506,20 @@ void Parking::reconsiderPrices()
 
 int Parking::extractIntFromString(string aString) const
 {
-    const char *charString = aString.c_str();
+    const char *charString = aString.c_str(); // On convertit la string en char*
+    string anIntTmp;
     int anInt;
     while (*charString)
     {
+        // On avance dans la string jusqu'à trouver le premier chiffre
         if ((*charString >= '0') && (*charString <= '9'))
-
         {
-            anInt = atoi(charString);
+            // On convertit le char* en int
+            anIntTmp += *charString;
         }
-
         charString++;
     }
+    anInt = stoi(anIntTmp);
     return anInt;
 }
 
@@ -540,8 +543,8 @@ void Parking::testRegression()
     cout << "Etat de la place 1 : " << p1.getPlacesTab()[0].getIsTaken() << endl;
     assert(p1.getPlacesTab()[0].getIsTaken() == p1.placesTab[0].getIsTaken());
 
-    Utilisateur u1(2.5, 1, "paulo-1"," pilo", 20, 2); 
-    Utilisateur u2(2.5, 2, "paulo-2"," pilo", 20, 2);
+    Utilisateur u1(2.5, 1, "paulo-1", " pilo", 20, 2);
+    Utilisateur u2(2.5, 2, "paulo-2", " pilo", 20, 2);
     p1.addUsersTab(u1);
     p1.addUsersTab(u2);
     p1.addUsersTab(u1);

@@ -83,7 +83,8 @@ void Conversation::updateStateCarParkAfterConv(Parking &p)
         {
             p.incrementNbAgreementsOnPrice();
             float parkTime = 0;
-            unsigned int idU = p.extractIntFromString(lastMessageOfConv.getSender());
+            unsigned int idU = p.extractIntFromString(lastMessageOfConv.getRecipient());
+
             for (int i = 0; i < p.getUsersTab().size(); i++)
             {
                 if (p.getUsersTab()[i].second.getId() == idU)
@@ -193,7 +194,7 @@ bool Conversation::stockConv(const string &fileName)
 void Conversation::testRegression()
 {
     Conversation c, c1, c2;
-    Utilisateur u(3.5, 14, "paulo-test", "test", 5,2);
+    Utilisateur u(3.5, 14, "paulo-test", "test", 5, 2);
     Utilisateur u1(6, 15, "paulo-test2", "test2", 6, 2);
     Utilisateur u2(2, 16, "paulo-test3", "test3", 7, 2);
     Parking p({10, 10}, 3, 4, 10, 10, 4);

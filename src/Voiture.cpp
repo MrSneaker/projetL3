@@ -13,7 +13,7 @@ Voiture::Voiture(Utilisateur U)
 {
     position = Vec2(0, 0);
     TargetPosition = Vec2(0, 0);
-    speed = 2;
+    speed = 5;
     Is_in = false;
     Is_parked = false;
     Is_pathfind = false;
