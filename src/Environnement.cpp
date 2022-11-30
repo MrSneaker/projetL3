@@ -29,6 +29,7 @@ Environnement::Environnement()
 bool Environnement::checkId(int id, string filename)
 {
     vector<int> doublons;
+    bool ret;
     ifstream fichier("data/User.txt", ios::in);
     if (fichier)
     {
@@ -57,17 +58,18 @@ bool Environnement::checkId(int id, string filename)
                 if (doublons[i] == doublons[j])
                 {
                     doubleUser.push_back(doublons[i]);
-                    return false;
+                    ret = false;
                 }
             }
         }
 
-        return true;
+        ret = true;
     }
     else
     {
         cerr << "Impossible d'ouvrir le fichier !" << endl;
     }
+    return ret;
 }
 
 Environnement::~Environnement()
@@ -588,17 +590,19 @@ int Environnement::getPlaceInd(int parkingInd)
 {
     // retourne l'indice d'une place aléatoirement entre les places disponibles du parking (recursive)
     int ind = random(0, parkings[parkingInd].getNbPlaces());
+    int ret;
     // si la place n'est pas reservée donc pas prise
     if (parkings[parkingInd].getPlacesTab()[ind].getIsReserved() == false)
     {
-        return ind;
+        ret = ind;
     }
     // sinon si le parkings n'a plus de place disponible
     else if (parkings[parkingInd].getNbAvailablePlaces() == 0 && !parkings[parkingInd].IsFull())
-        return -1;
+        ret = -1;
     // sinon on rappelle la fonction
     else
         getPlaceInd(parkingInd);
+    return ret;
 }
 
 const int Environnement::GetEntry()
@@ -687,30 +691,27 @@ void Environnement::updateStateVoiture()
         bool isInPlace = false; // booléen qui permet de savoir si la voiture est dans une place ou non
         int parkingInd = voitures[i].getParking();
         int placeInd = voitures[i].getPlace();
-
         int VoiturePosX = voitures[i].get_position().x;            // Position de la voiture en x
         int VoiturePosY = voitures[i].get_position().y;            // Position de la voiture en y
         int TargetParkPosX = parkings[parkingInd].getPos().x * 10; // Position de la parking en x
         int TargetParkPosY = parkings[parkingInd].getPos().y * 10; // Position du parking en y
-
         // Si la voiture est dans l'enceinte du parking
-        if (VoiturePosX >= TargetParkPosX && VoiturePosX <= TargetParkPosX + parkings[parkingInd].getDIMX() * 10 && VoiturePosY >= TargetParkPosY && VoiturePosY <= TargetParkPosY + parkings[parkingInd].getDIMY() * 10)
-        {
-
-            // cout << "Voiture " << i << " est dans le parking " << j << endl;
-            inParking = true;                                                                    // La voiture est dans un parking
-            int TargetPlacePosX = parkings[parkingInd].getPlacesTab()[placeInd].getPos().x * 10; // Position de la place en x
-            int TargetPlacePosY = parkings[parkingInd].getPlacesTab()[placeInd].getPos().y * 10; // Position de la place en y
-
-            // Si la voiture est dans l'enceinte de la place
-            if (VoiturePosX >= TargetPlacePosX && VoiturePosX <= TargetPlacePosX + 10 && VoiturePosY >= TargetPlacePosY && VoiturePosY <= TargetPlacePosY + 20)
+        if (parkingInd != -1)
+            if (VoiturePosX >= TargetParkPosX && VoiturePosX <= TargetParkPosX + parkings[parkingInd].getDIMX() * 10 && VoiturePosY >= TargetParkPosY && VoiturePosY <= TargetParkPosY + parkings[parkingInd].getDIMY() * 10)
             {
+                inParking = true;                                                                    // La voiture est dans un parking
+                int TargetPlacePosX = parkings[parkingInd].getPlacesTab()[placeInd].getPos().x * 10; // Position de la place en x
+                int TargetPlacePosY = parkings[parkingInd].getPlacesTab()[placeInd].getPos().y * 10; // Position de la place en y
+                // Si la voiture est dans l'enceinte de la place
+                if (VoiturePosX >= TargetPlacePosX && VoiturePosX <= TargetPlacePosX + 10 && VoiturePosY >= TargetPlacePosY && VoiturePosY <= TargetPlacePosY + 20)
+                {
 
-                isInPlace = true; // La voiture est dans une place
-            }
-            else
-                isInPlace = false; // La voiture n'est pas dans une place
-        }
+                    isInPlace = true; // La voiture est dans une place
+                }
+                else
+                    isInPlace = false; // La voiture n'est pas dans une place
+
+            }      
 
         if (inParking)
         {
@@ -818,14 +819,14 @@ void Environnement::Environnement_play()
                 Astar(voitures[i], GetNodeIndbyPos(voitures[i].get_position()), voitures[i].Exit);
                 voitures[i].ChangeTrajToExit = true;
             }
-            if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit)
+            else if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit)
             {
                 savedConducteurs.push_back(voitures[i].User); // on sauvegarde le conducteur pour qu'il puisse être réutilisé
                 RemoveVoiture(i);
                 break;
             }
 
-            if (voitures[i].getNbFinishedConv() < 1)
+            else if (voitures[i].getNbFinishedConv() < 1)
             {
                 conversation(voitures[i]);
                 voitures[i].incrementNbFinishedConv();
@@ -834,18 +835,18 @@ void Environnement::Environnement_play()
                 {
                     parkings[j].incrementNbFinishedConv();
                 }
-
                 changeTarget(voitures[i], voitures[i].getParking());
                 aConversationHasEnded = true;
             }
-
             voitures[i].MoveToTargetPosition();
         }
     }
     updateStateVoiture();
 
     if (aConversationHasEnded)
+    {
         updateStateCarParks();
+    }
 }
 
 void Environnement::getMap()

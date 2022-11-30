@@ -51,7 +51,7 @@ public:
     unsigned int getAge() const;
     //! \brief Modifie l'age de l'utilisateur.
     //! \param u_Age age de l'utilisateur.
-    unsigned int setAge(unsigned int u_Age);
+    void setAge(unsigned int u_Age);
     //! \brief test de régression de la classe utilisateur.
     void testRegression();
 };
