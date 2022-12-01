@@ -17,8 +17,6 @@ Utilisateur::~Utilisateur()
 {
 }
 
-
-
 Utilisateur::Utilisateur(double u_maxPrice, unsigned int u_id, string u_name, string u_surname, unsigned int u_Age, float u_parkTime)
 {
     maxPrice = u_maxPrice;
@@ -27,6 +25,7 @@ Utilisateur::Utilisateur(double u_maxPrice, unsigned int u_id, string u_name, st
     surname = u_surname;
     Age = u_Age;
     ParkTime = u_parkTime;
+    AlreadySpawned = false;
 }
 
 double Utilisateur::getMaxPrice() const
@@ -34,7 +33,7 @@ double Utilisateur::getMaxPrice() const
     return maxPrice;
 }
 
-const unsigned int& Utilisateur::getId() const
+const unsigned int &Utilisateur::getId() const
 {
     return id;
 }
@@ -54,18 +53,15 @@ unsigned int Utilisateur::getAge() const
     return Age;
 }
 
-
 void Utilisateur::setAge(unsigned int u_Age)
 {
     Age = u_Age;
 }
 
-
 float Utilisateur::getParkTime() const
 {
     return ParkTime;
 }
-
 
 void Utilisateur::setParkTime(float u_ParkTime)
 {
@@ -87,10 +83,10 @@ void Utilisateur::testRegression()
     assert(u1.ParkTime == 0);
     cout << "Test du constructeur par défaut OK" << endl;
 
-    //test constructeur avec parametre
+    // test constructeur avec parametre
     cout << "Test constructeur avec parametre + setParkTime()" << endl;
     float parktime = 1.5;
-    Utilisateur u2(2.54,34,"Zidane", "Zinedine", 45, 2);
+    Utilisateur u2(2.54, 34, "Zidane", "Zinedine", 45, 2);
     u2.setParkTime(parktime);
     assert(u2.id == 34);
     assert(u2.maxPrice == 2.54);
@@ -98,7 +94,6 @@ void Utilisateur::testRegression()
     assert(u2.ParkTime == parktime);
     cout << "Test constructeur avec parametre OK" << endl;
 
-    Utilisateur u3(2,37,"Michel", "Dupont", 25, 2);
-    cout<<u3.getParkTime()<<endl;
-    
+    Utilisateur u3(2, 37, "Michel", "Dupont", 25, 2);
+    cout << u3.getParkTime() << endl;
 }

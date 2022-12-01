@@ -179,6 +179,7 @@ bool Conversation::stockConv(const string &fileName, unsigned int nbConv)
                 stockFile << "-----------------------------------------------------" << endl;
             }
             // on retourne vrai quand on fini de tout écrire.
+            stockFile.close();
             return true;
         }
         // sinon on retourne false.

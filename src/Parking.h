@@ -7,6 +7,7 @@
 #include <vector>
 #include <math.h>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -113,10 +114,6 @@ private:
     // (fonction membre reconsiderPrices).
 
     double profit;
-
-    vector<pair<double, double>> dataProfit;
-    vector<pair<double, double>> dataStartingPrice;
-    vector<pair<double, double>> dataNbPlaceTaken;
 
     unsigned int nbFinishedConv;
     // - Nombre de négociations effectuées par le parking depuis le début de la simulation.

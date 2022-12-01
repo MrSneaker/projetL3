@@ -56,7 +56,7 @@ private:
     vector<string> f_NameList;
     vector<string> SurnameList;
 
-    vector<pair<double,double>> dataAvgSuccessPourcent;
+   
 
 public:
     string map[DimWindowX / tailleCase * DimWindowY / tailleCase];
@@ -94,6 +94,8 @@ public:
     const int GetEntry();
 
     const int GetExit();
+
+    vector<pair<double,double>> getDataFromFile(string fileName) const;
 
     //! \brief Fonction horloge
     void ClockTime();

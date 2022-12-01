@@ -19,12 +19,9 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     profit = 0;
     nbFinishedConv = 0;
     nbAgreementsOnPrice = 0;
+    lastNbAgreements = 0;
+    lastNbFinishedConv = 0;
     initPlace(position.x + 1, position.y + 1);
-}
-
-Parking::Parking()
-{
-    cout<<"on entre dans le construceur par defaut";
 }
 
 Parking::~Parking()
@@ -61,21 +58,6 @@ int Parking::getStartingPrice() const
 const double &Parking::getProfit() const
 {
     return profit;
-}
-
-const vector<pair<double, double>> &Parking::getDataProfit() const
-{
-    return dataProfit;
-}
-
-const vector<pair<double, double>> &Parking::getDataStartingPrice() const
-{
-    return dataStartingPrice;
-}
-
-const vector<pair<double, double>> &Parking::getDataNbPlaceTaken() const
-{
-    return dataNbPlaceTaken;
 }
 
 const int &Parking::getDIMX() const
@@ -222,9 +204,30 @@ void Parking::addUsersTab(Utilisateur unUtilisateur)
 
 void Parking::addToData(double currentTime)
 {
-    dataProfit.push_back(make_pair(currentTime, profit));
-    dataStartingPrice.push_back(make_pair(currentTime, startingPrice));
-    dataNbPlaceTaken.push_back(make_pair(currentTime, (nbPlaces - nbAvailablePlaces)));
+    ofstream dataProfit("data/dataProfit" + to_string(idP) + ".txt", ios::app);
+    ofstream dataStartingPrice("data/dataStartingPrice" + to_string(idP) + ".txt", ios::app);
+    ofstream dataNbPlaceTaken("data/dataNbPlaceTaken" + to_string(idP) + ".txt", ios::app);
+    if (dataProfit)
+    {
+        dataProfit << currentTime << endl;
+        dataProfit << profit << endl;
+    }
+
+    if (dataStartingPrice)
+    {
+        dataStartingPrice << currentTime << endl;
+        dataStartingPrice << startingPrice << endl;
+    }
+
+    if (dataProfit)
+    {
+        dataNbPlaceTaken << currentTime << endl;
+        dataNbPlaceTaken << (nbPlaces - nbAvailablePlaces) << endl;
+    }
+
+    dataProfit.close();
+    dataNbPlaceTaken.close();
+    dataStartingPrice.close();
 }
 
 void Parking::incrementNbTotalVisits()
@@ -500,7 +503,8 @@ void Parking::reconsiderPrices()
         unsigned int nbPlacesTaken = (nbPlaces - nbAvailablePlaces);
         if (nbPlacesTaken != 0)
             augNbPlDependance = (((double)(nbPlacesTaken * 100 / nbPlaces) + 1) / 100);
-        else augNbPlDependance = 1;
+        else
+            augNbPlDependance = 1;
 
         double augmentation = 1.5 + augNbPlDependance;
         if (minPrice < 7)

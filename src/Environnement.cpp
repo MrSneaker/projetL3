@@ -360,7 +360,7 @@ void Environnement::getUser()
             int id = stoi(tokens[0]);
             string name = tokens[1];
             string surname = tokens[2];
-            float maxPrice = stof(tokens[3]);
+            double maxPrice = stod(tokens[3]);
             int age = stoi(tokens[4]);
             float parkTime = stof(tokens[5]);
             savedConducteurs.push_back(Utilisateur(maxPrice, id, name, surname, age, parkTime)); // on ajoute le conducteur au tableau de conducteurs enregistrés
@@ -547,7 +547,7 @@ void Environnement::initUser(bool quitif)
     // Si tout les conducteurs enregistés ont été créer ou qu'il n'y a pas encore de conducteurs enregistrés
     else
     {
-        double price = (double)(random(20, 60) / 10); // on simule des floats en divisants par 10.
+        double price = (double)(random(40, 100) / 10); // on simule des floats en divisants par 10.
 
         int id = CreateRandomId(); // On crée un id aléatoire différent de ceux déjà utilisés
 
@@ -787,7 +787,13 @@ void Environnement::updateStateCarParks()
     }
 
     double avgSuccessPourcent = (double)(parkings[0].getSuccessPourcentage() + parkings[1].getSuccessPourcentage() + parkings[2].getSuccessPourcentage()) / 3;
-    dataAvgSuccessPourcent.push_back(make_pair(realTime, avgSuccessPourcent));
+    ofstream dataAvgSuccessPourcent("data/dataAvgSuccessPourcent.txt", ios::app);
+    if (dataAvgSuccessPourcent)
+    {
+        dataAvgSuccessPourcent << realTime << endl;
+        dataAvgSuccessPourcent << avgSuccessPourcent << endl;
+    }
+    dataAvgSuccessPourcent.close();
 }
 
 // Boucle de jeu
@@ -883,6 +889,24 @@ void Environnement::getMap()
     }
 }
 
+vector<pair<double, double>> Environnement::getDataFromFile(string fileName) const
+{
+    ifstream file(fileName);
+    string line1, line2;
+    vector<pair<double, double>> data;
+    if (file)
+    {
+        while (getline(file, line1))
+        {
+            double d1 = stod(line1);
+            getline(file, line2);
+            double d2 = stod(line2);
+            data.push_back(std::make_pair(d1, d2));
+        }
+    }
+    return data;
+}
+
 int Environnement::createConv()
 {
     Conversation *newConv = new Conversation;
@@ -894,6 +918,7 @@ void Environnement::deleteConv(int ind)
 {
     delete conv.at(ind);
     conv.erase(conv.begin() + ind);
+    conv.shrink_to_fit();
 }
 
 void Environnement::conversation(Voiture &v)
@@ -945,6 +970,7 @@ int Environnement::chosenPark(vector<Conversation *> c, Voiture v)
     }
     else
         idBest = -1;
+    tabPrice.clear();
     return idBest;
 }
 
@@ -952,30 +978,19 @@ void Environnement::changeTarget(Voiture &v, int indPr)
 {
     if (indPr != -1 && parkings[indPr].IsFull() == false)
     {
-        // cout<<"1.1"<<endl;
         v.setParking(indPr);
-        // cout<<"1.2"<<endl;                                                   // on change la cible de la voiture
-        v.setPlace(getPlaceInd(indPr)); // on set la place dans voiture
-        // cout<<"1.3"<<endl;
-        cout << "place pos" << parkings[indPr].getPlacesTab()[v.getPlace()].getPos().x << " - " << parkings[indPr].getPlacesTab()[v.getPlace()].getPos().y << endl;
+        v.setPlace(getPlaceInd(indPr));                                        // on set la place dans voiture
         Vec2 Placepos = parkings[indPr].getPlacesTab()[v.getPlace()].getPos(); // on récupère la position de la place
-        // cout<<"1.4"<<endl;
-        v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place.
-        // cout<<"1.5"<<endl;
-        parkings[indPr].getPlacesTab()[v.getPlace()].setIsReserved(true); // la place est réservée, pour pas qu'une autre voiture puisse y aller.
-        // cout<<"1.6"<<endl;
+        v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5));             // on place la cible au milieu de la place.
+        parkings[indPr].getPlacesTab()[v.getPlace()].setIsReserved(true);      // la place est réservée, pour pas qu'une autre voiture puisse y aller.
         if (v.derement)
-            parkings[indPr].decrementNbAvailablePlaces(); // on décrémente le nombre de places disponibles.
-        Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition()));
-        // cout<<"1.7"<<endl;
+            parkings[indPr].decrementNbAvailablePlaces();                                    // on décrémente le nombre de places disponibles.
+        Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition())); // on change la cible de la voiture
     }
     else
     {
-        // cout<<"2.1"<<endl;
         v.Exit = GetExit();
-        // cout<<"2.2"<<endl;
         Astar(v, GetNodeIndbyPos(v.get_position()), v.Exit);
-        // cout<<"2.3"<<endl;
         v.ChangeTrajToExit = true;
     }
 }
@@ -984,7 +999,19 @@ void Environnement::removeLogs()
 {
     ofstream file("data/logs/rmLogs");
     if (std::filesystem::exists("data/logs/rmLogs"))
+    {
         system("rm data/logs/*");
+        system("rm data/dataAvgSuccessPourcent.txt");
+        system("rm data/dataNbPlaceTaken0.txt");
+        system("rm data/dataNbPlaceTaken1.txt");
+        system("rm data/dataNbPlaceTaken2.txt");
+        system("rm data/dataProfit0.txt");
+        system("rm data/dataProfit1.txt");
+        system("rm data/dataProfit2.txt");
+        system("rm data/dataStartingPrice0.txt");
+        system("rm data/dataStartingPrice1.txt");
+        system("rm data/dataStartingPrice2.txt");
+    }
 }
 
 double Environnement::searchMaxInPair(vector<pair<double, double>> tab)
@@ -1021,46 +1048,52 @@ double Environnement::searchMax(vector<double> tab)
 
 void Environnement::makeGraph(int choice)
 {
-
+    vector<vector<pair<double, double>>> dataTab;
     vector<double> tabMaxProfit;
     vector<double> tabMaxPlace;
     vector<double> tabMaxPrice;
     for (int i = 0; i < 3; i++)
-        if (!parkings[i].getDataProfit().empty())
-        {
-            tabMaxProfit.push_back(searchMaxInPair(parkings[i].getDataProfit()));
-        }
+        if (!getDataFromFile("data/dataProfit" + to_string(i) + ".txt").empty())
+            tabMaxProfit.push_back(searchMaxInPair(getDataFromFile("data/dataProfit" + to_string(i) + ".txt")));
 
     for (int i = 0; i < 3; i++)
-        if (!parkings[i].getDataNbPlaceTaken().empty())
-            tabMaxPlace.push_back(searchMaxInPair(parkings[i].getDataNbPlaceTaken()));
+        if (!getDataFromFile("data/dataNbPlaceTaken" + to_string(i) + ".txt").empty())
+            tabMaxPlace.push_back(searchMaxInPair(getDataFromFile("data/dataNbPlaceTaken" + to_string(i) + ".txt")));
 
     for (int i = 0; i < 3; i++)
-        if (!parkings[i].getDataStartingPrice().empty())
-            tabMaxPrice.push_back(searchMaxInPair(parkings[i].getDataStartingPrice()));
+        if (!getDataFromFile("data/dataStartingPrice" + to_string(i) + ".txt").empty())
+            tabMaxPrice.push_back(searchMaxInPair(getDataFromFile("data/dataStartingPrice" + to_string(i) + ".txt")));
 
     switch (choice)
     {
     case 0:
-        cout << searchMax(tabMaxProfit) << endl;
+        for (int i = 0; i < 3; i++)
+            dataTab.push_back(getDataFromFile("data/dataProfit" + to_string(i) + ".txt"));
         if (!tabMaxProfit.empty())
-            Graph(parkings[0].getDataProfit(), parkings[1].getDataProfit(), parkings[2].getDataProfit(), "Profit parking ", 0, 0, realTime, searchMax(tabMaxProfit));
+            Graph(dataTab[0], dataTab[1], dataTab[2], "Profit parking ", 0, 0, realTime, searchMax(tabMaxProfit)+1);
         break;
     case 1:
+        for (int i = 0; i < 3; i++)
+            dataTab.push_back(getDataFromFile("data/dataStartingPrice" + to_string(i) + ".txt"));
         if (!tabMaxPrice.empty())
-            Graph(parkings[0].getDataStartingPrice(), parkings[1].getDataStartingPrice(), parkings[2].getDataStartingPrice(), "Evolution prix de départ parking ", 0, 0, realTime, searchMax(tabMaxPrice));
+            Graph(dataTab[0], dataTab[1], dataTab[2], "Evolution prix de départ parking ", 0, 0, realTime, searchMax(tabMaxPrice)+1);
         break;
     case 2:
+        for (int i = 0; i < 3; i++)
+            dataTab.push_back(getDataFromFile("data/dataNbPlaceTaken" + to_string(i) + ".txt"));
         if (!tabMaxPlace.empty())
-            Graph(parkings[0].getDataNbPlaceTaken(), parkings[1].getDataNbPlaceTaken(), parkings[2].getDataNbPlaceTaken(), "Nombres de places occupées parking ", 0, 0, realTime, searchMax(tabMaxPlace));
+            Graph(dataTab[0], dataTab[1], dataTab[2], "Nombres de places occupées parking ", 0, 0, realTime, searchMax(tabMaxPlace)+1);
         break;
     case 3:
-        if (!dataAvgSuccessPourcent.empty())
-            Graph(dataAvgSuccessPourcent, "Pourcentage de succes moyen", 0, 0, realTime, searchMaxInPair(dataAvgSuccessPourcent));
+        Graph(getDataFromFile("data/dataAvgSuccessPourcent.txt"), "Pourcentage de succes moyen", 0, 0, realTime, searchMaxInPair(getDataFromFile("data/dataAvgSuccessPourcent.txt"))+1);
         break;
     default:
         break;
     }
+    dataTab.clear();
+    tabMaxProfit.clear();
+    tabMaxPlace.clear();
+    tabMaxPrice.clear();
 }
 
 void Environnement::test_regresion()
