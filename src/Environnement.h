@@ -44,6 +44,8 @@ private:
 
     // on veut gérer les convs dynamiquement
     vector<Conversation *> conv;
+    unsigned int nbConv; 
+
     vector<Utilisateur> SimuConducteurs; // liste des conducteurs qui sont utilisés dans la simulation
     vector<Utilisateur> tmpsavedConducteurs; // liste des conducteurs qui seront enregistrés à la fin de la simulation
     vector<Utilisateur> savedConducteurs; // liste des conducteurs enregistrés dans le fichier

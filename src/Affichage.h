@@ -108,7 +108,7 @@ class Affichage{
         Affichage();
         ~Affichage();
 
-        void AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, int r, int g, int b, int a);
+        void AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, unsigned char r, unsigned char g, unsigned char b, int a);
 
         void InitAffichage();
 

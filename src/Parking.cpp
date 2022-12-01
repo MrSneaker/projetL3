@@ -14,7 +14,7 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     nbPlaces = ((DIMX / 2 - 1) * (DIMY / 4));
     nbAvailablePlaces = (nbPlaces);
     idP = (id);
-    successPercentage = (100);
+    successPercentage = 100;
     successPercentageLastConv = 100;
     profit = 0;
     nbFinishedConv = 0;
@@ -298,14 +298,14 @@ Message Parking::managingConversation(Message *aMessage) const
 
         if (sentType == "COUNTER_OFFER")
         {
-            float nbMessage = aMessage->getMessageNumber();
-            if (proposedCarPrice < minPrice)
+            int nbMessage = aMessage->getMessageNumber();
+            if (proposedCarPrice < minPrice && nbMessage > 5)
             {
                 chosenPrice = minPrice;
                 responseType = "LAST_OFFER";
             }
 
-            if ((minPrice <= proposedCarPrice) && (proposedCarPrice < startingPrice))
+            if ((proposedCarPrice >= minPrice) && (proposedCarPrice < startingPrice))
             {
 
                 /*
@@ -496,9 +496,18 @@ void Parking::reconsiderPrices()
     }
     else if (successPercentageLastConv > 70)
     {
-        double augmentation = 1.2;
-        setMinPrice(augmentation * minPrice);
-        setStartingPrice(augmentation * startingPrice);
+        double augNbPlDependance;
+        unsigned int nbPlacesTaken = (nbPlaces - nbAvailablePlaces);
+        if (nbPlacesTaken != 0)
+            augNbPlDependance = (((double)(nbPlacesTaken * 100 / nbPlaces) + 1) / 100);
+        else augNbPlDependance = 1;
+
+        double augmentation = 1.5 + augNbPlDependance;
+        if (minPrice < 7)
+        {
+            setMinPrice(augmentation * minPrice);
+            setStartingPrice(augmentation * startingPrice);
+        }
     }
 
     /*cout << endl

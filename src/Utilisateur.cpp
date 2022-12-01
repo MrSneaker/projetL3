@@ -55,7 +55,7 @@ unsigned int Utilisateur::getAge() const
 }
 
 
-unsigned int Utilisateur::setAge(unsigned int u_Age)
+void Utilisateur::setAge(unsigned int u_Age)
 {
     Age = u_Age;
 }

@@ -61,7 +61,7 @@ public:
     void updateStateCarParkAfterConv (Parking & p);
 
     //! \brief Stocke la conversation, afin de laisser une trace.
-    bool stockConv(const string &fileName);
+    bool stockConv(const string &fileName, unsigned int nbConv);
 
     //! \brief Test de régression de la classe Conversation.
     void testRegression();

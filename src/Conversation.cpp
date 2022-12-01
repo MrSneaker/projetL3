@@ -31,7 +31,6 @@ void Conversation::sendMessageVoiture(Voiture v)
     }
 
     sub = toSend.getSubject();
-
     if (sub == "ACCEPT" || sub == "REJECT" || sub == "UNKNOWN SUBJECT" || sub == "INVALID_TYPE")
     {
         convOK = false;
@@ -43,7 +42,7 @@ void Conversation::sendMessageParking(Parking p)
 {
     // On fait dormir le thread 5 milisecondes pour éviter qu'il empiète sur la voiture.
     this_thread::sleep_for(chrono::milliseconds(5));
-    // On bloque le mutex durant l'execution de la procédure, il est libéré.
+    // On bloque le mutex durant l'execution de la procédure, il est libéré à la fin de celle-ci.
     lock_guard<mutex> guard(conv_mutex);
     // sujet testé en fin de procédure pour mettre à jour convOK.
     string sub;
@@ -157,13 +156,13 @@ void Conversation::manageConfirm(Parking p, Voiture v, int indPrOK)
     }
 }
 
-bool Conversation::stockConv(const string &fileName)
+bool Conversation::stockConv(const string &fileName, unsigned int nbConv)
 {
     // Si les threads sont terminés, on peut stocker leur conversation.
     if (voiture.joinable() == false && parking.joinable() == false)
     {
         // nom du fichier.
-        string newName = "data/logs/" + fileName + ".txt";
+        string newName = "data/logs/" + fileName + "_" + to_string(nbConv) + ".txt";
         // ouverture du fichier.
         ofstream stockFile(newName.c_str());
         // si le fichier est ouvert on écrit les informations de la conversation.
@@ -207,7 +206,7 @@ void Conversation::testRegression()
     assert(c.convOK == false);
     assert(c1.convOK == false);
     assert(c2.convOK == false);
-    c.stockConv("convTest");
-    c1.stockConv("convTest2");
-    c2.stockConv("convTest3");
+    c.stockConv("convTest", 1);
+    c1.stockConv("convTest2", 2);
+    c2.stockConv("convTest3", 3);
 }
