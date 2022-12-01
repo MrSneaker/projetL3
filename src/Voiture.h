@@ -34,6 +34,7 @@ public:
     int indice;
     bool isMoving = false;
     bool derement = true;
+    bool reachGoal = false;
     float timer;
     float startTimer;
     bool ChangeTrajToExit = false;

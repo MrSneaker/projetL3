@@ -20,6 +20,7 @@ int Environnement::random(int min, int max) // fonction permettant de renvoyer u
 Environnement::Environnement()
 {
     removeLogs();
+    nbConv = 0;
     getMap();
     getUser();
     getNames_SurnamesFromFile();
@@ -140,6 +141,7 @@ void Environnement::ClockTime()
 
 void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd)
 {
+    v.reachGoal = false;
     vector<Node *> nodes;
 
     for (int x = 0; x < DimWindowX / tailleCase; x++)
@@ -291,7 +293,7 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     v.setIs_pathfind(true);
 
     openList.clear();
-    if (v.getIs_parked() == true)
+    if (v.getIs_parked() == true || v.reachGoal == true)
     {
         for (int i = 0; i < nodes.size(); i++)
         {
@@ -601,7 +603,7 @@ int Environnement::getPlaceInd(int parkingInd)
         ret = -1;
     // sinon on rappelle la fonction
     else
-        getPlaceInd(parkingInd);
+        ret = getPlaceInd(parkingInd);
     return ret;
 }
 
@@ -691,12 +693,14 @@ void Environnement::updateStateVoiture()
         bool isInPlace = false; // booléen qui permet de savoir si la voiture est dans une place ou non
         int parkingInd = voitures[i].getParking();
         int placeInd = voitures[i].getPlace();
-        int VoiturePosX = voitures[i].get_position().x;            // Position de la voiture en x
-        int VoiturePosY = voitures[i].get_position().y;            // Position de la voiture en y
-        int TargetParkPosX = parkings[parkingInd].getPos().x * 10; // Position de la parking en x
-        int TargetParkPosY = parkings[parkingInd].getPos().y * 10; // Position du parking en y
-        // Si la voiture est dans l'enceinte du parking
+        int VoiturePosX = voitures[i].get_position().x; // Position de la voiture en x
         if (parkingInd != -1)
+        {
+
+            int VoiturePosY = voitures[i].get_position().y;            // Position de la voiture en y
+            int TargetParkPosX = parkings[parkingInd].getPos().x * 10; // Position de la parking en x
+            int TargetParkPosY = parkings[parkingInd].getPos().y * 10; // Position du parking en y
+                                                                       // Si la voiture est dans l'enceinte du parking
             if (VoiturePosX >= TargetParkPosX && VoiturePosX <= TargetParkPosX + parkings[parkingInd].getDIMX() * 10 && VoiturePosY >= TargetParkPosY && VoiturePosY <= TargetParkPosY + parkings[parkingInd].getDIMY() * 10)
             {
                 inParking = true;                                                                    // La voiture est dans un parking
@@ -710,9 +714,8 @@ void Environnement::updateStateVoiture()
                 }
                 else
                     isInPlace = false; // La voiture n'est pas dans une place
-
-            }      
-
+            }
+        }
         if (inParking)
         {
             voitures[i].setIs_in(true);
@@ -821,6 +824,7 @@ void Environnement::Environnement_play()
             }
             else if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit)
             {
+                voitures[i].isMoving = true;
                 savedConducteurs.push_back(voitures[i].User); // on sauvegarde le conducteur pour qu'il puisse être réutilisé
                 RemoveVoiture(i);
                 break;
@@ -828,15 +832,21 @@ void Environnement::Environnement_play()
 
             else if (voitures[i].getNbFinishedConv() < 1)
             {
+                // cout<<"1"<<endl;
                 conversation(voitures[i]);
+                // cout<<"2"<<endl;
                 voitures[i].incrementNbFinishedConv();
+                // cout<<"3"<<endl;
 
                 for (int j = 0; j < parkings.size(); j++)
                 {
                     parkings[j].incrementNbFinishedConv();
                 }
+                // cout<<"4"<<endl;
                 changeTarget(voitures[i], voitures[i].getParking());
+                // cout<<"5"<<endl;
                 aConversationHasEnded = true;
+                nbConv++;
             }
             voitures[i].MoveToTargetPosition();
         }
@@ -891,7 +901,7 @@ void Environnement::conversation(Voiture &v)
         conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j], v, v.getParking());
         if (isFinished)
         {
-            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[parkings.size() - 1 - j].getId()));
+            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[parkings.size() - 1 - j].getId()), nbConv);
 
             conv.at(indConv[parkings.size() - 1 - j])->updateStateCarParkAfterConv(parkings[parkings.size() - 1 - j]);
         }
@@ -932,19 +942,30 @@ void Environnement::changeTarget(Voiture &v, int indPr)
 {
     if (indPr != -1 && parkings[indPr].IsFull() == false)
     {
-        v.setParking(indPr);                                                   // on change la cible de la voiture
-        v.setPlace(getPlaceInd(indPr));                                        // on set la place dans voiture
+        // cout<<"1.1"<<endl;
+        v.setParking(indPr);
+        // cout<<"1.2"<<endl;                                                   // on change la cible de la voiture
+        v.setPlace(getPlaceInd(indPr)); // on set la place dans voiture
+        // cout<<"1.3"<<endl;
+        cout << "place pos" << parkings[indPr].getPlacesTab()[v.getPlace()].getPos().x << " - " << parkings[indPr].getPlacesTab()[v.getPlace()].getPos().y << endl;
         Vec2 Placepos = parkings[indPr].getPlacesTab()[v.getPlace()].getPos(); // on récupère la position de la place
-        v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5));             // on place la cible au milieu de la place.
-        parkings[indPr].getPlacesTab()[v.getPlace()].setIsReserved(true);      // la place est réservée, pour pas qu'une autre voiture puisse y aller.
+        // cout<<"1.4"<<endl;
+        v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5)); // on place la cible au milieu de la place.
+        // cout<<"1.5"<<endl;
+        parkings[indPr].getPlacesTab()[v.getPlace()].setIsReserved(true); // la place est réservée, pour pas qu'une autre voiture puisse y aller.
+        // cout<<"1.6"<<endl;
         if (v.derement)
             parkings[indPr].decrementNbAvailablePlaces(); // on décrémente le nombre de places disponibles.
         Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition()));
+        // cout<<"1.7"<<endl;
     }
     else
     {
+        // cout<<"2.1"<<endl;
         v.Exit = GetExit();
+        // cout<<"2.2"<<endl;
         Astar(v, GetNodeIndbyPos(v.get_position()), v.Exit);
+        // cout<<"2.3"<<endl;
         v.ChangeTrajToExit = true;
     }
 }

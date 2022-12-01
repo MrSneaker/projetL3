@@ -12,5 +12,3 @@ data/logs/*.txt
 gmon.out
 
 UML.dia~
-
-data/user.txt

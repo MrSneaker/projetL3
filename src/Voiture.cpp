@@ -13,7 +13,7 @@ Voiture::Voiture(Utilisateur U)
 {
     position = Vec2(0, 0);
     TargetPosition = Vec2(0, 0);
-    speed = 5;
+    speed = 2;
     Is_in = false;
     Is_parked = false;
     Is_pathfind = false;
@@ -28,6 +28,7 @@ Voiture::Voiture(Utilisateur U)
     User = U;
     nbFinishedConv = 0;
     pathTab.clear();
+    isMoving = true;
     Exit = 0;
 }
 
@@ -104,11 +105,10 @@ const Vec2 &Voiture::getTargetPosition() const
 // Fonction qui fait avancer la voiture en suivant le chemin
 bool Voiture::MoveToTargetPosition()
 {
-    Node *Current = new Node();
 
     if (pathTab.size() > 0)
     {
-
+        Node *Current;
         Current = pathTab[pathTab.size() - 1]; // On récupère le dernier noeud du chemin
         if (Current->getNodepos().x * 10 + 5 > position.x)
         {
@@ -135,7 +135,7 @@ bool Voiture::MoveToTargetPosition()
             pathTab.pop_back();
         }
     }
-    delete Current;
+    reachGoal = true;
     isMoving = false;
     return true;
 }
@@ -160,7 +160,7 @@ Message Voiture::managingConversation(Message *aMessage) const
         {
             float userMaxPrice = User.getMaxPrice();
             float nbMessage = aMessage->getMessageNumber();
-            if (proposedParkPrice > userMaxPrice )
+            if (proposedParkPrice > userMaxPrice && nbMessage - 1 > 5)
             {
                 chosenPrice = userMaxPrice;
                 responseType = "LAST_OFFER";
