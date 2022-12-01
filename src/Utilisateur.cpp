@@ -27,6 +27,7 @@ Utilisateur::Utilisateur(double u_maxPrice, unsigned int u_id, string u_name, st
     surname = u_surname;
     Age = u_Age;
     ParkTime = u_parkTime;
+    AlreadySpawned = false;
 }
 
 double Utilisateur::getMaxPrice() const

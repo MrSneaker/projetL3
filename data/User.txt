@@ -1638,3 +1638,11 @@
 3369,Wendy,Louvel,3,35,2;
 6243,Gillian,Buffet,5,42,0.433333;
 3915,Marie-Josephine,Boisseau,3,21,0.9;
+2987,Joan,Guilbert,2,35,3;
+1025,Josy,Pinot,3,74,2;
+3085,Rania,Borie,4,52,0.9;
+8,Neven,Hecquet,2,55,2;
+6095,Angela,Leriche,3,34,8;
+360,Milan,Moulin,2,58,10;
+5912,Javier,Maes,3,78,0.4;
+2645,Faustine,Carette,3,51,0.866667;
