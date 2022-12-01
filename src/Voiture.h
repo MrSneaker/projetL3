@@ -39,6 +39,7 @@ public:
     bool ChangeTrajToExit = false;
     unsigned int Exit;
     unsigned int CarColor;
+    bool reachGoal = false;
 
     Voiture();
 

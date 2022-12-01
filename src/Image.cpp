@@ -14,9 +14,10 @@ Image::~Image()
 
 {
 
-    SDL_FreeSurface(m_surface);
-
-    SDL_DestroyTexture(m_texture);
+    if(m_surface == nullptr)
+        SDL_FreeSurface(m_surface);
+    if(m_texture == nullptr)
+        SDL_DestroyTexture(m_texture);
 
     m_surface = nullptr;
 

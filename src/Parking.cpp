@@ -15,6 +15,7 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     nbAvailablePlaces = (nbPlaces);
     idP = (id);
     successPercentage = (100);
+    successPercentageLastConv = 100;
     profit = 0;
     nbFinishedConv = 0;
     nbAgreementsOnPrice = 0;
@@ -23,6 +24,7 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
 
 Parking::Parking()
 {
+    cout<<"on entre dans le construceur par defaut";
 }
 
 Parking::~Parking()

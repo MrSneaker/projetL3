@@ -688,30 +688,33 @@ void Environnement::updateStateVoiture()
         int parkingInd = voitures[i].getParking();
         int placeInd = voitures[i].getPlace();
 
-        int VoiturePosX = voitures[i].get_position().x;            // Position de la voiture en x
-        int VoiturePosY = voitures[i].get_position().y;            // Position de la voiture en y
-        int TargetParkPosX = parkings[parkingInd].getPos().x * 10; // Position de la parking en x
-        int TargetParkPosY = parkings[parkingInd].getPos().y * 10; // Position du parking en y
-
-        // Si la voiture est dans l'enceinte du parking
-        if (VoiturePosX >= TargetParkPosX && VoiturePosX <= TargetParkPosX + parkings[parkingInd].getDIMX() * 10 && VoiturePosY >= TargetParkPosY && VoiturePosY <= TargetParkPosY + parkings[parkingInd].getDIMY() * 10)
+        int VoiturePosX = voitures[i].get_position().x; // Position de la voiture en x
+        int VoiturePosY = voitures[i].get_position().y; // Position de la voiture en y
+        if (parkingInd != -1)
         {
 
-            // cout << "Voiture " << i << " est dans le parking " << j << endl;
-            inParking = true;                                                                    // La voiture est dans un parking
-            int TargetPlacePosX = parkings[parkingInd].getPlacesTab()[placeInd].getPos().x * 10; // Position de la place en x
-            int TargetPlacePosY = parkings[parkingInd].getPlacesTab()[placeInd].getPos().y * 10; // Position de la place en y
+            int TargetParkPosX = parkings[parkingInd].getPos().x * 10; // Position de la parking en x
+            int TargetParkPosY = parkings[parkingInd].getPos().y * 10; // Position du parking en y
 
-            // Si la voiture est dans l'enceinte de la place
-            if (VoiturePosX >= TargetPlacePosX && VoiturePosX <= TargetPlacePosX + 10 && VoiturePosY >= TargetPlacePosY && VoiturePosY <= TargetPlacePosY + 20)
+            // Si la voiture est dans l'enceinte du parking
+            if (VoiturePosX >= TargetParkPosX && VoiturePosX <= TargetParkPosX + parkings[parkingInd].getDIMX() * 10 && VoiturePosY >= TargetParkPosY && VoiturePosY <= TargetParkPosY + parkings[parkingInd].getDIMY() * 10)
             {
 
-                isInPlace = true; // La voiture est dans une place
-            }
-            else
-                isInPlace = false; // La voiture n'est pas dans une place
-        }
+                // cout << "Voiture " << i << " est dans le parking " << j << endl;
+                inParking = true;                                                                    // La voiture est dans un parking
+                int TargetPlacePosX = parkings[parkingInd].getPlacesTab()[placeInd].getPos().x * 10; // Position de la place en x
+                int TargetPlacePosY = parkings[parkingInd].getPlacesTab()[placeInd].getPos().y * 10; // Position de la place en y
 
+                // Si la voiture est dans l'enceinte de la place
+                if (VoiturePosX >= TargetPlacePosX && VoiturePosX <= TargetPlacePosX + 10 && VoiturePosY >= TargetPlacePosY && VoiturePosY <= TargetPlacePosY + 20)
+                {
+
+                    isInPlace = true; // La voiture est dans une place
+                }
+                else
+                    isInPlace = false; // La voiture n'est pas dans une place
+            }
+        }
         if (inParking)
         {
             voitures[i].setIs_in(true);
