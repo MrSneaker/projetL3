@@ -308,7 +308,7 @@ Message Parking::managingConversation(Message *aMessage) const
                 responseType = "LAST_OFFER";
             }
 
-            if ((proposedCarPrice >= minPrice) && (proposedCarPrice < startingPrice))
+            if (proposedCarPrice < startingPrice)
             {
 
                 /*
