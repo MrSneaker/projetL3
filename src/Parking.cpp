@@ -16,6 +16,8 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     idP = (id);
     successPercentage = 100;
     successPercentageLastConv = 100;
+    lastNbAgreements = 0;
+    lastNbFinishedConv= 0;
     profit = 0;
     nbFinishedConv = 0;
     nbAgreementsOnPrice = 0;
