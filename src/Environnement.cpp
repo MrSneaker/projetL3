@@ -655,7 +655,7 @@ void Environnement::AddVoiture()
     Voiture V(conducteurs[conducteurs.size() - 1]);
     for (int i = 0; i < parkings.size(); i++)
     {
-        parkings[i].addUsersTab(conducteurs[conducteurs.size() - 1]);
+        parkings[i].addUsersData(conducteurs[conducteurs.size() - 1]);
     }
     V.indice = voitures.size();
 
@@ -669,7 +669,6 @@ void Environnement::AddVoiture()
 
     V.startTimer = frameParkTime;
     voitures.push_back(V); // Ajout de la voiture dans le tableau de voiture
-
     Astar(voitures.back(), Entry, GetNodeIndbyPos(voitures.back().getTargetPosition())); // on lance l'algorithme A* pour trouver le chemin
 }
 
@@ -1011,6 +1010,9 @@ void Environnement::removeLogs()
         system("rm data/dataStartingPrice0.txt");
         system("rm data/dataStartingPrice1.txt");
         system("rm data/dataStartingPrice2.txt");
+        system("rm data/userData0.txt");
+        system("rm data/userData1.txt");
+        system("rm data/userData2.txt");
     }
 }
 

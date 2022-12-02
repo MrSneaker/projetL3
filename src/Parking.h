@@ -8,6 +8,8 @@
 #include <math.h>
 #include <iostream>
 #include <fstream>
+#include <filesystem>
+#include <string>
 
 using namespace std;
 
@@ -194,7 +196,7 @@ public:
 
     //! \brief ajoute un utilisateur au tableau usersTab en vérifiant que celui-ci n'existe pas déjà dans le tableau.
     //! \param unUtilisateur un utilisateur.
-    void addUsersTab(Utilisateur unUtilisateur);
+    void addUsersData(Utilisateur unUtilisateur);
 
     void addToData(double currentTime);
 
@@ -202,7 +204,7 @@ public:
 
     //! \brief incrémente le nombre de visites de l'utilisateur en paramètre de 1 à chaque appel.
     //! \param unUtilisateur pointeur sur un utilisateur.
-    void incrementNbVisitsTab(Utilisateur unUtilisateur);
+    void incrementNbVisitsTab(unsigned int id);
 
     //! \brief enleve une place au nombre de places dispo
     void decrementNbAvailablePlaces();
