@@ -28,7 +28,6 @@ using namespace std;
 class Environnement
 {
 private:
-    Vec2 position;
     float speed;
 
     // Noeud de départ et d'arrivée
@@ -89,13 +88,13 @@ public:
     Vec2 GetPosbyNodeInd(int indiceCase) const;
 
     //! \brief Fonction permettant de retourner l'indice d'une case a partir de sa position
-    int GetNodeIndbyPos(Vec2 pos) const;
+    const int GetNodeIndbyPos(Vec2 pos) const;
 
     const int GetEntry();
 
     const int GetExit();
 
-    vector<pair<double,double>> getDataFromFile(string fileName) const;
+    const vector<pair<double,double>> getDataFromFile(string fileName) const;
 
     //! \brief Fonction horloge
     void ClockTime();
@@ -150,9 +149,9 @@ public:
     double searchMax(vector<double> tab);
 
     //Fonction qui permet de revoyer l'indice d'une place d'un des 3 parkings sauf si celui-ci est plein et que la place est prise
-    int getPlaceInd(int parkingInd);
+    const int getPlaceInd(int parkingInd);
 
-    int getParkingInd();
+    const int getParkingInd();
 
     void changeTarget(Voiture &v, int indPr);
 

@@ -56,34 +56,6 @@ private:
     bool isFull;
     // Vrai si le parking est plein, faux sinon
 
-    vector<int> conversationsTab;
-    // Pas encore sûrs qu'on va l'utiliser,
-    // et pas encore sûrs du type que l'on va stocker dans ce vector
-    // (car on va peut-être stocker les conversations dans des fichiers TXT,
-    // et/ou ne pas garder en mémoire les conversations une fois que ces dernières ont eu lieu)
-
-    vector<Voiture *> voitures;
-    // - Tableau dynamique 1D de pointeurs sur Voiture
-
-    // - Quand une Voiture pénètre dans le parking,
-    // un pointeur sur cette Voiture est créé et ajouté au tableau.
-    // Quand la Voiture quitte le parking, le pointeur est supprimé du tableau.
-
-    vector<pair<unsigned int, const Utilisateur>> usersTab;
-    // - Tableau dynamique 1D d' Utilisateur et de leur id.
-
-    // - Quand un Utilisateur se gare dans le parking,
-    // un pointeur sur cet Utilisateur est créé et ajouté au tableau.
-    // Ce pointeur existe et est constant durant toute la vie de l'Utilisateur.
-
-    // - Cet accès aux Utilisateurs s'étant garés au moins une fois dans le parking
-    // permettra notamment d'avoir accès au nombre de visites de chacun de ces Utilisateurs
-    // dans le parking. Ce dernier pourra ainsi appliquer une réduction à un Utilisateur
-    // s'étant déjà garé chez lui : plus le nombre de visites de l'Utilisateur est élevé,
-    // plus le pourcentage de réduction le sera également.
-
-    // - Une visite correspond à une fois où un utilisateur s'est garé dans le parking.
-
     int nbTotalVisits;
     // - Nombre total de visites du parking.
 
@@ -167,9 +139,7 @@ public:
 
     const vector<pair<double, double>> &getDataNbPlaceTaken() const;
 
-    const vector<pair<unsigned int, const Utilisateur>> &getUsersTab() const;
-
-    int getNbTotalVisits() const;
+    const int& getNbTotalVisits() const;
 
     //! \brief Donne la position (x,y) du parking - coin en haut a gauche
     const Vec2 &getPos() const;

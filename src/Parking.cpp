@@ -94,12 +94,7 @@ bool Parking::IsFull()
     return isFull;
 }
 
-const vector<pair<unsigned int, const Utilisateur>> &Parking::getUsersTab() const
-{
-    return usersTab;
-}
-
-int Parking::getNbTotalVisits() const
+const int& Parking::getNbTotalVisits() const
 {
     return nbTotalVisits;
 }
@@ -570,7 +565,7 @@ void Parking::reconsiderPrices()
         else
             augNbPlDependance = 1;
 
-        double augmentation = 1.5 + augNbPlDependance;
+        double augmentation = 1.2 + augNbPlDependance;
         if (minPrice < 7)
         {
             setMinPrice(augmentation * minPrice);
