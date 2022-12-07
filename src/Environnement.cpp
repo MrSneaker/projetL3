@@ -20,11 +20,28 @@ int Environnement::random(int min, int max) // fonction permettant de renvoyer u
 Environnement::Environnement()
 {
     removeLogs();
-    nbConv = 0;
-    getMap();
+    getMap();s
     getUser();
     getNames_SurnamesFromFile();
     initParkings();
+    nbConv = 0;
+    frames = 0;
+    frameParkTime = 0;
+    prevtime = 0;
+    currentTime = 0;
+    realTime = 0;
+    deltaTime = 0;
+    frametime = 0;
+    temps = 0;
+    TempsEcoule = 0;
+    Secondes = 0;
+    Minutes = 0;
+    Heures = 0;
+    Jours = 0;
+    Mois = 0;
+    nbUserCreated = 0;
+    nbUserSaved = 0;
+
 }
 
 bool Environnement::checkId(int id, string filename)
@@ -289,19 +306,22 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
         v.getpathTab().push_back(current); // on ajoute le noeud courant au chemin pour le tracer
         current = current->getParent();    // on passe au noeud parent pour continuer le chemin jusqu'au StartNode
     }
-    //---------------------------------TrackPath---------------------------------
+    //---------------------------------TrackPath--------------------------------
+    //si le pathtab est créé et stocké met le booléen à true
+    cout<<"PathTab Size" << v.getpathTab().size()<<endl;
     v.setIs_pathfind(true);
-
     openList.clear();
-    if (v.getIs_parked() == true || v.reachGoal == true)
+    cout<<"Noeud Size" << nodes.size()<<endl;
+    // si le pathtab de la voiture est créé et stocké on supprime les noeuds
+
+    if(v.getIs_pathfind() == true)
     {
-        for (int i = 0; i < nodes.size(); i++)
-        {
-            delete nodes[i];
-        }
+        cout<<" On supprime les noeuds"<<endl;
         nodes.clear();
+        cout<<"on ets la 1"<<endl;
         delete StartNode;
         delete EndNode;
+        cout<<"Noeud Size 2 " << nodes.size()<<endl;
     }
 }
 
@@ -384,7 +404,7 @@ void Environnement::getNames_SurnamesFromFile()
         // on stocke les noms de femmes dans le vecteur f_NameList
         while (getline(FemaleNamesFile, ligne))
         {
-            f_NameList.push_back(ligne);
+            f_NameList.push_back(ligne); // on ajoute le nom lu au tableau de noms de femmes
         }
 
         FemaleNamesFile.close();
@@ -401,7 +421,7 @@ void Environnement::getNames_SurnamesFromFile()
         // on stocke les noms d'hommes dans le vecteur m_NameList
         while (getline(MaleNamesFile, ligne))
         {
-            m_NameList.push_back(ligne);
+            m_NameList.push_back(ligne); // on ajoute le nom lu au tableau de noms d'hommes
         }
 
         MaleNamesFile.close();
@@ -418,7 +438,7 @@ void Environnement::getNames_SurnamesFromFile()
         // on stocke les noms de famille dans le vecteur s_NameList
         while (getline(SurnamesFile, ligne))
         {
-            SurnameList.push_back(ligne);
+            SurnameList.push_back(ligne); // on ajoute le nom lu au tableau de noms de famille
         }
 
         SurnamesFile.close();
@@ -513,8 +533,8 @@ void Environnement::initUser(bool quitif)
     // Si il y'a des conducteurs enregistrés dans le fichier
     if (!savedConducteurs.empty() && quitif == false)
     {
-        int randomNUM = random(0, nbUserSaved); // On choisit un conducteur au hasard dans le tableau de conducteurs enregistrés
         // Si l'utilisateur est deja apparu dans la simulation on le recupere
+        int randomNUM = random(0, nbUserSaved); // On choisit un conducteur au hasard dans le tableau de conducteurs enregistrés
         if (savedConducteurs[randomNUM].AlreadySpawned == true)
         {
 
@@ -525,7 +545,6 @@ void Environnement::initUser(bool quitif)
                 savedConducteurs[randomNUM].AlreadySpawned = true;            // On dit que le conducteur est deja apparu dans la simulation
                 conducteurs.push_back(savedConducteurs[randomNUM]);           // on ajoute le conducteur au tableau de conducteurs
                 savedConducteurs.erase(savedConducteurs.begin() + randomNUM); // On supprime le conducteur du tableau de conducteurs enregistrés
-                savedConducteurs.shrink_to_fit();                             // On réduit la taille du tableau
                 SimuConducteurs.push_back(conducteurs[0]);                    // On ajoute le conducteur au tableau de conducteurs totale de la simulation
                 nbUserCreated++;
             }
@@ -540,7 +559,6 @@ void Environnement::initUser(bool quitif)
             conducteurs.push_back(savedConducteurs[randomNUM]);           // on ajoute le conducteur au tableau de conducteurs
             savedConducteurs.erase(savedConducteurs.begin() + randomNUM); // On supprime le conducteur aléatoire du tableau
             SimuConducteurs.push_back(conducteurs[0]);                    // On ajoute le conducteur au tableau de conducteurs de la simulation
-            savedConducteurs.shrink_to_fit();                             // On réduit la taille du tableau
             nbUserCreated++;                                              // On incremente le nombre de conducteurs créés
         }
     }
@@ -737,7 +755,7 @@ void Environnement::updateStateVoiture()
 
                 if (voitures[i].derement == true)
                 {
-                    voitures[i].startTimer = frameParkTime;
+                    voitures[i].startTimer = frameParkTime; 
                     voitures[i].derement = false;
                 }
 
