@@ -59,7 +59,6 @@ void Conversation::sendMessageParking(Parking p)
     }
 
     sub = toSend.getSubject();
-
     if (sub == "ACCEPT" || sub == "REJECT" || sub == "UNKNOWN SUBJECT" || sub == "INVALID_TYPE")
     {
         convOK = false; // à "faux", ce qui veut dire que la conversation ne va pas se poursuivre.
@@ -77,26 +76,45 @@ void Conversation::updateStateCarParkAfterConv(Parking &p)
     {
 
         Message lastMessageOfConv = conv.at(conv.size() - 1);
-
+        float parkTimeU = 0;
         if (lastMessageOfConv.getSubject() == "OK_TO_PARK")
         {
             p.incrementNbAgreementsOnPrice();
-            float parkTime = 0;
             unsigned int idU = p.extractIntFromString(lastMessageOfConv.getRecipient());
 
-            for (int i = 0; i < p.getUsersTab().size(); i++)
+            int id;
+            int nbVisit;
+            float parkTime;
+            ifstream rUserData("data/userData" + to_string(p.getId()) + ".txt");
+            if (rUserData)
             {
-                if (p.getUsersTab()[i].second.getId() == idU)
+                string line;
+                while (getline(rUserData, line))
                 {
-                    parkTime = p.getUsersTab()[i].second.getParkTime();
-                    p.incrementNbVisitsTab(p.getUsersTab()[i].second);
+                    stringstream ss(line); // on crée un flux à partir de la ligne lue
+                    vector<string> tokens; // un tableau pour stocker les mots lus
+                    string token;          // une variable pour stocker les mots lus
+                    while (getline(ss, token, ','))
+                    {
+                        tokens.push_back(token); // on ajoute le mot lu au tableau
+                    }
+                    id = stoi(tokens[0]);
+                    parkTime = stof(tokens[1]);
+                    if(id == idU)
+                    {
+                        parkTimeU = parkTime;
+                        p.incrementNbVisitsTab(idU);
+                    }
                 }
-            }
 
-            p.updateProfit(lastMessageOfConv.getPrice(), parkTime);
+                rUserData.close();
+            }
         }
+
+        p.updateProfit(lastMessageOfConv.getPrice(), parkTimeU);
     }
 }
+
 
 void Conversation::sendConfirmationV(Voiture v, int indPrOK)
 {

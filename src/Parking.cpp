@@ -17,13 +17,17 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     successPercentage = 100;
     successPercentageLastConv = 100;
     lastNbAgreements = 0;
-    lastNbFinishedConv= 0;
+    lastNbFinishedConv = 0;
     profit = 0;
     nbFinishedConv = 0;
     nbAgreementsOnPrice = 0;
     lastNbAgreements = 0;
     lastNbFinishedConv = 0;
     initPlace(position.x + 1, position.y + 1);
+}
+
+Parking::Parking()
+{
 }
 
 Parking::~Parking()
@@ -90,12 +94,7 @@ bool Parking::IsFull()
     return isFull;
 }
 
-const vector<pair<unsigned int, const Utilisateur>> &Parking::getUsersTab() const
-{
-    return usersTab;
-}
-
-int Parking::getNbTotalVisits() const
+const int& Parking::getNbTotalVisits() const
 {
     return nbTotalVisits;
 }
@@ -179,29 +178,55 @@ void Parking::setStartingPrice(float startPrice)
     startingPrice = startPrice;
 }
 
-void Parking::addUsersTab(Utilisateur unUtilisateur)
+void Parking::addUsersData(Utilisateur unUtilisateur)
 {
 
     bool addOk = false; // on initialise un bool sur false, bool qui définit si on ajoute ou non l'utilisateur.
-    if (usersTab.size() == 0)
+    if (!std::filesystem::exists("data/userData" + to_string(idP) + ".txt"))
     {
         addOk = true; // dans le cas ou le tableau est vide, pas besoin de vérifier donc on ajoute.
     }
-    if (!addOk)
+    else if (!addOk)
     {
-        for (int i = 0; i < usersTab.size(); i++)
+        int id;
+        ifstream rUserData("data/userData" + to_string(idP) + ".txt");
+        if (rUserData)
         {
-            if (usersTab[i].second.getId() == unUtilisateur.getId())
+            string line;
+            while (getline(rUserData, line))
             {
-                addOk = false; // si on trouve le meme id deux fois, on ajoute pas.
-                break;
+                stringstream ss(line); // on crée un flux à partir de la ligne lue
+                string token;          // une variable pour stocker les mots lus
+                vector<string> tokens; // un tableau pour stocker les mots lus
+                while (getline(ss, token, ','))
+                {
+                    tokens.push_back(token); // on ajoute le mot lu au tableau
+                }
+                id = stoi(tokens[0]);
+
+                if (id == unUtilisateur.getId())
+                {
+                    addOk = false; // si on trouve le meme id deux fois, on ajoute pas.
+                    break;
+                }
+                else
+                    addOk = true;
             }
-            else
-                addOk = true;
         }
+        rUserData.close();
     }
     if (addOk) // si addOk est vraie en fin de procédure, on ajoute alors l'utilisateur.
-        usersTab.push_back(make_pair(0, unUtilisateur));
+    {
+        ofstream userData("data/userData" + to_string(idP) + ".txt", ios::app);
+        if (userData)
+        {
+            userData << unUtilisateur.getId() << ",";
+            userData << unUtilisateur.getParkTime() << ",";
+            userData << 0 << endl;
+        }
+        userData.close();
+    }
+    // usersTab.push_back(make_pair(0, unUtilisateur));
 }
 
 void Parking::addToData(double currentTime)
@@ -237,16 +262,48 @@ void Parking::incrementNbTotalVisits()
     nbTotalVisits++;
 }
 
-void Parking::incrementNbVisitsTab(Utilisateur unUtilisateur)
+void Parking::incrementNbVisitsTab(unsigned int idU)
 {
-    for (int i = 0; i < usersTab.size(); i++)
+    int id;
+    int nbVisit;
+    vector<vector<string>> linesData; // un tableau pour stocker les lignes lus
+    ifstream rUserData("data/userData" + to_string(idP) + ".txt");
+    if (rUserData)
     {
-        if (usersTab.at(i).second.getId() == unUtilisateur.getId())
+        string line;
+        while (getline(rUserData, line))
         {
-            usersTab.at(i).first++;
+            stringstream ss(line); // on crée un flux à partir de la ligne lue
+            vector<string> tokens; // un tableau pour stocker les mots lus
+            string token;          // une variable pour stocker les mots lus
+            while (getline(ss, token, ','))
+            {
+                tokens.push_back(token); // on ajoute le mot lu au tableau
+            }
+            id = stoi(tokens[0]);
+            nbVisit = stoi(tokens[2]);
+            if (id == idU)
+            {
+                // si on trouve le meme id deux fois, on incrémente son nombre de visite.
+                nbVisit++;
+                tokens[2] = to_string(nbVisit);
+            }
+            linesData.push_back(tokens);
         }
+        rUserData.close();
     }
-    incrementNbTotalVisits();
+        ofstream userData("data/userData" + to_string(idP) + ".txt", ios::trunc);
+        for (int i = 0; i < linesData.size(); i++)
+        {
+            if (userData)
+            {
+                userData << linesData[i].at(0) << ",";
+                userData << linesData[i].at(1) << ",";
+                userData << linesData[i].at(2) << endl;
+            }
+        }
+        userData.close();
+        incrementNbTotalVisits();
 }
 
 void Parking::initPlace(int PcornerX, int PcornerY)
@@ -310,7 +367,7 @@ Message Parking::managingConversation(Message *aMessage) const
                 responseType = "LAST_OFFER";
             }
 
-            if (proposedCarPrice < startingPrice)
+            if (proposedCarPrice <= minPrice && proposedCarPrice < startingPrice)
             {
 
                 /*
@@ -508,7 +565,7 @@ void Parking::reconsiderPrices()
         else
             augNbPlDependance = 1;
 
-        double augmentation = 1.5 + augNbPlDependance;
+        double augmentation = 1.2 + augNbPlDependance;
         if (minPrice < 7)
         {
             setMinPrice(augmentation * minPrice);
@@ -559,16 +616,12 @@ void Parking::testRegression()
     cout << "Etat de la place 1 : " << p1.placesTab[0].getIsTaken() << endl;
     cout << "Etat de la place 1 : " << p1.getPlacesTab()[0].getIsTaken() << endl;
     assert(p1.getPlacesTab()[0].getIsTaken() == p1.placesTab[0].getIsTaken());
-
     Utilisateur u1(2.5, 1, "paulo-1", " pilo", 20, 2);
     Utilisateur u2(2.5, 2, "paulo-2", " pilo", 20, 2);
-    p1.addUsersTab(u1);
-    p1.addUsersTab(u2);
-    p1.addUsersTab(u1);
-    assert(p1.usersTab.size() == 2);
-    assert(p1.usersTab.at(0).second.getId() == 1);
-    p1.incrementNbVisitsTab(u1);
-    p1.incrementNbVisitsTab(u1);
-    assert(p1.getUsersTab().at(0).first == 2);
+    p1.addUsersData(u1);
+    p1.addUsersData(u2);
+    p1.addUsersData(u1);
+    p1.incrementNbVisitsTab(u1.getId());
+    p1.incrementNbVisitsTab(u1.getId());
     assert(p1.nbTotalVisits == 2);
 }

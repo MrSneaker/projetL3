@@ -20,7 +20,7 @@ int Environnement::random(int min, int max) // fonction permettant de renvoyer u
 Environnement::Environnement()
 {
     removeLogs();
-    getMap();s
+    getMap();
     getUser();
     getNames_SurnamesFromFile();
     initParkings();
@@ -120,7 +120,7 @@ Vec2 Environnement::GetPosbyNodeInd(int indiceCase) const
     return pos;
 }
 
-int Environnement::GetNodeIndbyPos(Vec2 pos) const
+const int Environnement::GetNodeIndbyPos(Vec2 pos) const
 {
     int indiceCase;
     indiceCase = (pos.x / tailleCase) + (pos.y / tailleCase) * (DimWindowX / tailleCase);
@@ -606,7 +606,7 @@ void Environnement::initParkings()
     parkings.push_back(p2);
 }
 
-int Environnement::getPlaceInd(int parkingInd)
+const int Environnement::getPlaceInd(int parkingInd)
 {
     // retourne l'indice d'une place aléatoirement entre les places disponibles du parking (recursive)
     int ind = random(0, parkings[parkingInd].getNbPlaces());
@@ -673,7 +673,7 @@ void Environnement::AddVoiture()
     Voiture V(conducteurs[conducteurs.size() - 1]);
     for (int i = 0; i < parkings.size(); i++)
     {
-        parkings[i].addUsersTab(conducteurs[conducteurs.size() - 1]);
+        parkings[i].addUsersData(conducteurs[conducteurs.size() - 1]);
     }
     V.indice = voitures.size();
 
@@ -687,7 +687,6 @@ void Environnement::AddVoiture()
 
     V.startTimer = frameParkTime;
     voitures.push_back(V); // Ajout de la voiture dans le tableau de voiture
-
     Astar(voitures.back(), Entry, GetNodeIndbyPos(voitures.back().getTargetPosition())); // on lance l'algorithme A* pour trouver le chemin
 }
 
@@ -907,7 +906,7 @@ void Environnement::getMap()
     }
 }
 
-vector<pair<double, double>> Environnement::getDataFromFile(string fileName) const
+const vector<pair<double, double>> Environnement::getDataFromFile(string fileName) const
 {
     ifstream file(fileName);
     string line1, line2;
@@ -1029,6 +1028,9 @@ void Environnement::removeLogs()
         system("rm data/dataStartingPrice0.txt");
         system("rm data/dataStartingPrice1.txt");
         system("rm data/dataStartingPrice2.txt");
+        system("rm data/userData0.txt");
+        system("rm data/userData1.txt");
+        system("rm data/userData2.txt");
     }
 }
 
