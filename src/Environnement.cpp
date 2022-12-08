@@ -41,7 +41,6 @@ Environnement::Environnement()
     Mois = 0;
     nbUserCreated = 0;
     nbUserSaved = 0;
-
 }
 
 bool Environnement::checkId(int id, string filename)
@@ -215,7 +214,6 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     }
 
     vector<Node *> openList;
-    openList.clear();
     v.getpathTab().clear();
     v.setIs_pathfind(false);
 
@@ -306,16 +304,19 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
         current = current->getParent();    // on passe au noeud parent pour continuer le chemin jusqu'au StartNode
     }
     //---------------------------------TrackPath--------------------------------
-    //si le pathtab est créé et stocké met le booléen à true
+    // si le pathtab est créé et stocké met le booléen à true
     v.setIs_pathfind(true);
     openList.clear();
     // si le pathtab de la voiture est créé et stocké on supprime les noeuds
 
-    if(v.getIs_pathfind() == true)
+    if (v.reachGoal == true)
     {
-        //nodes.clear();
-        delete StartNode;
-        delete EndNode;
+        cout<<"alo"<<endl;
+        // nodes.clear();
+        for(int i = 0; i<nodes.size();i++)
+        {
+            delete nodes[i];
+        }
         nodes.clear();
     }
 }
@@ -681,7 +682,7 @@ void Environnement::AddVoiture()
     V.setTargetPosition(GetPosbyNodeInd(V.Exit) + Vec2(5, 5));
 
     V.startTimer = frameParkTime;
-    voitures.push_back(V); // Ajout de la voiture dans le tableau de voiture
+    voitures.push_back(V);                                                               // Ajout de la voiture dans le tableau de voiture
     Astar(voitures.back(), Entry, GetNodeIndbyPos(voitures.back().getTargetPosition())); // on lance l'algorithme A* pour trouver le chemin
 }
 
@@ -749,7 +750,7 @@ void Environnement::updateStateVoiture()
 
                 if (voitures[i].derement == true)
                 {
-                    voitures[i].startTimer = frameParkTime; 
+                    voitures[i].startTimer = frameParkTime;
                     voitures[i].derement = false;
                 }
 
@@ -1085,22 +1086,22 @@ void Environnement::makeGraph(int choice)
         for (int i = 0; i < 3; i++)
             dataTab.push_back(getDataFromFile("data/dataProfit" + to_string(i) + ".txt"));
         if (!tabMaxProfit.empty())
-            Graph(dataTab[0], dataTab[1], dataTab[2], "Profit parking ", 0, 0, realTime, searchMax(tabMaxProfit)+1);
+            Graph(dataTab[0], dataTab[1], dataTab[2], "Profit parking ", 0, 0, realTime, searchMax(tabMaxProfit) + 1);
         break;
     case 1:
         for (int i = 0; i < 3; i++)
             dataTab.push_back(getDataFromFile("data/dataStartingPrice" + to_string(i) + ".txt"));
         if (!tabMaxPrice.empty())
-            Graph(dataTab[0], dataTab[1], dataTab[2], "Evolution prix de départ parking ", 0, 0, realTime, searchMax(tabMaxPrice)+1);
+            Graph(dataTab[0], dataTab[1], dataTab[2], "Evolution prix de départ parking ", 0, 0, realTime, searchMax(tabMaxPrice) + 1);
         break;
     case 2:
         for (int i = 0; i < 3; i++)
             dataTab.push_back(getDataFromFile("data/dataNbPlaceTaken" + to_string(i) + ".txt"));
         if (!tabMaxPlace.empty())
-            Graph(dataTab[0], dataTab[1], dataTab[2], "Nombres de places occupées parking ", 0, 0, realTime, searchMax(tabMaxPlace)+1);
+            Graph(dataTab[0], dataTab[1], dataTab[2], "Nombres de places occupées parking ", 0, 0, realTime, searchMax(tabMaxPlace) + 1);
         break;
     case 3:
-        Graph(getDataFromFile("data/dataAvgSuccessPourcent.txt"), "Pourcentage de succes moyen", 0, 0, realTime, searchMaxInPair(getDataFromFile("data/dataAvgSuccessPourcent.txt"))+1);
+        Graph(getDataFromFile("data/dataAvgSuccessPourcent.txt"), "Pourcentage de succes moyen", 0, 0, realTime, searchMaxInPair(getDataFromFile("data/dataAvgSuccessPourcent.txt")) + 1);
         break;
     default:
         break;

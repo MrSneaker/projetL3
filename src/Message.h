@@ -99,7 +99,7 @@ public:
     //! \brief procédure de récupération du destinataire du message
     const string &getRecipient() const;
 
-
+    //! \brief test de régression de la classe Message.
     void test_regresion();
 };
 

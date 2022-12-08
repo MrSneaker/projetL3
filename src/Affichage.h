@@ -88,20 +88,28 @@ public:
     Affichage();
     ~Affichage();
 
+    //! \brief procédure d'affichage de texte en SDL.
     void AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, unsigned char r, unsigned char g, unsigned char b, int a);
 
+    //! \brief procédure d'initialisation de l'affichage (initialisation des textures, renderer..).
     void InitAffichage();
 
+    //! \brief procédure d'affichage du plateau (parkings, places, routes).
     void AffichagePlateau();
 
+    //! \brief affichage du menu (pause, accelere, temps, boutton exit). 
     void AffichageMenu();
 
+    //! \brief 
     int AffichageUserCard(unsigned int Vind);
 
+    //! \brief
     int AffichageParkingCard(unsigned int Parkind);
 
+    //! \brief
     int AffichageGraphMenu();
 
+    //! \brief boucle d'affichage de l'application.
     void AffichageSimulation();
 };
 

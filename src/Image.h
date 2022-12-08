@@ -17,14 +17,16 @@ private:
     bool m_hasChanged; 
 
 public:
+    //! \brief constructeur de l'image, met toutes les valeurs de la classe à null.
     Image();
 
+    //! \brief destructeur de l'image, désalloue la surface et la texture et reset les valeurs.
     ~Image();
 
-    // Fait correspondre texture + surface avec un png 
+    //! \brief Fait correspondre texture + surface avec un png 
     void loadFromFile(const char *filename, SDL_Renderer *renderer);
 
-    // Dessine l'image
+    //! \brief Dessine l'image
     void draw(SDL_Renderer *renderer, int x, int y, int w = -1, int h = -1, int angle = 0);
 };
 

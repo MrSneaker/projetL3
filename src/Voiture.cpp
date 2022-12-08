@@ -18,6 +18,7 @@ Voiture::Voiture(Utilisateur U)
     Is_parked = false;
     Is_pathfind = false;
     ChangeTrajToExit = false;
+    reachGoal = false;
     parking = 0;
     place = 0;
     width = 1;
@@ -132,11 +133,15 @@ bool Voiture::MoveToTargetPosition()
         }
         else
         {
+            delete Current;
             pathTab.pop_back();
         }
     }
-    reachGoal = true;
-    isMoving = false;
+    else
+    {
+        reachGoal = true;
+        isMoving = false;
+    }
     return true;
 }
 

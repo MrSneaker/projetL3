@@ -35,11 +35,13 @@ public:
     ~Conversation();
 
     //! \brief Renvoie le vecteur de Message conv.
+    //! \return un vecteur de Message.
     vector<Message> getConv() const;
 
     //! \brief Démarre une conversation entre deux entités en paramètres.
     //! \param p un parking,
     //! \param v une voiture.
+    //! \return un booléen : true si la conversation s'est déroulée sans erreur, false sinon.
     bool manageConv(Parking p, Voiture v);
 
     void manageConfirm(Parking p, Voiture v,int indPrOK);

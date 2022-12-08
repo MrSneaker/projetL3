@@ -30,6 +30,7 @@ private:
     vector<Node *> pathTab; // tableau des noeuds du chemin
 
 public:
+    vector<Node *> nodes;
     Utilisateur User; // Utilisateur de la voiture
     int indice;
     bool isMoving = false;
