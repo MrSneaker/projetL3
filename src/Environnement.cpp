@@ -964,7 +964,7 @@ void Environnement::conversation(Voiture &v)
                                                                  + "P"
                                                                  + to_string(parkings[parkings.size() - 1 - j].getId()), nbConv);
 
-            // On met à jour les données membres incrementNbTotalVisitsFor10LastConv,
+            // On met à jour les données membres nbTotalVisitsFor10LastConv,
             // nbTotalVisits et profit du Parking.
             conv.at(indConv[parkings.size() - 1 - j])->updateStateCarParkAfterConv(parkings[parkings.size() - 1 - j]);
         }

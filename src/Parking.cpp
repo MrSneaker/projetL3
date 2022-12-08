@@ -130,7 +130,7 @@ void Parking::setNbAvailablePlaces(int nb)
 
 void Parking::incrementNbTotalVisitsFor10LastConv()
 {
-    incrementNbTotalVisitsFor10LastConv++;
+    nbTotalVisitsFor10LastConv++;
     lastNbAgreements++;
 }
 
@@ -158,7 +158,7 @@ void Parking::updateSuccessPercentage()
     if (nbFinishedConv > 0)
     {
         successPercentageLastConv = (lastNbAgreements * 100 / lastNbFinishedConv);
-        successPercentage = incrementNbTotalVisitsFor10LastConv * 100 / nbFinishedConv;
+        successPercentage = nbTotalVisitsFor10LastConv * 100 / nbFinishedConv;
     }
     if (nbFinishedConv % 10 == 0)
     {
