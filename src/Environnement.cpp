@@ -120,7 +120,7 @@ Vec2 Environnement::GetPosbyNodeInd(int indiceCase) const
     return pos;
 }
 
-const int Environnement::GetNodeIndbyPos(Vec2 pos) const
+int Environnement::GetNodeIndbyPos(Vec2 pos) const
 {
     int indiceCase;
     indiceCase = (pos.x / tailleCase) + (pos.y / tailleCase) * (DimWindowX / tailleCase);
@@ -606,7 +606,7 @@ void Environnement::initParkings()
     parkings.push_back(p2);
 }
 
-const int Environnement::getPlaceInd(int parkingInd)
+int Environnement::getPlaceInd(int parkingInd)
 {
     // retourne l'indice d'une place aléatoirement entre les places disponibles du parking (recursive)
     int ind = random(0, parkings[parkingInd].getNbPlaces());
@@ -906,7 +906,7 @@ void Environnement::getMap()
     }
 }
 
-const vector<pair<double, double>> Environnement::getDataFromFile(string fileName) const
+vector<pair<double, double>> Environnement::getDataFromFile(string fileName) const
 {
     ifstream file(fileName);
     string line1, line2;
