@@ -103,7 +103,6 @@ Environnement::~Environnement()
         cout << "pas ok" << endl;
         for (int i = 0; i < doubleUser.size(); i++)
         {
-
             cout << "Doublon : " << doubleUser[i] << endl;
         }
     }
@@ -308,20 +307,16 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     }
     //---------------------------------TrackPath--------------------------------
     //si le pathtab est créé et stocké met le booléen à true
-    cout<<"PathTab Size" << v.getpathTab().size()<<endl;
     v.setIs_pathfind(true);
     openList.clear();
-    cout<<"Noeud Size" << nodes.size()<<endl;
     // si le pathtab de la voiture est créé et stocké on supprime les noeuds
 
     if(v.getIs_pathfind() == true)
     {
-        cout<<" On supprime les noeuds"<<endl;
-        nodes.clear();
-        cout<<"on ets la 1"<<endl;
+        //nodes.clear();
         delete StartNode;
         delete EndNode;
-        cout<<"Noeud Size 2 " << nodes.size()<<endl;
+        nodes.clear();
     }
 }
 

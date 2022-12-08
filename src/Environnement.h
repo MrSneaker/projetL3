@@ -87,7 +87,7 @@ public:
     //! \brief Fonction permettant de retourner l'indice d'une case a partir de sa position
     //! \param pos position de la case
     //! \return Entier correspondant a l'indice de la case
-    int GetNodeIndbyPos(Vec2 pos) const;
+    const int GetNodeIndbyPos(Vec2 pos) const;
 
     //! \brief Fonction permettant de retourner l'indice du noeud d'une des 3 entrées
     //! \return Un entier correspondant à l'indice du noeud
@@ -100,7 +100,7 @@ public:
     //! \brief Récupère les données pour les graphiques dans un fichier
     //! \param fileName vecteur de pair de double contenant les données x et y du graphique
     //! \return vecteur de pair de double contenant les données x et y du graphique
-    vector<pair<double,double>> getDataFromFile(string fileName) const;
+    const vector<pair<double,double>> getDataFromFile(string fileName) const;
 
     //! \brief Fonction qui permet d'actualisé l'horloge pour l'affichage (seconde, minute, heure, jour, mois)
     void ClockTime();
@@ -172,7 +172,7 @@ public:
     //! \brief Fonction qui permet de revoyer l'indice d'une place d'un des 3 parkings sauf si celui-ci est plein et que la place est prise
     //! \param parking parking dans lequel on cherche une place
     //! \return entier correspondant à l'indice de la place
-    int getPlaceInd(int parkingInd);
+    const int getPlaceInd(int parkingInd);
 
     //! \brief Permet a une voiture de changer de trajectoire a tout moment
     //! \param v Voiture qui change de trajectoire

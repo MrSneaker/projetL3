@@ -94,7 +94,7 @@ bool Parking::IsFull()
     return isFull;
 }
 
-const int& Parking::getNbTotalVisits() const
+const int &Parking::getNbTotalVisits() const
 {
     return nbTotalVisits;
 }
@@ -292,18 +292,18 @@ void Parking::incrementNbVisitsTab(unsigned int idU)
         }
         rUserData.close();
     }
-        ofstream userData("data/userData" + to_string(idP) + ".txt", ios::trunc);
-        for (int i = 0; i < linesData.size(); i++)
+    ofstream userData("data/userData" + to_string(idP) + ".txt", ios::trunc);
+    for (int i = 0; i < linesData.size(); i++)
+    {
+        if (userData)
         {
-            if (userData)
-            {
-                userData << linesData[i].at(0) << ",";
-                userData << linesData[i].at(1) << ",";
-                userData << linesData[i].at(2) << endl;
-            }
+            userData << linesData[i].at(0) << ",";
+            userData << linesData[i].at(1) << ",";
+            userData << linesData[i].at(2) << endl;
         }
-        userData.close();
-        incrementNbTotalVisits();
+    }
+    userData.close();
+    incrementNbTotalVisits();
 }
 
 void Parking::initPlace(int PcornerX, int PcornerY)
@@ -345,6 +345,7 @@ Message Parking::managingConversation(Message *aMessage) const
     if (aMessage != nullptr)
     {
         string recipientString = aMessage->getSender();
+        unsigned int idU = extractIntFromString(recipientString);
 
         double chosenPrice = -2;              // Initialisation avec une valeur arbitraire absurde
         string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
@@ -354,20 +355,49 @@ Message Parking::managingConversation(Message *aMessage) const
 
         if (sentType == "CALL")
         {
-            chosenPrice = startingPrice;
-            responseType = "OFFER";
+            int nbVisit;
+            int nbVisitU;
+            vector<vector<string>> linesData; // un tableau pour stocker les lignes lus
+            ifstream rUserData("data/userData" + to_string(idP) + ".txt");
+            if (rUserData)
+            {
+                double reduc;
+                string line;
+                while (getline(rUserData, line))
+                {
+                    stringstream ss(line); // on crée un flux à partir de la ligne lue
+                    vector<string> tokens; // un tableau pour stocker les mots lus
+                    string token;          // une variable pour stocker les mots lus
+                    while (getline(ss, token, ','))
+                    {
+                        tokens.push_back(token); // on ajoute le mot lu au tableau
+                    }
+                    int id = stoi(tokens[0]);
+                    nbVisit = stoi(tokens[2]);
+                    if (id == idU)
+                    {
+                        // si on trouve le meme id deux fois, on retient le nombre de visite de l'utilisateur.
+                        nbVisitU = nbVisit;
+                    }
+                    linesData.push_back(tokens);
+                }
+                rUserData.close();
+                reduc = (0.05 * nbVisitU) * startingPrice;
+                chosenPrice = startingPrice - reduc;
+                responseType = "OFFER";
+            }
         }
 
         if (sentType == "COUNTER_OFFER")
         {
             int nbMessage = aMessage->getMessageNumber();
-            if (proposedCarPrice < minPrice && nbMessage > 5)
+            if (nbMessage > 5)
             {
                 chosenPrice = minPrice;
                 responseType = "LAST_OFFER";
             }
 
-            if (proposedCarPrice <= minPrice && proposedCarPrice < startingPrice)
+            else if ((proposedCarPrice <= startingPrice))
             {
 
                 /*
@@ -497,6 +527,12 @@ Message Parking::managingConversation(Message *aMessage) const
 
         unsigned int MessageNum = aMessage->getMessageNumber() + 1;
         Message newMessage(MessageNum, chosenPrice, responseType, senderString, recipientString);
+        if(responseType == "INVALID_TYPE")
+        {
+            cout<<"prix prop : "<<proposedCarPrice<<endl;
+            cout<<"prix min park : "<<minPrice<<endl;
+            cout<<"prix dep park : "<<startingPrice<<endl;
+        }
         return newMessage;
     }
 
