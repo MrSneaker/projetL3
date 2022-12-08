@@ -73,19 +73,18 @@ private:
     // Position du coin supérieur gauche du parking
 
     double successPercentage;
-    double successPercentageLastConv;
-    // - Pourcentage de réussite des négociations du Parking
 
-    // - Ratio, en pourcentage, des valeurs suivantes :
-    //      ---> nbAgreementsOnPrice
-    //      SUR :
-    //      ---> nbFinishedConv
-    //
-    //   Cette donnée vaut donc : (nbAgreementsOnPrice + nbTotalVisits) / 2 / nbFinishedConv * 100
+    double successPercentageLastConv;
+
+    // - Pourcentage de réussite des dernières négociations du Parking.
+
+    // - Ratio, en pourcentage, de nbTotalVisitsFor10LastConv
+    // sur nbFinishedConv (commentaire obsolète).
 
     // - A intervalles réguliers, le parking considerera cette donnée membre
     // pour éventuellement modifier son minPrice et son startingPrice
     // (fonction membre reconsiderPrices).
+
 
     double profit;
 
@@ -94,11 +93,11 @@ private:
 
     // - Cette donnée rentre dans le calcul de successPercentage.
 
-    unsigned int nbAgreementsOnPrice;
-    // - Nombre de négociations dans lesquelles le parking et une voiture se sont mis
-    // d'accord sur le prix.
 
-    // - Il faudra utiliser cette donnée dans la reconsidération des prix du parking.
+    unsigned int nbTotalVisitsFor10LastConv;
+    // - Nombre total de visites du parking à l'issue des 10 dernières conversations.
+
+    // - On utilise cette donnée dans la reconsidération des prix du parking.
 
     unsigned int lastNbFinishedConv;
     unsigned int lastNbAgreements;
@@ -182,9 +181,9 @@ public:
     //! \brief ajoute une place au nombre de places dispo
     void incrementNbAvailablePlaces();
 
-    //! \brief Incrémente le nombre de négociations dans lesquelles
-    //! \brief le parking et une voiture se sont mis d'accord sur le prix.
-    void incrementNbAgreementsOnPrice();
+    //! \brief Incrémente le nombre total de visites du parking
+    //! \brief à l'issue des 10 dernières conversations.
+    void incrementNbTotalVisitsFor10LastConv ();
 
     //! \brief Incrémente de 1 le nombre de négociations effectuées par le parking.
     void incrementNbFinishedConv();

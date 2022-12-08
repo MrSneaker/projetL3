@@ -20,7 +20,7 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     lastNbFinishedConv = 0;
     profit = 0;
     nbFinishedConv = 0;
-    nbAgreementsOnPrice = 0;
+    nbTotalVisitsFor10LastConv = 0;
     lastNbAgreements = 0;
     lastNbFinishedConv = 0;
     initPlace(position.x + 1, position.y + 1);
@@ -128,9 +128,9 @@ void Parking::setNbAvailablePlaces(int nb)
     IsFull();
 }
 
-void Parking::incrementNbAgreementsOnPrice()
+void Parking::incrementNbTotalVisitsFor10LastConv()
 {
-    nbAgreementsOnPrice++;
+    nbTotalVisitsFor10LastConv++;
     lastNbAgreements++;
 }
 
@@ -158,7 +158,7 @@ void Parking::updateSuccessPercentage()
     if (nbFinishedConv > 0)
     {
         successPercentageLastConv = (lastNbAgreements * 100 / lastNbFinishedConv);
-        successPercentage = nbAgreementsOnPrice * 100 / nbFinishedConv;
+        successPercentage = nbTotalVisitsFor10LastConv * 100 / nbFinishedConv;
     }
     if (nbFinishedConv % 10 == 0)
     {

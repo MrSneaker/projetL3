@@ -120,7 +120,7 @@ Vec2 Environnement::GetPosbyNodeInd(int indiceCase) const
     return pos;
 }
 
-const int Environnement::GetNodeIndbyPos(Vec2 pos) const
+int Environnement::GetNodeIndbyPos(Vec2 pos) const
 {
     int indiceCase;
     indiceCase = (pos.x / tailleCase) + (pos.y / tailleCase) * (DimWindowX / tailleCase);
@@ -439,7 +439,7 @@ void Environnement::initParkings()
     parkings.push_back(p2);
 }
 
-const int Environnement::getPlaceInd(int parkingInd)
+int Environnement::getPlaceInd(int parkingInd)
 {
     // retourne l'indice d'une place aléatoirement entre les places disponibles du parking (recursive)
     int ind = random(0, parkings[parkingInd].getNbPlaces());
@@ -652,6 +652,12 @@ void Environnement::Environnement_play()
 
     prevtime = currentTime;
     currentTime = temps;
+
+    /* Booléen que l'on passera à vrai s'il y a eu,
+    durant le passage dans cette fonction, au moins une
+    conversation entre un Parking et une Voiture. Si le booléen
+    est vrai à la fin de la	fonction, on appellera updateStateCarParks
+    de Environnement. */
     bool aConversationHasEnded = false;
 
     if (Pause == false)
@@ -741,7 +747,7 @@ void Environnement::getMap()
     }
 }
 
-const vector<pair<double, double>> Environnement::getDataFromFile(string fileName) const
+vector<pair<double, double>> Environnement::getDataFromFile(string fileName) const
 {
     ifstream file(fileName);
     string line1, line2;
@@ -788,8 +794,13 @@ void Environnement::conversation(Voiture &v)
         conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j], v, v.getParking());
         if (isFinished)
         {
-            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[parkings.size() - 1 - j].getId()), nbConv);
+            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U"
+                                                                 + to_string(v.User.getId())
+                                                                 + "P"
+                                                                 + to_string(parkings[parkings.size() - 1 - j].getId()), nbConv);
 
+            // On met à jour les données membres nbTotalVisitsFor10LastConv,
+            // nbTotalVisits et profit du Parking.
             conv.at(indConv[parkings.size() - 1 - j])->updateStateCarParkAfterConv(parkings[parkings.size() - 1 - j]);
         }
 
