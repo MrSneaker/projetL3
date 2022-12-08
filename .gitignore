@@ -9,6 +9,8 @@ obj/*.o
 
 data/logs/*.txt
 
+data/*.txt
+
 gmon.out
 
 UML.dia~
