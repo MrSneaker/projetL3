@@ -69,7 +69,7 @@ public:
     int Jours;
     int Mois;
 
-    void Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd);
+    void Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd, bool check);
 
     //! \brief Fonction revoyant un nombre aléatoire en deux valeurs
     //! \param min valeur minimale

@@ -32,6 +32,8 @@ private:
 public:
     vector<Node *> nodes;
     Utilisateur User; // Utilisateur de la voiture
+    vector<Node *> nodes;
+    vector<Node*> openList;
     int indice;
     bool isMoving = false;
     bool derement = true;
@@ -156,6 +158,8 @@ public:
     vector<Node *> &getpathTab();
 
     float bestPrice(vector<float> tabPrice);
+
+    void Astar(unsigned int startInd, unsigned int endInd);
 
     //! \brief Test de regression la classe Voiture
     void test_regresion();
