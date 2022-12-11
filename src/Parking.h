@@ -94,7 +94,7 @@ private:
     // - Cette donnée rentre dans le calcul de successPercentage.
 
 
-    unsigned int nbTotalVisitsFor10LastConv;
+    unsigned int nbAgreement;
     // - Nombre total de visites du parking à l'issue des 10 dernières conversations.
 
     // - On utilise cette donnée dans la reconsidération des prix du parking.
@@ -183,7 +183,7 @@ public:
 
     //! \brief Incrémente le nombre total de visites du parking
     //! \brief à l'issue des 10 dernières conversations.
-    void incrementNbTotalVisitsFor10LastConv ();
+    void incrementNbAgreements();
 
     //! \brief Incrémente de 1 le nombre de négociations effectuées par le parking.
     void incrementNbFinishedConv();

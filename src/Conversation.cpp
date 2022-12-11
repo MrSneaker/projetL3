@@ -79,7 +79,7 @@ void Conversation::updateStateCarParkAfterConv(Parking &p)
         float parkTimeU = 0;
         if (lastMessageOfConv.getSubject() == "OK_TO_PARK")
         {
-            p.incrementNbTotalVisitsFor10LastConv();
+            p.incrementNbAgreements();
             unsigned int idU = p.extractIntFromString(lastMessageOfConv.getRecipient());
 
             int id;

@@ -7,14 +7,13 @@
 #include <time.h>
 #include <iostream>
 #include <unistd.h>
+#include <limits>
 
 using namespace std;
 
 int main()
 {
     srand(time(NULL)); // initialisation de rand
-
-
 
     // test de regression de la classe Voiture
     Voiture V1;
@@ -25,10 +24,20 @@ int main()
     // u.testRegression();
 
     time_t begin = time(NULL);
-    //Environnement Simulation;
-
-    // //Simulation.Environnement_play();
-    //Simulation.test_regresion();
+    Environnement Simulation;
+    int a = 0;
+    /*while (a!=-1)
+    {
+        Simulation.Environnement_play();
+        //cout<<"temps : "<<Simulation.temps<<endl;
+        if(Simulation.temps%30 == 0)
+        {
+            cout<<"continue? :";
+            cin>>a;
+            cout<<endl;
+        }
+    }*/
+    // Simulation.test_regresion();
 
     Affichage aff;
 
@@ -36,8 +45,8 @@ int main()
 
     // time_t end = time(NULL)
 
-    //Parking p1;
-    //p1.testRegression();
+    // Parking p1;
+    // p1.testRegression();
 
     // Place P1;
     // P1.test_regresion();

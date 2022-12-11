@@ -92,20 +92,6 @@ bool Environnement::checkId(int id, string filename)
 Environnement::~Environnement()
 {
     saveUser();
-    if (checkId(0, "data/User.txt"))
-    {
-        cout << "ok" << endl;
-        // Affiche les doublon qui sont stockés dans le vector doubleUser
-    }
-    else
-    {
-        cout << "pas ok" << endl;
-        for (int i = 0; i < doubleUser.size(); i++)
-        {
-            cout << "Doublon : " << doubleUser[i] << endl;
-        }
-    }
-
     tmpsavedConducteurs.clear(); // suppression des conducteurs temporaires
     savedConducteurs.clear();    // suppression des conducteurs sauvegardés
 }
@@ -154,7 +140,179 @@ void Environnement::ClockTime()
     }
 }
 
+ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd, vector<Node *> &nodes)
+{
+    if (nodes.size() > 0)
+    {
+        v.deleteNode();
+    }
+    v.reachGoal = false;
+    for (int x = 0; x < DimWindowX / tailleCase; x++)
+    {
+        for (int y = 0; y < DimWindowY / tailleCase; y++)
+        {
+            Node* n = new Node;
+            if(n == nullptr)
+                cout<<"erreur lors de l'allocation"<<endl;
+            nodes.push_back(n);
+        }
+    }
+    for (int x = 0; x < DimWindowX / tailleCase; x++)
+    {
+        for (int y = 0; y < DimWindowY / tailleCase; y++)
+        {
+            nodes[x + y * DimWindowX / tailleCase]->setNodepos(Vec2(x, y));
+            nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
+            nodes[x + y * DimWindowX / tailleCase]->setParent(nullptr);
+            nodes[x + y * DimWindowX / tailleCase]->indice = x + y * DimWindowX / tailleCase;
 
+            if (map[y][x] == '1')
+                nodes[x + y * DimWindowX / tailleCase]->setisObstacle(true);
+            else
+                nodes[x + y * DimWindowX / tailleCase]->setisObstacle(false);
+        }
+    }
+    for (int i = 0; i < parkings.size(); i++)
+    {
+        for (int j = 0; j < parkings[i].getPlacesTab().size(); j++)
+        {
+            unsigned int PlacePosX = parkings[i].getPlacesTab()[j].getPos().x * tailleCase;
+            unsigned int PlacePosY = parkings[i].getPlacesTab()[j].getPos().y * tailleCase;
+            unsigned int NoeudPlace = GetNodeIndbyPos(Vec2(PlacePosX, PlacePosY));
+            if (parkings[i].getPlacesTab()[j].getIsTaken() == true && parkings[i].getPlacesTab()[j].getIsReserved() == true)
+            {
+
+                nodes[NoeudPlace]->setisObstacle(true);       // on met à jour l'état du noeud
+                nodes[NoeudPlace + 100]->setisObstacle(true); // on met à jour l'état du noeud
+            }
+            else
+            {
+                nodes[NoeudPlace]->setisObstacle(false);       // on met à jour l'état du noeud
+                nodes[NoeudPlace + 100]->setisObstacle(false); // on met à jour l'état du noeud
+            }
+        }
+    }
+
+    for (int x = 0; x < DimWindowX / tailleCase; x++)
+    {
+        for (int y = 0; y < DimWindowY / tailleCase; y++)
+        {
+            nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
+
+            for(int i =0;i<nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().size();i++)
+            {
+                delete nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours()[i];
+            }
+
+            nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().clear();
+        }
+    }
+
+    vector<Node *> openList;
+    openList.clear();
+    v.getpathTab().clear();
+    v.setIs_pathfind(false);
+
+    Node *currentNode;
+    Node *StartNode = nodes[StartInd];
+    Node *EndNode = nodes[EndInd];
+
+
+
+    for (int x = 0; x < DimWindowX / tailleCase; x++)
+    {
+        for (int y = 0; y < DimWindowY / tailleCase; y++)
+        {
+            nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
+            nodes[x + y * DimWindowX / tailleCase]->localGoal = INFINITY;
+            nodes[x + y * DimWindowX / tailleCase]->GlobalGoal = INFINITY;
+            nodes[x + y * tailleCase]->setParent(nullptr);
+
+            if (y > 0)
+                nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x + 0) + (y - 1) * DimWindowX / tailleCase]);
+            if (y < DimWindowY / tailleCase - 1)
+                nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x + 0) + (y + 1) * DimWindowX / tailleCase]);
+            if (x > 0)
+                nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x - 1) + (y + 0) * DimWindowX / tailleCase]);
+            if (x < DimWindowX / tailleCase - 1)
+                nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x + 1) + (y + 0) * DimWindowX / tailleCase]);
+        }
+    }
+
+    auto distance = [](Node *a, Node *b)
+    {
+        return sqrtf((a->getNodepos().x - b->getNodepos().x) * (a->getNodepos().x - b->getNodepos().x) +
+                     (a->getNodepos().y - b->getNodepos().y) * (a->getNodepos().y - b->getNodepos().y));
+    };
+
+    auto heuristic = [distance](Node *a, Node *b)
+    {
+        return distance(a, b);
+    };
+
+    currentNode = StartNode;
+    StartNode->localGoal = 0.0f;
+    StartNode->GlobalGoal = heuristic(StartNode, EndNode);
+
+    openList.push_back(StartNode);
+
+    while (!openList.empty() && currentNode != EndNode && v.getIs_pathfind() == false)
+    {
+        while (!openList.empty() && openList.front()->getisVisited())
+        {
+            openList.erase(openList.begin());
+        }
+
+        if (openList.empty())
+        {
+            break;
+        }
+
+        currentNode = openList.front();
+        currentNode->setisVisited(true);
+
+        // check each of this node's neighbours
+        for (auto neighbour : currentNode->getVecNeighbours())
+        {
+            if (neighbour->getisVisited() == false && neighbour->getisObstacle() == false)
+            {
+                openList.push_back(neighbour);
+
+                float possiblyLowerGoal = currentNode->localGoal + distance(currentNode, neighbour);
+
+                if (possiblyLowerGoal < neighbour->localGoal)
+                {
+                    neighbour->setParent(currentNode);
+
+                    neighbour->localGoal = possiblyLowerGoal;
+
+                    neighbour->GlobalGoal = neighbour->localGoal + heuristic(neighbour, EndNode);
+                }
+            }
+        }
+    }
+    //---------------------------------TrackPath---------------------------------
+    Node *current = EndNode; // on commence par le EndNode car on remonte le chemin
+    if (current->getParent() == nullptr)
+    {
+        cout << "Pas de parent" << endl;
+    }
+    while (current->getParent() != nullptr && v.getIs_pathfind() == false)
+    {
+        v.getpathTab().push_back(current); // on ajoute le noeud courant au chemin pour le tracer
+        current = current->getParent();    // on passe au noeud parent pour continuer le chemin jusqu'au StartNode
+    }
+    //---------------------------------TrackPath--------------------------------
+    // si le pathtab est créé et stocké met le booléen à true
+    v.setIs_pathfind(true);
+    for(int i=0;i<openList.size();i++)
+    {
+        openList[i] = nullptr;
+        delete openList[i];
+    }
+    openList.clear();
+    // si le pathtab de la voiture est créé et stocké on supprime les noeuds
+}
 
 void Environnement::saveUser()
 {
@@ -517,8 +675,8 @@ void Environnement::AddVoiture()
     V.setTargetPosition(GetPosbyNodeInd(V.Exit) + Vec2(5, 5));
 
     V.startTimer = frameParkTime;
-    voitures.push_back(V);                                                               // Ajout de la voiture dans le tableau de voiture
-    V.Astar(Entry, GetNodeIndbyPos(voitures.back().getTargetPosition())); // on lance l'algorithme A* pour trouver le chemin
+    voitures.push_back(V);                                                                                      // Ajout de la voiture dans le tableau de voiture
+    //Astar(voitures.back(), Entry, GetNodeIndbyPos(voitures.back().getTargetPosition()), voitures.back().nodes); // on lance l'algorithme A* pour trouver le chemin
 }
 
 void Environnement::RemoveVoiture(int numVoiture)
@@ -557,8 +715,6 @@ void Environnement::updateStateVoiture()
                 // Si la voiture est dans l'enceinte de la place
                 if (VoiturePosX >= TargetPlacePosX && VoiturePosX <= TargetPlacePosX + 10 && VoiturePosY >= TargetPlacePosY && VoiturePosY <= TargetPlacePosY + 20)
                 {
-
-                    // cout << "Voiture " << i << " est dans le parking " << j << endl;
                     inParking = true;                                                                    // La voiture est dans un parking
                     int TargetPlacePosX = parkings[parkingInd].getPlacesTab()[placeInd].getPos().x * 10; // Position de la place en x
                     int TargetPlacePosY = parkings[parkingInd].getPlacesTab()[placeInd].getPos().y * 10; // Position de la place en y
@@ -647,17 +803,14 @@ void Environnement::updateStateCarParks()
 // Boucle de jeu
 void Environnement::Environnement_play()
 {
-
     prevtime = currentTime;
     currentTime = temps;
-
     /* Booléen que l'on passera à vrai s'il y a eu,
     durant le passage dans cette fonction, au moins une
     conversation entre un Parking et une Voiture. Si le booléen
     est vrai à la fin de la	fonction, on appellera updateStateCarParks
     de Environnement. */
     bool aConversationHasEnded = false;
-
     if (Pause == false)
     {
         // fonction de frametime
@@ -675,11 +828,11 @@ void Environnement::Environnement_play()
         realTime += deltaTime;
         ClockTime();
         // Affiche une voiture toutes les 5 secondes un seul fois
-        // if (frametime >= 5.0f)
-        // {
-        //     AddVoiture();
-        //     frametime = 0;
-        // }
+        if (frametime >= 5.0f)
+        {
+            AddVoiture();
+            frametime = 0;
+        }
 
         for (int i = 0; i < voitures.size(); i++)
         {
@@ -689,38 +842,35 @@ void Environnement::Environnement_play()
                 voitures[i].setIs_parked(false);
 
                 voitures[i].Exit = GetExit();
-                voitures[i].Astar(GetNodeIndbyPos(voitures[i].get_position()), voitures[i].Exit);
+                Astar(voitures[i], GetNodeIndbyPos(voitures[i].get_position()), voitures[i].Exit, voitures[i].nodes);
                 voitures[i].ChangeTrajToExit = true;
+                voitures[i].isMoving = true;
             }
-            
-
-            else if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit) // si la voiture est arrivée à la sortie
+            else if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit)
             {
                 voitures[i].isMoving = true;
                 savedConducteurs.push_back(voitures[i].User); // on sauvegarde le conducteur pour qu'il puisse être réutilisé
+                voitures[i].deleteNode();
                 RemoveVoiture(i);
                 break;
             }
 
             else if (voitures[i].getNbFinishedConv() < 1)
             {
-                // cout<<"1"<<endl;
                 conversation(voitures[i]);
-                // cout<<"2"<<endl;
                 voitures[i].incrementNbFinishedConv();
-                // cout<<"3"<<endl;
-
                 for (int j = 0; j < parkings.size(); j++)
                 {
                     parkings[j].incrementNbFinishedConv();
                 }
-                // cout<<"4"<<endl;
                 changeTarget(voitures[i], voitures[i].getParking());
-                // cout<<"5"<<endl;
                 aConversationHasEnded = true;
                 nbConv++;
             }
-            voitures[i].MoveToTargetPosition();
+            if (!voitures[i].reachGoal && voitures[i].isMoving == true)
+                voitures[i].MoveToTargetPosition();
+            if (voitures[i].reachGoal)
+                voitures[i].deleteNode();
         }
     }
     updateStateVoiture();
@@ -766,12 +916,16 @@ const vector<pair<double, double>> Environnement::getDataFromFile(string fileNam
 int Environnement::createConv()
 {
     Conversation *newConv = new Conversation;
+    if(newConv == nullptr)
+        cout<<"erreur, pointeur non-alloué (createConv)"<<endl;
     conv.push_back(newConv);
     return conv.size() - 1;
 }
 
 void Environnement::deleteConv(int ind)
 {
+    conv.at(ind)->getConv().clear();
+    conv.at(ind) = nullptr;
     delete conv.at(ind);
     conv.erase(conv.begin() + ind);
     conv.shrink_to_fit();
@@ -792,10 +946,7 @@ void Environnement::conversation(Voiture &v)
         conv.at(indConv[parkings.size() - 1 - j])->manageConfirm(parkings[parkings.size() - 1 - j], v, v.getParking());
         if (isFinished)
         {
-            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U"
-                                                                 + to_string(v.User.getId())
-                                                                 + "P"
-                                                                 + to_string(parkings[parkings.size() - 1 - j].getId()), nbConv);
+            conv.at(indConv[parkings.size() - 1 - j])->stockConv("Conversation U" + to_string(v.User.getId()) + "P" + to_string(parkings[parkings.size() - 1 - j].getId()), nbConv);
 
             // On met à jour les données membres nbTotalVisitsFor10LastConv,
             // nbTotalVisits et profit du Parking.
@@ -845,13 +996,13 @@ void Environnement::changeTarget(Voiture &v, int indPr)
         v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5));             // on place la cible au milieu de la place.
         parkings[indPr].getPlacesTab()[v.getPlace()].setIsReserved(true);      // la place est réservée, pour pas qu'une autre voiture puisse y aller.
         if (v.derement)
-            parkings[indPr].decrementNbAvailablePlaces();                                    // on décrémente le nombre de places disponibles.
-        v.Astar(GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition())); // on change la cible de la voiture
+            parkings[indPr].decrementNbAvailablePlaces();                                                                              // on décrémente le nombre de places disponibles.
+        Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition()), v.nodes); // on change la cible de la voiture
     }
     else
     {
         v.Exit = GetExit();
-        v.Astar(GetNodeIndbyPos(v.get_position()), v.Exit);
+        Astar(v, GetNodeIndbyPos(v.get_position()), v.Exit, v.nodes);
         v.ChangeTrajToExit = true;
     }
 }
@@ -954,10 +1105,6 @@ void Environnement::makeGraph(int choice)
     default:
         break;
     }
-    dataTab.clear();
-    tabMaxProfit.clear();
-    tabMaxPlace.clear();
-    tabMaxPrice.clear();
 }
 
 void Environnement::test_regresion()
@@ -966,78 +1113,48 @@ void Environnement::test_regresion()
     // test de regression de la classe Environnement
     Environnement E;
 
-    // assert(E.parkings.size() == 3);
-    // cout << "Test de regression de la fonction initParking() : OK" << endl;
+    assert(E.parkings.size() == 3);
+    cout << "Test de regression de la fonction initParking() : OK" << endl;
 
-    // for (int i = 0; i < 10; i++)
-    // {
-    //     E.AddVoiture();
-    // }
-    // assert(E.voitures.size() == 10);
-    // E.RemoveVoiture(0);
-    // assert(E.voitures.size() == 9);
+    for (int i = 0; i < 10; i++)
+    {
+         E.AddVoiture();
+     }
+     assert(E.voitures.size() == 10);
+     E.RemoveVoiture(0);
+     assert(E.voitures.size() == 9);
 
-    // cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
+     cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
 
-    // int a = E.createConv();
-    // assert(E.conv.size() == 1);
-    // E.deleteConv(a);
-    // assert(E.conv.size() == 0);
-    // cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
+     int a = E.createConv();
+     assert(E.conv.size() == 1);
+     E.deleteConv(a);
+     assert(E.conv.size() == 0);
+     cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
 
-    // for (int i = 0; i < E.voitures.size(); i++)
-    // {
-    //     E.conversation(E.voitures.at(i));
-    // }
+     for (int i = 0; i < E.voitures.size(); i++)
+     {
+        E.conversation(E.voitures.at(i));
+     }
 
-    /*// Affiche les infos du noeud 47
-    cout << "Noeud 47 : " << endl;
-    cout << "Position : " << E.nodes[47]->getNodepos().x << " " << E.nodes[47]->getNodepos().y << endl;
-    cout << "fcost : " << E.nodes[47]->getFcost() << endl;
-    cout << "gcost : " << E.nodes[47]->getGcost() << endl;
-    cout << "hcost : " << E.nodes[47]->getHcost() << endl;
+     E.AddVoiture();
+     E.AddVoiture();
 
-    // Affiche les infos du noeud 4299
-    cout << "Noeud 4299 : " << endl;
-    cout << "Position : " << E.nodes[4299]->getNodepos().x << " " << E.nodes[4299]->getNodepos().y << endl;
-    cout << "fcost : " << E.nodes[4299]->getFcost() << endl;
-    cout << "gcost : " << E.nodes[4299]->getGcost() << endl;
-    cout << "hcost : " << E.nodes[4299]->getHcost() << endl;
-    */
+     for (int i = 0; i < E.voitures.size(); i++)
+     {
+         cout << "Voiture " << i << " : "
+              << "pathTab.size() : " << E.voitures[i].getpathTab().size() << endl;
+         E.Astar(E.voitures[i], 47, 1721,E.voitures[i].nodes);
+         cout << "la" << endl;
+         cout << "Voiture : " << i << " : "
+              << " getpathTab() size : " << E.voitures[0].getpathTab().size() << endl;
+         for (int j = 0; j < E.voitures[i].getpathTab().size(); j++)
+         {
+             cout << "Noeud " << j << " : " << E.voitures[i].getpathTab()[j]->getNodepos().x << " " << E.voitures[i].getpathTab()[j]->getNodepos().y << endl;
+         }
+     }
 
-    // cout << "Longueur de la map : " << map[0].length() << endl;
-    // cout<<"map[][] : "<<map[42][99]<<endl;
-    // affiche le pathTab en mode texxte sur la map
-    //  for(int i=0; i<E.pathTab.size(); i++)
-    //  {
-    //  	map[E.pathTab[i]->getNodepos().y][E.pathTab[i]->getNodepos().x] = '#';
-    //  }
-    //  cout << "Longueur de la map : " << map[0].length() << endl;
-    //  cout<<"map[][] : "<<map[42][99]<<endl;
-    //  affiche le pathTab en mode texxte sur la map
-    //   for(int i=0; i<E.pathTab.size(); i++)
-    //   {
-    //   	map[E.pathTab[i]->getNodepos().y][E.pathTab[i]->getNodepos().x] = '#';
-    //   }
-
-    // E.AddVoiture();
-    // E.AddVoiture();
-
-    // for (int i = 0; i < E.voitures.size(); i++)
-    // {
-    //     cout << "Voiture " << i << " : "
-    //          << "pathTab.size() : " << E.voitures[i].getpathTab().size() << endl;
-    //     E.Astar(E.voitures[i], 47, 1721);
-    //     cout << "la" << endl;
-    //     cout << "Voiture : " << i << " : "
-    //          << " getpathTab() size : " << E.voitures[0].getpathTab().size() << endl;
-    //     for (int j = 0; j < E.voitures[i].getpathTab().size(); j++)
-    //     {
-    //         cout << "Noeud " << j << " : " << E.voitures[i].getpathTab()[j]->getNodepos().x << " " << E.voitures[i].getpathTab()[j]->getNodepos().y << endl;
-    //     }
-    // }
-
-    cout << "Test de regression de la fonction saveUser()" << endl;
+    /*cout << "Test de regression de la fonction saveUser()" << endl;
     E.AddVoiture();
     E.AddVoiture();
 
@@ -1081,4 +1198,5 @@ void Environnement::test_regresion()
     E.getUser();
     assert(E.savedConducteurs.size() == 2);
     cout << "E.savedConducteurs.size() : " << E.savedConducteurs.size() << endl;
+    */
 }

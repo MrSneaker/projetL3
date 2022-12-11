@@ -14,16 +14,16 @@ Image::~Image()
 
 {
 
-    if(m_surface == nullptr)
-        SDL_FreeSurface(m_surface);
-    if(m_texture == nullptr)
-        SDL_DestroyTexture(m_texture);
-
     m_surface = nullptr;
 
     m_texture = nullptr;
 
     m_hasChanged = false;
+
+    if (m_surface == nullptr)
+        SDL_FreeSurface(m_surface);
+    if (m_texture == nullptr)
+        SDL_DestroyTexture(m_texture);
 }
 
 void Image::loadFromFile(const char *filename, SDL_Renderer *renderer)
@@ -66,6 +66,8 @@ void Image::loadFromFile(const char *filename, SDL_Renderer *renderer)
     m_surface = surfaceCorrectPixelFormat;
 
     m_texture = SDL_CreateTextureFromSurface(renderer, surfaceCorrectPixelFormat);
+
+    SDL_FreeSurface(surfaceCorrectPixelFormat);
 
     if (m_texture == NULL)
     {

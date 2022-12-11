@@ -8,6 +8,7 @@ using namespace std;
 
 Affichage::Affichage()
 {
+    InitAffichage();
 }
 
 Affichage::~Affichage()
@@ -34,7 +35,7 @@ Affichage::~Affichage()
     Calendar.~Image();
 
     TTF_Quit();
-
+    IMG_Quit();
     SDL_Quit();
 }
 
@@ -608,8 +609,6 @@ void Affichage::AffichageSimulation()
     int ParkInd = 0;
 
     float beginTick = SDL_GetTicks();
-
-    InitAffichage();
 
     while (display)
     {

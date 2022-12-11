@@ -32,8 +32,6 @@ private:
 public:
     vector<Node *> nodes;
     Utilisateur User; // Utilisateur de la voiture
-    vector<Node *> nodes;
-    vector<Node*> openList;
     int indice;
     bool isMoving = false;
     bool derement = true;
@@ -68,6 +66,8 @@ public:
     //! \brief Déplace la voiture vers la position de la cible (parking / place / sortie)
     //! \return true si la voiture est arrivée à la position de la cible (parking / place / sortie)
     bool MoveToTargetPosition();
+
+    void deleteNode();
 
     //! \brief La voiture lit le message reçu (donné en paramètre) s'il y en a un
     //! \brief (s'il n'y en a pas, le pointeur est nul),
@@ -158,8 +158,6 @@ public:
     vector<Node *> &getpathTab();
 
     float bestPrice(vector<float> tabPrice);
-
-    void Astar(unsigned int startInd, unsigned int endInd);
 
     //! \brief Test de regression la classe Voiture
     void test_regresion();

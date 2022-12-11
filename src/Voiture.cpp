@@ -103,174 +103,15 @@ const Vec2 &Voiture::getTargetPosition() const
     return TargetPosition;
 }
 
-void Voiture::Astar(unsigned int StartInd, unsigned int EndInd)
-{
-    reachGoal = false;
- 
-    setIs_pathfind(false);
-    int DimWindowX = 1000;
-    int DimWindowY = 1000;
-    int tailleCase = 10;
-
-    for (int x = 0; x < DimWindowX / tailleCase; x++)
-    {
-        for (int y = 0; y < DimWindowY / tailleCase; y++)
-        {
-            nodes.push_back(new Node());
-        }
-    }
-    for (int x = 0; x < DimWindowX / tailleCase; x++)
-    {
-        for (int y = 0; y < DimWindowY / tailleCase; y++)
-        {
-            nodes[x + y * DimWindowX / tailleCase]->setNodepos(Vec2(x, y));
-            nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
-            nodes[x + y * DimWindowX / tailleCase]->setParent(nullptr);
-            nodes[x + y * DimWindowX / tailleCase]->indice = x + y * DimWindowX / tailleCase;
-
-            if (map[y][x] == '1')
-                nodes[x + y * DimWindowX / tailleCase]->setisObstacle(true);
-            else
-                nodes[x + y * DimWindowX / tailleCase]->setisObstacle(false);
-        }
-    }
-    // Si une place est prise elle devient un obstacle
-    for (int i = 0; i < parkings.size(); i++)
-    {
-        for (int j = 0; j < parkings[i].getPlacesTab().size(); j++)
-        {
-            unsigned int PlacePosX = parkings[i].getPlacesTab()[j].getPos().x * tailleCase;
-            unsigned int PlacePosY = parkings[i].getPlacesTab()[j].getPos().y * tailleCase;
-            unsigned int NoeudPlace = GetNodeIndbyPos(Vec2(PlacePosX, PlacePosY));
-            if (parkings[i].getPlacesTab()[j].getIsTaken() == true && parkings[i].getPlacesTab()[j].getIsReserved() == true)
-            {
-
-                nodes[NoeudPlace]->setisObstacle(true);       // on met à jour l'état du noeud
-                nodes[NoeudPlace + 100]->setisObstacle(true); // on met à jour l'état du noeud
-            }
-            else
-            {
-                nodes[NoeudPlace]->setisObstacle(false);       // on met à jour l'état du noeud
-                nodes[NoeudPlace + 100]->setisObstacle(false); // on met à jour l'état du noeud
-            }
-        }
-    }
-
-    for (int x = 0; x < DimWindowX / tailleCase; x++)
-    {
-        for (int y = 0; y < DimWindowY / tailleCase; y++)
-        {
-            nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
-
-            nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().clear();
-        }
-    }
-    openList.clear();
-    
-
-    Node *currentNode;
-    Node *StartNode = nodes[StartInd];
-    Node *EndNode = nodes[EndInd];
-
-    for (int x = 0; x < DimWindowX / tailleCase; x++)
-    {
-        for (int y = 0; y < DimWindowY / tailleCase; y++)
-        {
-            nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
-            nodes[x + y * DimWindowX / tailleCase]->localGoal = INFINITY;
-            nodes[x + y * DimWindowX / tailleCase]->GlobalGoal = INFINITY;
-            nodes[x + y * tailleCase]->setParent(nullptr);
-
-            if (y > 0)
-                nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x + 0) + (y - 1) * DimWindowX / tailleCase]);
-            if (y < DimWindowY / tailleCase - 1)
-                nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x + 0) + (y + 1) * DimWindowX / tailleCase]);
-            if (x > 0)
-                nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x - 1) + (y + 0) * DimWindowX / tailleCase]);
-            if (x < DimWindowX / tailleCase - 1)
-                nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x + 1) + (y + 0) * DimWindowX / tailleCase]);
-        }
-    }
-    auto distance = [](Node *a, Node *b)
-    {
-        return sqrtf((a->getNodepos().x - b->getNodepos().x) * (a->getNodepos().x - b->getNodepos().x) +
-                     (a->getNodepos().y - b->getNodepos().y) * (a->getNodepos().y - b->getNodepos().y));
-    };
-
-    auto heuristic = [distance](Node *a, Node *b)
-    {
-        return distance(a, b);
-    };
-
-    currentNode = StartNode;
-    StartNode->localGoal = 0.0f;
-    StartNode->GlobalGoal = heuristic(StartNode, EndNode);
-
-    openList.push_back(StartNode);
-
-    while (!openList.empty() && currentNode != EndNode && v.getIs_pathfind() == false)
-    {
-        while (!openList.empty() && openList.front()->getisVisited())
-        {
-            openList.erase(openList.begin());
-        }
-
-        if (openList.empty())
-        {
-            break;
-        }
-
-        currentNode = openList.front();
-        currentNode->setisVisited(true);
-
-        // check each of this node's neighbours
-        for (auto neighbour : currentNode->getVecNeighbours())
-        {
-            if (neighbour->getisVisited() == false && neighbour->getisObstacle() == false)
-            {
-                openList.push_back(neighbour);
-
-                float possiblyLowerGoal = currentNode->localGoal + distance(currentNode, neighbour);
-
-                if (possiblyLowerGoal < neighbour->localGoal)
-                {
-                    neighbour->setParent(currentNode);
-
-                    neighbour->localGoal = possiblyLowerGoal;
-
-                    neighbour->GlobalGoal = neighbour->localGoal + heuristic(neighbour, EndNode);
-                }
-            }
-        }
-    }
-    //---------------------------------TrackPath---------------------------------
-    Node *current = EndNode; // on commence par le EndNode car on remonte le chemin
-    if (current->getParent() == nullptr)
-    {
-        cout << "Pas de parent" << endl;
-    }
-    while (current->getParent() != nullptr && v.getIs_pathfind() == false)
-    {
-        //donne l'indice du noeud parent et sa position
-        v.getpathTab().push_back(current); // on ajoute le noeud courant au chemin pour le tracer
-        current = current->getParent();    // on passe au noeud parent pour continuer le chemin jusqu'au StartNode
-    }
-    //---------------------------------TrackPath--------------------------------
-    //si le pathtab est créé et stocké met le booléen à true
-    v.setIs_pathfind(true);
-    openList.clear();
-    // si le pathtab de la voiture est créé et stocké on supprime les noeuds
-}
-
 // Fonction qui fait avancer la voiture en suivant le chemin
 bool Voiture::MoveToTargetPosition()
 {
 
     if (pathTab.size() > 0)
     {
-  
+
         Node *Current;
-        Current = pathTab[pathTab.size()-1]; // On récupère le dernier noeud du chemin
+        Current = pathTab[pathTab.size() - 1]; // On récupère le dernier noeud du chemin
         // Donne la position du premier noeud du chemin
         if (Current->getNodepos().x * 10 + 5 > position.x)
         {
@@ -294,9 +135,9 @@ bool Voiture::MoveToTargetPosition()
         }
         else // Si la voiture est sur le noeud
         {
+            Current = nullptr;
             delete Current;
             pathTab.pop_back();
-            delete Current;
         }
     }
     else
@@ -305,6 +146,20 @@ bool Voiture::MoveToTargetPosition()
         isMoving = false;
     }
     return true;
+}
+
+void Voiture::deleteNode()
+{
+    for (int i = 0; i < nodes.size(); i++)
+    {
+        if (nodes[i] != nullptr)
+        {
+            nodes[i] = nullptr;
+            delete nodes[i];
+        }
+    }
+    nodes.clear();
+    reachGoal = false;
 }
 
 Message Voiture::managingConversation(Message *aMessage) const
