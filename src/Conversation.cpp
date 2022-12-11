@@ -103,7 +103,7 @@ void Conversation::updateStateCarParkAfterConv(Parking &p)
                     if(id == idU)
                     {
                         parkTimeU = parkTime;
-                        p.incrementNbVisitsTab(idU);
+                        p.incrementNbVisitsUser(idU);
                     }
                 }
 

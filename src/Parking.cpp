@@ -262,7 +262,7 @@ void Parking::incrementNbTotalVisits()
     nbTotalVisits++;
 }
 
-void Parking::incrementNbVisitsTab(unsigned int idU)
+void Parking::incrementNbVisitsUser(unsigned int idU)
 {
     int id;
     int nbVisit;
@@ -650,7 +650,7 @@ void Parking::testRegression()
     p1.addUsersData(u1);
     p1.addUsersData(u2);
     p1.addUsersData(u1);
-    p1.incrementNbVisitsTab(u1.getId());
-    p1.incrementNbVisitsTab(u1.getId());
+    p1.incrementNbVisitsUser(u1.getId());
+    p1.incrementNbVisitsUser(u1.getId());
     assert(p1.nbTotalVisits == 2);
 }

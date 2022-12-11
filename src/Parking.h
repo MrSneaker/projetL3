@@ -162,7 +162,7 @@ public:
 
     //! \brief incrémente le nombre de visites de l'utilisateur en paramètre de 1 à chaque appel.
     //! \param unUtilisateur pointeur sur un utilisateur.
-    void incrementNbVisitsTab(unsigned int id);
+    void incrementNbVisitsUser(unsigned int id);
 
     //! \brief enleve une place au nombre de places dispo
     void decrementNbAvailablePlaces();
