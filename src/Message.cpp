@@ -7,8 +7,8 @@ Message::Message (string aSender, string aRecipient) :
     messageNumber (0), date (clock ()/CLOCKS_PER_SEC), price (-1), subject ("CALL"),
     sender (aSender), recipient (aRecipient) {}
 
-Message::Message (unsigned int eMessageNumber, float aPrice, string aSubject, string aSender, string aRecipient) :
-    messageNumber (eMessageNumber), date (clock ()/CLOCKS_PER_SEC), price (aPrice), subject (aSubject),
+Message::Message (unsigned int aMessageNumber, float aPrice, string aSubject, string aSender, string aRecipient) :
+    messageNumber (aMessageNumber), date (clock ()/CLOCKS_PER_SEC), price (aPrice), subject (aSubject),
     sender (aSender), recipient (aRecipient) {}
 
 Message::Message () : messageNumber (0), date (clock ()/CLOCKS_PER_SEC), price (-21),

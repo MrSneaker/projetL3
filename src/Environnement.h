@@ -126,7 +126,7 @@ public:
     //! \param numVoiture numéro de la voiture à enlever.
     void RemoveVoiture(int numVoiture);
 
-    //! \brief Update le status de chaque voiture.
+    //! \brief Update le statut de chaque voiture.
     void updateStateVoiture();
 
     //! \brief Update les caractéristiques de chaque parking (dont ses prix).

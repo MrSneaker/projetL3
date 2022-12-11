@@ -60,6 +60,7 @@ public:
 
     //! \brief Met à jour les données membres nbTotalVisitsFor10LastConv,
     //! \brief nbTotalVisits et profit d'un parking.
+    //! \param p le parking qu'on met à jour
     void updateStateCarParkAfterConv (Parking & p);
 
     //! \brief Stocke la conversation, afin de laisser une trace.
