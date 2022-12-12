@@ -3,6 +3,7 @@
 #include "Affichage.h"
 #include "Parking.h"
 #include "Conversation.h"
+#include "Menu.h"
 
 #include <time.h>
 #include <iostream>
@@ -16,16 +17,11 @@ int main()
     srand(time(NULL)); // initialisation de rand
 
     // test de regression de la classe Voiture
-    Voiture V1;
     // V1.test_regresion();
 
     // test de regression de la classe Utilisateur
     // Utilisateur u;
     // u.testRegression();
-
-    time_t begin = time(NULL);
-    Environnement Simulation;
-    int a = 0;
     /*while (a!=-1)
     {
         Simulation.Environnement_play();
@@ -39,9 +35,9 @@ int main()
     }*/
     // Simulation.test_regresion();
 
-    Affichage aff;
+    //Affichage aff;
 
-    aff.AffichageSimulation();
+    //aff.AffichageSimulation();
 
     // time_t end = time(NULL)
 
@@ -57,5 +53,8 @@ int main()
 
     // Graph g;
     // g.test_regression();
+
+    Menu m;
+    m.menuLoop();
     return 0;
 }

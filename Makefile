@@ -1,8 +1,8 @@
 SDL2=`sdl2-config --cflags --libs` -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 all : bin/test
 
-bin/test : obj/maintest.o obj/Environnement.o obj/Parking.o obj/Voiture.o obj/Utilisateur.o obj/vec2.o obj/Affichage.o obj/Place.o obj/Message.o obj/Image.o obj/Conversation.o obj/Node.o obj/Graph.o 
-	g++ -o bin/test obj/maintest.o obj/Environnement.o obj/Parking.o obj/Voiture.o obj/Utilisateur.o obj/vec2.o obj/Affichage.o obj/Place.o obj/Message.o obj/Image.o obj/Conversation.o obj/Node.o obj/Graph.o $(SDL2) -p -lboost_iostreams -lboost_system -lboost_filesystem -pthread -ggdb
+bin/test : obj/maintest.o obj/Environnement.o obj/Parking.o obj/Voiture.o obj/Utilisateur.o obj/vec2.o obj/Affichage.o obj/Place.o obj/Message.o obj/Image.o obj/Conversation.o obj/Node.o obj/Graph.o obj/Menu.o
+	g++ -o bin/test obj/maintest.o obj/Environnement.o obj/Parking.o obj/Voiture.o obj/Utilisateur.o obj/vec2.o obj/Affichage.o obj/Place.o obj/Message.o obj/Image.o obj/Conversation.o obj/Node.o obj/Graph.o obj/Menu.o $(SDL2) -p -lboost_iostreams -lboost_system -lboost_filesystem -pthread -ggdb
 
 obj/maintest.o : src/maintest.cpp 
 	g++ -c -o obj/maintest.o src/maintest.cpp $(SDL2) -ggdb -p
@@ -43,7 +43,8 @@ obj/Conversation.o : src/Conversation.cpp src/Conversation.h src/Message.h
 obj/Graph.o: src/Graph.cpp src/Graph.h
 	g++ -c -g -o obj/Graph.o src/Graph.cpp -lboost_iostreams -lboost_system -lboost_filesystem -ggdb -p
 
-
+obj/Menu.o: src/Menu.cpp src/Menu.h
+	g++ -c -o obj/Menu.o src/Menu.cpp $(SDL2) -ggdb -p
 
 
 clean:

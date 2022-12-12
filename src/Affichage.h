@@ -72,7 +72,6 @@ private:
     TTF_Font *font_default;
     TTF_Font *font_UserCard;
     TTF_Font *font_UserCardBold;
-    ;
     TTF_Font *font_Time;
     TTF_Font *font_Calendar;
 

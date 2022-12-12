@@ -36,7 +36,6 @@ Affichage::~Affichage()
 
     TTF_Quit();
     IMG_Quit();
-    SDL_Quit();
 }
 
 // Affiche du texte selon l'entrée
