@@ -154,8 +154,8 @@ void Voiture::deleteNode()
     {
         if (nodes[i] != nullptr)
         {
-            nodes[i] = nullptr;
             delete nodes[i];
+            nodes[i] = nullptr;
         }
     }
     nodes.clear();

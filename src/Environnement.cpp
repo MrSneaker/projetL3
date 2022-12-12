@@ -305,11 +305,6 @@ void Environnement::ClockTime()
     //---------------------------------TrackPath--------------------------------
     // si le pathtab est créé et stocké met le booléen à true
     v.setIs_pathfind(true);
-    for(int i=0;i<openList.size();i++)
-    {
-        openList[i] = nullptr;
-        delete openList[i];
-    }
     openList.clear();
     // si le pathtab de la voiture est créé et stocké on supprime les noeuds
 }
@@ -676,7 +671,7 @@ void Environnement::AddVoiture()
 
     V.startTimer = frameParkTime;
     voitures.push_back(V);                                                                                      // Ajout de la voiture dans le tableau de voiture
-    //Astar(voitures.back(), Entry, GetNodeIndbyPos(voitures.back().getTargetPosition()), voitures.back().nodes); // on lance l'algorithme A* pour trouver le chemin
+    Astar(voitures.back(), Entry, GetNodeIndbyPos(voitures.back().getTargetPosition()), voitures.back().nodes); // on lance l'algorithme A* pour trouver le chemin
 }
 
 void Environnement::RemoveVoiture(int numVoiture)
@@ -925,8 +920,8 @@ int Environnement::createConv()
 void Environnement::deleteConv(int ind)
 {
     conv.at(ind)->getConv().clear();
-    conv.at(ind) = nullptr;
     delete conv.at(ind);
+    //conv.at(ind) = nullptr;
     conv.erase(conv.begin() + ind);
     conv.shrink_to_fit();
 }
