@@ -21,7 +21,7 @@ Une fois dans l'application, vous pouvez utilisez les fonctionnalités suivantes
 - Vous pouvez mettre la simulation en pause avec le bouton pause (situé dans la barre de menu en bas de l'écran, le bouton le plus à gauche).
 - Vous pouvez accélérer la simulation avec le bouton situé à coté du bouton pause. Notez que l'accélération n'est pas réinitialisée si vous stoper/relancer la simulation avec le bouton pause.
 
-#### Quand la simulation est mis en pause
+#### Quand la simulation est mise en pause
 - Vous pouvez relancer la simulation en appuyant à nouveau sur le bouton pause.
 - Vous pouvez cliquer sur n'importe quel voiture pour afficher les informations de l'utilisateur de celle-ci, dont les suivantes :
     - id utilisateur.
