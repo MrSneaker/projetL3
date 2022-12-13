@@ -164,8 +164,7 @@ public:
     //! \brief ajoute une place au nombre de places dispo
     void incrementNbAvailablePlaces();
 
-    //! \brief Incrémente le nombre total de visites du parking
-    //! \brief à l'issue des 10 dernières conversations.
+    //! \brief Incrémente le nombre de visites du parking
     void incrementNbAgreements();
 
     //! \brief Incrémente de 1 le nombre de négociations effectuées par le parking.

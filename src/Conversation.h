@@ -58,8 +58,8 @@ public:
     //! \param p un parking.
     void sendMessageParking(Parking p);
 
-    //! \brief Met à jour les données membres nbTotalVisitsFor10LastConv,
-    //! \brief nbTotalVisits et profit d'un parking.
+    //! \brief Met à jour les données membres lastNbAgreements,
+    //! \brief nbAgreement et profit d'un parking.
     //! \param p le parking qu'on met à jour
     void updateStateCarParkAfterConv (Parking & p);
 

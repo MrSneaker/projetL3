@@ -15,8 +15,6 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     idP = (id);
     successPercentage = 100;
     successPercentageLastConv = 100;
-    lastNbAgreements = 0;
-    lastNbFinishedConv = 0;
     profit = 0;
     nbFinishedConv = 0;
     nbAgreement = 0;
@@ -151,7 +149,7 @@ void Parking::updateSuccessPercentage()
 
     if (nbFinishedConv > 0)
     {
-        successPercentageLastConv = (lastNbAgreements * 100 / lastNbFinishedConv);
+        successPercentageLastConv = lastNbAgreements * 100 / lastNbFinishedConv;
         successPercentage = nbAgreement * 100 / nbFinishedConv;
     }
     if (nbFinishedConv % 10 == 0)
