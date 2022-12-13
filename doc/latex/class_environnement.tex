@@ -1,0 +1,480 @@
+\hypertarget{class_environnement}{}\doxysection{Environnement Class Reference}
+\label{class_environnement}\index{Environnement@{Environnement}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_environnement_acc23821bbf4bba086ffa4a61c0c9d9e7}\label{class_environnement_acc23821bbf4bba086ffa4a61c0c9d9e7}} 
+void {\bfseries Astar} (\mbox{\hyperlink{class_voiture}{Voiture}} \&v, unsigned int Start\+Ind, unsigned int End\+Ind, vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ \&nodes)
+\item 
+int \mbox{\hyperlink{class_environnement_aacedfef7c0d1c8b52ca9951992d57498}{random}} (int min, int max)
+\begin{DoxyCompactList}\small\item\em Fonction revoyant un nombre aléatoire en deux valeurs. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_vec2}{Vec2}} \mbox{\hyperlink{class_environnement_aa92f54d5923bc8ec613e26fcb8fb6fdc}{Get\+Posby\+Node\+Ind}} (int indice\+Case) const
+\begin{DoxyCompactList}\small\item\em Fonction permettant de retourner la position d\textquotesingle{}une case a partir de son indice. \end{DoxyCompactList}\item 
+const int \mbox{\hyperlink{class_environnement_a6b78f850bb3644d128bc06b5163b21f9}{Get\+Node\+Indby\+Pos}} (\mbox{\hyperlink{class_vec2}{Vec2}} pos) const
+\begin{DoxyCompactList}\small\item\em Fonction permettant de retourner l\textquotesingle{}indice d\textquotesingle{}une case a partir de sa position. \end{DoxyCompactList}\item 
+const int \mbox{\hyperlink{class_environnement_a4bc06e855b576eced9dbfe31a120ae34}{Get\+Entry}} ()
+\begin{DoxyCompactList}\small\item\em Fonction permettant de retourner l\textquotesingle{}indice du noeud d\textquotesingle{}une des 3 entrées. \end{DoxyCompactList}\item 
+const int \mbox{\hyperlink{class_environnement_a5989ac69ed106f675b152edc4c442be2}{Get\+Exit}} ()
+\begin{DoxyCompactList}\small\item\em Fonction permettant de retourner l\textquotesingle{}indice du noeud d\textquotesingle{}une des 3 sorties. \end{DoxyCompactList}\item 
+const vector$<$ pair$<$ double, double $>$ $>$ \mbox{\hyperlink{class_environnement_a9d41d57841293581257327aa7f29d092}{get\+Data\+From\+File}} (string file\+Name) const
+\begin{DoxyCompactList}\small\item\em Récupère les données pour les graphiques dans un fichier. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_a727551b2acefcbc473fe4102d0b8180c}\label{class_environnement_a727551b2acefcbc473fe4102d0b8180c}} 
+void \mbox{\hyperlink{class_environnement_a727551b2acefcbc473fe4102d0b8180c}{Clock\+Time}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui permet d\textquotesingle{}actualisé l\textquotesingle{}horloge pour l\textquotesingle{}affichage (seconde, minute, heure, jour, mois) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_ab90bc497b8fa27a0ee3eb25a72b790d9}\label{class_environnement_ab90bc497b8fa27a0ee3eb25a72b790d9}} 
+float \mbox{\hyperlink{class_environnement_ab90bc497b8fa27a0ee3eb25a72b790d9}{random\+Park\+Time}} ()
+\begin{DoxyCompactList}\small\item\em Fonction permettant de retourner un temps de stationnement aléatoire. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_environnement_a66696bcd86d532f1b1b232a8b91fcd34}{init\+User}} (bool quitif)
+\begin{DoxyCompactList}\small\item\em Initialisation d\textquotesingle{}un utilisateur, puis ajout dans le tableau de conducteurs. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_environnement_acbb1169ef3043a859884476095b1d306}{Create\+Random\+Id}} ()
+\begin{DoxyCompactList}\small\item\em Fonction permettant de créer un id aléatoire pour un utilisateur sans qu\textquotesingle{}il y ait de doublons. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_a910c4c31d58c281b6cd28ce655d30f09}\label{class_environnement_a910c4c31d58c281b6cd28ce655d30f09}} 
+void \mbox{\hyperlink{class_environnement_a910c4c31d58c281b6cd28ce655d30f09}{init\+Parkings}} ()
+\begin{DoxyCompactList}\small\item\em Initialisation des parkings. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_a76c31d8b4fb7cbda9f063fc6e03cefea}\label{class_environnement_a76c31d8b4fb7cbda9f063fc6e03cefea}} 
+void \mbox{\hyperlink{class_environnement_a76c31d8b4fb7cbda9f063fc6e03cefea}{Add\+Voiture}} ()
+\begin{DoxyCompactList}\small\item\em Ajout d\textquotesingle{}une voiture avec un conducteur dans le tableau de voitures. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_environnement_a5f44893d56f926e2ea94a4dd60b2fce8}{Remove\+Voiture}} (int num\+Voiture)
+\begin{DoxyCompactList}\small\item\em Enleve une voiture du tableau de voitures et le conducteur de la voiture du tableau de conducteurs. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_a8b347525639c5edbabab18bbfb8541cd}\label{class_environnement_a8b347525639c5edbabab18bbfb8541cd}} 
+void \mbox{\hyperlink{class_environnement_a8b347525639c5edbabab18bbfb8541cd}{update\+State\+Voiture}} ()
+\begin{DoxyCompactList}\small\item\em Update le statut de chaque voiture. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_a11efc032a0f03ad80ce00a325ee70012}\label{class_environnement_a11efc032a0f03ad80ce00a325ee70012}} 
+void \mbox{\hyperlink{class_environnement_a11efc032a0f03ad80ce00a325ee70012}{update\+State\+Car\+Parks}} ()
+\begin{DoxyCompactList}\small\item\em Update les caractéristiques de chaque parking (dont ses prix). \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_a083315044477691a438e6bd3b2173bfe}\label{class_environnement_a083315044477691a438e6bd3b2173bfe}} 
+void \mbox{\hyperlink{class_environnement_a083315044477691a438e6bd3b2173bfe}{Environnement\+\_\+play}} ()
+\begin{DoxyCompactList}\small\item\em Boucle de jeu. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_environnement_a1c358cb887aafef6a66732dcd6930549}{get\+Map}} ()
+\begin{DoxyCompactList}\small\item\em récupère les valeurs contenue dans le fichier map.\+txt qui contient un plateau de 0 et de 1 \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_ab20baba5b3cf428fac01f3672f155ff9}\label{class_environnement_ab20baba5b3cf428fac01f3672f155ff9}} 
+int \mbox{\hyperlink{class_environnement_ab20baba5b3cf428fac01f3672f155ff9}{create\+Conv}} ()
+\begin{DoxyCompactList}\small\item\em on créé une conv quand on veut communiquer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_environnement_a2ba97c0070d088e35e9be7290fd01c71}{chosen\+Park}} (vector$<$ \mbox{\hyperlink{class_conversation}{Conversation}} $\ast$ $>$ conv, \mbox{\hyperlink{class_voiture}{Voiture}} v)
+\begin{DoxyCompactList}\small\item\em Choisit le meilleur parking pour une voiture. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_environnement_a2b905ef8196d46fb80d7cbd764584340}{delete\+Conv}} (int ind)
+\begin{DoxyCompactList}\small\item\em pour suppr une conv après utilisation \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_environnement_a619556cab6e46af0c5c860d547628a79}{conversation}} (\mbox{\hyperlink{class_voiture}{Voiture}} \&v)
+\begin{DoxyCompactList}\small\item\em pour réaliser la conversation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_a11dee346dd9aebe74295e045db1ab13b}\label{class_environnement_a11dee346dd9aebe74295e045db1ab13b}} 
+void \mbox{\hyperlink{class_environnement_a11dee346dd9aebe74295e045db1ab13b}{remove\+Logs}} ()
+\begin{DoxyCompactList}\small\item\em supprime le dossier de logs avant nouvelle itération. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_environnement_a7e4924950dea85e5d149f7d957f01ea2}{search\+Max\+In\+Pair}} (vector$<$ pair$<$ double, double $>$$>$ tab)
+\begin{DoxyCompactList}\small\item\em Trouve le maximum d\textquotesingle{}un vecteur de pair de double. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_environnement_aa0b8be4b9cc3a3208b19cd8b8e2fb469}{search\+Max}} (vector$<$ double $>$ tab)
+\begin{DoxyCompactList}\small\item\em Trouve le maximum d\textquotesingle{}un vecteur de double. \end{DoxyCompactList}\item 
+const int \mbox{\hyperlink{class_environnement_a640ba3f5d0f91c87d652d9d64da52e62}{get\+Place\+Ind}} (int parking\+Ind)
+\begin{DoxyCompactList}\small\item\em Fonction qui permet de revoyer l\textquotesingle{}indice d\textquotesingle{}une place d\textquotesingle{}un des 3 parkings sauf si celui-\/ci est plein et que la place est prise. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_environnement_a0b8dbebe3222da2a469a62c2cb1e059a}{change\+Target}} (\mbox{\hyperlink{class_voiture}{Voiture}} \&v, int ind\+Pr)
+\begin{DoxyCompactList}\small\item\em Permet a une voiture de changer de trajectoire a tout moment. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_environnement_a00045295e38c97796b3b2e73baf948e7}{make\+Graph}} (int choice)
+\begin{DoxyCompactList}\small\item\em Fonction qui fait un graphique. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_a8679c75339287098c98190198bdc71ed}\label{class_environnement_a8679c75339287098c98190198bdc71ed}} 
+void \mbox{\hyperlink{class_environnement_a8679c75339287098c98190198bdc71ed}{save\+User}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui permet d\textquotesingle{}enregistrer les utilisateurs dans un fichier. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_ae491231cbdcfbd0100c71d3bb0c3d677}\label{class_environnement_ae491231cbdcfbd0100c71d3bb0c3d677}} 
+void \mbox{\hyperlink{class_environnement_ae491231cbdcfbd0100c71d3bb0c3d677}{get\+User}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui permet de charger les utilisateurs dans le vecteur savedconducteurs. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_environnement_ab8e8ea9af63a2b5a0deaa52281658e47}{check\+Id}} (int id, string filename)
+\begin{DoxyCompactList}\small\item\em Fonction qui verifie qu\textquotesingle{}il ny\textquotesingle{}a pas de doublons d\textquotesingle{}id dans le fichier user.\+txt. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_a1af222a2fa32821d86486e89b4cb7ee3}\label{class_environnement_a1af222a2fa32821d86486e89b4cb7ee3}} 
+void \mbox{\hyperlink{class_environnement_a1af222a2fa32821d86486e89b4cb7ee3}{get\+Names\+\_\+\+Surnames\+From\+File}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui récupère les noms et prénoms dans les fichiers txt. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_environnement_a840c4e8f0d2a052a8f04f5bc16cbc407}{get\+Name}} (string gender=\char`\"{}any\char`\"{})
+\begin{DoxyCompactList}\small\item\em Fonction qui retourne un nom aléatoire. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_environnement_aa4280f014be9d5d4951340a9a5ade424}{get\+Surname}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui retourne un prénom aléatoire. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_environnement_a1fa19aa3ff936701ea3bafa240f5331f}\label{class_environnement_a1fa19aa3ff936701ea3bafa240f5331f}} 
+void \mbox{\hyperlink{class_environnement_a1fa19aa3ff936701ea3bafa240f5331f}{test\+\_\+regresion}} ()
+\begin{DoxyCompactList}\small\item\em Test de regression de la classe \mbox{\hyperlink{class_environnement}{Environnement}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_environnement_ae761b3f73ac32c63fa3e8eae0272f4c5}\label{class_environnement_ae761b3f73ac32c63fa3e8eae0272f4c5}} 
+string {\bfseries map} \mbox{[}Dim\+WindowX/taille\+Case $\ast$Dim\+WindowY/taille\+Case\mbox{]}
+\item 
+\mbox{\Hypertarget{class_environnement_a91fbe714d760ccd698d9d6ca97357581}\label{class_environnement_a91fbe714d760ccd698d9d6ca97357581}} 
+vector$<$ \mbox{\hyperlink{class_voiture}{Voiture}} $>$ {\bfseries voitures}
+\item 
+\mbox{\Hypertarget{class_environnement_a91a90e34bc913fa1d897b81759078701}\label{class_environnement_a91a90e34bc913fa1d897b81759078701}} 
+vector$<$ \mbox{\hyperlink{class_parking}{Parking}} $>$ {\bfseries parkings}
+\item 
+\mbox{\Hypertarget{class_environnement_a73edb7a4ee7ffd6a5a2151147c9b6ca7}\label{class_environnement_a73edb7a4ee7ffd6a5a2151147c9b6ca7}} 
+vector$<$ \mbox{\hyperlink{class_utilisateur}{Utilisateur}} $>$ {\bfseries conducteurs}
+\item 
+\mbox{\Hypertarget{class_environnement_a4542c592158f1f9d9037f4697161f948}\label{class_environnement_a4542c592158f1f9d9037f4697161f948}} 
+vector$<$ int $>$ {\bfseries double\+User}
+\item 
+\mbox{\Hypertarget{class_environnement_a8e5b6bcbe4cc6c332664694311efb3cc}\label{class_environnement_a8e5b6bcbe4cc6c332664694311efb3cc}} 
+unsigned int {\bfseries temps}
+\item 
+\mbox{\Hypertarget{class_environnement_a7882227d4283d79cb4367a2c0fdc7099}\label{class_environnement_a7882227d4283d79cb4367a2c0fdc7099}} 
+float {\bfseries Temps\+Ecoule}
+\item 
+\mbox{\Hypertarget{class_environnement_a233eb29c7328175c16eb887504c1cdb4}\label{class_environnement_a233eb29c7328175c16eb887504c1cdb4}} 
+bool {\bfseries Pause} = false
+\item 
+\mbox{\Hypertarget{class_environnement_aad9219304ab0b46d3ac453436c61f33a}\label{class_environnement_aad9219304ab0b46d3ac453436c61f33a}} 
+bool {\bfseries Speed\+Up} = false
+\item 
+\mbox{\Hypertarget{class_environnement_a7ed91289a5b748fde71fe7a6b9c29ea5}\label{class_environnement_a7ed91289a5b748fde71fe7a6b9c29ea5}} 
+int {\bfseries Secondes}
+\item 
+\mbox{\Hypertarget{class_environnement_a13b4445ce2a6d45402e6aeaa7e3bf37d}\label{class_environnement_a13b4445ce2a6d45402e6aeaa7e3bf37d}} 
+int {\bfseries Minutes}
+\item 
+\mbox{\Hypertarget{class_environnement_af3c1fe8cc4aa830d58acd3928569e1d1}\label{class_environnement_af3c1fe8cc4aa830d58acd3928569e1d1}} 
+int {\bfseries Heures}
+\item 
+\mbox{\Hypertarget{class_environnement_abaa8a93306ccf35c861a300e31242979}\label{class_environnement_abaa8a93306ccf35c861a300e31242979}} 
+int {\bfseries Jours}
+\item 
+\mbox{\Hypertarget{class_environnement_a73c49ff62f33dea532ab2198a19feb87}\label{class_environnement_a73c49ff62f33dea532ab2198a19feb87}} 
+int {\bfseries Mois}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_environnement_a0b8dbebe3222da2a469a62c2cb1e059a}\label{class_environnement_a0b8dbebe3222da2a469a62c2cb1e059a}} 
+\index{Environnement@{Environnement}!changeTarget@{changeTarget}}
+\index{changeTarget@{changeTarget}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{changeTarget()}{changeTarget()}}
+{\footnotesize\ttfamily void Environnement\+::change\+Target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voiture}{Voiture}} \&}]{v,  }\item[{int}]{ind\+Pr }\end{DoxyParamCaption})}
+
+
+
+Permet a une voiture de changer de trajectoire a tout moment. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & \mbox{\hyperlink{class_voiture}{Voiture}} qui change de trajectoire \\
+\hline
+{\em ind\+Pr} & Indice du parkings \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_environnement_ab8e8ea9af63a2b5a0deaa52281658e47}\label{class_environnement_ab8e8ea9af63a2b5a0deaa52281658e47}} 
+\index{Environnement@{Environnement}!checkId@{checkId}}
+\index{checkId@{checkId}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{checkId()}{checkId()}}
+{\footnotesize\ttfamily bool Environnement\+::check\+Id (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Fonction qui verifie qu\textquotesingle{}il ny\textquotesingle{}a pas de doublons d\textquotesingle{}id dans le fichier user.\+txt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id a verifier \\
+\hline
+{\em filename} & nom du fichier \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+booléen qui permet de savoir si il y a des doublons ou non 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environnement_a2ba97c0070d088e35e9be7290fd01c71}\label{class_environnement_a2ba97c0070d088e35e9be7290fd01c71}} 
+\index{Environnement@{Environnement}!chosenPark@{chosenPark}}
+\index{chosenPark@{chosenPark}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{chosenPark()}{chosenPark()}}
+{\footnotesize\ttfamily int Environnement\+::chosen\+Park (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{class_conversation}{Conversation}} $\ast$ $>$}]{conv,  }\item[{\mbox{\hyperlink{class_voiture}{Voiture}}}]{v }\end{DoxyParamCaption})}
+
+
+
+Choisit le meilleur parking pour une voiture. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em conv} & Vecteur de conversation qui contient toutes les conversations \\
+\hline
+{\em v} & \mbox{\hyperlink{class_voiture}{Voiture}} qui a communiqué \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+entier correspondant à l\textquotesingle{}id du parking choisit (si -\/1 alors pas de parking) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environnement_a619556cab6e46af0c5c860d547628a79}\label{class_environnement_a619556cab6e46af0c5c860d547628a79}} 
+\index{Environnement@{Environnement}!conversation@{conversation}}
+\index{conversation@{conversation}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{conversation()}{conversation()}}
+{\footnotesize\ttfamily void Environnement\+::conversation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voiture}{Voiture}} \&}]{v }\end{DoxyParamCaption})}
+
+
+
+pour réaliser la conversation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & \mbox{\hyperlink{class_voiture}{Voiture}} qui a communiqué \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_environnement_acbb1169ef3043a859884476095b1d306}\label{class_environnement_acbb1169ef3043a859884476095b1d306}} 
+\index{Environnement@{Environnement}!CreateRandomId@{CreateRandomId}}
+\index{CreateRandomId@{CreateRandomId}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{CreateRandomId()}{CreateRandomId()}}
+{\footnotesize\ttfamily int Environnement\+::\+Create\+Random\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant de créer un id aléatoire pour un utilisateur sans qu\textquotesingle{}il y ait de doublons. 
+
+\begin{DoxyReturn}{Returns}
+Un entier correspondant à l\textquotesingle{}id de l\textquotesingle{}utilisateur 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environnement_a2b905ef8196d46fb80d7cbd764584340}\label{class_environnement_a2b905ef8196d46fb80d7cbd764584340}} 
+\index{Environnement@{Environnement}!deleteConv@{deleteConv}}
+\index{deleteConv@{deleteConv}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{deleteConv()}{deleteConv()}}
+{\footnotesize\ttfamily void Environnement\+::delete\+Conv (\begin{DoxyParamCaption}\item[{int}]{ind }\end{DoxyParamCaption})}
+
+
+
+pour suppr une conv après utilisation 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ind} & indice de la conv à supprimer \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_environnement_a9d41d57841293581257327aa7f29d092}\label{class_environnement_a9d41d57841293581257327aa7f29d092}} 
+\index{Environnement@{Environnement}!getDataFromFile@{getDataFromFile}}
+\index{getDataFromFile@{getDataFromFile}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{getDataFromFile()}{getDataFromFile()}}
+{\footnotesize\ttfamily const vector$<$ pair$<$ double, double $>$ $>$ Environnement\+::get\+Data\+From\+File (\begin{DoxyParamCaption}\item[{string}]{file\+Name }\end{DoxyParamCaption}) const}
+
+
+
+Récupère les données pour les graphiques dans un fichier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & vecteur de pair de double contenant les données x et y du graphique \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vecteur de pair de double contenant les données x et y du graphique 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environnement_a4bc06e855b576eced9dbfe31a120ae34}\label{class_environnement_a4bc06e855b576eced9dbfe31a120ae34}} 
+\index{Environnement@{Environnement}!GetEntry@{GetEntry}}
+\index{GetEntry@{GetEntry}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{GetEntry()}{GetEntry()}}
+{\footnotesize\ttfamily const int Environnement\+::\+Get\+Entry (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant de retourner l\textquotesingle{}indice du noeud d\textquotesingle{}une des 3 entrées. 
+
+\begin{DoxyReturn}{Returns}
+Un entier correspondant à l\textquotesingle{}indice du noeud 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environnement_a5989ac69ed106f675b152edc4c442be2}\label{class_environnement_a5989ac69ed106f675b152edc4c442be2}} 
+\index{Environnement@{Environnement}!GetExit@{GetExit}}
+\index{GetExit@{GetExit}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{GetExit()}{GetExit()}}
+{\footnotesize\ttfamily const int Environnement\+::\+Get\+Exit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant de retourner l\textquotesingle{}indice du noeud d\textquotesingle{}une des 3 sorties. 
+
+\begin{DoxyReturn}{Returns}
+Un entier correspondant à l\textquotesingle{}indice du noeud 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environnement_a1c358cb887aafef6a66732dcd6930549}\label{class_environnement_a1c358cb887aafef6a66732dcd6930549}} 
+\index{Environnement@{Environnement}!getMap@{getMap}}
+\index{getMap@{getMap}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{getMap()}{getMap()}}
+{\footnotesize\ttfamily void Environnement\+::get\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+récupère les valeurs contenue dans le fichier map.\+txt qui contient un plateau de 0 et de 1 
+
+0 = case libre, 1 = case obstacle \mbox{\Hypertarget{class_environnement_a840c4e8f0d2a052a8f04f5bc16cbc407}\label{class_environnement_a840c4e8f0d2a052a8f04f5bc16cbc407}} 
+\index{Environnement@{Environnement}!getName@{getName}}
+\index{getName@{getName}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily string Environnement\+::get\+Name (\begin{DoxyParamCaption}\item[{string}]{gender = {\ttfamily \char`\"{}any\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+Fonction qui retourne un nom aléatoire. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gender} & \char`\"{}m\char`\"{} = male $\vert$ \char`\"{}f\char`\"{} = female $\vert$ \mbox{[}vide\mbox{]} = aleatoire \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string correspondant au nom 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environnement_a6b78f850bb3644d128bc06b5163b21f9}\label{class_environnement_a6b78f850bb3644d128bc06b5163b21f9}} 
+\index{Environnement@{Environnement}!GetNodeIndbyPos@{GetNodeIndbyPos}}
+\index{GetNodeIndbyPos@{GetNodeIndbyPos}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{GetNodeIndbyPos()}{GetNodeIndbyPos()}}
+{\footnotesize\ttfamily const int Environnement\+::\+Get\+Node\+Indby\+Pos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vec2}{Vec2}}}]{pos }\end{DoxyParamCaption}) const}
+
+
+
+Fonction permettant de retourner l\textquotesingle{}indice d\textquotesingle{}une case a partir de sa position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & position de la case \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Entier correspondant a l\textquotesingle{}indice de la case 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environnement_a640ba3f5d0f91c87d652d9d64da52e62}\label{class_environnement_a640ba3f5d0f91c87d652d9d64da52e62}} 
+\index{Environnement@{Environnement}!getPlaceInd@{getPlaceInd}}
+\index{getPlaceInd@{getPlaceInd}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{getPlaceInd()}{getPlaceInd()}}
+{\footnotesize\ttfamily const int Environnement\+::get\+Place\+Ind (\begin{DoxyParamCaption}\item[{int}]{parking\+Ind }\end{DoxyParamCaption})}
+
+
+
+Fonction qui permet de revoyer l\textquotesingle{}indice d\textquotesingle{}une place d\textquotesingle{}un des 3 parkings sauf si celui-\/ci est plein et que la place est prise. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parking} & parking dans lequel on cherche une place \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+entier correspondant à l\textquotesingle{}indice de la place 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environnement_aa92f54d5923bc8ec613e26fcb8fb6fdc}\label{class_environnement_aa92f54d5923bc8ec613e26fcb8fb6fdc}} 
+\index{Environnement@{Environnement}!GetPosbyNodeInd@{GetPosbyNodeInd}}
+\index{GetPosbyNodeInd@{GetPosbyNodeInd}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{GetPosbyNodeInd()}{GetPosbyNodeInd()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_vec2}{Vec2}} Environnement\+::\+Get\+Posby\+Node\+Ind (\begin{DoxyParamCaption}\item[{int}]{indice\+Case }\end{DoxyParamCaption}) const}
+
+
+
+Fonction permettant de retourner la position d\textquotesingle{}une case a partir de son indice. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em indice} & indice de la case \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+la position de la case 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environnement_aa4280f014be9d5d4951340a9a5ade424}\label{class_environnement_aa4280f014be9d5d4951340a9a5ade424}} 
+\index{Environnement@{Environnement}!getSurname@{getSurname}}
+\index{getSurname@{getSurname}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{getSurname()}{getSurname()}}
+{\footnotesize\ttfamily string Environnement\+::get\+Surname (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction qui retourne un prénom aléatoire. 
+
+\begin{DoxyReturn}{Returns}
+string correspondant au prénom 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environnement_a66696bcd86d532f1b1b232a8b91fcd34}\label{class_environnement_a66696bcd86d532f1b1b232a8b91fcd34}} 
+\index{Environnement@{Environnement}!initUser@{initUser}}
+\index{initUser@{initUser}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{initUser()}{initUser()}}
+{\footnotesize\ttfamily void Environnement\+::init\+User (\begin{DoxyParamCaption}\item[{bool}]{quitif }\end{DoxyParamCaption})}
+
+
+
+Initialisation d\textquotesingle{}un utilisateur, puis ajout dans le tableau de conducteurs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em quitif} & booleéan qui permet de faire réapparaitre un conducteur si il est déjà apparrut dans la simu \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_environnement_a00045295e38c97796b3b2e73baf948e7}\label{class_environnement_a00045295e38c97796b3b2e73baf948e7}} 
+\index{Environnement@{Environnement}!makeGraph@{makeGraph}}
+\index{makeGraph@{makeGraph}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{makeGraph()}{makeGraph()}}
+{\footnotesize\ttfamily void Environnement\+::make\+Graph (\begin{DoxyParamCaption}\item[{int}]{choice }\end{DoxyParamCaption})}
+
+
+
+Fonction qui fait un graphique. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em choice} & choix du graphique (0 \+: profit, 1 \+: evolution du starting price, 2 \+: nombre de place occupé, 3 \+: Succès moyen des parkings) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_environnement_aacedfef7c0d1c8b52ca9951992d57498}\label{class_environnement_aacedfef7c0d1c8b52ca9951992d57498}} 
+\index{Environnement@{Environnement}!random@{random}}
+\index{random@{random}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{random()}{random()}}
+{\footnotesize\ttfamily int Environnement\+::random (\begin{DoxyParamCaption}\item[{int}]{min,  }\item[{int}]{max }\end{DoxyParamCaption})}
+
+
+
+Fonction revoyant un nombre aléatoire en deux valeurs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em min} & valeur minimale \\
+\hline
+{\em max} & valeur maximale \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_environnement_a5f44893d56f926e2ea94a4dd60b2fce8}\label{class_environnement_a5f44893d56f926e2ea94a4dd60b2fce8}} 
+\index{Environnement@{Environnement}!RemoveVoiture@{RemoveVoiture}}
+\index{RemoveVoiture@{RemoveVoiture}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{RemoveVoiture()}{RemoveVoiture()}}
+{\footnotesize\ttfamily void Environnement\+::\+Remove\+Voiture (\begin{DoxyParamCaption}\item[{int}]{num\+Voiture }\end{DoxyParamCaption})}
+
+
+
+Enleve une voiture du tableau de voitures et le conducteur de la voiture du tableau de conducteurs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+Voiture} & numéro de la voiture à enlever. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_environnement_aa0b8be4b9cc3a3208b19cd8b8e2fb469}\label{class_environnement_aa0b8be4b9cc3a3208b19cd8b8e2fb469}} 
+\index{Environnement@{Environnement}!searchMax@{searchMax}}
+\index{searchMax@{searchMax}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{searchMax()}{searchMax()}}
+{\footnotesize\ttfamily double Environnement\+::search\+Max (\begin{DoxyParamCaption}\item[{vector$<$ double $>$}]{tab }\end{DoxyParamCaption})}
+
+
+
+Trouve le maximum d\textquotesingle{}un vecteur de double. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tab} & vecteur de double \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double correspondant au maximum du vecteur 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_environnement_a7e4924950dea85e5d149f7d957f01ea2}\label{class_environnement_a7e4924950dea85e5d149f7d957f01ea2}} 
+\index{Environnement@{Environnement}!searchMaxInPair@{searchMaxInPair}}
+\index{searchMaxInPair@{searchMaxInPair}!Environnement@{Environnement}}
+\doxysubsubsection{\texorpdfstring{searchMaxInPair()}{searchMaxInPair()}}
+{\footnotesize\ttfamily double Environnement\+::search\+Max\+In\+Pair (\begin{DoxyParamCaption}\item[{vector$<$ pair$<$ double, double $>$$>$}]{tab }\end{DoxyParamCaption})}
+
+
+
+Trouve le maximum d\textquotesingle{}un vecteur de pair de double. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tab} & vecteur de pair de double \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double correspondant au maximum du vecteur 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/Environnement.\+h\item 
+src/Environnement.\+cpp\end{DoxyCompactItemize}

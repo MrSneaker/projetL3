@@ -1,0 +1,480 @@
+.TH "Environnement" 3 "Tue Dec 13 2022" "Gestionnaire de parkings intelligents" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Environnement
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBAstar\fP (\fBVoiture\fP &v, unsigned int StartInd, unsigned int EndInd, vector< \fBNode\fP * > &nodes)"
+.br
+.ti -1c
+.RI "int \fBrandom\fP (int min, int max)"
+.br
+.RI "Fonction revoyant un nombre aléatoire en deux valeurs\&. "
+.ti -1c
+.RI "\fBVec2\fP \fBGetPosbyNodeInd\fP (int indiceCase) const"
+.br
+.RI "Fonction permettant de retourner la position d'une case a partir de son indice\&. "
+.ti -1c
+.RI "const int \fBGetNodeIndbyPos\fP (\fBVec2\fP pos) const"
+.br
+.RI "Fonction permettant de retourner l'indice d'une case a partir de sa position\&. "
+.ti -1c
+.RI "const int \fBGetEntry\fP ()"
+.br
+.RI "Fonction permettant de retourner l'indice du noeud d'une des 3 entrées\&. "
+.ti -1c
+.RI "const int \fBGetExit\fP ()"
+.br
+.RI "Fonction permettant de retourner l'indice du noeud d'une des 3 sorties\&. "
+.ti -1c
+.RI "const vector< pair< double, double > > \fBgetDataFromFile\fP (string fileName) const"
+.br
+.RI "Récupère les données pour les graphiques dans un fichier\&. "
+.ti -1c
+.RI "void \fBClockTime\fP ()"
+.br
+.RI "Fonction qui permet d'actualisé l'horloge pour l'affichage (seconde, minute, heure, jour, mois) "
+.ti -1c
+.RI "float \fBrandomParkTime\fP ()"
+.br
+.RI "Fonction permettant de retourner un temps de stationnement aléatoire\&. "
+.ti -1c
+.RI "void \fBinitUser\fP (bool quitif)"
+.br
+.RI "Initialisation d'un utilisateur, puis ajout dans le tableau de conducteurs\&. "
+.ti -1c
+.RI "int \fBCreateRandomId\fP ()"
+.br
+.RI "Fonction permettant de créer un id aléatoire pour un utilisateur sans qu'il y ait de doublons\&. "
+.ti -1c
+.RI "void \fBinitParkings\fP ()"
+.br
+.RI "Initialisation des parkings\&. "
+.ti -1c
+.RI "void \fBAddVoiture\fP ()"
+.br
+.RI "Ajout d'une voiture avec un conducteur dans le tableau de voitures\&. "
+.ti -1c
+.RI "void \fBRemoveVoiture\fP (int numVoiture)"
+.br
+.RI "Enleve une voiture du tableau de voitures et le conducteur de la voiture du tableau de conducteurs\&. "
+.ti -1c
+.RI "void \fBupdateStateVoiture\fP ()"
+.br
+.RI "Update le statut de chaque voiture\&. "
+.ti -1c
+.RI "void \fBupdateStateCarParks\fP ()"
+.br
+.RI "Update les caractéristiques de chaque parking (dont ses prix)\&. "
+.ti -1c
+.RI "void \fBEnvironnement_play\fP ()"
+.br
+.RI "Boucle de jeu\&. "
+.ti -1c
+.RI "void \fBgetMap\fP ()"
+.br
+.RI "récupère les valeurs contenue dans le fichier map\&.txt qui contient un plateau de 0 et de 1 "
+.ti -1c
+.RI "int \fBcreateConv\fP ()"
+.br
+.RI "on créé une conv quand on veut communiquer\&. "
+.ti -1c
+.RI "int \fBchosenPark\fP (vector< \fBConversation\fP * > conv, \fBVoiture\fP v)"
+.br
+.RI "Choisit le meilleur parking pour une voiture\&. "
+.ti -1c
+.RI "void \fBdeleteConv\fP (int ind)"
+.br
+.RI "pour suppr une conv après utilisation "
+.ti -1c
+.RI "void \fBconversation\fP (\fBVoiture\fP &v)"
+.br
+.RI "pour réaliser la conversation\&. "
+.ti -1c
+.RI "void \fBremoveLogs\fP ()"
+.br
+.RI "supprime le dossier de logs avant nouvelle itération\&. "
+.ti -1c
+.RI "double \fBsearchMaxInPair\fP (vector< pair< double, double >> tab)"
+.br
+.RI "Trouve le maximum d'un vecteur de pair de double\&. "
+.ti -1c
+.RI "double \fBsearchMax\fP (vector< double > tab)"
+.br
+.RI "Trouve le maximum d'un vecteur de double\&. "
+.ti -1c
+.RI "const int \fBgetPlaceInd\fP (int parkingInd)"
+.br
+.RI "Fonction qui permet de revoyer l'indice d'une place d'un des 3 parkings sauf si celui-ci est plein et que la place est prise\&. "
+.ti -1c
+.RI "void \fBchangeTarget\fP (\fBVoiture\fP &v, int indPr)"
+.br
+.RI "Permet a une voiture de changer de trajectoire a tout moment\&. "
+.ti -1c
+.RI "void \fBmakeGraph\fP (int choice)"
+.br
+.RI "Fonction qui fait un graphique\&. "
+.ti -1c
+.RI "void \fBsaveUser\fP ()"
+.br
+.RI "Fonction qui permet d'enregistrer les utilisateurs dans un fichier\&. "
+.ti -1c
+.RI "void \fBgetUser\fP ()"
+.br
+.RI "Fonction qui permet de charger les utilisateurs dans le vecteur savedconducteurs\&. "
+.ti -1c
+.RI "bool \fBcheckId\fP (int id, string filename)"
+.br
+.RI "Fonction qui verifie qu'il ny'a pas de doublons d'id dans le fichier user\&.txt\&. "
+.ti -1c
+.RI "void \fBgetNames_SurnamesFromFile\fP ()"
+.br
+.RI "Fonction qui récupère les noms et prénoms dans les fichiers txt\&. "
+.ti -1c
+.RI "string \fBgetName\fP (string gender='any')"
+.br
+.RI "Fonction qui retourne un nom aléatoire\&. "
+.ti -1c
+.RI "string \fBgetSurname\fP ()"
+.br
+.RI "Fonction qui retourne un prénom aléatoire\&. "
+.ti -1c
+.RI "void \fBtest_regresion\fP ()"
+.br
+.RI "Test de regression de la classe \fBEnvironnement\fP\&. "
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "string \fBmap\fP [DimWindowX/tailleCase *DimWindowY/tailleCase]"
+.br
+.ti -1c
+.RI "vector< \fBVoiture\fP > \fBvoitures\fP"
+.br
+.ti -1c
+.RI "vector< \fBParking\fP > \fBparkings\fP"
+.br
+.ti -1c
+.RI "vector< \fBUtilisateur\fP > \fBconducteurs\fP"
+.br
+.ti -1c
+.RI "vector< int > \fBdoubleUser\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBtemps\fP"
+.br
+.ti -1c
+.RI "float \fBTempsEcoule\fP"
+.br
+.ti -1c
+.RI "bool \fBPause\fP = false"
+.br
+.ti -1c
+.RI "bool \fBSpeedUp\fP = false"
+.br
+.ti -1c
+.RI "int \fBSecondes\fP"
+.br
+.ti -1c
+.RI "int \fBMinutes\fP"
+.br
+.ti -1c
+.RI "int \fBHeures\fP"
+.br
+.ti -1c
+.RI "int \fBJours\fP"
+.br
+.ti -1c
+.RI "int \fBMois\fP"
+.br
+.in -1c
+.SH "Member Function Documentation"
+.PP 
+.SS "void Environnement::changeTarget (\fBVoiture\fP & v, int indPr)"
+
+.PP
+Permet a une voiture de changer de trajectoire a tout moment\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIv\fP \fBVoiture\fP qui change de trajectoire 
+.br
+\fIindPr\fP Indice du parkings 
+.RE
+.PP
+
+.SS "bool Environnement::checkId (int id, string filename)"
+
+.PP
+Fonction qui verifie qu'il ny'a pas de doublons d'id dans le fichier user\&.txt\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIid\fP id a verifier 
+.br
+\fIfilename\fP nom du fichier 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+booléen qui permet de savoir si il y a des doublons ou non 
+.RE
+.PP
+
+.SS "int Environnement::chosenPark (vector< \fBConversation\fP * > conv, \fBVoiture\fP v)"
+
+.PP
+Choisit le meilleur parking pour une voiture\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIconv\fP Vecteur de conversation qui contient toutes les conversations 
+.br
+\fIv\fP \fBVoiture\fP qui a communiqué 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+entier correspondant à l'id du parking choisit (si -1 alors pas de parking) 
+.RE
+.PP
+
+.SS "void Environnement::conversation (\fBVoiture\fP & v)"
+
+.PP
+pour réaliser la conversation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIv\fP \fBVoiture\fP qui a communiqué 
+.RE
+.PP
+
+.SS "int Environnement::CreateRandomId ()"
+
+.PP
+Fonction permettant de créer un id aléatoire pour un utilisateur sans qu'il y ait de doublons\&. 
+.PP
+\fBReturns\fP
+.RS 4
+Un entier correspondant à l'id de l'utilisateur 
+.RE
+.PP
+
+.SS "void Environnement::deleteConv (int ind)"
+
+.PP
+pour suppr une conv après utilisation 
+.PP
+\fBParameters\fP
+.RS 4
+\fIind\fP indice de la conv à supprimer 
+.RE
+.PP
+
+.SS "const vector< pair< double, double > > Environnement::getDataFromFile (string fileName) const"
+
+.PP
+Récupère les données pour les graphiques dans un fichier\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIfileName\fP vecteur de pair de double contenant les données x et y du graphique 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vecteur de pair de double contenant les données x et y du graphique 
+.RE
+.PP
+
+.SS "const int Environnement::GetEntry ()"
+
+.PP
+Fonction permettant de retourner l'indice du noeud d'une des 3 entrées\&. 
+.PP
+\fBReturns\fP
+.RS 4
+Un entier correspondant à l'indice du noeud 
+.RE
+.PP
+
+.SS "const int Environnement::GetExit ()"
+
+.PP
+Fonction permettant de retourner l'indice du noeud d'une des 3 sorties\&. 
+.PP
+\fBReturns\fP
+.RS 4
+Un entier correspondant à l'indice du noeud 
+.RE
+.PP
+
+.SS "void Environnement::getMap ()"
+
+.PP
+récupère les valeurs contenue dans le fichier map\&.txt qui contient un plateau de 0 et de 1 0 = case libre, 1 = case obstacle 
+.SS "string Environnement::getName (string gender = \fC'any'\fP)"
+
+.PP
+Fonction qui retourne un nom aléatoire\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIgender\fP 'm' = male | 'f' = female | [vide] = aleatoire 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+string correspondant au nom 
+.RE
+.PP
+
+.SS "const int Environnement::GetNodeIndbyPos (\fBVec2\fP pos) const"
+
+.PP
+Fonction permettant de retourner l'indice d'une case a partir de sa position\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpos\fP position de la case 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Entier correspondant a l'indice de la case 
+.RE
+.PP
+
+.SS "const int Environnement::getPlaceInd (int parkingInd)"
+
+.PP
+Fonction qui permet de revoyer l'indice d'une place d'un des 3 parkings sauf si celui-ci est plein et que la place est prise\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIparking\fP parking dans lequel on cherche une place 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+entier correspondant à l'indice de la place 
+.RE
+.PP
+
+.SS "\fBVec2\fP Environnement::GetPosbyNodeInd (int indiceCase) const"
+
+.PP
+Fonction permettant de retourner la position d'une case a partir de son indice\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIindice\fP indice de la case 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+la position de la case 
+.RE
+.PP
+
+.SS "string Environnement::getSurname ()"
+
+.PP
+Fonction qui retourne un prénom aléatoire\&. 
+.PP
+\fBReturns\fP
+.RS 4
+string correspondant au prénom 
+.RE
+.PP
+
+.SS "void Environnement::initUser (bool quitif)"
+
+.PP
+Initialisation d'un utilisateur, puis ajout dans le tableau de conducteurs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIquitif\fP booleéan qui permet de faire réapparaitre un conducteur si il est déjà apparrut dans la simu 
+.RE
+.PP
+
+.SS "void Environnement::makeGraph (int choice)"
+
+.PP
+Fonction qui fait un graphique\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchoice\fP choix du graphique (0 : profit, 1 : evolution du starting price, 2 : nombre de place occupé, 3 : Succès moyen des parkings) 
+.RE
+.PP
+
+.SS "int Environnement::random (int min, int max)"
+
+.PP
+Fonction revoyant un nombre aléatoire en deux valeurs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImin\fP valeur minimale 
+.br
+\fImax\fP valeur maximale 
+.RE
+.PP
+
+.SS "void Environnement::RemoveVoiture (int numVoiture)"
+
+.PP
+Enleve une voiture du tableau de voitures et le conducteur de la voiture du tableau de conducteurs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInumVoiture\fP numéro de la voiture à enlever\&. 
+.RE
+.PP
+
+.SS "double Environnement::searchMax (vector< double > tab)"
+
+.PP
+Trouve le maximum d'un vecteur de double\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP vecteur de double 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double correspondant au maximum du vecteur 
+.RE
+.PP
+
+.SS "double Environnement::searchMaxInPair (vector< pair< double, double >> tab)"
+
+.PP
+Trouve le maximum d'un vecteur de pair de double\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItab\fP vecteur de pair de double 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double correspondant au maximum du vecteur 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Gestionnaire de parkings intelligents from the source code\&.

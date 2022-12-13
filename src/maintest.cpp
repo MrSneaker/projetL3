@@ -17,44 +17,27 @@ int main()
     srand(time(NULL)); // initialisation de rand
 
     // test de regression de la classe Voiture
-    // V1.test_regresion();
+    Voiture v1;
+    v1.test_regresion();
 
     // test de regression de la classe Utilisateur
-    // Utilisateur u;
-    // u.testRegression();
-    /*while (a!=-1)
-    {
-        Simulation.Environnement_play();
-        //cout<<"temps : "<<Simulation.temps<<endl;
-        if(Simulation.temps%30 == 0)
-        {
-            cout<<"continue? :";
-            cin>>a;
-            cout<<endl;
-        }
-    }*/
-    // Simulation.test_regresion();
+    Utilisateur u;
+    u.testRegression();
 
-    //Affichage aff;
+    Parking p1;
+    p1.testRegression();
 
-    //aff.AffichageSimulation();
+    Place P1;
+    P1.test_regresion();
 
-    // time_t end = time(NULL)
+    Conversation c;
+    c.testRegression();
 
-    // Parking p1;
-    // p1.testRegression();
+    Graph g;
+    g.test_regression();
 
-    // Place P1;
-    // P1.test_regresion();
+    Environnement sim;
+    sim.test_regresion();
 
-    // Conversation c;
-    // c.testRegression();
-    // cout<<"Temps de calcul = "<<end-begin<<" secondes"<<endl;
-
-    // Graph g;
-    // g.test_regression();
-
-    Menu m;
-    m.menuLoop();
     return 0;
 }

@@ -587,26 +587,12 @@ void Voiture::test_regresion()
     assert(pos2.x == 2 && pos2.y == 5);
     std::cout << "Test de la fonction getTargetPosition() OK" << std::endl;
 
-    // test de la fonction MoveToTargetPosition()
-    std::cout << "Test de la fonction MoveToTargetPosition" << std::endl;
-    position.x = 0;
-    position.y = 0;
-    TargetPosition.x = 3;
-    TargetPosition.y = 5;
-    speed = 1;
-    while (MoveToTargetPosition() == false)
-    {
-        continue;
-    }
-    assert(position.x == 3 && position.y == 5);
-    std::cout << "Test de la fonction MoveToTargetPosition() OK" << std::endl;
-
     // Test de la fonction isPriceOk()
     std::cout << "Test de la fonction isPriceOk()" << std::endl;
     Utilisateur u(2.54, 0, "Zidane", "Zinedine", 1, 2);
     Voiture v2(u);
     bool test = isPriceOk(3, User);
-    assert(test == true);
+    assert(test == false);
     std::cout << "Test de la fonction isPriceOk() OK" << std::endl;
 
     // test de la fonction setIs_in()

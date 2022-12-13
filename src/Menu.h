@@ -20,9 +20,24 @@ private:
     SDL_Renderer *renderer;
     SDL_Event events;
 
+    unsigned int startButtonX;
+    unsigned int startButtonY;
+    unsigned int startButtonW;
+    unsigned int startButtonH;
     Image startButton;
+
+    unsigned int quitButtonX;
+    unsigned int quitButtonY;
+    unsigned int quitButtonW;
+    unsigned int quitButtonH;
     Image quitButton;
+
     Image background;
+
+    unsigned int settingsX;
+    unsigned int settingsY;
+    unsigned int settingsW;
+    unsigned int settingsH;
     Image settings;
 
     TTF_Font *font_default;

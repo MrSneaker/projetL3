@@ -10,9 +10,23 @@ Menu::~Menu()
 
 void Menu::initMenu() // on initialise la SDL.
 {
+    startButtonX = 350;
+    startButtonY = 200;
+    startButtonW = 300;
+    startButtonH = 200;
+
+    quitButtonX = 350;
+    quitButtonY = 500;
+    quitButtonW = 300;
+    quitButtonH = 200;
+
+    settingsX = 850;
+    settingsY = 650;
+    settingsW = 100;
+    settingsH = 100;
 
     // Initialisation de la SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
     {
         cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << endl;
         SDL_Quit();
@@ -68,28 +82,30 @@ void Menu::initTexture() // initialisation des textures.
     background.loadFromFile("img/background.png", renderer);
     startButton.loadFromFile("img/start.png", renderer);
     quitButton.loadFromFile("img/exit.png", renderer);
-    settings.loadFromFile("img/settings.png",renderer);
+    settings.loadFromFile("img/settings.png", renderer);
 }
 
 void Menu::afficherMenu() // affichage du menu.
 {
     background.draw(renderer, 0, 0, DimWindowX, DimWindowY, 0);
-    startButton.draw(renderer, 350, 200, 300, 200, 0);
-    quitButton.draw(renderer, 350, 500, 300, 200, 0);
-    settings.draw(renderer,850,650,100,100,0);
+    startButton.draw(renderer, startButtonX, startButtonY, startButtonW, startButtonH, 0);
+    quitButton.draw(renderer, quitButtonX, quitButtonY, quitButtonW, quitButtonH, 0);
+    settings.draw(renderer, settingsX, settingsY, settingsW, settingsH, 0);
     SDL_RenderPresent(renderer);
+    SDL_RenderClear(renderer);
 }
 
 void Menu::destructMenu() // destruction de toute les instances SDL (sans SDL_Quit).
 {
     TTF_CloseFont(font_default);
-    TTF_Quit();
     background.~Image();
     startButton.~Image();
     quitButton.~Image();
-    IMG_Quit();
+    settings.~Image();
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
+    IMG_Quit();
+    TTF_Quit();
 }
 
 void Menu::launchSim()
@@ -102,7 +118,8 @@ void Menu::menuLoop()
 {
     initMenu();        // on initialise la SDL.
     bool quit = false; // condition du while.
-    int x, y;          // position de la souris.
+    bool click = false;
+    int x, y; // position de la souris.
     x = 0;
     y = 0;
     afficherMenu(); // on affiche le Menu.
@@ -115,11 +132,14 @@ void Menu::menuLoop()
             case SDL_QUIT:   // si on ferme la fenêtre..
                 quit = true; // .. on ferme la fenêtre.
                 break;
-            case SDL_MOUSEBUTTONDOWN:                        // si on appuie sur un bouton de la souris..
-                if (events.button.button == SDL_BUTTON_LEFT) // .. et que c'est le clique gauche..
+            case SDL_MOUSEMOTION:
+                x = events.motion.x; // .. on récupère la position de la souris.
+                y = events.motion.y; // si on bouge la souris.
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                if (events.button.button == SDL_BUTTON_LEFT) // on detecte le clique gauche.
                 {
-                    x = events.motion.x; // .. on récupère la position de la souris.
-                    y = events.motion.y;
+                    click = true;
                 }
                 break;
             default:
@@ -127,18 +147,17 @@ void Menu::menuLoop()
             }
         }
         // Ici on tests si le clique de la souris était dans un bouton ou non.
-        if ((x > 350) && (x < 350 + 300) && (y > 300) && (y < 300 + 200))
+        if ((x > startButtonX) && (x < startButtonX + startButtonW) && (y > startButtonY) && (y < startButtonY + startButtonH) && click)
         {
             destructMenu(); // on efface le menu.
             launchSim();    // on lance la simulation.
             x = 0;          // on reset la position de la souris.
             y = 0;
             initMenu(); // on réinitialise le menu.
-            initFont();
-            initTexture();
+            click = false;
         }
 
-        else if ((x > 350) && (x < 350 + 300) && (y > 500) && (y < 500 + 200))
+        else if ((x > quitButtonX) && (x < quitButtonX + quitButtonW) && (y > quitButtonY) && (y < quitButtonY + quitButtonH) && click)
         { // on quitte le menu.
             quit = true;
         }

@@ -1,0 +1,32 @@
+.TH "Image" 3 "Tue Dec 13 2022" "Gestionnaire de parkings intelligents" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Image
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBImage\fP ()"
+.br
+.RI "constructeur de l'image, met toutes les valeurs de la classe à null\&. "
+.ti -1c
+.RI "\fB~Image\fP ()"
+.br
+.RI "destructeur de l'image, désalloue la surface et la texture et reset les valeurs\&. "
+.ti -1c
+.RI "void \fBloadFromFile\fP (const char *filename, SDL_Renderer *renderer)"
+.br
+.RI "Fait correspondre texture + surface avec un png\&. "
+.ti -1c
+.RI "void \fBdraw\fP (SDL_Renderer *renderer, int x, int y, int w=\-1, int h=\-1, int angle=0)"
+.br
+.RI "Dessine l'image\&. "
+.in -1c
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Gestionnaire de parkings intelligents from the source code\&.

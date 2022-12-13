@@ -1131,67 +1131,6 @@ void Environnement::test_regresion()
      {
         E.conversation(E.voitures.at(i));
      }
-
-     E.AddVoiture();
-     E.AddVoiture();
-
-     for (int i = 0; i < E.voitures.size(); i++)
-     {
-         cout << "Voiture " << i << " : "
-              << "pathTab.size() : " << E.voitures[i].getpathTab().size() << endl;
-         E.Astar(E.voitures[i], 47, 1721,E.voitures[i].nodes);
-         cout << "la" << endl;
-         cout << "Voiture : " << i << " : "
-              << " getpathTab() size : " << E.voitures[0].getpathTab().size() << endl;
-         for (int j = 0; j < E.voitures[i].getpathTab().size(); j++)
-         {
-             cout << "Noeud " << j << " : " << E.voitures[i].getpathTab()[j]->getNodepos().x << " " << E.voitures[i].getpathTab()[j]->getNodepos().y << endl;
-         }
-     }
-
-    /*cout << "Test de regression de la fonction saveUser()" << endl;
-    E.AddVoiture();
-    E.AddVoiture();
-
-    E.saveUser();
-
-    // On verifie que les utilisateurs sont bien sauvegardés dans le fichier
-    ifstream fichier("data/User.txt", ios::in); // on ouvre le fichier en lecture
-
-    vector<string> data;
-    string tmp;
-    if (fichier)
-    {
-        string ligne;
-        int i = 0;
-        while (getline(fichier, ligne))
-        {
-            cout << "Ligne " << i << " : " << ligne << endl;
-
-            data.push_back(ligne);
-            i++;
-        }
-        fichier.close();
-    }
-    else
-    {
-        cerr << "Impossible d'ouvrir le fichier !" << endl;
-    }
-
-    assert(E.savedConducteurs.size() == 2);
-    cout << "E.savedConducteurs.size() : " << E.savedConducteurs.size() << endl;
-    // affiche les donnée stockées dans le tableau data
-    cout << "data.size() : " << data.size() << endl;
-    for (int i = 0; i < data.size(); i++)
-    {
-        cout << "data[" << i << "] : " << data[i] << endl;
-    }
-
-    cout << "test de regression de la fonction saveUser() : OK" << endl;
-
-    // test de regression de la fonction getUser()
-    E.getUser();
-    assert(E.savedConducteurs.size() == 2);
-    cout << "E.savedConducteurs.size() : " << E.savedConducteurs.size() << endl;
-    */
+     assert(E.conv.size() == 0);
+     cout << "Test de regression de la fonction conversation: OK" << endl;
 }

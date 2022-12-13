@@ -401,7 +401,7 @@ int Affichage::AffichageUserCard(unsigned int Vind)
     AfficherTexte(font_UserCard, "", "", environnement.voitures[Vind].User.getAge(), User_Card.x + 155, User_Card.y + 70, 0, 0, 0, 255);
     // on affiche son temps de stationnement
     AfficherTexte(font_UserCardBold, "ParkTime: ", "", 0, User_Card.x + 125, User_Card.y + 90, 0, 0, 0, 255);
-    AfficherTexte(font_UserCard, "", "", environnement.voitures[Vind].User.getParkTime(), User_Card.x + 183, User_Card.y + 90, 0, 0, 0, 255);
+    AfficherTexte(font_UserCard, "", "", environnement.voitures[Vind].User.getParkTime()*10, User_Card.x + 183, User_Card.y + 90, 0, 0, 0, 255);
     // on affiche son prix max
     AfficherTexte(font_UserCardBold, "PrixMax: ", "", 0, User_Card.x + 125, User_Card.y + 110, 0, 0, 0, 255);
     AfficherTexte(font_UserCard, "", "", environnement.voitures[Vind].User.getMaxPrice(), User_Card.x + 175, User_Card.y + 110, 0, 0, 0, 255);
@@ -745,7 +745,6 @@ void Affichage::AffichageSimulation()
                     {
                         if (XC > VX - VH / 2 && XC < VX + VH / 2 && YC > VY - VW / 2 && YC < VY + VW / 2)
                         {
-                            cout << "voiture " << i << endl;
                             DisplayUserCard = true;
                             CarInd = i;
                         }
@@ -754,7 +753,6 @@ void Affichage::AffichageSimulation()
                     {
                         if (XC > VX - VW / 2 && XC < VX + VW / 2 && YC > VY - VH / 2 && YC < VY + VH / 2)
                         {
-                            cout << "Voiture : " << i << endl;
                             DisplayUserCard = true;
                             CarInd = i;
                         }
@@ -769,7 +767,6 @@ void Affichage::AffichageSimulation()
                     int InfoParkH = 50;
                     if (XC > InfoParkX && XC < InfoParkX + InfoParkW && YC > InfoParkY && YC < InfoParkY + InfoParkH)
                     {
-                        cout << "Parking : " << i << endl;
                         DisplayParkingCard = true;
                         ParkInd = i;
                     }

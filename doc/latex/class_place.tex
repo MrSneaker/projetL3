@@ -1,0 +1,72 @@
+\hypertarget{class_place}{}\doxysection{Place Class Reference}
+\label{class_place}\index{Place@{Place}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_place_ab5ae86c31e3a4c91800fb396d38e7a2b}\label{class_place_ab5ae86c31e3a4c91800fb396d38e7a2b}} 
+\mbox{\hyperlink{class_place_ab5ae86c31e3a4c91800fb396d38e7a2b}{Place}} ()
+\begin{DoxyCompactList}\small\item\em constructeur de la place. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_place_ad9de061be2696fa05a9320ff4192fee7}\label{class_place_ad9de061be2696fa05a9320ff4192fee7}} 
+\mbox{\hyperlink{class_place_ad9de061be2696fa05a9320ff4192fee7}{Place}} (\mbox{\hyperlink{class_vec2}{Vec2}} pos, int indP)
+\begin{DoxyCompactList}\small\item\em constructeur à paramètre de \mbox{\hyperlink{class_place}{Place}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_place_a190a59c6249d3b30d7ecfa8babe411ff}\label{class_place_a190a59c6249d3b30d7ecfa8babe411ff}} 
+\mbox{\hyperlink{class_place_a190a59c6249d3b30d7ecfa8babe411ff}{$\sim$\+Place}} ()
+\begin{DoxyCompactList}\small\item\em destructeur de la place. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_place_ab68bc461377bcbc65bcfc169c6925476}\label{class_place_ab68bc461377bcbc65bcfc169c6925476}} 
+const \mbox{\hyperlink{class_vec2}{Vec2}} \& \mbox{\hyperlink{class_place_ab68bc461377bcbc65bcfc169c6925476}{get\+Pos}} () const
+\begin{DoxyCompactList}\small\item\em position de la place. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_place_a28e0aa068bb9060154e22acd593ff4ef}\label{class_place_a28e0aa068bb9060154e22acd593ff4ef}} 
+const int \& \mbox{\hyperlink{class_place_a28e0aa068bb9060154e22acd593ff4ef}{get\+IndP}} () const
+\begin{DoxyCompactList}\small\item\em procédure de récupération de l\textquotesingle{}indice de la position de la place. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_place_a41b3fef8c002e717d0cc5430e9159ca5}{set\+Is\+Taken}} (bool new\+\_\+is\+Taken)
+\begin{DoxyCompactList}\small\item\em met à jour la valeur de is\+Taken avec la valeur de \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_place_a724bf83be3de73cba0b47a350b37f23c}\label{class_place_a724bf83be3de73cba0b47a350b37f23c}} 
+const bool \& \mbox{\hyperlink{class_place_a724bf83be3de73cba0b47a350b37f23c}{get\+Is\+Taken}} () const
+\begin{DoxyCompactList}\small\item\em retourne le booléen is\+Taken. Vrai = place prise, faux sinon. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_place_ace3c55e7bf3f4952483249e6ea9d0697}{set\+Is\+Reserved}} (bool new\+\_\+is\+Reserved)
+\begin{DoxyCompactList}\small\item\em met à jour la valeur de is\+Reserved avec la valeur de \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_place_af4ba36d4b153adef7dde526a05363b33}\label{class_place_af4ba36d4b153adef7dde526a05363b33}} 
+const bool \& \mbox{\hyperlink{class_place_af4ba36d4b153adef7dde526a05363b33}{get\+Is\+Reserved}} () const
+\begin{DoxyCompactList}\small\item\em retourne le booléen is\+Reserved. Vrai = place réservée, faux sinon. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_place_ae16b237e274ef328a88f8b8a3868ee6b}\label{class_place_ae16b237e274ef328a88f8b8a3868ee6b}} 
+void \mbox{\hyperlink{class_place_ae16b237e274ef328a88f8b8a3868ee6b}{test\+\_\+regresion}} ()
+\begin{DoxyCompactList}\small\item\em test de régression de la classe \mbox{\hyperlink{class_place}{Place}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_place_ace3c55e7bf3f4952483249e6ea9d0697}\label{class_place_ace3c55e7bf3f4952483249e6ea9d0697}} 
+\index{Place@{Place}!setIsReserved@{setIsReserved}}
+\index{setIsReserved@{setIsReserved}!Place@{Place}}
+\doxysubsubsection{\texorpdfstring{setIsReserved()}{setIsReserved()}}
+{\footnotesize\ttfamily void Place\+::set\+Is\+Reserved (\begin{DoxyParamCaption}\item[{bool}]{new\+\_\+is\+Reserved }\end{DoxyParamCaption})}
+
+
+
+met à jour la valeur de is\+Reserved avec la valeur de 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+is\+Reserved,un} & booléen. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_place_a41b3fef8c002e717d0cc5430e9159ca5}\label{class_place_a41b3fef8c002e717d0cc5430e9159ca5}} 
+\index{Place@{Place}!setIsTaken@{setIsTaken}}
+\index{setIsTaken@{setIsTaken}!Place@{Place}}
+\doxysubsubsection{\texorpdfstring{setIsTaken()}{setIsTaken()}}
+{\footnotesize\ttfamily void Place\+::set\+Is\+Taken (\begin{DoxyParamCaption}\item[{bool}]{new\+\_\+is\+Taken }\end{DoxyParamCaption})}
+
+
+
+met à jour la valeur de is\+Taken avec la valeur de 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+is\+Taken,un} & booléen. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/Place.\+h\item 
+src/Place.\+cpp\end{DoxyCompactItemize}

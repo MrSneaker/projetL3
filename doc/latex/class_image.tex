@@ -1,0 +1,23 @@
+\hypertarget{class_image}{}\doxysection{Image Class Reference}
+\label{class_image}\index{Image@{Image}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_image_a58edd1c45b4faeb5f789b0d036d02313}\label{class_image_a58edd1c45b4faeb5f789b0d036d02313}} 
+\mbox{\hyperlink{class_image_a58edd1c45b4faeb5f789b0d036d02313}{Image}} ()
+\begin{DoxyCompactList}\small\item\em constructeur de l\textquotesingle{}image, met toutes les valeurs de la classe à null. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_image_a0294f63700543e11c0f0da85601c7ae5}\label{class_image_a0294f63700543e11c0f0da85601c7ae5}} 
+\mbox{\hyperlink{class_image_a0294f63700543e11c0f0da85601c7ae5}{$\sim$\+Image}} ()
+\begin{DoxyCompactList}\small\item\em destructeur de l\textquotesingle{}image, désalloue la surface et la texture et reset les valeurs. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_image_aa276b5183099671ddeaf8f083068046c}\label{class_image_aa276b5183099671ddeaf8f083068046c}} 
+void \mbox{\hyperlink{class_image_aa276b5183099671ddeaf8f083068046c}{load\+From\+File}} (const char $\ast$filename, SDL\+\_\+\+Renderer $\ast$renderer)
+\begin{DoxyCompactList}\small\item\em Fait correspondre texture + surface avec un png. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_image_a0d2455acb1fb5acd690aef8e434c0caa}\label{class_image_a0d2455acb1fb5acd690aef8e434c0caa}} 
+void \mbox{\hyperlink{class_image_a0d2455acb1fb5acd690aef8e434c0caa}{draw}} (SDL\+\_\+\+Renderer $\ast$renderer, int x, int y, int w=-\/1, int h=-\/1, int angle=0)
+\begin{DoxyCompactList}\small\item\em Dessine l\textquotesingle{}image. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/Image.\+h\item 
+src/Image.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,123 @@
+\hypertarget{class_conversation}{}\doxysection{Conversation Class Reference}
+\label{class_conversation}\index{Conversation@{Conversation}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_conversation_aef6cde38cb587ab72c687512302ad3a0}\label{class_conversation_aef6cde38cb587ab72c687512302ad3a0}} 
+\mbox{\hyperlink{class_conversation_aef6cde38cb587ab72c687512302ad3a0}{Conversation}} ()
+\begin{DoxyCompactList}\small\item\em Constucteur par défaut de \mbox{\hyperlink{class_conversation}{Conversation}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_conversation_a19e4014c024725b233371ab0a6d405ae}\label{class_conversation_a19e4014c024725b233371ab0a6d405ae}} 
+\mbox{\hyperlink{class_conversation_a19e4014c024725b233371ab0a6d405ae}{$\sim$\+Conversation}} ()
+\begin{DoxyCompactList}\small\item\em Destructeur de \mbox{\hyperlink{class_conversation}{Conversation}}. \end{DoxyCompactList}\item 
+vector$<$ \mbox{\hyperlink{class_message}{Message}} $>$ \mbox{\hyperlink{class_conversation_affad0b12a5c84e72ee3cf3033df6d1e5}{get\+Conv}} () const
+\begin{DoxyCompactList}\small\item\em Renvoie le vecteur de \mbox{\hyperlink{class_message}{Message}} conv. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_conversation_a2a256e3bedce1c7e4f15b5749c25b710}{manage\+Conv}} (\mbox{\hyperlink{class_parking}{Parking}} p, \mbox{\hyperlink{class_voiture}{Voiture}} v)
+\begin{DoxyCompactList}\small\item\em Démarre une conversation entre deux entités en paramètres. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_conversation_af0b65a49b6ad00425cb55a63f4dec3d2}\label{class_conversation_af0b65a49b6ad00425cb55a63f4dec3d2}} 
+void {\bfseries manage\+Confirm} (\mbox{\hyperlink{class_parking}{Parking}} p, \mbox{\hyperlink{class_voiture}{Voiture}} v, int ind\+Pr\+OK)
+\item 
+void \mbox{\hyperlink{class_conversation_a0fcf8bafd26d83f8d11bc7892c1ab013}{send\+Message\+Voiture}} (\mbox{\hyperlink{class_voiture}{Voiture}} v)
+\begin{DoxyCompactList}\small\item\em Fait appel à manage\+Conversation dans \mbox{\hyperlink{class_voiture}{Voiture}} pour écrire un message approprié à l\textquotesingle{}état de la conversation. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_conversation_a663c09326c171c9cbd7d4ee4d0939873}\label{class_conversation_a663c09326c171c9cbd7d4ee4d0939873}} 
+void {\bfseries send\+ConfirmationV} (\mbox{\hyperlink{class_voiture}{Voiture}} v, int ind\+Pr\+OK)
+\item 
+\mbox{\Hypertarget{class_conversation_abbd935c599448b655d53a5adace274d8}\label{class_conversation_abbd935c599448b655d53a5adace274d8}} 
+void {\bfseries send\+ConfirmationP} (\mbox{\hyperlink{class_parking}{Parking}} p)
+\item 
+void \mbox{\hyperlink{class_conversation_a9f236786edf3cd767c0ee7b65b04a7b8}{send\+Message\+Parking}} (\mbox{\hyperlink{class_parking}{Parking}} p)
+\begin{DoxyCompactList}\small\item\em Fait appel à manage\+Conversation dans \mbox{\hyperlink{class_parking}{Parking}} pour écrire un message approprié à l\textquotesingle{}état de la conversation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_conversation_a8242eb7f32910df3e9d0e7e721838edb}{update\+State\+Car\+Park\+After\+Conv}} (\mbox{\hyperlink{class_parking}{Parking}} \&p)
+\begin{DoxyCompactList}\small\item\em Met à jour les données membres nb\+Total\+Visits\+For10\+Last\+Conv,. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_conversation_aae0c4e86c0da3d85e98be1a982605b34}\label{class_conversation_aae0c4e86c0da3d85e98be1a982605b34}} 
+bool \mbox{\hyperlink{class_conversation_aae0c4e86c0da3d85e98be1a982605b34}{stock\+Conv}} (const string \&file\+Name, unsigned int nb\+Conv)
+\begin{DoxyCompactList}\small\item\em Stocke la conversation, afin de laisser une trace. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_conversation_a2de2535975a3405826d2888b16569f60}\label{class_conversation_a2de2535975a3405826d2888b16569f60}} 
+void \mbox{\hyperlink{class_conversation_a2de2535975a3405826d2888b16569f60}{test\+Regression}} ()
+\begin{DoxyCompactList}\small\item\em Test de régression de la classe \mbox{\hyperlink{class_conversation}{Conversation}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_conversation_affad0b12a5c84e72ee3cf3033df6d1e5}\label{class_conversation_affad0b12a5c84e72ee3cf3033df6d1e5}} 
+\index{Conversation@{Conversation}!getConv@{getConv}}
+\index{getConv@{getConv}!Conversation@{Conversation}}
+\doxysubsubsection{\texorpdfstring{getConv()}{getConv()}}
+{\footnotesize\ttfamily vector$<$ \mbox{\hyperlink{class_message}{Message}} $>$ Conversation\+::get\+Conv (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Renvoie le vecteur de \mbox{\hyperlink{class_message}{Message}} conv. 
+
+\begin{DoxyReturn}{Returns}
+un vecteur de \mbox{\hyperlink{class_message}{Message}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_conversation_a2a256e3bedce1c7e4f15b5749c25b710}\label{class_conversation_a2a256e3bedce1c7e4f15b5749c25b710}} 
+\index{Conversation@{Conversation}!manageConv@{manageConv}}
+\index{manageConv@{manageConv}!Conversation@{Conversation}}
+\doxysubsubsection{\texorpdfstring{manageConv()}{manageConv()}}
+{\footnotesize\ttfamily bool Conversation\+::manage\+Conv (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_parking}{Parking}}}]{p,  }\item[{\mbox{\hyperlink{class_voiture}{Voiture}}}]{v }\end{DoxyParamCaption})}
+
+
+
+Démarre une conversation entre deux entités en paramètres. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & un parking, \\
+\hline
+{\em v} & une voiture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+un booléen \+: true si la conversation s\textquotesingle{}est déroulée sans erreur, false sinon. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_conversation_a9f236786edf3cd767c0ee7b65b04a7b8}\label{class_conversation_a9f236786edf3cd767c0ee7b65b04a7b8}} 
+\index{Conversation@{Conversation}!sendMessageParking@{sendMessageParking}}
+\index{sendMessageParking@{sendMessageParking}!Conversation@{Conversation}}
+\doxysubsubsection{\texorpdfstring{sendMessageParking()}{sendMessageParking()}}
+{\footnotesize\ttfamily void Conversation\+::send\+Message\+Parking (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_parking}{Parking}}}]{p }\end{DoxyParamCaption})}
+
+
+
+Fait appel à manage\+Conversation dans \mbox{\hyperlink{class_parking}{Parking}} pour écrire un message approprié à l\textquotesingle{}état de la conversation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & un parking. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_conversation_a0fcf8bafd26d83f8d11bc7892c1ab013}\label{class_conversation_a0fcf8bafd26d83f8d11bc7892c1ab013}} 
+\index{Conversation@{Conversation}!sendMessageVoiture@{sendMessageVoiture}}
+\index{sendMessageVoiture@{sendMessageVoiture}!Conversation@{Conversation}}
+\doxysubsubsection{\texorpdfstring{sendMessageVoiture()}{sendMessageVoiture()}}
+{\footnotesize\ttfamily void Conversation\+::send\+Message\+Voiture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_voiture}{Voiture}}}]{v }\end{DoxyParamCaption})}
+
+
+
+Fait appel à manage\+Conversation dans \mbox{\hyperlink{class_voiture}{Voiture}} pour écrire un message approprié à l\textquotesingle{}état de la conversation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & une voiture. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_conversation_a8242eb7f32910df3e9d0e7e721838edb}\label{class_conversation_a8242eb7f32910df3e9d0e7e721838edb}} 
+\index{Conversation@{Conversation}!updateStateCarParkAfterConv@{updateStateCarParkAfterConv}}
+\index{updateStateCarParkAfterConv@{updateStateCarParkAfterConv}!Conversation@{Conversation}}
+\doxysubsubsection{\texorpdfstring{updateStateCarParkAfterConv()}{updateStateCarParkAfterConv()}}
+{\footnotesize\ttfamily void Conversation\+::update\+State\+Car\+Park\+After\+Conv (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_parking}{Parking}} \&}]{p }\end{DoxyParamCaption})}
+
+
+
+Met à jour les données membres nb\+Total\+Visits\+For10\+Last\+Conv,. 
+
+nb\+Total\+Visits et profit d\textquotesingle{}un parking. 
+\begin{DoxyParams}{Parameters}
+{\em p} & le parking qu\textquotesingle{}on met à jour \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/Conversation.\+h\item 
+src/Conversation.\+cpp\end{DoxyCompactItemize}
