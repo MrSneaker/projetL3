@@ -34,7 +34,7 @@ private:
     // au cours de sa vie, en fonction de si ce prix minimum
     // a tendance à être trop haut (pour les utilisateurs)
     // ou trop bas (ie le parking ne gagne pas assez d'argent)
-    // [cf commentaire de la donnée membre nbAgreement pour plus d'explications]
+    // [cf commentaire de la donnée membre successPercentageLastConv pour plus d'explications]
 
     float startingPrice; // Prix proposé par le parking au début de la négociation
 
@@ -44,7 +44,7 @@ private:
     // au cours de sa vie, en fonction de si ce prix de départ
     // a tendance à être trop haut (pour les utilisateurs)
     // ou trop bas (ie le parking ne gagne pas assez d'argent)
-    // [cf commentaire de la donnée membre nbAgreement pour plus d'explications]
+    // [cf commentaire de la donnée membre successPercentageLastConv pour plus d'explications]
 
     int idP; // Numéro du parking : 0, 1 ou 2 dans l'implémentation, mais 1, 2 ou 3 sur l'affichage au sol
 
@@ -54,6 +54,7 @@ private:
 
     double successPercentage; // Pourcentage de réussite des négociations du Parking
 
+
     double successPercentageLastConv; // Pourcentage de réussite des 10 dernières négociations du Parking
 
     // - Ratio, en pourcentage, de lastNbAgreements sur lastNbFinishedConv.
@@ -61,6 +62,18 @@ private:
     // - A intervalles réguliers, le parking considère cette donnée membre
     // pour éventuellement modifier son minPrice et son startingPrice
     // (cf fonction membre reconsiderPrices).
+
+    /* - En détails : le parking calcule régulièrement son nombre de
+       réussites récentes par rapport à son nombre de négociations récentes. Si les négociations
+       ont souvent abouti à un refus de l'utilisateur de se garer dans le parking,
+       (i.e. si successPercentageLastConv est au-dessous
+       d'un certain seuil fixe [TO DO : voir plus tard si on fait plus dynamique qu'un simple seuil fixe]),
+       cela veut dire que les prix du parking sont trop hauts, et ce dernier va donc diminuer
+       les bornes de son intervalle de prix pour faire venir globalement plus de voitures.
+       A l'inverse, si le rapport est au-dessus d'un certain seuil fixe (pas le même seuil),
+       le parking va augmenter ses prix pour tenter de gagner plus d'argent.
+    */
+
 
     double profit; // Quantité totale d'argent reçue par le Parking
 
@@ -73,20 +86,12 @@ private:
     unsigned int lastNbAgreements; // Nombre total de visites du parking à l'issue de ses 10 dernières conversations
     // Cette donnée rentre dans le calcul de successPercentageLastConv.
 
-    unsigned int nbAgreement;   // Nombre total d'accords trouvés par le Parking, donc nombre total de visites du Parking
+    unsigned int nbAgreement; // Nombre total d'accords trouvés par le Parking, donc nombre total de visites du Parking
 
     // - Une visite correspond à une fois où un utilisateur s'est garé dans le parking.
 
-    /* - Le parking calcule régulièrement son nombre de
-       réussites récentes par rapport à son nombre de négociations récentes. Si les négociations
-       ont souvent abouti à un refus de l'utilisateur de se garer dans le parking en question,
-       (i.e. si successPercentageLastConv est au-dessous
-       d'un certain seuil fixe [TO DO : voir plus tard si on fait plus dynamique qu'un simple seuil fixe]),
-       cela veut dire que les prix du parking sont trop hauts, et ce dernier va donc diminuer
-       les bornes de son intervalle de prix pour faire venir globalement plus de voitures.
-       A l'inverse, si le rapport est au-dessus d'un certain seuil fixe (pas le même seuil),
-       le parking va augmenter ses prix pour tenter de gagner plus d'argent.
-       */
+    // - Cette donnée rentre dans le calcul de successPercentage.
+
 
 
 public:
