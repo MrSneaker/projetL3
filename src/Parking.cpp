@@ -8,7 +8,6 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     minPrice = (minimumPrice);
     startingPrice = (startPrice);
     isFull = (false);
-    nbTotalVisits = (0);
     DIMX = DimX;
     DIMY = DimY;
     nbPlaces = ((DIMX / 2 - 1) * (DIMY / 4));
@@ -92,11 +91,6 @@ bool Parking::IsFull()
         isFull = false;
     }
     return isFull;
-}
-
-const int &Parking::getNbTotalVisits() const
-{
-    return nbTotalVisits;
 }
 
 const Vec2 &Parking::getPos() const
@@ -257,11 +251,6 @@ void Parking::addToData(double currentTime)
     dataStartingPrice.close();
 }
 
-void Parking::incrementNbTotalVisits()
-{
-    nbTotalVisits++;
-}
-
 void Parking::incrementNbVisitsUser(unsigned int idU)
 {
     int id;
@@ -303,7 +292,6 @@ void Parking::incrementNbVisitsUser(unsigned int idU)
         }
     }
     userData.close();
-    incrementNbTotalVisits();
 }
 
 void Parking::initPlace(int PcornerX, int PcornerY)
@@ -357,7 +345,7 @@ Message Parking::managingConversation(Message *aMessage) const
         {
             int nbVisit;
             int nbVisitU;
-            vector<vector<string>> linesData; // un tableau pour stocker les lignes lus
+            vector<vector<string>> linesData; // un tableau pour stocker les lignes lues
             ifstream rUserData("data/userData" + to_string(idP) + ".txt");
             if (rUserData)
             {
@@ -393,11 +381,16 @@ Message Parking::managingConversation(Message *aMessage) const
             int nbMessage = aMessage->getMessageNumber();
             if (nbMessage > 5)
             {
-                chosenPrice = minPrice;
+                if (proposedCarPrice < minPrice) {
+                    chosenPrice = minPrice;
+                }
+                else {
+                    chosenPrice = proposedCarPrice;
+                }
                 responseType = "LAST_OFFER";
             }
 
-            else if ((proposedCarPrice <= startingPrice))
+            else if ((proposedCarPrice < startingPrice))
             {
 
                 /*
@@ -652,5 +645,5 @@ void Parking::testRegression()
     p1.addUsersData(u1);
     p1.incrementNbVisitsUser(u1.getId());
     p1.incrementNbVisitsUser(u1.getId());
-    assert(p1.nbTotalVisits == 2);
+    assert(p1.nbAgreement == 2);
 }

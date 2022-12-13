@@ -70,8 +70,7 @@ void Conversation::updateStateCarParkAfterConv(Parking &p)
 {
 
     // Si les threads sont terminés, on peut consulter leur conversation
-    // pour voir si on doit incrémenter nbTotalVisitsFor10LastConv
-    // et nbTotalVisits de p.
+    // pour voir si on doit incrémenter nbTotalVisitsFor10LastConv de p.
     if (voiture.joinable() == false && parking.joinable() == false)
     {
 
