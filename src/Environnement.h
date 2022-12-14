@@ -69,7 +69,7 @@ public:
     int Jours;
     int Mois;
 
-    void Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd, bool check);
+    void Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd);
 
     //! \brief Fonction revoyant un nombre aléatoire en deux valeurs
     //! \param min valeur minimale
@@ -87,7 +87,7 @@ public:
     //! \brief Fonction permettant de retourner l'indice d'une case a partir de sa position
     //! \param pos position de la case
     //! \return Entier correspondant a l'indice de la case
-    const int GetNodeIndbyPos(Vec2 pos) const;
+    int GetNodeIndbyPos(Vec2 pos) const;
 
     //! \brief Fonction permettant de retourner l'indice du noeud d'une des 3 entrées
     //! \return Un entier correspondant à l'indice du noeud
@@ -172,7 +172,7 @@ public:
     //! \brief Fonction qui permet de revoyer l'indice d'une place d'un des 3 parkings sauf si celui-ci est plein et que la place est prise
     //! \param parking parking dans lequel on cherche une place
     //! \return entier correspondant à l'indice de la place
-    const int getPlaceInd(int parkingInd);
+    int getPlaceInd(int parkingInd);
 
     //! \brief Permet a une voiture de changer de trajectoire a tout moment
     //! \param v Voiture qui change de trajectoire

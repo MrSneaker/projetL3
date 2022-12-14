@@ -127,6 +127,165 @@ int Environnement::GetNodeIndbyPos(Vec2 pos) const
     return indiceCase;
 }
 
+void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd)
+{
+    v.reachGoal = false;
+ 
+    v.setIs_pathfind(false);
+
+    vector<Node *> nodes;
+    vector<Node *> openList;
+
+    for (int x = 0; x < DimWindowX / tailleCase; x++)
+    {
+        for (int y = 0; y < DimWindowY / tailleCase; y++)
+        {
+            nodes.push_back(new Node());
+        }
+    }
+    for (int x = 0; x < DimWindowX / tailleCase; x++)
+    {
+        for (int y = 0; y < DimWindowY / tailleCase; y++)
+        {
+            nodes[x + y * DimWindowX / tailleCase]->setNodepos(Vec2(x, y));
+            nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
+            nodes[x + y * DimWindowX / tailleCase]->setParent(nullptr);
+            nodes[x + y * DimWindowX / tailleCase]->indice = x + y * DimWindowX / tailleCase;
+
+            if (map[y][x] == '1')
+                nodes[x + y * DimWindowX / tailleCase]->setisObstacle(true);
+            else
+                nodes[x + y * DimWindowX / tailleCase]->setisObstacle(false);
+        }
+    }
+    // Si une place est prise elle devient un obstacle
+    for (int i = 0; i < parkings.size(); i++)
+    {
+        for (int j = 0; j < parkings[i].getPlacesTab().size(); j++)
+        {
+            unsigned int PlacePosX = parkings[i].getPlacesTab()[j].getPos().x * tailleCase;
+            unsigned int PlacePosY = parkings[i].getPlacesTab()[j].getPos().y * tailleCase;
+            unsigned int NoeudPlace = GetNodeIndbyPos(Vec2(PlacePosX, PlacePosY));
+            if (parkings[i].getPlacesTab()[j].getIsTaken() == true && parkings[i].getPlacesTab()[j].getIsReserved() == true)
+            {
+
+                nodes[NoeudPlace]->setisObstacle(true);       // on met à jour l'état du noeud
+                nodes[NoeudPlace + 100]->setisObstacle(true); // on met à jour l'état du noeud
+            }
+            else
+            {
+                nodes[NoeudPlace]->setisObstacle(false);       // on met à jour l'état du noeud
+                nodes[NoeudPlace + 100]->setisObstacle(false); // on met à jour l'état du noeud
+            }
+        }
+    }
+
+    for (int x = 0; x < DimWindowX / tailleCase; x++)
+    {
+        for (int y = 0; y < DimWindowY / tailleCase; y++)
+        {
+            nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
+
+            nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().clear();
+        }
+    }
+    openList.clear();
+    
+
+    Node *currentNode;
+    Node *StartNode = nodes[StartInd];
+    Node *EndNode = nodes[EndInd];
+
+    for (int x = 0; x < DimWindowX / tailleCase; x++)
+    {
+        for (int y = 0; y < DimWindowY / tailleCase; y++)
+        {
+            nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
+            nodes[x + y * DimWindowX / tailleCase]->localGoal = INFINITY;
+            nodes[x + y * DimWindowX / tailleCase]->GlobalGoal = INFINITY;
+            nodes[x + y * tailleCase]->setParent(nullptr);
+
+            if (y > 0)
+                nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x + 0) + (y - 1) * DimWindowX / tailleCase]);
+            if (y < DimWindowY / tailleCase - 1)
+                nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x + 0) + (y + 1) * DimWindowX / tailleCase]);
+            if (x > 0)
+                nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x - 1) + (y + 0) * DimWindowX / tailleCase]);
+            if (x < DimWindowX / tailleCase - 1)
+                nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().push_back(nodes[(x + 1) + (y + 0) * DimWindowX / tailleCase]);
+        }
+    }
+    auto distance = [](Node *a, Node *b)
+    {
+        return sqrtf((a->getNodepos().x - b->getNodepos().x) * (a->getNodepos().x - b->getNodepos().x) +
+                     (a->getNodepos().y - b->getNodepos().y) * (a->getNodepos().y - b->getNodepos().y));
+    };
+
+    auto heuristic = [distance](Node *a, Node *b)
+    {
+        return distance(a, b);
+    };
+
+    currentNode = StartNode;
+    StartNode->localGoal = 0.0f;
+    StartNode->GlobalGoal = heuristic(StartNode, EndNode);
+
+    openList.push_back(StartNode);
+
+    while (!openList.empty() && currentNode != EndNode && v.getIs_pathfind() == false)
+    {
+        while (!openList.empty() && openList.front()->getisVisited())
+        {
+            openList.erase(openList.begin());
+        }
+
+        if (openList.empty())
+        {
+            break;
+        }
+
+        currentNode = openList.front();
+        currentNode->setisVisited(true);
+
+        // check each of this node's neighbours
+        for (auto neighbour : currentNode->getVecNeighbours())
+        {
+            if (neighbour->getisVisited() == false && neighbour->getisObstacle() == false)
+            {
+                openList.push_back(neighbour);
+
+                float possiblyLowerGoal = currentNode->localGoal + distance(currentNode, neighbour);
+
+                if (possiblyLowerGoal < neighbour->localGoal)
+                {
+                    neighbour->setParent(currentNode);
+
+                    neighbour->localGoal = possiblyLowerGoal;
+
+                    neighbour->GlobalGoal = neighbour->localGoal + heuristic(neighbour, EndNode);
+                }
+            }
+        }
+    }
+    //---------------------------------TrackPath---------------------------------
+    Node *current = EndNode; // on commence par le EndNode car on remonte le chemin
+    if (current->getParent() == nullptr)
+    {
+        cout << "Pas de parent" << endl;
+    }
+    while (current->getParent() != nullptr && v.getIs_pathfind() == false)
+    {
+        //donne l'indice du noeud parent et sa position
+        v.getpathTab().push_back(current); // on ajoute le noeud courant au chemin pour le tracer
+        current = current->getParent();    // on passe au noeud parent pour continuer le chemin jusqu'au StartNode
+    }
+    //---------------------------------TrackPath--------------------------------
+    //si le pathtab est créé et stocké met le booléen à true
+    v.setIs_pathfind(true);
+    openList.clear();
+    // si le pathtab de la voiture est créé et stocké on supprime les noeuds
+}
+
 void Environnement::ClockTime()
 {
     if (TempsEcoule >= 1.f)
@@ -513,7 +672,7 @@ void Environnement::AddVoiture()
     int Entry = GetEntry();
     V.set_position(GetPosbyNodeInd(Entry) + Vec2(5, 5));
 
-    V.CarColor = random(0, 3);
+    V.setCarColor(random(0, 3));
 
     V.Exit = GetExit();
     V.setTargetPosition(GetPosbyNodeInd(V.Exit) + Vec2(5, 5));
@@ -585,10 +744,10 @@ void Environnement::updateStateVoiture()
                 parkings[parkingInd].getPlacesTab()[placeInd].setIsTaken(true); // on met à jour l'état de la place
                 // parkings[parkingInd].getPlacesTab()[placeInd].setIsReserved(true); // on met à jour l'état de la place
 
-                if (voitures[i].derement == true)
+                if (voitures[i].decrement == true)
                 {
                     voitures[i].startTimer = frameParkTime; 
-                    voitures[i].derement = false;
+                    voitures[i].decrement = false;
                 }
 
                 voitures[i].setAngle(0);
@@ -597,14 +756,14 @@ void Environnement::updateStateVoiture()
             {
 
                 // si la voiture quitte la place
-                if (voitures[i].derement == false)
+                if (voitures[i].decrement == false)
                 {
                     voitures[i].startTimer = 0;
                     parkings[parkingInd].getPlacesTab()[placeInd].setIsTaken(false);    // on met à jour l'état de la place
                     parkings[parkingInd].getPlacesTab()[placeInd].setIsReserved(false); // on met à jour l'état de la place
                     voitures[i].setIs_parked(false);                                    // on met à jour l'état de la voiture
                     parkings[parkingInd].incrementNbAvailablePlaces();                  // on incrémente le nombre de place disponible
-                    voitures[i].derement = true;                                        // on met à jour le booléen
+                    voitures[i].decrement = true;                                        // on met à jour le booléen
                 }
             }
         }
@@ -698,7 +857,6 @@ void Environnement::Environnement_play()
 
             else if (voitures[i].ChangeTrajToExit == true && GetNodeIndbyPos(voitures[i].get_position()) == voitures[i].Exit) // si la voiture est arrivée à la sortie
             {
-                voitures[i].isMoving = true;
                 savedConducteurs.push_back(voitures[i].User); // on sauvegarde le conducteur pour qu'il puisse être réutilisé
                 RemoveVoiture(i);
                 break;
@@ -747,7 +905,7 @@ void Environnement::getMap()
     }
 }
 
-vector<pair<double, double>> Environnement::getDataFromFile(string fileName) const
+const vector<pair<double, double>> Environnement::getDataFromFile(string fileName) const
 {
     ifstream file(fileName);
     string line1, line2;
@@ -846,7 +1004,7 @@ void Environnement::changeTarget(Voiture &v, int indPr)
         Vec2 Placepos = parkings[indPr].getPlacesTab()[v.getPlace()].getPos(); // on récupère la position de la place
         v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5));             // on place la cible au milieu de la place.
         parkings[indPr].getPlacesTab()[v.getPlace()].setIsReserved(true);      // la place est réservée, pour pas qu'une autre voiture puisse y aller.
-        if (v.derement)
+        if (v.decrement)
             parkings[indPr].decrementNbAvailablePlaces();                                    // on décrémente le nombre de places disponibles.
         Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition())); // on change la cible de la voiture
     }

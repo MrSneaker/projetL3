@@ -11,20 +11,16 @@ class Message
 
 private:
 
-
-    unsigned int messageNumber;
-    // - Numéro du message dans la conversation.
+    unsigned int messageNumber; // Numéro du message dans la conversation.
     // - Le 1er message porte le numéro 0, et le numéro de chaque nouveau message
     // sera l'entier suivant (0, 1, 2, 3, etc.).
 
 
-    clock_t date;
-    // "Date-heure" courante du message
+    clock_t date; // "Date-heure" courante du message
 
-    float price;
-    // Tarif horaire proposé dans le message
+    float price; // Tarif horaire proposé dans le message
 
-    string subject;
+    string subject; // Sujet du message
 
     // - Type du message : par exemple : "appel", "offre", "acceptation", "refus", "contre-offre"...
 
@@ -72,6 +68,7 @@ public:
     //! \brief 2e constructeur à paramètres du message
     //! \brief Utilisé pour créer tout les messages qui ne sont pas
     //! \brief le 1er message d'une conversation
+
     Message(unsigned int eMessageNumber, float aPrice, string aSubject,
             string aSender, string aRecipient);
 
