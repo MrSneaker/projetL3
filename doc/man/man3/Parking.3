@@ -1,0 +1,263 @@
+.TH "Parking" 3 "Tue Dec 13 2022" "Gestionnaire de parkings intelligents" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Parking
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBParking\fP (\fBVec2\fP position, float minimumPrice, float startPrice, int DimX, int DimY, int id)"
+.br
+.RI "Constructeur parametre de la class parking\&. "
+.ti -1c
+.RI "vector< \fBPlace\fP > & \fBgetPlacesTab\fP ()"
+.br
+.ti -1c
+.RI "int \fBgetNbPlaces\fP () const"
+.br
+.RI "Retourne le nombre de places du parking\&. "
+.ti -1c
+.RI "int \fBgetNbAvailablePlaces\fP () const"
+.br
+.ti -1c
+.RI "int \fBgetMinPrice\fP () const"
+.br
+.ti -1c
+.RI "int \fBgetStartingPrice\fP () const"
+.br
+.ti -1c
+.RI "const double & \fBgetProfit\fP () const"
+.br
+.ti -1c
+.RI "const int & \fBgetId\fP () const"
+.br
+.ti -1c
+.RI "const vector< pair< double, double > > & \fBgetDataProfit\fP () const"
+.br
+.ti -1c
+.RI "const vector< pair< double, double > > & \fBgetDataStartingPrice\fP () const"
+.br
+.ti -1c
+.RI "const vector< pair< double, double > > & \fBgetDataNbPlaceTaken\fP () const"
+.br
+.ti -1c
+.RI "const int & \fBgetNbTotalVisits\fP () const"
+.br
+.ti -1c
+.RI "const \fBVec2\fP & \fBgetPos\fP () const"
+.br
+.RI "Donne la position (x,y) du parking - coin en haut a gauche\&. "
+.ti -1c
+.RI "const int & \fBgetDIMX\fP () const"
+.br
+.RI "Donne la largeur du parking\&. "
+.ti -1c
+.RI "const int & \fBgetDIMY\fP () const"
+.br
+.RI "Donne la hauteur du parking\&. "
+.ti -1c
+.RI "const double & \fBgetSuccessPourcentage\fP () const"
+.br
+.RI "fonction qui renvoie le pourcentage de succes\&. "
+.ti -1c
+.RI "bool \fBIsFull\fP ()"
+.br
+.RI "Fonction qui renvoie un entier, permet de savoir si le parking est plein ou non\&. "
+.ti -1c
+.RI "void \fBsetMinPrice\fP (float minimumPrice)"
+.br
+.ti -1c
+.RI "void \fBsetStartingPrice\fP (float startPrice)"
+.br
+.ti -1c
+.RI "void \fBsetNbAvailablePlaces\fP (int nbAvailablePlaces)"
+.br
+.ti -1c
+.RI "void \fBaddUsersData\fP (\fBUtilisateur\fP unUtilisateur)"
+.br
+.RI "ajoute un utilisateur au tableau usersTab en vérifiant que celui-ci n'existe pas déjà dans le tableau\&. "
+.ti -1c
+.RI "void \fBaddToData\fP (double currentTime)"
+.br
+.ti -1c
+.RI "void \fBincrementNbTotalVisits\fP ()"
+.br
+.ti -1c
+.RI "void \fBincrementNbVisitsUser\fP (unsigned int id)"
+.br
+.RI "incrémente le nombre de visites de l'utilisateur en paramètre de 1 à chaque appel\&. "
+.ti -1c
+.RI "void \fBdecrementNbAvailablePlaces\fP ()"
+.br
+.RI "enleve une place au nombre de places dispo "
+.ti -1c
+.RI "void \fBincrementNbAvailablePlaces\fP ()"
+.br
+.RI "ajoute une place au nombre de places dispo "
+.ti -1c
+.RI "void \fBincrementNbAgreements\fP ()"
+.br
+.RI "Incrémente le nombre total de visites du parking\&. "
+.ti -1c
+.RI "void \fBincrementNbFinishedConv\fP ()"
+.br
+.RI "Incrémente de 1 le nombre de négociations effectuées par le parking\&. "
+.ti -1c
+.RI "void \fBupdateProfit\fP (double aPrice, float parkTime)"
+.br
+.RI "Ajoute au profit (du parking) la valeur\&. "
+.ti -1c
+.RI "void \fBupdateSuccessPercentage\fP ()"
+.br
+.RI "Met à jour le pourcentage de réussite des négociations du \fBParking\fP\&. "
+.ti -1c
+.RI "void \fBinitPlace\fP (int PcornerX, int PcornerY)"
+.br
+.RI "initialisation de toutes les places de parkings (positions, etc\&.\&.)\&. "
+.ti -1c
+.RI "bool \fBisPriceOk\fP (double price) const"
+.br
+.RI "vérifie qu'un prix donné est acceptable ou non, avec une marge arbitraire\&. Renvoie un booléen\&. "
+.ti -1c
+.RI "\fBMessage\fP \fBmanagingConversation\fP (\fBMessage\fP *aMessage) const"
+.br
+.RI "Le parking lit le message reçu (donné en paramètre) "
+.ti -1c
+.RI "\fBMessage\fP \fBconfirmConversation\fP (\fBMessage\fP *aMessage)"
+.br
+.RI "
+.IP "\(bu" 2
+Confirme la transaction ou non en fonction de la réponse de la voiture, fait les opérations en conséquence\&. 
+.PP
+"
+.ti -1c
+.RI "void \fBreconsiderPrices\fP ()"
+.br
+.RI "Consideration de la donnée membre successPercentage\&. "
+.ti -1c
+.RI "int \fBextractIntFromString\fP (string aString) const"
+.br
+.ti -1c
+.RI "void \fBtestRegression\fP ()"
+.br
+.in -1c
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Parking::Parking (\fBVec2\fP position, float minimumPrice, float startPrice, int DimX, int DimY, int id)"
+
+.PP
+Constructeur parametre de la class parking\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIposition\fP position du parking (position du rectangle en haut a gauche) 
+.br
+\fIminimumPrice\fP Prix minimum d'acceptance par minutes que le parking peut accepté -> A REVOIR 
+.br
+\fIstartPrice\fP Prix max que le parking propose -> A REVOIR 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void Parking::addUsersData (\fBUtilisateur\fP unUtilisateur)"
+
+.PP
+ajoute un utilisateur au tableau usersTab en vérifiant que celui-ci n'existe pas déjà dans le tableau\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIunUtilisateur\fP un utilisateur\&. 
+.RE
+.PP
+
+.SS "\fBMessage\fP Parking::confirmConversation (\fBMessage\fP * aMessage)"
+
+.PP
+
+.IP "\(bu" 2
+Confirme la transaction ou non en fonction de la réponse de la voiture, fait les opérations en conséquence\&. 
+.PP
+
+.IP "\(bu" 2
+Cette fonction est appelée pour toute négociation, on y incrémente donc notamment le nombre de négociations
+.PP
+.PP
+effectuées par le parking\&. 
+.SS "void Parking::incrementNbAgreements ()"
+
+.PP
+Incrémente le nombre total de visites du parking\&. à l'issue des 10 dernières conversations\&. 
+.SS "void Parking::incrementNbVisitsUser (unsigned int id)"
+
+.PP
+incrémente le nombre de visites de l'utilisateur en paramètre de 1 à chaque appel\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIunUtilisateur\fP pointeur sur un utilisateur\&. 
+.RE
+.PP
+
+.SS "bool Parking::isPriceOk (double price) const"
+
+.PP
+vérifie qu'un prix donné est acceptable ou non, avec une marge arbitraire\&. Renvoie un booléen\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIprice\fP prix à vérifier 
+.RE
+.PP
+
+.SS "\fBMessage\fP Parking::managingConversation (\fBMessage\fP * aMessage) const"
+
+.PP
+Le parking lit le message reçu (donné en paramètre) et en crée un nouveau (comme il s'agit forcément d'une réponse, les données du nouveau
+.PP
+message sont initialisées en fonction des données contenues dans le message reçu)\&.
+.PP
+Types de message générable :
+.PP
+.IP "\(bu" 2
+OFFER
+.IP "\(bu" 2
+COUNTER_OFFER
+.IP "\(bu" 2
+LAST_OFFER
+.IP "\(bu" 2
+ACCEPT
+.IP "\(bu" 2
+REJECT
+.PP
+.PP
+Types de message reçu pris en compte :
+.PP
+.IP "\(bu" 2
+CALL
+.IP "\(bu" 2
+COUNTER_OFFER
+.IP "\(bu" 2
+LAST_OFFER
+.IP "\(bu" 2
+ACCEPT
+.IP "\(bu" 2
+REJECT 
+.PP
+
+.SS "void Parking::reconsiderPrices ()"
+
+.PP
+Consideration de la donnée membre successPercentage\&. puis modification éventuelle de minPrice et startingPrice en conséquence\&. 
+.SS "void Parking::updateProfit (double aPrice, float parkTime)"
+
+.PP
+Ajoute au profit (du parking) la valeur\&. (prix de la place louée à une voiture) passée en paramètre\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Gestionnaire de parkings intelligents from the source code\&.

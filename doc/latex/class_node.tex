@@ -1,0 +1,195 @@
+\hypertarget{class_node}{}\doxysection{Node Class Reference}
+\label{class_node}\index{Node@{Node}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_node_ad7a34779cad45d997bfd6d3d8043c75f}\label{class_node_ad7a34779cad45d997bfd6d3d8043c75f}} 
+\mbox{\hyperlink{class_node_ad7a34779cad45d997bfd6d3d8043c75f}{Node}} ()
+\begin{DoxyCompactList}\small\item\em Constructeur. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_node_aa0840c3cb5c7159be6d992adecd2097c}\label{class_node_aa0840c3cb5c7159be6d992adecd2097c}} 
+\mbox{\hyperlink{class_node_aa0840c3cb5c7159be6d992adecd2097c}{$\sim$\+Node}} ()
+\begin{DoxyCompactList}\small\item\em Destructeur. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_node_a5da981cf1acaa407d2768e6a3e65da86}{setis\+Visited}} (bool visited)
+\begin{DoxyCompactList}\small\item\em Fonction permettant de modifier la valeur de is\+Visited. \end{DoxyCompactList}\item 
+const bool \& \mbox{\hyperlink{class_node_ab84ed2dd54b6f09015cc59bd5c20b3fd}{getis\+Visited}} () const
+\begin{DoxyCompactList}\small\item\em Fonction permettant de récupérer la valeur de is\+Visited. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_node_a50e8e005aa9d5540a8c4fd2090aa7b27}{setis\+Obstacle}} (bool obstacle)
+\begin{DoxyCompactList}\small\item\em Fonction permettant de modifier la valeur de is\+Obstacle. \end{DoxyCompactList}\item 
+const bool \& \mbox{\hyperlink{class_node_a77d905e5f6b6247d3c699674afb24a94}{getis\+Obstacle}} () const
+\begin{DoxyCompactList}\small\item\em Fonction permettant de récupérer la valeur de is\+Obstacle. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_node_ab5f0786bcb59591c528efb0b776797fc}{set\+Parent}} (\mbox{\hyperlink{class_node}{Node}} $\ast$parent)
+\begin{DoxyCompactList}\small\item\em Fonction permettant de modifier la valeur de parent. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_a3cad655320d50751c43c5cec9356dcf3}{get\+Parent}} () const
+\begin{DoxyCompactList}\small\item\em Fonction permettant de récupérer la valeur de parent. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_node_aa3b2bf5465f358edc7cc1e83cbe7f28c}{set\+Vec\+Neighbours}} (vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ Vec\+Neighbours)
+\begin{DoxyCompactList}\small\item\em Fonction permettant de modifier la valeur de Vec\+Neighbours. \end{DoxyCompactList}\item 
+vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ \& \mbox{\hyperlink{class_node_aad3631098e115cdbe6d8f3eb9b02848b}{get\+Vec\+Neighbours}} ()
+\begin{DoxyCompactList}\small\item\em Fonction permettant de récupérer la valeur de Vec\+Neighbours. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_node_af2b017ac930c14d72394e7786bb9bb62}{set\+Nodepos}} (\mbox{\hyperlink{class_vec2}{Vec2}} pos)
+\begin{DoxyCompactList}\small\item\em Fonction permettant de modifier la valeur de Nodepos. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_vec2}{Vec2}} \& \mbox{\hyperlink{class_node_a5cc7a15b015fdab5b5c6550dfecd940c}{get\+Nodepos}} () const
+\begin{DoxyCompactList}\small\item\em Fonction permettant de récupérer la valeur de Nodepos. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_node_a0177f51a461940df18b7f5643ed4f93a}\label{class_node_a0177f51a461940df18b7f5643ed4f93a}} 
+bool {\bfseries open} = false
+\item 
+\mbox{\Hypertarget{class_node_aee8aba44b6eb1c30b9dbd4b08acef1d8}\label{class_node_aee8aba44b6eb1c30b9dbd4b08acef1d8}} 
+float {\bfseries local\+Goal}
+\item 
+\mbox{\Hypertarget{class_node_a8ef7e8d0a7e4ab09438f5ad7d94a5446}\label{class_node_a8ef7e8d0a7e4ab09438f5ad7d94a5446}} 
+float {\bfseries Global\+Goal}
+\item 
+\mbox{\Hypertarget{class_node_afb5601d1eee3c566d73455baa7151b4c}\label{class_node_afb5601d1eee3c566d73455baa7151b4c}} 
+int {\bfseries indice}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_node_a77d905e5f6b6247d3c699674afb24a94}\label{class_node_a77d905e5f6b6247d3c699674afb24a94}} 
+\index{Node@{Node}!getisObstacle@{getisObstacle}}
+\index{getisObstacle@{getisObstacle}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getisObstacle()}{getisObstacle()}}
+{\footnotesize\ttfamily const bool \& Node\+::getis\+Obstacle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Fonction permettant de récupérer la valeur de is\+Obstacle. 
+
+\begin{DoxyReturn}{Returns}
+is\+Obstacle 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_ab84ed2dd54b6f09015cc59bd5c20b3fd}\label{class_node_ab84ed2dd54b6f09015cc59bd5c20b3fd}} 
+\index{Node@{Node}!getisVisited@{getisVisited}}
+\index{getisVisited@{getisVisited}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getisVisited()}{getisVisited()}}
+{\footnotesize\ttfamily const bool \& Node\+::getis\+Visited (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Fonction permettant de récupérer la valeur de is\+Visited. 
+
+\begin{DoxyReturn}{Returns}
+is\+Visited 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_a5cc7a15b015fdab5b5c6550dfecd940c}\label{class_node_a5cc7a15b015fdab5b5c6550dfecd940c}} 
+\index{Node@{Node}!getNodepos@{getNodepos}}
+\index{getNodepos@{getNodepos}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getNodepos()}{getNodepos()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_vec2}{Vec2}} \& Node\+::get\+Nodepos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Fonction permettant de récupérer la valeur de Nodepos. 
+
+\begin{DoxyReturn}{Returns}
+Nodepos 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_a3cad655320d50751c43c5cec9356dcf3}\label{class_node_a3cad655320d50751c43c5cec9356dcf3}} 
+\index{Node@{Node}!getParent@{getParent}}
+\index{getParent@{getParent}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getParent()}{getParent()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_node}{Node}} $\ast$ Node\+::get\+Parent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Fonction permettant de récupérer la valeur de parent. 
+
+\begin{DoxyReturn}{Returns}
+parent 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_aad3631098e115cdbe6d8f3eb9b02848b}\label{class_node_aad3631098e115cdbe6d8f3eb9b02848b}} 
+\index{Node@{Node}!getVecNeighbours@{getVecNeighbours}}
+\index{getVecNeighbours@{getVecNeighbours}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{getVecNeighbours()}{getVecNeighbours()}}
+{\footnotesize\ttfamily vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ \& Node\+::get\+Vec\+Neighbours (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant de récupérer la valeur de Vec\+Neighbours. 
+
+\begin{DoxyReturn}{Returns}
+Vec\+Neighbours 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_a50e8e005aa9d5540a8c4fd2090aa7b27}\label{class_node_a50e8e005aa9d5540a8c4fd2090aa7b27}} 
+\index{Node@{Node}!setisObstacle@{setisObstacle}}
+\index{setisObstacle@{setisObstacle}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{setisObstacle()}{setisObstacle()}}
+{\footnotesize\ttfamily void Node\+::setis\+Obstacle (\begin{DoxyParamCaption}\item[{bool}]{obstacle }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant de modifier la valeur de is\+Obstacle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obstacle} & valeur booléenne \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_node_a5da981cf1acaa407d2768e6a3e65da86}\label{class_node_a5da981cf1acaa407d2768e6a3e65da86}} 
+\index{Node@{Node}!setisVisited@{setisVisited}}
+\index{setisVisited@{setisVisited}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{setisVisited()}{setisVisited()}}
+{\footnotesize\ttfamily void Node\+::setis\+Visited (\begin{DoxyParamCaption}\item[{bool}]{visited }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant de modifier la valeur de is\+Visited. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visited} & valeur booléenne \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_node_af2b017ac930c14d72394e7786bb9bb62}\label{class_node_af2b017ac930c14d72394e7786bb9bb62}} 
+\index{Node@{Node}!setNodepos@{setNodepos}}
+\index{setNodepos@{setNodepos}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{setNodepos()}{setNodepos()}}
+{\footnotesize\ttfamily void Node\+::set\+Nodepos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vec2}{Vec2}}}]{pos }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant de modifier la valeur de Nodepos. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & vecteur 2D \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_node_ab5f0786bcb59591c528efb0b776797fc}\label{class_node_ab5f0786bcb59591c528efb0b776797fc}} 
+\index{Node@{Node}!setParent@{setParent}}
+\index{setParent@{setParent}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{setParent()}{setParent()}}
+{\footnotesize\ttfamily void Node\+::set\+Parent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}} $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant de modifier la valeur de parent. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & pointeur sur un noeud \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_node_aa3b2bf5465f358edc7cc1e83cbe7f28c}\label{class_node_aa3b2bf5465f358edc7cc1e83cbe7f28c}} 
+\index{Node@{Node}!setVecNeighbours@{setVecNeighbours}}
+\index{setVecNeighbours@{setVecNeighbours}!Node@{Node}}
+\doxysubsubsection{\texorpdfstring{setVecNeighbours()}{setVecNeighbours()}}
+{\footnotesize\ttfamily void Node\+::set\+Vec\+Neighbours (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$}]{Vec\+Neighbours }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant de modifier la valeur de Vec\+Neighbours. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Vec\+Neighbours} & vecteur de pointeurs sur des nodes \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/Node.\+h\item 
+src/Node.\+cpp\end{DoxyCompactItemize}

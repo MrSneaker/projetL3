@@ -37,6 +37,7 @@ public:
     vector<Node *> openList; // tableau des noeuds ouverts
     bool decrement;          // booléen pour décrémenter le nombre de places libres 1 seule fois par voiture
     bool reachGoal;          // true si la voiture a atteint sa cible
+    bool isMoving;
     bool ChangeTrajToExit;   // booléen pour changer la trajectoire de la voiture vers la sortie
     int indice;              // indice de la voiture dans le tableau de voiture
     int Exit;                // indice de la sortie
@@ -189,6 +190,8 @@ public:
     //! \return true si la voiture est arrivée à la position de la cible (parking / place / sortie)
     bool MoveToTargetPosition();
 
+    void deleteNode();
+
     //! \brief La voiture lit le message reçu (donné en paramètre) s'il y en a un
     //! (s'il n'y en a pas, le pointeur est nul),
     //! \param message : message reçu
@@ -212,6 +215,46 @@ public:
 
     //! \brief Affiche les Infos du conducteur
     void UserGetInfos();
+
+    //! \brief renvoie la vitesse de la voiture
+    const int& getSpeed() const;
+
+    const int& getNbFinishedConv() const;
+
+    //! \brief Modifie la vitesse de la voiture
+    void setSpeed(float new_speed);
+
+    const bool& getIs_in() const;
+
+    void setIs_in(bool new_Is_in);
+
+    void setIs_parked(bool new_Is_parked);
+
+    const bool& getIs_parked() const;
+
+    void setIs_pathfind(bool new_Is_pathfind);
+
+    const bool& getIs_pathfind() const;
+
+    void setParking(int new_parking);
+
+    const int& getParking() const ;
+
+    void setPlace(int new_place);
+
+    const int& getPlace() const ;
+
+    void setwidth(int new_width);
+
+    const int& getwidth() const ;
+
+    void setheight(int new_height);
+
+    const int& getheight() const;
+
+    vector<Node *> &getpathTab();
+
+    float bestPrice(vector<float> tabPrice);
 
     //! \brief Test de regression la classe Voiture
     void test_regresion();

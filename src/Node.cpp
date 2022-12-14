@@ -6,6 +6,9 @@ Node::Node()
 
 Node::~Node()
 {
+    for(int i=0;i<VecNeighbours.size();i++)
+        VecNeighbours[i] = nullptr;
+    parent = nullptr;
 }
 
 void Node::setisVisited(bool visited)

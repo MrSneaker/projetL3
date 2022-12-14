@@ -8,7 +8,6 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     minPrice = (minimumPrice);
     startingPrice = (startPrice);
     isFull = (false);
-    nbTotalVisits = (0);
     DIMX = DimX;
     DIMY = DimY;
     nbPlaces = ((DIMX / 2 - 1) * (DIMY / 4));
@@ -16,11 +15,9 @@ Parking::Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, 
     idP = (id);
     successPercentage = 100;
     successPercentageLastConv = 100;
-    lastNbAgreements = 0;
-    lastNbFinishedConv = 0;
     profit = 0;
     nbFinishedConv = 0;
-    nbTotalVisitsFor10LastConv = 0;
+    nbAgreement = 0;
     lastNbAgreements = 0;
     lastNbFinishedConv = 0;
     initPlace(position.x + 1, position.y + 1);
@@ -94,11 +91,6 @@ bool Parking::IsFull()
     return isFull;
 }
 
-const int& Parking::getNbTotalVisits() const
-{
-    return nbTotalVisits;
-}
-
 const Vec2 &Parking::getPos() const
 {
     return pos;
@@ -128,9 +120,9 @@ void Parking::setNbAvailablePlaces(int nb)
     IsFull();
 }
 
-void Parking::incrementNbTotalVisitsFor10LastConv()
+void Parking::incrementNbAgreements()
 {
-    nbTotalVisitsFor10LastConv++;
+    nbAgreement++;
     lastNbAgreements++;
 }
 
@@ -157,8 +149,8 @@ void Parking::updateSuccessPercentage()
 
     if (nbFinishedConv > 0)
     {
-        successPercentageLastConv = (lastNbAgreements * 100 / lastNbFinishedConv);
-        successPercentage = nbTotalVisitsFor10LastConv * 100 / nbFinishedConv;
+        successPercentageLastConv = lastNbAgreements * 100 / lastNbFinishedConv;
+        successPercentage = nbAgreement * 100 / nbFinishedConv;
     }
     if (nbFinishedConv % 10 == 0)
     {
@@ -257,12 +249,7 @@ void Parking::addToData(double currentTime)
     dataStartingPrice.close();
 }
 
-void Parking::incrementNbTotalVisits()
-{
-    nbTotalVisits++;
-}
-
-void Parking::incrementNbVisitsTab(unsigned int idU)
+void Parking::incrementNbVisitsUser(unsigned int idU)
 {
     int id;
     int nbVisit;
@@ -292,18 +279,17 @@ void Parking::incrementNbVisitsTab(unsigned int idU)
         }
         rUserData.close();
     }
-        ofstream userData("data/userData" + to_string(idP) + ".txt", ios::trunc);
-        for (int i = 0; i < linesData.size(); i++)
+    ofstream userData("data/userData" + to_string(idP) + ".txt", ios::trunc);
+    for (int i = 0; i < linesData.size(); i++)
+    {
+        if (userData)
         {
-            if (userData)
-            {
-                userData << linesData[i].at(0) << ",";
-                userData << linesData[i].at(1) << ",";
-                userData << linesData[i].at(2) << endl;
-            }
+            userData << linesData[i].at(0) << ",";
+            userData << linesData[i].at(1) << ",";
+            userData << linesData[i].at(2) << endl;
         }
-        userData.close();
-        incrementNbTotalVisits();
+    }
+    userData.close();
 }
 
 void Parking::initPlace(int PcornerX, int PcornerY)
@@ -345,6 +331,7 @@ Message Parking::managingConversation(Message *aMessage) const
     if (aMessage != nullptr)
     {
         string recipientString = aMessage->getSender();
+        unsigned int idU = extractIntFromString(recipientString);
 
         double chosenPrice = -2;              // Initialisation avec une valeur arbitraire absurde
         string responseType = "INVALID_TYPE"; // Initialisation avec un type invalide
@@ -354,20 +341,54 @@ Message Parking::managingConversation(Message *aMessage) const
 
         if (sentType == "CALL")
         {
-            chosenPrice = startingPrice;
-            responseType = "OFFER";
+            int nbVisit;
+            int nbVisitU;
+            vector<vector<string>> linesData; // un tableau pour stocker les lignes lues
+            ifstream rUserData("data/userData" + to_string(idP) + ".txt");
+            if (rUserData)
+            {
+                double reduc;
+                string line;
+                while (getline(rUserData, line))
+                {
+                    stringstream ss(line); // on crée un flux à partir de la ligne lue
+                    vector<string> tokens; // un tableau pour stocker les mots lus
+                    string token;          // une variable pour stocker les mots lus
+                    while (getline(ss, token, ','))
+                    {
+                        tokens.push_back(token); // on ajoute le mot lu au tableau
+                    }
+                    int id = stoi(tokens[0]);
+                    nbVisit = stoi(tokens[2]);
+                    if (id == idU)
+                    {
+                        // si on trouve le meme id deux fois, on retient le nombre de visite de l'utilisateur.
+                        nbVisitU = nbVisit;
+                    }
+                    linesData.push_back(tokens);
+                }
+                rUserData.close();
+                reduc = (0.05 * nbVisitU) * startingPrice;
+                chosenPrice = startingPrice - reduc;
+                responseType = "OFFER";
+            }
         }
 
         if (sentType == "COUNTER_OFFER")
         {
             int nbMessage = aMessage->getMessageNumber();
-            if (proposedCarPrice < minPrice && nbMessage > 5)
+            if (nbMessage > 5)
             {
-                chosenPrice = minPrice;
+                if (proposedCarPrice < minPrice) {
+                    chosenPrice = minPrice;
+                }
+                else {
+                    chosenPrice = proposedCarPrice;
+                }
                 responseType = "LAST_OFFER";
             }
 
-            if (proposedCarPrice <= minPrice && proposedCarPrice < startingPrice)
+            else if ((proposedCarPrice < startingPrice))
             {
 
                 /*
@@ -497,6 +518,12 @@ Message Parking::managingConversation(Message *aMessage) const
 
         unsigned int MessageNum = aMessage->getMessageNumber() + 1;
         Message newMessage(MessageNum, chosenPrice, responseType, senderString, recipientString);
+        if(responseType == "INVALID_TYPE")
+        {
+            cout<<"prix prop : "<<proposedCarPrice<<endl;
+            cout<<"prix min park : "<<minPrice<<endl;
+            cout<<"prix dep park : "<<startingPrice<<endl;
+        }
         return newMessage;
     }
 
@@ -543,7 +570,6 @@ void Parking::reconsiderPrices()
     {
         bool limit = false;
         double reductionStartPrice = (50 - successPercentage) / 100 * startingPrice;
-        // cout << "reductionStart : " << reductionStartPrice << endl;
         if (startingPrice - reductionStartPrice >= minPrice)
             setStartingPrice(startingPrice - reductionStartPrice);
         else
@@ -553,8 +579,6 @@ void Parking::reconsiderPrices()
         {
             setMinPrice(minPrice * 0.98);
         }
-        // cout << "Parking " << idP + 1 << " : startingPrice : " << startingPrice << endl;
-        // cout << "Parking " << idP + 1 << " : minPrice : " << minPrice << endl;
     }
     else if (successPercentageLastConv > 70)
     {
@@ -572,10 +596,6 @@ void Parking::reconsiderPrices()
             setStartingPrice(augmentation * startingPrice);
         }
     }
-
-    /*cout << endl
-         << endl
-         << endl;*/
 }
 
 int Parking::extractIntFromString(string aString) const
@@ -621,7 +641,7 @@ void Parking::testRegression()
     p1.addUsersData(u1);
     p1.addUsersData(u2);
     p1.addUsersData(u1);
-    p1.incrementNbVisitsTab(u1.getId());
-    p1.incrementNbVisitsTab(u1.getId());
-    assert(p1.nbTotalVisits == 2);
+    p1.incrementNbVisitsUser(u1.getId());
+    p1.incrementNbVisitsUser(u1.getId());
+    assert(p1.nbAgreement == 2);
 }

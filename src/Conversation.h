@@ -35,11 +35,13 @@ public:
     ~Conversation();
 
     //! \brief Renvoie le vecteur de Message conv.
+    //! \return un vecteur de Message.
     vector<Message> getConv() const;
 
     //! \brief Démarre une conversation entre deux entités en paramètres.
     //! \param p un parking,
     //! \param v une voiture.
+    //! \return un booléen : true si la conversation s'est déroulée sans erreur, false sinon.
     bool manageConv(Parking p, Voiture v);
 
     void manageConfirm(Parking p, Voiture v,int indPrOK);
@@ -56,8 +58,9 @@ public:
     //! \param p un parking.
     void sendMessageParking(Parking p);
 
-    //! \brief Met à jour les données membres nbTotalVisitsFor10LastConv,
-    //! \brief nbTotalVisits et profit d'un parking.
+    //! \brief Met à jour les données membres lastNbAgreements,
+    //! \brief nbAgreement et profit d'un parking.
+    //! \param p le parking qu'on met à jour
     void updateStateCarParkAfterConv (Parking & p);
 
     //! \brief Stocke la conversation, afin de laisser une trace.

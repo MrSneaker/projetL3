@@ -1,0 +1,116 @@
+.TH "Utilisateur" 3 "Tue Dec 13 2022" "Gestionnaire de parkings intelligents" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Utilisateur
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBUtilisateur\fP ()"
+.br
+.RI "constructeur "
+.ti -1c
+.RI "\fBUtilisateur\fP (double maxPrice, unsigned int id, string name, string surname, unsigned int Age, float ParkTime)"
+.br
+.RI "constructeur avec parametre "
+.ti -1c
+.RI "\fB~Utilisateur\fP ()"
+.br
+.RI "destructeur\&. "
+.ti -1c
+.RI "double \fBgetMaxPrice\fP () const"
+.br
+.RI "renvoie un float contenant le prix maximum que l'utilisateur pourrait payer\&. "
+.ti -1c
+.RI "const unsigned int & \fBgetId\fP () const"
+.br
+.RI "renvoie l'id de l'utilisateur, qui sera unique\&. "
+.ti -1c
+.RI "float \fBgetParkTime\fP () const"
+.br
+.RI "renvoie le temps de stationnement de l'utilisateur\&. "
+.ti -1c
+.RI "void \fBsetParkTime\fP (float u_ParkTime)"
+.br
+.RI "Modifie le temps de stationnement de l'utilisateur\&. "
+.ti -1c
+.RI "string \fBgetName\fP () const"
+.br
+.RI "renvoie le nom de l'utilisateur sous forme de string\&. "
+.ti -1c
+.RI "string \fBgetSurname\fP () const"
+.br
+.RI "renvoie le prénom de l'utilisateur sous forme de string\&. "
+.ti -1c
+.RI "unsigned int \fBgetAge\fP () const"
+.br
+.RI "renvoie l'age de l'utilisateur\&. "
+.ti -1c
+.RI "void \fBsetAge\fP (unsigned int u_Age)"
+.br
+.RI "Modifie l'age de l'utilisateur\&. "
+.ti -1c
+.RI "void \fBtestRegression\fP ()"
+.br
+.RI "test de régression de la classe utilisateur\&. "
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "bool \fBAlreadySpawned\fP"
+.br
+.in -1c
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Utilisateur::Utilisateur (double maxPrice, unsigned int id, string name, string surname, unsigned int Age, float ParkTime)"
+
+.PP
+constructeur avec parametre 
+.PP
+\fBParameters\fP
+.RS 4
+\fIu_maxPrice\fP prix maximum que l'utilisateur est prêt à payer 
+.br
+\fIu_id\fP identifiant de l'utilisateur 
+.br
+\fIu_name\fP nom de l'utilisateur 
+.br
+\fIu_surname\fP prenom de l'utilisateur 
+.br
+\fIu_Parktime\fP temps de stationnement de l'utilisateur 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void Utilisateur::setAge (unsigned int u_Age)"
+
+.PP
+Modifie l'age de l'utilisateur\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIu_Age\fP age de l'utilisateur\&. 
+.RE
+.PP
+
+.SS "void Utilisateur::setParkTime (float u_ParkTime)"
+
+.PP
+Modifie le temps de stationnement de l'utilisateur\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIu_ParkTime\fP temps de stationnement de l'utilisateur\&. 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Gestionnaire de parkings intelligents from the source code\&.

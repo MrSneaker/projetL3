@@ -1,0 +1,52 @@
+.TH "Affichage" 3 "Tue Dec 13 2022" "Gestionnaire de parkings intelligents" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Affichage
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBAfficherTexte\fP (TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, unsigned char r, unsigned char g, unsigned char b, int a)"
+.br
+.RI "procédure d'affichage de texte en SDL\&. "
+.ti -1c
+.RI "void \fBInitAffichage\fP ()"
+.br
+.RI "procédure d'initialisation de l'affichage (initialisation des textures, renderer\&.\&.)\&. "
+.ti -1c
+.RI "void \fBAffichagePlateau\fP ()"
+.br
+.RI "procédure d'affichage du plateau (parkings, places, routes)\&. "
+.ti -1c
+.RI "void \fBAffichageMenu\fP ()"
+.br
+.RI "affichage du menu (pause, accelere, temps, boutton exit)\&. "
+.ti -1c
+.RI "int \fBAffichageUserCard\fP (unsigned int Vind)"
+.br
+.ti -1c
+.RI "int \fBAffichageParkingCard\fP (unsigned int Parkind)"
+.br
+.ti -1c
+.RI "int \fBAffichageGraphMenu\fP ()"
+.br
+.ti -1c
+.RI "void \fBAffichageSimulation\fP ()"
+.br
+.RI "boucle d'affichage de l'application\&. "
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "vector< SDL_Rect > \fBVoituresRect\fP"
+.br
+.in -1c
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Gestionnaire de parkings intelligents from the source code\&.

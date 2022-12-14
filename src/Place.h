@@ -22,14 +22,19 @@ public:
     //! \brief procédure de récupération de l'indice de la position de la place.
     const int& getIndP() const;
 
+    //! \brief met à jour la valeur de isTaken avec la valeur de \param new_isTaken, un booléen.
     void setIsTaken(bool new_isTaken);
 
+    //! \brief retourne le booléen isTaken. Vrai = place prise, faux sinon.
     const bool& getIsTaken() const;
 
+    //! \brief  met à jour la valeur de isReserved avec la valeur de \param new_isReserved, un booléen.
     void setIsReserved(bool new_isReserved);
 
+    //! \brief retourne le booléen isReserved. Vrai = place réservée, faux sinon. 
     const bool& getIsReserved() const;
 
+    //! \brief test de régression de la classe Place.
     void test_regresion();
     
 };

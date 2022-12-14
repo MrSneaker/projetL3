@@ -17,20 +17,16 @@ class Parking
 {
 
 private:
-    vector<Place> placesTab;
-    // Tableau dynamique de Places
+    vector<Place> placesTab; // Tableau dynamique de Places
 
-    int nbPlaces;
-    // - Nombre total de places (disponibles + occupées) dans le parking
-    // - Valeur fixe du début à la fin de la vie du parking
+    int nbPlaces; // Nombre total de places (disponibles + occupées) dans le parking
+    // Valeur fixe du début à la fin de la vie du parking
 
-    int nbAvailablePlaces;
-    // Nombre de places disponibles dans le parking
+    int nbAvailablePlaces; // Nombre de places disponibles dans le parking
 
-    int DIMX, DIMY;
+    int DIMX, DIMY; // Dimensions horizontale et verticale
 
-    float minPrice;
-    // - Prix minimum accepté par le parking
+    float minPrice; // Prix minimum accepté par le parking
 
     // - C'est le prix au-dessous duquel le parking refusera d'aller au cours d'une négocation
 
@@ -38,10 +34,9 @@ private:
     // au cours de sa vie, en fonction de si ce prix minimum
     // a tendance à être trop haut (pour les utilisateurs)
     // ou trop bas (ie le parking ne gagne pas assez d'argent)
-    // [cf commentaire de la donnée membre "nbTotalVisits" pour plus d'explications]
+    // [cf commentaire de la donnée membre successPercentageLastConv pour plus d'explications]
 
-    float startingPrice;
-    // - Prix proposé par le parking au début de la négociation
+    float startingPrice; // Prix proposé par le parking au début de la négociation
 
     // - C'est un prix toujours supérieur à minPrice
 
@@ -49,58 +44,55 @@ private:
     // au cours de sa vie, en fonction de si ce prix de départ
     // a tendance à être trop haut (pour les utilisateurs)
     // ou trop bas (ie le parking ne gagne pas assez d'argent)
-    // [cf commentaire de la donnée membre "nbTotalVisits" pour plus d'explications]
+    // [cf commentaire de la donnée membre successPercentageLastConv pour plus d'explications]
 
-    int idP;
+    int idP; // Numéro du parking : 0, 1 ou 2 dans l'implémentation, mais 1, 2 ou 3 sur l'affichage au sol
 
-    bool isFull;
-    // Vrai si le parking est plein, faux sinon
+    bool isFull; // Vrai si le parking est plein, faux sinon
 
-    int nbTotalVisits;
-    // - Nombre total de visites du parking.
+    Vec2 pos; // Position du coin supérieur gauche du parking
+
+    double successPercentage; // Pourcentage de réussite des négociations du Parking
+
+
+    double successPercentageLastConv; // Pourcentage de réussite des 10 dernières négociations du Parking
+
+    // - Ratio, en pourcentage, de lastNbAgreements sur lastNbFinishedConv.
+
+    // - A intervalles réguliers, le parking considère cette donnée membre
+    // pour éventuellement modifier son minPrice et son startingPrice
+    // (cf fonction membre reconsiderPrices).
+
+    /* - En détails : le parking calcule régulièrement son nombre de
+       réussites récentes par rapport à son nombre de négociations récentes. Si les négociations
+       ont souvent abouti à un refus de l'utilisateur de se garer dans le parking,
+       (i.e. si successPercentageLastConv est au-dessous
+       d'un certain seuil fixe [TO DO : voir plus tard si on fait plus dynamique qu'un simple seuil fixe]),
+       cela veut dire que les prix du parking sont trop hauts, et ce dernier va donc diminuer
+       les bornes de son intervalle de prix pour faire venir globalement plus de voitures.
+       A l'inverse, si le rapport est au-dessus d'un certain seuil fixe (pas le même seuil),
+       le parking va augmenter ses prix pour tenter de gagner plus d'argent.
+    */
+
+
+    double profit; // Quantité totale d'argent reçue par le Parking
+
+    unsigned int nbFinishedConv; // Nombre de négociations effectuées par le parking
+    // Cette donnée rentre dans le calcul de successPercentage.
+
+    unsigned int lastNbFinishedConv; // nbFinishedConv % 10
+    // Cette donnée rentre dans le calcul de successPercentageLastConv.
+
+    unsigned int lastNbAgreements; // Nombre total de visites du parking à l'issue de ses 10 dernières conversations
+    // Cette donnée rentre dans le calcul de successPercentageLastConv.
+
+    unsigned int nbAgreement; // Nombre total d'accords trouvés par le Parking, donc nombre total de visites du Parking
 
     // - Une visite correspond à une fois où un utilisateur s'est garé dans le parking.
-
-    // - Le parking va, toutes les 2h dans la simulation (par ex), calculer son nombre de
-    // réussites par rapport à son nombre de négociations. Si les négociations
-    // ont souvent abouti à un refus de l'utilisateur de se garer dans le parking en question,
-    // (i.e. si le rapport nb de réussites/nb de négociations est au-dessous d'un certain seuil
-    // qu'on aura fixé [voir plus tard si on fait plus dynamique qu'un simple seuil fixé]),
-    // cela veut dire que les prix du parking sont trop hauts, et ce dernier va donc baisser
-    // ses tarifs en moyenne pour obtenir globalement plus de voitures.
-
-    Vec2 pos;
-    // Position du coin supérieur gauche du parking
-
-    double successPercentage;
-
-    double successPercentageLastConv;
-
-    // - Pourcentage de réussite des dernières négociations du Parking.
-
-    // - Ratio, en pourcentage, de nbTotalVisitsFor10LastConv
-    // sur nbFinishedConv (commentaire obsolète).
-
-    // - A intervalles réguliers, le parking considerera cette donnée membre
-    // pour éventuellement modifier son minPrice et son startingPrice
-    // (fonction membre reconsiderPrices).
-
-
-    double profit;
-
-    unsigned int nbFinishedConv;
-    // - Nombre de négociations effectuées par le parking depuis le début de la simulation.
 
     // - Cette donnée rentre dans le calcul de successPercentage.
 
 
-    unsigned int nbTotalVisitsFor10LastConv;
-    // - Nombre total de visites du parking à l'issue des 10 dernières conversations.
-
-    // - On utilise cette donnée dans la reconsidération des prix du parking.
-
-    unsigned int lastNbFinishedConv;
-    unsigned int lastNbAgreements;
 
 public:
     // CONSTRUCTEURS et DESTRUCTEUR
@@ -138,8 +130,6 @@ public:
 
     const vector<pair<double, double>> &getDataNbPlaceTaken() const;
 
-    const int& getNbTotalVisits() const;
-
     //! \brief Donne la position (x,y) du parking - coin en haut a gauche
     const Vec2 &getPos() const;
 
@@ -169,11 +159,9 @@ public:
 
     void addToData(double currentTime);
 
-    void incrementNbTotalVisits();
-
     //! \brief incrémente le nombre de visites de l'utilisateur en paramètre de 1 à chaque appel.
     //! \param unUtilisateur pointeur sur un utilisateur.
-    void incrementNbVisitsTab(unsigned int id);
+    void incrementNbVisitsUser(unsigned int id);
 
     //! \brief enleve une place au nombre de places dispo
     void decrementNbAvailablePlaces();
@@ -181,9 +169,8 @@ public:
     //! \brief ajoute une place au nombre de places dispo
     void incrementNbAvailablePlaces();
 
-    //! \brief Incrémente le nombre total de visites du parking
-    //! \brief à l'issue des 10 dernières conversations.
-    void incrementNbTotalVisitsFor10LastConv ();
+    //! \brief Incrémente le nombre de visites du parking
+    void incrementNbAgreements();
 
     //! \brief Incrémente de 1 le nombre de négociations effectuées par le parking.
     void incrementNbFinishedConv();
