@@ -17,13 +17,45 @@ int Environnement::random(int min, int max) // fonction permettant de renvoyer u
     return res;
 }
 
+Environnement::Environnement(double price1, double price2, double price3, double userPrice_, double userPriceInf_, double tpsAppVoiture_)
+{
+    removeLogs();
+    getMap();
+    getUser();
+    getNames_SurnamesFromFile();
+    initParkings(price1,price2,price3);
+    tpsAppVoiture = tpsAppVoiture_;
+    userPrice = userPrice_;
+    userPriceInf = userPriceInf_;
+    nbConv = 0;
+    frames = 0;
+    frameParkTime = 0;
+    prevtime = 0;
+    currentTime = 0;
+    realTime = 0;
+    deltaTime = 0;
+    frametime = 0;
+    temps = 0;
+    TempsEcoule = 0;
+    Secondes = 0;
+    Minutes = 0;
+    Heures = 0;
+    Jours = 0;
+    Mois = 0;
+    nbUserCreated = 0;
+    nbUserSaved = 0;
+}
+
 Environnement::Environnement()
 {
     removeLogs();
     getMap();
     getUser();
     getNames_SurnamesFromFile();
-    initParkings();
+    initParkings(8,8,8);
+    tpsAppVoiture = 5;
+    userPrice = 10;
+    userPriceInf = 4;
     nbConv = 0;
     frames = 0;
     frameParkTime = 0;
@@ -439,21 +471,21 @@ float Environnement::randomParkTime()
     // On simule un pourcentage qui définie le temps de stationnement de l'utilisateur.
     float res = rand() % 100;
 
-    // Si le pourcentage est inferieur à 20, on met le temps de stationnement entre 15 minutes et 1 heure
+    // Si le pourcentage est inferieur à 20, on met le temps de stationnement entre 15 minutes et 1 heure 15
     if (res <= 20)
     {
-        new_Parktime = (rand() % 45 + 15);
+        new_Parktime = 15 + (rand() % 60);
         new_Parktime = new_Parktime / 60;
     }
     // Si le pourcentage est inferieur à 50 et supperieur a 10, on met le temps de stationnement entre 1 et 5 heures
     else if (res <= 50)
     {
-        new_Parktime = (rand() % 240 + 60) / 60;
+        new_Parktime = 60 + (rand() % 240) / 60;
     }
-    // Si le pourcentage est supperieur a 50, on met le temps de stationnement entre 5 et 12 heures
+    // Si le pourcentage est supperieur a 50, on met le temps de stationnement entre 5 et 55 heures
     else
     {
-        new_Parktime = (rand() % 420 + 300) / 60;
+        new_Parktime = 300 + (rand() % 3000) / 60;
     }
 
     return new_Parktime;
@@ -549,7 +581,7 @@ void Environnement::initUser(bool quitif)
     // Si tout les conducteurs enregistés ont été créer ou qu'il n'y a pas encore de conducteurs enregistrés
     else
     {
-        double price = (double)(random(40, 100) / 10); // on simule des floats en divisants par 10.
+        double price = (double)(random(userPriceInf*10, userPrice*10) / 10); // on simule des floats en divisants par 10.
 
         int id = CreateRandomId(); // On crée un id aléatoire différent de ceux déjà utilisés
 
@@ -575,15 +607,15 @@ void Environnement::initUser(bool quitif)
     }
 }
 
-void Environnement::initParkings()
+void Environnement::initParkings(double price1, double price2, double price3)
 {
     // Initialisation des parkings
     // Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir
 
     // Créer 3 parkings et les ajouter dans le tableau de parkings
-    Parking p0(Vec2(1, 1), 3, 8, 44, 38, 0);   // p0
-    Parking p1(Vec2(57, 1), 3, 8, 44, 38, 1);  // p1
-    Parking p2(Vec2(1, 52), 3, 8, 100, 29, 2); // p2
+    Parking p0(Vec2(1, 1), 0.4*price1, price1, 44, 38, 0);   // p0
+    Parking p1(Vec2(57, 1), 0.4*price2, price2, 44, 38, 1);  // p1
+    Parking p2(Vec2(1, 52), 0.4*price3, price3, 100, 29, 2); // p2
 
     parkings.push_back(p0);
     parkings.push_back(p1);
@@ -822,7 +854,7 @@ void Environnement::Environnement_play()
         realTime += deltaTime;
         ClockTime();
         // Affiche une voiture toutes les 5 secondes un seul fois
-        if (frametime >= 5.0f)
+        if (frametime >= tpsAppVoiture)
         {
             AddVoiture();
             frametime = 0;

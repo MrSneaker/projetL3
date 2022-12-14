@@ -86,7 +86,8 @@ private:
 public:
 
     //! \brief Constructeur de la classe Affichage
-    Affichage();
+    //! \param env , l'environnement à afficher.
+    Affichage(Environnement env);
 
     //! \brief Destructor de la classe Affichage
     ~Affichage();

@@ -6,8 +6,9 @@
 
 using namespace std;
 
-Affichage::Affichage()
+Affichage::Affichage(Environnement env)
 {
+    environnement = env;
     InitAffichage();
 }
 

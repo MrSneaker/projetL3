@@ -27,7 +27,6 @@ using namespace std;
 class Environnement
 {
 private:
-
     // Pour le temps
     float frames;
     float frameParkTime;
@@ -36,38 +35,54 @@ private:
     float realTime;
     float deltaTime;
     float frametime;
+    float tpsAppVoiture;
+
+    double userPrice;
+    double userPriceInf;
 
     // on veut gérer les convs dynamiquement
     vector<Conversation *> conv;
-    unsigned int nbConv; 
+    unsigned int nbConv;
 
-    vector<Utilisateur> SimuConducteurs; // liste des conducteurs qui sont utilisés dans la simulation
+    vector<Utilisateur> SimuConducteurs;     // liste des conducteurs qui sont utilisés dans la simulation
     vector<Utilisateur> tmpsavedConducteurs; // liste des nouveaux conducteurs qui sont ajoutés dans la simulation et qui seront ajouté au fichier User.txt
-    vector<Utilisateur> savedConducteurs; // liste des conducteurs enregistrés dans le fichier
+    vector<Utilisateur> savedConducteurs;    // liste des conducteurs enregistrés dans le fichier
     unsigned int nbUserCreated;
     unsigned int nbUserSaved;
 
-    vector<string> m_NameList; // liste des prenoms des conducteurs
-    vector<string> f_NameList; // liste des prenoms des conductrices
+    vector<string> m_NameList;  // liste des prenoms des conducteurs
+    vector<string> f_NameList;  // liste des prenoms des conductrices
     vector<string> SurnameList; // liste des noms des conducteurs
 
 public:
+    string map[DimWindowX / tailleCase * DimWindowY / tailleCase]; // tableau pour stocker
 
-    string map[DimWindowX / tailleCase * DimWindowY / tailleCase]; // tableau pour stocker 
-
-    vector<Voiture> voitures; // liste des voitures
-    vector<Parking> parkings; // liste des parkings
+    vector<Voiture> voitures;        // liste des voitures
+    vector<Parking> parkings;        // liste des parkings
     vector<Utilisateur> conducteurs; // liste des conducteurs
-    vector<int> doubleUser; // liste des conducteurs qui ont été enregistrés deux fois
+    vector<int> doubleUser;          // liste des conducteurs qui ont été enregistrés deux fois
     unsigned int temps;
     float TempsEcoule;
     bool Pause = false;
     bool SpeedUp = false;
-    int Secondes ;
+    int Secondes;
     int Minutes;
     int Heures;
     int Jours;
     int Mois;
+
+    //! \brief Constructeur d'environnement par paramètre.
+    //! \param price1 prix du parking 1.
+    //! \param price2 prix du parking 2.
+    //! \param price3 prix du parking 3.
+    //! \param userPrice borne maximum pour le prix des utilisateurs.
+    //! \param tpsAppVoiture temps d'apparition entre chaque voiture.
+    Environnement(double price1, double price2, double price3, double userPrice, double userPriceInf, double tpsAppVoiture);
+
+    //! \brief Constructeur par défaut d'environnement.
+    Environnement();
+
+    ~Environnement();
 
     void Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd, vector<Node *> &nodes);
 
@@ -75,9 +90,6 @@ public:
     //! \param min valeur minimale
     //! \param max valeur maximale
     int random(int min, int max);
-
-    Environnement();
-    ~Environnement();
 
     //! \brief Fonction permettant de retourner la position d'une case a partir de son indice
     //! \param indice indice de la case
@@ -100,7 +112,7 @@ public:
     //! \brief Récupère les données pour les graphiques dans un fichier
     //! \param fileName vecteur de pair de double contenant les données x et y du graphique
     //! \return vecteur de pair de double contenant les données x et y du graphique
-    const vector<pair<double,double>> getDataFromFile(string fileName) const;
+    const vector<pair<double, double>> getDataFromFile(string fileName) const;
 
     //! \brief Fonction qui permet d'actualisé l'horloge pour l'affichage (seconde, minute, heure, jour, mois)
     void ClockTime();
@@ -110,6 +122,7 @@ public:
 
     //! \brief Initialisation d'un utilisateur, puis ajout dans le tableau de conducteurs.
     //! \param quitif booleéan qui permet de faire réapparaitre un conducteur si il est déjà apparrut dans la simu
+    //! \param userPrice borne maximum des prix utilisateurs.
     void initUser(bool quitif);
 
     //! \brief Fonction permettant de créer un id aléatoire pour un utilisateur sans qu'il y ait de doublons
@@ -117,7 +130,10 @@ public:
     int CreateRandomId();
 
     //! \brief Initialisation des parkings
-    void initParkings();
+    //! \param price1 prix du parking 1.
+    //! \param price2 prix du parking 2.
+    //! \param price3 prix du parking 3.
+    void initParkings(double price1, double price2, double price3);
 
     //! \brief Ajout d'une voiture avec un conducteur dans le tableau de voitures.
     void AddVoiture();
@@ -162,7 +178,7 @@ public:
     //! \brief Trouve le maximum d'un vecteur de pair de double
     //! \param tab vecteur de pair de double
     //! \return double correspondant au maximum du vecteur
-    double searchMaxInPair(vector<pair<double,double>> tab);
+    double searchMaxInPair(vector<pair<double, double>> tab);
 
     //! \brief Trouve le maximum d'un vecteur de double
     //! \param tab vecteur de double
@@ -179,14 +195,14 @@ public:
     //! \param indPr Indice du parkings
     void changeTarget(Voiture &v, int indPr);
 
-    //! \brief Fonction qui fait un graphique 
+    //! \brief Fonction qui fait un graphique
     //! \param choice choix du graphique (0 : profit, 1 : evolution du starting price, 2 : nombre de place occupé, 3 : Succès moyen des parkings)
     void makeGraph(int choice);
 
     //! \brief Fonction qui permet d'enregistrer les utilisateurs dans un fichier
     void saveUser();
 
-    //! \brief Fonction qui permet de charger les utilisateurs dans le vecteur savedconducteurs 
+    //! \brief Fonction qui permet de charger les utilisateurs dans le vecteur savedconducteurs
     void getUser();
 
     //! \brief Fonction qui verifie qu'il ny'a pas de doublons d'id dans le fichier user.txt

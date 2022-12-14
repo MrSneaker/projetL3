@@ -41,16 +41,7 @@ private:
     unsigned int settingsH;
     Image settings;
 
-    unsigned int plusX;
-    unsigned int plusY;
-    unsigned int plusW;
-    unsigned int plusH;
     Image plus;
-
-    unsigned int minusX;
-    unsigned int minusY;
-    unsigned int minusW;
-    unsigned int minusH;
     Image minus;
 
     unsigned int okButtonX;
@@ -64,6 +55,12 @@ private:
     unsigned int cancelButtonW;
     unsigned int cancelButtonH;
     Image cancelButton;
+
+    unsigned int clearButtonX;
+    unsigned int clearButtonY;
+    unsigned int clearButtonW;
+    unsigned int clearButtonH;
+    Image clearButton;
 
     TTF_Font *font_default;
     TTF_Font *font_param;
@@ -80,6 +77,9 @@ private:
     double userPrice;
     double defUserPrice;
 
+    double userPriceInf;
+    double defUserPriceInf;
+
     double tpsAppVoiture;
     double defTpsApp;
 
@@ -95,6 +95,8 @@ public:
     void launchSim();
     void menuLoop();
     void showSettings();
+    void setToDef();
+    void saveValue();
     void afficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, unsigned char r, unsigned char g, unsigned char b, int a);
 };
 

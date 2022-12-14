@@ -29,6 +29,9 @@ Menu::Menu() // on met toutes les textures à NULL.
     userPrice = 10;
     defUserPrice = 10;
 
+    userPriceInf = 4;
+    defUserPriceInf = 4;
+
     tpsAppVoiture = 5;
     defTpsApp = 5;
 }
@@ -103,6 +106,7 @@ void Menu::initTexture() // initialisation des textures.
     settingsBack.loadFromFile("img/settingsBack.png", renderer);
     okButton.loadFromFile("img/OK.png", renderer);
     cancelButton.loadFromFile("img/cancel.png", renderer);
+    clearButton.loadFromFile("img/clear.png", renderer);
 }
 
 void Menu::showMenu() // affichage du menu.
@@ -134,8 +138,29 @@ void Menu::destructMenu() // destruction de toute les instances SDL (sans SDL_Qu
 
 void Menu::launchSim()
 {
-    Affichage sim;
+    Environnement env(price1, price2, price3, userPrice, userPriceInf, tpsAppVoiture);
+    Affichage sim(env);
     sim.AffichageSimulation();
+}
+
+void Menu::setToDef()
+{
+    price1 = defPrice1;
+    price2 = defPrice2;
+    price3 = defPrice3;
+    userPrice = defUserPrice;
+    userPriceInf = defUserPriceInf;
+    tpsAppVoiture = defTpsApp;
+}
+
+void Menu::saveValue()
+{
+    defPrice1 = price1;
+    defPrice2 = price2;
+    defPrice3 = price3;
+    defUserPrice = userPrice;
+    defUserPriceInf = userPriceInf;
+    defTpsApp = tpsAppVoiture;
 }
 
 void Menu::afficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, unsigned char r, unsigned char g, unsigned char b, int a)
@@ -186,15 +211,30 @@ void Menu::showSettings()
     plus.draw(renderer, 670, 210, 30, 30, 0);
     minus.draw(renderer, 630, 220, 30, 10, 0);
 
-    afficherTexte(font_param, "Prix max possible utilisateurs :", "", 0, 200, 270, 255, 255, 255, 255);
-    afficherTexte(font_param, "", "", userPrice, 615, 270, 255, 255, 255, 255);
-    plus.draw(renderer, 720, 270, 30, 30, 0);
-    minus.draw(renderer, 680, 280, 30, 10, 0);
+    afficherTexte(font_param, "Temps d'apparition voiture(sec) :", "", 0, 200, 270, 255, 255, 255, 255);
+    afficherTexte(font_param, "", "", tpsAppVoiture, 640, 270, 255, 255, 255, 255);
+    plus.draw(renderer, 750, 270, 30, 30, 0);
+    minus.draw(renderer, 710, 280, 30, 10, 0);
 
-    afficherTexte(font_param, "Temps d'apparition voiture :", "", 0, 200, 330, 255, 255, 255, 255);
-    afficherTexte(font_param, "", "", tpsAppVoiture, 580, 330, 255, 255, 255, 255);
+    afficherTexte(font_param, "Prix max possible utilisateurs :", "", 0, 200, 330, 255, 255, 255, 255);
+    afficherTexte(font_param, "", "", userPrice, 615, 330, 255, 255, 255, 255);
     plus.draw(renderer, 720, 330, 30, 30, 0);
     minus.draw(renderer, 680, 340, 30, 10, 0);
+
+    afficherTexte(font_param, "Prix min possible utilisateurs :", "", 0, 200, 370, 255, 255, 255, 255);
+    afficherTexte(font_param, "", "", userPriceInf, 615, 370, 255, 255, 255, 255);
+    plus.draw(renderer, 720, 370, 30, 30, 0);
+    minus.draw(renderer, 680, 380, 30, 10, 0);
+
+    afficherTexte(font_param, "Reset data utilisateur :", "", 0, 200, 430, 255, 255, 255, 255);
+    clearButtonX = 520;
+    clearButtonY = 410;
+    clearButtonW = 100;
+    clearButtonH = 75;
+    clearButton.draw(renderer, clearButtonX, clearButtonY, clearButtonW, clearButtonH, 0);
+
+    plus.draw(renderer, 720, 370, 30, 30, 0);
+    minus.draw(renderer, 680, 380, 30, 10, 0);
 
     okButtonX = 700;
     okButtonY = 650;
@@ -269,25 +309,17 @@ void Menu::menuLoop()
             showSettings();
             if (xc > okButtonX && xc < okButtonX + okButtonW && yc > okButtonY && yc < okButtonY + okButtonH)
             {
+                saveValue();
                 showSet = false;
                 xc = 0;
                 yc = 0;
-                defPrice1 = price1;
-                defPrice2 = price2;
-                defPrice3 = price3;
-                defUserPrice = userPrice;
-                defTpsApp = tpsAppVoiture;
             }
             else if (xc > cancelButtonX && xc < cancelButtonX + cancelButtonW && yc > cancelButtonY && yc < cancelButtonY + cancelButtonH)
             {
+                setToDef();
                 showSet = false;
                 xc = 0;
                 yc = 0;
-                price1 = defPrice1;
-                price2 = defPrice2;
-                price3 = defPrice3;
-                userPrice = defUserPrice;
-                tpsAppVoiture = defTpsApp;
             }
             else if (xc > 670 && xc < 670 + 30 && yc > 130 && yc < 130 + 30)
             {
@@ -337,37 +369,66 @@ void Menu::menuLoop()
                 xc = 0;
                 yc = 0;
             }
-            else if (xc > 720 && xc < 720 + 30 && yc > 270 && yc < 270 + 30)
+            else if (xc > 750 && xc < 750 + 30 && yc > 270 && yc < 270 + 30)
             {
-                userPrice += 0.5;
+                tpsAppVoiture += 0.5;
                 xc = 0;
                 yc = 0;
             }
-            else if (xc > 680 && xc < 680 + 40 && yc > 275 && yc < 275 + 25)
+            else if (xc > 710 && xc < 710 + 40 && yc > 275 && yc < 275 + 25)
             {
-                userPrice -= 0.5;
-                if (userPrice < 0.5)
+                tpsAppVoiture -= 0.5;
+                if (tpsAppVoiture < 0.5)
                 {
-                    userPrice = 0.5;
+                    tpsAppVoiture = 0.5;
                 }
                 xc = 0;
                 yc = 0;
             }
             else if (xc > 720 && xc < 720 + 30 && yc > 330 && yc < 330 + 30)
             {
-                tpsAppVoiture += 0.5;
+                userPrice += 0.5;
                 xc = 0;
                 yc = 0;
             }
             else if (xc > 680 && xc < 680 + 40 && yc > 335 && yc < 335 + 25)
             {
-                tpsAppVoiture -= 0.5;
-                if (tpsAppVoiture < 2)
+                userPrice -= 0.5;
+                if (userPrice < 2)
                 {
-                    tpsAppVoiture = 2;
+                    userPrice = 2;
+                }
+                else if (userPrice < userPriceInf)
+                {
+                    userPriceInf -= 0.5;
                 }
                 xc = 0;
                 yc = 0;
+            }
+            else if (xc > 720 && xc < 720 + 30 && yc > 370 && yc < 370 + 30)
+            {
+                userPriceInf += 0.5;
+                xc = 0;
+                yc = 0;
+                if (userPriceInf > userPrice)
+                {
+                    userPrice += 0.5;
+                }
+            }
+            else if (xc > 680 && xc < 680 + 40 && yc > 375 && yc < 375 + 25)
+            {
+                userPriceInf -= 0.5;
+                if (userPriceInf < 2)
+                {
+                    userPriceInf = 2;
+                }
+                xc = 0;
+                yc = 0;
+            }
+            else if (xc > clearButtonX && xc < clearButtonX + clearButtonW && yc > clearButtonY && yc < clearButtonY + clearButtonH)
+            {
+                if (std::filesystem::exists("data/User.txt"))
+                    system("rm data/User.txt");
             }
         }
         SDL_RenderPresent(renderer);
