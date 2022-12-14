@@ -33,6 +33,7 @@ private:
     Image quitButton;
 
     Image background;
+    Image settingsBack;
 
     unsigned int settingsX;
     unsigned int settingsY;
@@ -40,7 +41,47 @@ private:
     unsigned int settingsH;
     Image settings;
 
+    unsigned int plusX;
+    unsigned int plusY;
+    unsigned int plusW;
+    unsigned int plusH;
+    Image plus;
+
+    unsigned int minusX;
+    unsigned int minusY;
+    unsigned int minusW;
+    unsigned int minusH;
+    Image minus;
+
+    unsigned int okButtonX;
+    unsigned int okButtonY;
+    unsigned int okButtonW;
+    unsigned int okButtonH;
+    Image okButton;
+
+    unsigned int cancelButtonX;
+    unsigned int cancelButtonY;
+    unsigned int cancelButtonW;
+    unsigned int cancelButtonH;
+    Image cancelButton;
+
     TTF_Font *font_default;
+    TTF_Font *font_param;
+
+    double price1;
+    double defPrice1;
+
+    double price2;
+    double defPrice2;
+
+    double price3;
+    double defPrice3;
+
+    double userPrice;
+    double defUserPrice;
+
+    double tpsAppVoiture;
+    double defTpsApp;
 
 public:
     Menu();
@@ -50,9 +91,11 @@ public:
     void initFont();
     void initTexture();
     void destructMenu();
-    void afficherMenu();
+    void showMenu();
     void launchSim();
     void menuLoop();
+    void showSettings();
+    void afficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, unsigned char r, unsigned char g, unsigned char b, int a);
 };
 
 #endif

@@ -2,6 +2,35 @@
 
 Menu::Menu() // on met toutes les textures à NULL.
 {
+    startButtonX = 350;
+    startButtonY = 150;
+    startButtonW = 300;
+    startButtonH = 150;
+
+    quitButtonX = 350;
+    quitButtonY = 550;
+    quitButtonW = 300;
+    quitButtonH = 150;
+
+    settingsX = 350;
+    settingsY = 350;
+    settingsW = 300;
+    settingsH = 150;
+
+    price1 = 8;
+    defPrice1 = 8;
+
+    price2 = 8;
+    defPrice2 = 8;
+
+    price3 = 8;
+    defPrice3 = 8;
+
+    userPrice = 10;
+    defUserPrice = 10;
+
+    tpsAppVoiture = 5;
+    defTpsApp = 5;
 }
 
 Menu::~Menu()
@@ -10,21 +39,6 @@ Menu::~Menu()
 
 void Menu::initMenu() // on initialise la SDL.
 {
-    startButtonX = 350;
-    startButtonY = 200;
-    startButtonW = 300;
-    startButtonH = 200;
-
-    quitButtonX = 350;
-    quitButtonY = 500;
-    quitButtonW = 300;
-    quitButtonH = 200;
-
-    settingsX = 850;
-    settingsY = 650;
-    settingsW = 100;
-    settingsH = 100;
-
     // Initialisation de la SDL
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
     {
@@ -74,34 +88,44 @@ void Menu::initMenu() // on initialise la SDL.
 
 void Menu::initFont() // initialisation de la police.
 {
-    font_default = TTF_OpenFont("font/arial.ttf", 15);
+    font_default = TTF_OpenFont("font/arial.ttf", 50);
+    font_param = TTF_OpenFont("font/arial.ttf", 30);
 }
 
 void Menu::initTexture() // initialisation des textures.
 {
     background.loadFromFile("img/background.png", renderer);
     startButton.loadFromFile("img/start.png", renderer);
-    quitButton.loadFromFile("img/exit.png", renderer);
+    quitButton.loadFromFile("img/exitMenu.png", renderer);
     settings.loadFromFile("img/settings.png", renderer);
+    plus.loadFromFile("img/plus.png", renderer);
+    minus.loadFromFile("img/minus.png", renderer);
+    settingsBack.loadFromFile("img/settingsBack.png", renderer);
+    okButton.loadFromFile("img/OK.png", renderer);
+    cancelButton.loadFromFile("img/cancel.png", renderer);
 }
 
-void Menu::afficherMenu() // affichage du menu.
+void Menu::showMenu() // affichage du menu.
 {
     background.draw(renderer, 0, 0, DimWindowX, DimWindowY, 0);
     startButton.draw(renderer, startButtonX, startButtonY, startButtonW, startButtonH, 0);
     quitButton.draw(renderer, quitButtonX, quitButtonY, quitButtonW, quitButtonH, 0);
     settings.draw(renderer, settingsX, settingsY, settingsW, settingsH, 0);
-    SDL_RenderPresent(renderer);
-    SDL_RenderClear(renderer);
 }
 
 void Menu::destructMenu() // destruction de toute les instances SDL (sans SDL_Quit).
 {
     TTF_CloseFont(font_default);
+    TTF_CloseFont(font_param);
     background.~Image();
     startButton.~Image();
     quitButton.~Image();
     settings.~Image();
+    minus.~Image();
+    plus.~Image();
+    settingsBack.~Image();
+    okButton.~Image();
+    cancelButton.~Image();
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     IMG_Quit();
@@ -114,17 +138,91 @@ void Menu::launchSim()
     sim.AffichageSimulation();
 }
 
+void Menu::afficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, unsigned char r, unsigned char g, unsigned char b, int a)
+{
+
+    // return;
+    SDL_Color color = {r, g, b};
+    const char *text = Msg.c_str(); // convertir string en char
+
+    if (Msg == "")
+    {
+        ostringstream Val;                      // convertir float en string
+        Val << Valeur;                          //
+        string val = MsgWithValeur + Val.str(); // concatener les deux strings
+        text = val.c_str();
+    }
+
+    SDL_Surface *surface = TTF_RenderText_Blended(font, text, color);
+    SDL_SetSurfaceAlphaMod(surface, a);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+    int w = w;
+    int h = h;
+    SDL_QueryTexture(texture, NULL, NULL, &w, &h);
+    SDL_Rect dstrect = {x, y, w, h};
+    SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+}
+
+void Menu::showSettings()
+{
+    settingsBack.draw(renderer, 150, 50, 700, 700, 0);
+    afficherTexte(font_default, "Settings", "", 0, 400, 70, 255, 255, 255, 255);
+
+    afficherTexte(font_param, "Prix de depart parking 1 :", "", 0, 200, 130, 255, 255, 255, 255);
+    afficherTexte(font_param, "", "", price1, 550, 130, 255, 255, 255, 255);
+    plus.draw(renderer, 670, 130, 30, 30, 0);
+    minus.draw(renderer, 630, 140, 30, 10, 0);
+
+    afficherTexte(font_param, "Prix de depart parking 2 :", "", 0, 200, 170, 255, 255, 255, 255);
+    afficherTexte(font_param, "", "", price2, 550, 170, 255, 255, 255, 255);
+    plus.draw(renderer, 670, 170, 30, 30, 0);
+    minus.draw(renderer, 630, 180, 30, 10, 0);
+
+    afficherTexte(font_param, "Prix de depart parking 3 :", "", 0, 200, 210, 255, 255, 255, 255);
+    afficherTexte(font_param, "", "", price3, 550, 210, 255, 255, 255, 255);
+    plus.draw(renderer, 670, 210, 30, 30, 0);
+    minus.draw(renderer, 630, 220, 30, 10, 0);
+
+    afficherTexte(font_param, "Prix max possible utilisateurs :", "", 0, 200, 270, 255, 255, 255, 255);
+    afficherTexte(font_param, "", "", userPrice, 615, 270, 255, 255, 255, 255);
+    plus.draw(renderer, 720, 270, 30, 30, 0);
+    minus.draw(renderer, 680, 280, 30, 10, 0);
+
+    afficherTexte(font_param, "Temps d'apparition voiture :", "", 0, 200, 330, 255, 255, 255, 255);
+    afficherTexte(font_param, "", "", tpsAppVoiture, 580, 330, 255, 255, 255, 255);
+    plus.draw(renderer, 720, 330, 30, 30, 0);
+    minus.draw(renderer, 680, 340, 30, 10, 0);
+
+    okButtonX = 700;
+    okButtonY = 650;
+    okButtonW = 100;
+    okButtonH = 75;
+    okButton.draw(renderer, okButtonX, okButtonY, okButtonW, okButtonH, 0);
+
+    cancelButtonX = 500;
+    cancelButtonY = 650;
+    cancelButtonW = 100;
+    cancelButtonH = 75;
+    cancelButton.draw(renderer, cancelButtonX, cancelButtonY, cancelButtonW, cancelButtonH, 0);
+}
+
 void Menu::menuLoop()
 {
     initMenu();        // on initialise la SDL.
     bool quit = false; // condition du while.
-    bool click = false;
-    int x, y; // position de la souris.
-    x = 0;
-    y = 0;
-    afficherMenu(); // on affiche le Menu.
+    bool showSet = false;
+    int xc, yc, xm, ym; // position de la souris.
+    xc = 0;
+    yc = 0;
+    xm = 0;
+    ym = 0;
+    showMenu(); // on affiche le Menu.
     while (!quit)
     {
+        showMenu();                    // si aucune des conditions n'est remplies, on continue d'afficher le menu.
         while (SDL_PollEvent(&events)) // boucle d'évènements SDL.
         {
             switch (events.type)
@@ -133,13 +231,14 @@ void Menu::menuLoop()
                 quit = true; // .. on ferme la fenêtre.
                 break;
             case SDL_MOUSEMOTION:
-                x = events.motion.x; // .. on récupère la position de la souris.
-                y = events.motion.y; // si on bouge la souris.
+                xm = events.motion.x;
+                ym = events.motion.y;
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 if (events.button.button == SDL_BUTTON_LEFT) // on detecte le clique gauche.
                 {
-                    click = true;
+                    xc = events.motion.x; // .. on récupère la position de la souris.
+                    yc = events.motion.y;
                 }
                 break;
             default:
@@ -147,21 +246,132 @@ void Menu::menuLoop()
             }
         }
         // Ici on tests si le clique de la souris était dans un bouton ou non.
-        if ((x > startButtonX) && (x < startButtonX + startButtonW) && (y > startButtonY) && (y < startButtonY + startButtonH) && click)
+        if ((xc > startButtonX) && (xc < startButtonX + startButtonW) && (yc > startButtonY) && (yc < startButtonY + startButtonH) && !showSet)
         {
             destructMenu(); // on efface le menu.
             launchSim();    // on lance la simulation.
-            x = 0;          // on reset la position de la souris.
-            y = 0;
+            xc = 0;         // on reset la position de la souris.
+            yc = 0;
             initMenu(); // on réinitialise le menu.
-            click = false;
         }
-
-        else if ((x > quitButtonX) && (x < quitButtonX + quitButtonW) && (y > quitButtonY) && (y < quitButtonY + quitButtonH) && click)
+        else if ((xc > settingsX) && (xc < settingsX + settingsW) && (yc > settingsY) && (yc < settingsY + settingsH) && !showSet)
+        {
+            showSet = true;
+            xc = 0;
+            yc = 0;
+        }
+        else if ((xc > quitButtonX) && (xc < quitButtonX + quitButtonW) && (yc > quitButtonY) && (yc < quitButtonY + quitButtonH) && !showSet)
         { // on quitte le menu.
             quit = true;
         }
-        afficherMenu(); // si aucune des conditions n'est remplies, on continue d'afficher le menu.
+        if (showSet)
+        {
+            showSettings();
+            if (xc > okButtonX && xc < okButtonX + okButtonW && yc > okButtonY && yc < okButtonY + okButtonH)
+            {
+                showSet = false;
+                xc = 0;
+                yc = 0;
+                defPrice1 = price1;
+                defPrice2 = price2;
+                defPrice3 = price3;
+                defUserPrice = userPrice;
+                defTpsApp = tpsAppVoiture;
+            }
+            else if (xc > cancelButtonX && xc < cancelButtonX + cancelButtonW && yc > cancelButtonY && yc < cancelButtonY + cancelButtonH)
+            {
+                showSet = false;
+                xc = 0;
+                yc = 0;
+                price1 = defPrice1;
+                price2 = defPrice2;
+                price3 = defPrice3;
+                userPrice = defUserPrice;
+                tpsAppVoiture = defTpsApp;
+            }
+            else if (xc > 670 && xc < 670 + 30 && yc > 130 && yc < 130 + 30)
+            {
+                price1 += 0.5;
+                xc = 0;
+                yc = 0;
+            }
+            else if (xc > 630 && xc < 630 + 40 && yc > 135 && yc < 135 + 25)
+            {
+                price1 -= 0.5;
+                if (price1 < 0.5)
+                {
+                    price1 = 0.5;
+                }
+                xc = 0;
+                yc = 0;
+            }
+            else if (xc > 670 && xc < 670 + 30 && yc > 170 && yc < 170 + 30)
+            {
+                price2 += 0.5;
+                xc = 0;
+                yc = 0;
+            }
+            else if (xc > 630 && xc < 630 + 40 && yc > 175 && yc < 175 + 25)
+            {
+                price2 -= 0.5;
+                if (price2 < 0.5)
+                {
+                    price2 = 0.5;
+                }
+                xc = 0;
+                yc = 0;
+            }
+            else if (xc > 670 && xc < 670 + 30 && yc > 210 && yc < 210 + 30)
+            {
+                price3 += 0.5;
+                xc = 0;
+                yc = 0;
+            }
+            else if (xc > 630 && xc < 630 + 40 && yc > 215 && yc < 215 + 25)
+            {
+                price3 -= 0.5;
+                if (price3 < 0.5)
+                {
+                    price3 = 0.5;
+                }
+                xc = 0;
+                yc = 0;
+            }
+            else if (xc > 720 && xc < 720 + 30 && yc > 270 && yc < 270 + 30)
+            {
+                userPrice += 0.5;
+                xc = 0;
+                yc = 0;
+            }
+            else if (xc > 680 && xc < 680 + 40 && yc > 275 && yc < 275 + 25)
+            {
+                userPrice -= 0.5;
+                if (userPrice < 0.5)
+                {
+                    userPrice = 0.5;
+                }
+                xc = 0;
+                yc = 0;
+            }
+            else if (xc > 720 && xc < 720 + 30 && yc > 330 && yc < 330 + 30)
+            {
+                tpsAppVoiture += 0.5;
+                xc = 0;
+                yc = 0;
+            }
+            else if (xc > 680 && xc < 680 + 40 && yc > 335 && yc < 335 + 25)
+            {
+                tpsAppVoiture -= 0.5;
+                if (tpsAppVoiture < 2)
+                {
+                    tpsAppVoiture = 2;
+                }
+                xc = 0;
+                yc = 0;
+            }
+        }
+        SDL_RenderPresent(renderer);
+        SDL_RenderClear(renderer);
     }
     destructMenu(); // si on sort de la boucle, on détruit le menu.
     SDL_Quit();     // on quitte la SDL.
