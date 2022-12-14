@@ -19,9 +19,9 @@ Voiture::Voiture(Utilisateur U)
     Is_parked = false;
     Is_pathfind = false;
     ChangeTrajToExit = false;
-    decrement = false;
+    decrement = true;
     reachGoal = false;
-    isMoving = false;
+    isMoving = true;
 
     //------------------- float -------------------
     speed = 2;
@@ -386,11 +386,6 @@ Message Voiture::managingConversation(Message *aMessage) const
             // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A")
             // (ce n'est pas une acceptation engageante). En effet, si par la suite, dans une conversation parallèle,
             // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
-
-            // TO DO : il faudra appeler une fonction qui fait que la voiture stocke l'adresse ou l'id (ou je ne sais quoi
-            //         qui lui permet d'identifier le parking) du parking, ainsi que le prix accepté, pour que la voiture
-            //         puisse ensuite comparer les prix acceptés dans les différentes conversations, et ainsi se diriger
-            //         vers le parking lui ayant proposé le meilleur prix.
         }
 
         if (sentType == "REJECT" || sentType == "NO_MORE_SPOTS")
