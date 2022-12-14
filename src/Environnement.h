@@ -87,7 +87,7 @@ public:
     //! \brief Fonction permettant de retourner l'indice d'une case a partir de sa position
     //! \param pos position de la case
     //! \return Entier correspondant a l'indice de la case
-    const int GetNodeIndbyPos(Vec2 pos) const;
+    int GetNodeIndbyPos(Vec2 pos) const;
 
     //! \brief Fonction permettant de retourner l'indice du noeud d'une des 3 entrées
     //! \return Un entier correspondant à l'indice du noeud

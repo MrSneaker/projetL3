@@ -206,7 +206,7 @@ void Affichage::AffichagePlateau()
         unsigned int y = environnement.voitures[i].get_position().y - h / 2;
         int angle = environnement.voitures[i].getAngle();
 
-        switch (environnement.voitures[i].CarColor)
+        switch (environnement.voitures[i].getCarColor())
         {
         case 0:
             Voiture.draw(renderer, x, y, w, h, angle);

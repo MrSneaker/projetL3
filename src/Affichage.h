@@ -23,7 +23,7 @@ private:
     SDL_Renderer *renderer;
     SDL_Event event;
 
-    //------------------------------- IMAGE -----------------------------------
+//------------------------------- IMAGE ----------------------------------------
 
     Image Voiture;
     Image Voiture2;
@@ -68,47 +68,68 @@ private:
 
     bool quit;
 
-    //------------------------------- TEXT -----------------------------------
+//----------------------------------- TEXTE ------------------------------------
+
     TTF_Font *font_default;
     TTF_Font *font_UserCard;
     TTF_Font *font_UserCardBold;
     TTF_Font *font_Time;
     TTF_Font *font_Calendar;
 
-    int X = 0;
-    int Y = 0;
-    int Xm, Ym;
-    int XC, YC;
+//------------------------------------------------------------------------------
+
+    int Xm, Ym; // Position X Y de la souris lorsqu'elle bouge 
+    int XC, YC; // Position X Y de la souris lorsqu'ont clique
 
     bool DisplayUnrolledMenu = false; // si le menu est déroulé
 
 public:
-    vector<SDL_Rect> VoituresRect; // Tableau des rectangles des voitures (Pour plus tard)
+
+    //! \brief Constructeur de la classe Affichage
     Affichage();
+
+    //! \brief Destructor de la classe Affichage
     ~Affichage();
 
-    //! \brief procédure d'affichage de texte en SDL.
+    //! \brief Affiche du texte selon les différents paramètre 
+    //! \brief 2 choix possible : 1 - Afficher une simple ligne de texte ou 2 - Afficher du texte + une valeur statique ou dynamique (qui change au fil du temps)
+    //! \brief Pour passer de du choix 1 a 2 il suffit de mettre juste un String vide ( "" ) sur le parametre Msg
+    //! ex : AfficherTexte(---, "Son texte", --- , ---, etc. ) -> Affiche une simple ligne de texte.
+    //! ex : AfficherTexte(---, "", "Texte", valeur, ---, etc.) -> Affiche Texte + valeur
+    //! \param font Police du texte
+    //! \param Msg 1 - Texte simple 
+    //! \param MsgWithValeur 2 - Texte qui accompagne la valeur
+    //! \param valeur Valeur que l'on veut afficher
+    //! \param x Position en x du texte
+    //! \param y Position en y du texte
+    //! \param r Parametre R du RGBA -> color rouge
+    //! \param g Parametre G du RGBA -> color vert
+    //! \param b Parametre B du RGBA -> color bleu
+    //! \param a Parametre A du RGBA -> transparance
     void AfficherTexte(TTF_Font *font, string Msg, string MsgWithValeur, float Valeur, int x, int y, unsigned char r, unsigned char g, unsigned char b, int a);
 
-    //! \brief procédure d'initialisation de l'affichage (initialisation des textures, renderer..).
+    //! \brief Initialise tout les composants graphique SDL (Window, Font, Image, renderer)
     void InitAffichage();
 
-    //! \brief procédure d'affichage du plateau (parkings, places, routes).
+    //! \brief Affiche les composants graphique de la simulation
     void AffichagePlateau();
 
-    //! \brief affichage du menu (pause, accelere, temps, boutton exit). 
+    //! \brief Affiche les composants graphique du menu en bas
     void AffichageMenu();
 
-    //! \brief 
+    //! \brief Affiche le permis de l'utilisateur de la voiture (Nom, Prenom, Age, ParkTime, ID)
+    //! \param Vind Indice de la voiture sur lequel on a cliqué
+    //! \return int : Sert a savoir si on affiche ou non les infos
     int AffichageUserCard(unsigned int Vind);
 
-    //! \brief
+    //! \brief Affiche les informations du parkings (Indice du parking, Prix de départ, Prix moyen, nombre de places dispo)
+    //! \return int : Sert a savoir si on affiche ou non les infos 
     int AffichageParkingCard(unsigned int Parkind);
 
-    //! \brief
+    //! \brief Affiche le menu pour choisir les différent graphique a afficher
     int AffichageGraphMenu();
 
-    //! \brief boucle d'affichage de l'application.
+    //! \brief boucle principal d'affichage de la simulation
     void AffichageSimulation();
 };
 

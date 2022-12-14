@@ -11,16 +11,13 @@ class Message
 
 private:
 
-
-    unsigned int messageNumber;     // Numéro du message dans la conversation.
-    // Le 1er message porte le numéro 0, et le numéro de chaque nouveau message
+    unsigned int messageNumber; // Numéro du message dans la conversation.
+    // - Le 1er message porte le numéro 0, et le numéro de chaque nouveau message
     // sera l'entier suivant (0, 1, 2, 3, etc.).
 
+    clock_t date; // "Date-heure" courante du message
 
-    clock_t date;       // "Date-heure" courante du message
-
-    float price;        // Tarif horaire proposé dans le message
-
+    float price; // Tarif horaire proposé dans le message
 
     string subject;     // Type du message, les types utilisés étant :
     /*

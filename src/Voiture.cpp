@@ -11,64 +11,43 @@ Voiture::Voiture()
 
 Voiture::Voiture(Utilisateur U)
 {
+    //------------------- Vec2 -------------------
     position = Vec2(0, 0);
     TargetPosition = Vec2(0, 0);
-    speed = 2;
+    //------------------- bool -------------------
     Is_in = false;
     Is_parked = false;
     Is_pathfind = false;
     ChangeTrajToExit = false;
+    decrement = true;
     reachGoal = false;
+    isMoving = true;
+
+    //------------------- float -------------------
+    speed = 2;
+    startTimer = 0;
+
+    //------------------- int ---------------------
     parking = 0;
     place = 0;
     width = 1;
     height = 2;
     indice = 0;
-    startTimer = 0;
-    timer = 0;
-    User = U;
     nbFinishedConv = 0;
-    pathTab.clear();
-    isMoving = true;
     Exit = 0;
+    CarColor = 0;
+    //---------------------------------------------
+    User = U;
+
+    pathTab.clear();
 }
 
-// Destructeur de la classe Voiture
+
 Voiture::~Voiture()
 {
 }
 
-// Déplace la voiture vers la droite
-void Voiture::MoveRight()
-{
-    position.x += speed;
-    isMoving = true;
-    setAngle(270);
-}
-
-// Déplace la voiture vers la gauche
-void Voiture::MoveLeft()
-{
-    position.x -= speed;
-    isMoving = true;
-    setAngle(90);
-}
-
-// Déplace la voiture vers le haut
-void Voiture::MoveUp()
-{
-    position.y += speed;
-    isMoving = true;
-    setAngle(0);
-}
-
-// Déplace la voiture vers le bas
-void Voiture::MoveDown()
-{
-    position.y -= speed;
-    isMoving = true;
-    setAngle(180);
-}
+//--------------------------- Getter + Setter ----------------------------------
 
 void Voiture::setAngle(int new_angle)
 {
@@ -80,19 +59,16 @@ const int &Voiture::getAngle() const
     return angle;
 }
 
-// Renvoie la position (x;y) de la voiture
-const Vec2 &Voiture::get_position() const
-{
-    return position;
-}
-
-// Modifie la position (x;y) de la voiture
 void Voiture::set_position(Vec2 new_pos)
 {
     position = new_pos;
 }
 
-// Modifie la position de la cible (parking / place / sortie)
+const Vec2 &Voiture::get_position() const
+{
+    return position;
+}
+
 void Voiture::setTargetPosition(Vec2 new_pos)
 {
     TargetPosition = new_pos;
@@ -103,7 +79,132 @@ const Vec2 &Voiture::getTargetPosition() const
     return TargetPosition;
 }
 
-// Fonction qui fait avancer la voiture en suivant le chemin
+void Voiture::setCarColor(int new_color)
+{
+    CarColor = new_color;
+}
+
+const int &Voiture::getCarColor() const
+{
+    return CarColor;
+}
+
+const int &Voiture::getSpeed() const
+{
+    return speed;
+}
+
+const int &Voiture::getNbFinishedConv() const
+{
+    return nbFinishedConv;
+}
+
+void Voiture::setSpeed(int new_speed)
+{
+    speed = new_speed;
+}
+
+void Voiture::setIs_in(bool new_is_in)
+{
+    Is_in = new_is_in;
+}
+
+const bool &Voiture::getIs_in() const
+{
+    return Is_in;
+}
+
+void Voiture::setIs_parked(bool new_is_parked)
+{
+    Is_parked = new_is_parked;
+}
+
+const bool &Voiture::getIs_parked() const
+{
+    return Is_parked;
+}
+
+void Voiture::setParking(int new_parking)
+{
+    parking = new_parking;
+}
+
+const int &Voiture::getParking() const
+{
+    return parking;
+}
+void Voiture::setIs_pathfind(bool new_is_pathfind)
+{
+    Is_pathfind = new_is_pathfind;
+}
+
+const bool &Voiture::getIs_pathfind() const
+{
+    return Is_pathfind;
+}
+
+void Voiture::setPlace(int new_place)
+{
+    place = new_place;
+}
+
+const int &Voiture::getPlace() const
+{
+    return place;
+}
+
+void Voiture::setwidth(int new_width)
+{
+    width = new_width;
+}
+
+const int &Voiture::getwidth() const
+{
+    return width;
+}
+
+void Voiture::setheight(int new_height)
+{
+    height = new_height;
+}
+
+const int &Voiture::getheight() const
+{
+    return height;
+}
+
+vector<Node *> &Voiture::getpathTab()
+{
+    return pathTab;
+}
+
+//------------------------------------------------------------------------------
+
+
+void Voiture::MoveRight()
+{
+    position.x += speed;
+    setAngle(270);
+}
+
+void Voiture::MoveLeft()
+{
+    position.x -= speed;
+    setAngle(90);
+}
+
+void Voiture::MoveUp()
+{
+    position.y += speed;
+    setAngle(0);
+}
+
+void Voiture::MoveDown()
+{
+    position.y -= speed;
+    setAngle(180);
+}
+
 bool Voiture::MoveToTargetPosition()
 {
 
@@ -285,11 +386,6 @@ Message Voiture::managingConversation(Message *aMessage) const
             // [SUGGGESTION :] Cela ne veut pas dire qu'on va aller dans le parking en question (appelons-le "parking A")
             // (ce n'est pas une acceptation engageante). En effet, si par la suite, dans une conversation parallèle,
             // on accepte une offre moins chère avant d'atteindre le parking A, on n'ira pas dans le parking A.
-
-            // TO DO : il faudra appeler une fonction qui fait que la voiture stocke l'adresse ou l'id (ou je ne sais quoi
-            //         qui lui permet d'identifier le parking) du parking, ainsi que le prix accepté, pour que la voiture
-            //         puisse ensuite comparer les prix acceptés dans les différentes conversations, et ainsi se diriger
-            //         vers le parking lui ayant proposé le meilleur prix.
         }
 
         if (sentType == "REJECT" || sentType == "NO_MORE_SPOTS")
@@ -321,13 +417,13 @@ Message Voiture::managingConversation(Message *aMessage) const
 
 Message Voiture::confirmConversation(Message *aMessage, int indPrOK) const
 {
-    string senderString = "User_" + to_string(User.getId());
-    string recipientString = aMessage->getSender();
-    unsigned int messageNum = aMessage->getMessageNumber() + 1;
-    double price = aMessage->getPrice();
-    string subject;
-    int indPr;
-    indPr = extractIntFromString(recipientString);
+    string senderString = "User_" + to_string(User.getId());    // "Nom de l'User : User_1" par exemple
+    string recipientString = aMessage->getSender();             // "Nom du parking : Parking_1" par exemple
+    unsigned int messageNum = aMessage->getMessageNumber() + 1; // numéro du message à envoyer
+    double price = aMessage->getPrice();                        // prix proposé par le parking
+    string subject;                                             // sujet du message à envoyer
+    int indPr;                                                  // indice du parking
+    indPr = extractIntFromString(recipientString);              // on extrait l'indice du parking dans le nom du parking
     if (indPr == indPrOK)
     {
         subject = "CONFIRM_ACCEPT";
@@ -342,7 +438,7 @@ Message Voiture::confirmConversation(Message *aMessage, int indPrOK) const
 
 float Voiture::bestPrice(vector<float> tabPrice)
 {
-    float min = tabPrice.at(0);
+    float min = tabPrice.at(0); 
     float tmp = 0;
     for (int i = 0; i < tabPrice.size(); i++)
     {
@@ -354,123 +450,6 @@ float Voiture::bestPrice(vector<float> tabPrice)
         tmp = tabPrice[i];
     }
     return min;
-}
-
-bool Voiture::isPriceOk(double price, Utilisateur User) const
-{
-    double u_price = User.getMaxPrice();
-
-    bool ok = (price <= u_price + 0.05 * u_price);
-    // On considère que le prix est acceptable s'il est au plus 5 % trop cher.
-
-    if (ok)
-        return true;
-    else
-        return false;
-}
-
-void Voiture::UserGetInfos()
-{
-    // Donne les infos du conducteur
-    std::cout << "Nom : " << User.getName() << std::endl;
-    std::cout << "ID : " << User.getId() << std::endl;
-    std::cout << "Temps de stationnement : " << User.getParkTime() << std::endl;
-    std::cout << "Prix max : " << User.getMaxPrice() << std::endl;
-}
-
-const float &Voiture::getSpeed() const
-{
-    return speed;
-}
-
-const int &Voiture::getNbFinishedConv() const
-{
-    return nbFinishedConv;
-}
-
-void Voiture::setSpeed(float new_speed)
-{
-    speed = new_speed;
-}
-
-void Voiture::setIs_in(bool new_is_in)
-{
-    Is_in = new_is_in;
-}
-
-const bool &Voiture::getIs_in() const
-{
-    return Is_in;
-}
-
-void Voiture::setIs_parked(bool new_is_parked)
-{
-    Is_parked = new_is_parked;
-}
-
-const bool &Voiture::getIs_parked() const
-{
-    return Is_parked;
-}
-
-void Voiture::setParking(int new_parking)
-{
-    parking = new_parking;
-}
-
-const int &Voiture::getParking() const
-{
-    return parking;
-}
-void Voiture::setIs_pathfind(bool new_is_pathfind)
-{
-    Is_pathfind = new_is_pathfind;
-}
-
-const bool &Voiture::getIs_pathfind() const
-{
-    return Is_pathfind;
-}
-
-// set place
-void Voiture::setPlace(int new_place)
-{
-    place = new_place;
-}
-
-// get place
-const int &Voiture::getPlace() const
-{
-    return place;
-}
-
-// set Width
-void Voiture::setwidth(int new_width)
-{
-    width = new_width;
-}
-
-// get Width
-const int &Voiture::getwidth() const
-{
-    return width;
-}
-
-// set Height
-void Voiture::setheight(int new_height)
-{
-    height = new_height;
-}
-
-// get Height
-const int &Voiture::getheight() const
-{
-    return height;
-}
-
-vector<Node *> &Voiture::getpathTab()
-{
-    return pathTab;
 }
 
 void Voiture::incrementNbFinishedConv()
@@ -493,6 +472,28 @@ int Voiture::extractIntFromString(string aString) const
         charString++;
     }
     return anInt;
+}
+
+bool Voiture::isPriceOk(double price, Utilisateur User) const
+{
+    double u_price = User.getMaxPrice();
+
+    bool ok = (price <= u_price + 0.05 * u_price);
+    // On considère que le prix est acceptable s'il est au plus 5 % trop cher.
+
+    if (ok)
+        return true;
+    else
+        return false;
+}
+
+void Voiture::UserGetInfos()
+{
+    // Donne les infos du conducteur
+    std::cout << "Nom : " << User.getName() << std::endl;
+    std::cout << "ID : " << User.getId() << std::endl;
+    std::cout << "Temps de stationnement : " << User.getParkTime() << std::endl;
+    std::cout << "Prix max : " << User.getMaxPrice() << std::endl;
 }
 
 // -----------------------------------------------------------------------------------------------

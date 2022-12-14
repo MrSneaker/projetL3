@@ -104,7 +104,7 @@ Vec2 Environnement::GetPosbyNodeInd(int indiceCase) const
     return pos;
 }
 
-const int Environnement::GetNodeIndbyPos(Vec2 pos) const
+int Environnement::GetNodeIndbyPos(Vec2 pos) const
 {
     int indiceCase;
     indiceCase = (pos.x / tailleCase) + (pos.y / tailleCase) * (DimWindowX / tailleCase);
@@ -140,7 +140,7 @@ void Environnement::ClockTime()
     }
 }
 
-void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd, vector<Node *> &nodes)
+ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd, vector<Node *> &nodes)
 {
     if (nodes.size() > 0)
     {
@@ -151,9 +151,9 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     {
         for (int y = 0; y < DimWindowY / tailleCase; y++)
         {
-            Node *n = new Node;
-            if (n == nullptr)
-                cout << "erreur lors de l'allocation" << endl;
+            Node* n = new Node;
+            if(n == nullptr)
+                cout<<"erreur lors de l'allocation"<<endl;
             nodes.push_back(n);
         }
     }
@@ -199,7 +199,7 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
         {
             nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
 
-            for (int i = 0; i < nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().size(); i++)
+            for(int i =0;i<nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().size();i++)
             {
                 delete nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours()[i];
             }
@@ -216,6 +216,8 @@ void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd
     Node *currentNode;
     Node *StartNode = nodes[StartInd];
     Node *EndNode = nodes[EndInd];
+
+
 
     for (int x = 0; x < DimWindowX / tailleCase; x++)
     {
@@ -662,8 +664,7 @@ void Environnement::AddVoiture()
     int Entry = GetEntry();
     V.set_position(GetPosbyNodeInd(Entry) + Vec2(5, 5));
 
-    V.CarColor = random(0, 3);
-
+    V.setCarColor(random(0, 3));
     V.Exit = GetExit();
     V.setTargetPosition(GetPosbyNodeInd(V.Exit) + Vec2(5, 5));
 
@@ -732,10 +733,10 @@ void Environnement::updateStateVoiture()
                 parkings[parkingInd].getPlacesTab()[placeInd].setIsTaken(true); // on met à jour l'état de la place
                 // parkings[parkingInd].getPlacesTab()[placeInd].setIsReserved(true); // on met à jour l'état de la place
 
-                if (voitures[i].derement == true)
+                if (voitures[i].decrement == true)
                 {
                     voitures[i].startTimer = frameParkTime;
-                    voitures[i].derement = false;
+                    voitures[i].decrement = false;
                 }
 
                 voitures[i].setAngle(0);
@@ -744,14 +745,14 @@ void Environnement::updateStateVoiture()
             {
 
                 // si la voiture quitte la place
-                if (voitures[i].derement == false)
+                if (voitures[i].decrement == false)
                 {
                     voitures[i].startTimer = 0;
                     parkings[parkingInd].getPlacesTab()[placeInd].setIsTaken(false);    // on met à jour l'état de la place
                     parkings[parkingInd].getPlacesTab()[placeInd].setIsReserved(false); // on met à jour l'état de la place
                     voitures[i].setIs_parked(false);                                    // on met à jour l'état de la voiture
                     parkings[parkingInd].incrementNbAvailablePlaces();                  // on incrémente le nombre de place disponible
-                    voitures[i].derement = true;                                        // on met à jour le booléen
+                    voitures[i].decrement = true;                                        // on met à jour le booléen
                 }
             }
         }
@@ -909,8 +910,8 @@ const vector<pair<double, double>> Environnement::getDataFromFile(string fileNam
 int Environnement::createConv()
 {
     Conversation *newConv = new Conversation;
-    if (newConv == nullptr)
-        cout << "erreur, pointeur non-alloué (createConv)" << endl;
+    if(newConv == nullptr)
+        cout<<"erreur, pointeur non-alloué (createConv)"<<endl;
     conv.push_back(newConv);
     return conv.size() - 1;
 }
@@ -919,7 +920,7 @@ void Environnement::deleteConv(int ind)
 {
     conv.at(ind)->getConv().clear();
     delete conv.at(ind);
-    // conv.at(ind) = nullptr;
+    //conv.at(ind) = nullptr;
     conv.erase(conv.begin() + ind);
     conv.shrink_to_fit();
 }
@@ -988,8 +989,8 @@ void Environnement::changeTarget(Voiture &v, int indPr)
         Vec2 Placepos = parkings[indPr].getPlacesTab()[v.getPlace()].getPos(); // on récupère la position de la place
         v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5));             // on place la cible au milieu de la place.
         parkings[indPr].getPlacesTab()[v.getPlace()].setIsReserved(true);      // la place est réservée, pour pas qu'une autre voiture puisse y aller.
-        if (v.derement)
-            parkings[indPr].decrementNbAvailablePlaces();                                             // on décrémente le nombre de places disponibles.
+        if (v.decrement)
+            parkings[indPr].decrementNbAvailablePlaces();                                                                              // on décrémente le nombre de places disponibles.
         Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition()), v.nodes); // on change la cible de la voiture
     }
     else
@@ -1093,8 +1094,7 @@ void Environnement::makeGraph(int choice)
             Graph(dataTab[0], dataTab[1], dataTab[2], "Nombres de places occupées parking ", 0, 0, realTime, searchMax(tabMaxPlace) + 1);
         break;
     case 3:
-        if (!getDataFromFile("data/dataAvgSuccessPourcent.txt").empty())
-            Graph(getDataFromFile("data/dataAvgSuccessPourcent.txt"), "Pourcentage de succes moyen", 0, 0, realTime, searchMaxInPair(getDataFromFile("data/dataAvgSuccessPourcent.txt")) + 1);
+        Graph(getDataFromFile("data/dataAvgSuccessPourcent.txt"), "Pourcentage de succes moyen", 0, 0, realTime, searchMaxInPair(getDataFromFile("data/dataAvgSuccessPourcent.txt")) + 1);
         break;
     default:
         break;
@@ -1112,24 +1112,24 @@ void Environnement::test_regresion()
 
     for (int i = 0; i < 10; i++)
     {
-        E.AddVoiture();
-    }
-    assert(E.voitures.size() == 10);
-    E.RemoveVoiture(0);
-    assert(E.voitures.size() == 9);
+         E.AddVoiture();
+     }
+     assert(E.voitures.size() == 10);
+     E.RemoveVoiture(0);
+     assert(E.voitures.size() == 9);
 
-    cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
+     cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
 
-    int a = E.createConv();
-    assert(E.conv.size() == 1);
-    E.deleteConv(a);
-    assert(E.conv.size() == 0);
-    cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
+     int a = E.createConv();
+     assert(E.conv.size() == 1);
+     E.deleteConv(a);
+     assert(E.conv.size() == 0);
+     cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
 
-    for (int i = 0; i < E.voitures.size(); i++)
-    {
+     for (int i = 0; i < E.voitures.size(); i++)
+     {
         E.conversation(E.voitures.at(i));
-    }
-    assert(E.conv.size() == 0);
-    cout << "Test de regression de la fonction conversation: OK" << endl;
+     }
+     assert(E.conv.size() == 0);
+     cout << "Test de regression de la fonction conversation: OK" << endl;
 }
