@@ -1,0 +1,4 @@
+<map id="Voiture::isPriceOk" name="Voiture::isPriceOk">
+<area shape="rect" id="node1" title="vérifie qu&#39;un prix donné est acceptable ou non, avec une marge arbitraire. Renvoie un booléen." alt="" coords="5,5,143,32"/>
+<area shape="rect" id="node2" href="$class_utilisateur.html#a7885ac9f70ef054bb75440b0320fcbe1" title="renvoie un float contenant le prix maximum que l&#39;utilisateur pourrait payer." alt="" coords="191,5,369,32"/>
+</map>

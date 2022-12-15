@@ -1,0 +1,5 @@
+<map id="Environnement::chosenPark" name="Environnement::chosenPark">
+<area shape="rect" id="node1" title="Choisit le meilleur parking pour une voiture." alt="" coords="5,31,208,57"/>
+<area shape="rect" id="node2" href="$class_voiture.html#a06c1e3fc713859d08bba0b4fb12a2838" title="Trouve le meilleur (minimum) prix dans un tableau de prix." alt="" coords="293,5,429,32"/>
+<area shape="rect" id="node3" href="$class_voiture.html#ab14e45b67a90ce0956c435ed12c65c19" title="Extrait un ou plusieurs entier d&#39;un String." alt="" coords="256,56,467,83"/>
+</map>

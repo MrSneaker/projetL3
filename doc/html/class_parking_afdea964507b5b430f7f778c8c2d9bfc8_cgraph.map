@@ -1,0 +1,7 @@
+<map id="Parking::confirmConversation" name="Parking::confirmConversation">
+<area shape="rect" id="node1" title="Confirme la transaction ou non en fonction de la réponse de la voiture, fait les opérations en conséq..." alt="" coords="5,81,219,108"/>
+<area shape="rect" id="node2" href="$class_message.html#a89b2412b588785c6a8c68fae94e01a21" title="procédure de récupération du numéro du message" alt="" coords="267,5,485,32"/>
+<area shape="rect" id="node3" href="$class_message.html#a4cace77594aed492d616a61444b8e061" title="procédure de récupération du tarif indiqué dans le message" alt="" coords="305,56,447,83"/>
+<area shape="rect" id="node4" href="$class_message.html#af57f62e5c0cef22c45d69f1e9b5e7397" title="procédure de récupération de l&#39;expéditeur du message" alt="" coords="299,107,453,133"/>
+<area shape="rect" id="node5" href="$class_message.html#aa51eced8dbbf907cb6fe8e854899adc6" title="procédure de récupération de l&#39;objet du message" alt="" coords="297,157,455,184"/>
+</map>

@@ -1,0 +1,10 @@
+<map id="Voiture::managingConversation" name="Voiture::managingConversation">
+<area shape="rect" id="node1" title="La voiture lit le message reçu (donné en paramètre) s&#39;il y en a un (s&#39;il n&#39;y en a pas,..." alt="" coords="5,157,232,184"/>
+<area shape="rect" id="node2" href="$class_utilisateur.html#ac2f497f75d6a1d549582634327990b4a" title="renvoie l&#39;id de l&#39;utilisateur, qui sera unique." alt="" coords="324,5,455,32"/>
+<area shape="rect" id="node3" href="$class_utilisateur.html#a7885ac9f70ef054bb75440b0320fcbe1" title="renvoie un float contenant le prix maximum que l&#39;utilisateur pourrait payer." alt="" coords="547,183,725,209"/>
+<area shape="rect" id="node4" href="$class_message.html#a89b2412b588785c6a8c68fae94e01a21" title="procédure de récupération du numéro du message" alt="" coords="280,107,499,133"/>
+<area shape="rect" id="node5" href="$class_message.html#a4cace77594aed492d616a61444b8e061" title="procédure de récupération du tarif indiqué dans le message" alt="" coords="319,157,460,184"/>
+<area shape="rect" id="node6" href="$class_message.html#af57f62e5c0cef22c45d69f1e9b5e7397" title="procédure de récupération de l&#39;expéditeur du message" alt="" coords="312,208,467,235"/>
+<area shape="rect" id="node7" href="$class_message.html#aa51eced8dbbf907cb6fe8e854899adc6" title="procédure de récupération de l&#39;objet du message" alt="" coords="311,259,468,285"/>
+<area shape="rect" id="node8" href="$class_voiture.html#ad199ef6e94c132f0ac44093f25221443" title="vérifie qu&#39;un prix donné est acceptable ou non, avec une marge arbitraire. Renvoie un booléen." alt="" coords="321,309,458,336"/>
+</map>

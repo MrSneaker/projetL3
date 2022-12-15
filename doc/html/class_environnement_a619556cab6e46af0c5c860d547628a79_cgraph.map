@@ -1,0 +1,6 @@
+<map id="Environnement::conversation" name="Environnement::conversation">
+<area shape="rect" id="node1" title="pour réaliser la conversation." alt="" coords="5,56,219,83"/>
+<area shape="rect" id="node2" href="$class_utilisateur.html#ac2f497f75d6a1d549582634327990b4a" title="renvoie l&#39;id de l&#39;utilisateur, qui sera unique." alt="" coords="274,5,405,32"/>
+<area shape="rect" id="node3" href="$class_voiture.html#afcaf603ac5d623751fe8c08a244f5c59" title="Getter de l&#39;indice du parking ou la voiture va / est." alt="" coords="267,56,412,83"/>
+<area shape="rect" id="node4" href="$class_voiture.html#add4a1985d90531edef18d5865426f0ad" title="Modifier l&#39;indice du parkings ou la voiture va / est." alt="" coords="267,107,411,133"/>
+</map>
