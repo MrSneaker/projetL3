@@ -1,24 +1,82 @@
-\hypertarget{class_voiture}{}\doxysection{Voiture Class Reference}
+\hypertarget{class_voiture}{}\doxysection{Référence de la classe Voiture}
 \label{class_voiture}\index{Voiture@{Voiture}}
 
 
-Collaboration diagram for Voiture\+:
+Graphe de collaboration de Voiture\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=148pt]{class_voiture__coll__graph}
+\includegraphics[height=550pt]{class_voiture__coll__graph}
 \end{center}
 \end{figure}
-\doxysubsection*{Public Member Functions}
+\doxysubsection*{Fonctions membres publiques}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_voiture_ad118f57e0009cfb2162550d58933144b}\label{class_voiture_ad118f57e0009cfb2162550d58933144b}} 
-{\bfseries Voiture} (\mbox{\hyperlink{class_utilisateur}{Utilisateur}} User)
-\item 
-\mbox{\Hypertarget{class_voiture_ab14e45b67a90ce0956c435ed12c65c19}\label{class_voiture_ab14e45b67a90ce0956c435ed12c65c19}} 
-int {\bfseries extract\+Int\+From\+String} (string a\+String) const
-\item 
+\mbox{\Hypertarget{class_voiture_a5bcf57fecc474ac7dba49ca67529e31b}\label{class_voiture_a5bcf57fecc474ac7dba49ca67529e31b}} 
+\mbox{\hyperlink{class_voiture_a5bcf57fecc474ac7dba49ca67529e31b}{Voiture}} ()
+\begin{DoxyCompactList}\small\item\em Constructeur de la classe \mbox{\hyperlink{class_voiture}{Voiture}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_voiture_ad118f57e0009cfb2162550d58933144b}{Voiture}} (\mbox{\hyperlink{class_utilisateur}{Utilisateur}} User)
+\begin{DoxyCompactList}\small\item\em Constructeur de \mbox{\hyperlink{class_voiture}{Voiture}} avec un \mbox{\hyperlink{class_utilisateur}{Utilisateur}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_voiture_afe85820a993b6908d0fdb524245e5133}\label{class_voiture_afe85820a993b6908d0fdb524245e5133}} 
+\mbox{\hyperlink{class_voiture_afe85820a993b6908d0fdb524245e5133}{$\sim$\+Voiture}} ()
+\begin{DoxyCompactList}\small\item\em Destructor de la classe \mbox{\hyperlink{class_voiture}{Voiture}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voiture_a15432e0bb6e84459f84beae1854c75a7}{set\+Car\+Color}} (int new\+\_\+\+Car\+Color)
+\begin{DoxyCompactList}\small\item\em Setter de la couleur de la voiture. \end{DoxyCompactList}\item 
+const int \& \mbox{\hyperlink{class_voiture_a43b9651c5cff8d160f47e1d5150de8dd}{get\+Car\+Color}} () const
+\begin{DoxyCompactList}\small\item\em Getter de la couleur de la voiture. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voiture_abeaff0302f03e921eaed638ea3819d11}{set\+Target\+Position}} (\mbox{\hyperlink{class_vec2}{Vec2}} new\+\_\+pos)
+\begin{DoxyCompactList}\small\item\em Modifie la position de la cible (parking / place / sortie) \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_vec2}{Vec2}} \& \mbox{\hyperlink{class_voiture_a7ef3b6df2eb2cdaf7df4061d6cff1a33}{get\+Target\+Position}} () const
+\begin{DoxyCompactList}\small\item\em Getter de la position de la cible (parking / place / sortie) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voiture_a7e7e55f1b5cce5275e686bf40968c837}{set\+Angle}} (int new\+\_\+angle)
+\begin{DoxyCompactList}\small\item\em Modifie l\textquotesingle{}angle de la voiture. \end{DoxyCompactList}\item 
+const int \& \mbox{\hyperlink{class_voiture_ac231d9b02d76f86312c130aa4a4a063f}{get\+Angle}} () const
+\begin{DoxyCompactList}\small\item\em Getter de l\textquotesingle{}angle de la voiture. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voiture_a927287d61ec1f4d450ac05c09b128ee5}{set\+\_\+position}} (\mbox{\hyperlink{class_vec2}{Vec2}} new\+\_\+pos)
+\begin{DoxyCompactList}\small\item\em Modifie la position de la voiture. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_vec2}{Vec2}} \& \mbox{\hyperlink{class_voiture_a83532646a006877af0bd081563b0314d}{get\+\_\+position}} () const
+\begin{DoxyCompactList}\small\item\em Getter de la position de la voiture. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voiture_aca46d6950983226bae12b9e6f1ce1992}{set\+Speed}} (int new\+\_\+speed)
+\begin{DoxyCompactList}\small\item\em Modifie la vitesse de la voiture. \end{DoxyCompactList}\item 
+const int \& \mbox{\hyperlink{class_voiture_aed042a668f24cc2a68031abe623e66d8}{get\+Speed}} () const
+\begin{DoxyCompactList}\small\item\em Getter de la vitesse de la voiture. \end{DoxyCompactList}\item 
+const int \& \mbox{\hyperlink{class_voiture_a649f3e63c7f00ebd7f55dee98a664b85}{get\+Nb\+Finished\+Conv}} () const
+\begin{DoxyCompactList}\small\item\em Getter du nombre de conversations finies. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voiture_a9bd505c2551a128ca296578b1027bb3e}{set\+Is\+\_\+in}} (bool new\+\_\+\+Is\+\_\+in)
+\begin{DoxyCompactList}\small\item\em Mofifie le booléen qui indique si la voiture est dans une place. \end{DoxyCompactList}\item 
+const bool \& \mbox{\hyperlink{class_voiture_ab70bc9b7a613c761c297ebf9d25570d5}{get\+Is\+\_\+in}} () const
+\begin{DoxyCompactList}\small\item\em Getter du booléen qui indique si la voiture est dans une place. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voiture_a6888fc2086f314982696d1b26259a0d1}{set\+Is\+\_\+parked}} (bool new\+\_\+\+Is\+\_\+parked)
+\begin{DoxyCompactList}\small\item\em Modifier le booléen qui indique si la voiture est garée. \end{DoxyCompactList}\item 
+const bool \& \mbox{\hyperlink{class_voiture_aadc2f343e8028c211a6da9d8605859e1}{get\+Is\+\_\+parked}} () const
+\begin{DoxyCompactList}\small\item\em Getter du booléen qui indique si la voiture est garée. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voiture_a7989fb239e451c9ed538faf1525cb437}{set\+Is\+\_\+pathfind}} (bool new\+\_\+\+Is\+\_\+pathfind)
+\begin{DoxyCompactList}\small\item\em Modifier le booléen qui indique si la voiture à generer son chemin. \end{DoxyCompactList}\item 
+const bool \& \mbox{\hyperlink{class_voiture_a06c69ec457be60cfe6ca8916f0c75596}{get\+Is\+\_\+pathfind}} () const
+\begin{DoxyCompactList}\small\item\em Getter du booléen qui indique si la voiture à generer son chemin. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voiture_add4a1985d90531edef18d5865426f0ad}{set\+Parking}} (int new\+\_\+parking)
+\begin{DoxyCompactList}\small\item\em Modifier l\textquotesingle{}indice du parkings ou la voiture va / est. \end{DoxyCompactList}\item 
+const int \& \mbox{\hyperlink{class_voiture_afcaf603ac5d623751fe8c08a244f5c59}{get\+Parking}} () const
+\begin{DoxyCompactList}\small\item\em Getter de l\textquotesingle{}indice du parking ou la voiture va / est. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voiture_a491ac3055dac34b88f9c66ca18cb138d}{set\+Place}} (int new\+\_\+place)
+\begin{DoxyCompactList}\small\item\em Modifier l\textquotesingle{}indice de la place ou la voiture va / est. \end{DoxyCompactList}\item 
+const int \& \mbox{\hyperlink{class_voiture_a896704185acef78fbb946424d76b2a9d}{get\+Place}} () const
+\begin{DoxyCompactList}\small\item\em Getter de l\textquotesingle{}indice de la place ou la voiture va / est. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voiture_a829eb2511c24eedf980fedd28e394cb6}{setwidth}} (int new\+\_\+width)
+\begin{DoxyCompactList}\small\item\em Modifier la valeurs de la largeur de la voiture Sert a ce que quand la voiture rentre dans l\textquotesingle{}enceinte du parking, elle rattrécie sa largeur. \end{DoxyCompactList}\item 
+const int \& \mbox{\hyperlink{class_voiture_a1f998484a28e31d1372540aa7177a161}{getwidth}} () const
+\begin{DoxyCompactList}\small\item\em Getter de la largeur de la voiture. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voiture_ad5acc1ac9dedfd1d5d22ce6da010b057}{setheight}} (int new\+\_\+height)
+\begin{DoxyCompactList}\small\item\em Modifier la valeurs de la hauteur de la voiture Sert a ce que quand la voiture rentre dans l\textquotesingle{}enceinte du parking, elle rattrécie sa hauteur. \end{DoxyCompactList}\item 
+const int \& \mbox{\hyperlink{class_voiture_abf4185b3bd6c9c03d43e4777614cee08}{getheight}} () const
+\begin{DoxyCompactList}\small\item\em Getter de la hauteur de la voiture. \end{DoxyCompactList}\item 
+vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ \& \mbox{\hyperlink{class_voiture_a3fff7730d62f1ff421a3ff9423ebeb8b}{getpath\+Tab}} ()
+\begin{DoxyCompactList}\small\item\em Getter du chemin que la voiture va parcourir. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_voiture_ad199ef6e94c132f0ac44093f25221443}{is\+Price\+Ok}} (double price, \mbox{\hyperlink{class_utilisateur}{Utilisateur}} User) const
+\begin{DoxyCompactList}\small\item\em vérifie qu\textquotesingle{}un prix donné est acceptable ou non, avec une marge arbitraire. Renvoie un booléen. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_voiture_ab14e45b67a90ce0956c435ed12c65c19}{extract\+Int\+From\+String}} (string a\+String) const
+\begin{DoxyCompactList}\small\item\em Extrait un ou plusieurs entier d\textquotesingle{}un String. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_voiture_a606eda18cc4c12acb6e6267fbc8ebe17}\label{class_voiture_a606eda18cc4c12acb6e6267fbc8ebe17}} 
 void \mbox{\hyperlink{class_voiture_a606eda18cc4c12acb6e6267fbc8ebe17}{Move\+Right}} ()
 \begin{DoxyCompactList}\small\item\em Déplace la voiture vers la droite. \end{DoxyCompactList}\item 
@@ -37,133 +95,320 @@ bool \mbox{\hyperlink{class_voiture_ad094067f2ce14be307bf49688a2bd1ee}{Move\+To\
 void {\bfseries delete\+Node} ()
 \item 
 \mbox{\hyperlink{class_message}{Message}} \mbox{\hyperlink{class_voiture_a91c2b4ceb7d960ad6eb016c9113ace95}{managing\+Conversation}} (\mbox{\hyperlink{class_message}{Message}} $\ast$a\+Message) const
-\begin{DoxyCompactList}\small\item\em La voiture lit le message reçu (donné en paramètre) s\textquotesingle{}il y en a un. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_voiture_a57dba926d818f3bd01f2812b4e51fd0c}\label{class_voiture_a57dba926d818f3bd01f2812b4e51fd0c}} 
-\mbox{\hyperlink{class_message}{Message}} {\bfseries confirm\+Conversation} (\mbox{\hyperlink{class_message}{Message}} $\ast$a\+Message, int ind\+Pr\+OK) const
-\item 
+\begin{DoxyCompactList}\small\item\em La voiture lit le message reçu (donné en paramètre) s\textquotesingle{}il y en a un (s\textquotesingle{}il n\textquotesingle{}y en a pas, le pointeur est nul),. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_message}{Message}} \mbox{\hyperlink{class_voiture_a57dba926d818f3bd01f2812b4e51fd0c}{confirm\+Conversation}} (\mbox{\hyperlink{class_message}{Message}} $\ast$a\+Message, int ind\+Pr\+OK) const
+\begin{DoxyCompactList}\small\item\em La voiture lit le message reçu (donné en paramètre) renvoie un message de type ACCEPT ou REJECT avec le nouveau prix si reject. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_voiture_a06c1e3fc713859d08bba0b4fb12a2838}{best\+Price}} (vector$<$ float $>$ tab\+Price)
+\begin{DoxyCompactList}\small\item\em Trouve le meilleur (minimum) prix dans un tableau de prix. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_voiture_ae08ce2e27375d714f970af0010716c8c}\label{class_voiture_ae08ce2e27375d714f970af0010716c8c}} 
 void \mbox{\hyperlink{class_voiture_ae08ce2e27375d714f970af0010716c8c}{increment\+Nb\+Finished\+Conv}} ()
 \begin{DoxyCompactList}\small\item\em incrémente le nombre de conversations finies de 1. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_voiture_abeaff0302f03e921eaed638ea3819d11}\label{class_voiture_abeaff0302f03e921eaed638ea3819d11}} 
-void \mbox{\hyperlink{class_voiture_abeaff0302f03e921eaed638ea3819d11}{set\+Target\+Position}} (\mbox{\hyperlink{class_vec2}{Vec2}} new\+\_\+pos)
-\begin{DoxyCompactList}\small\item\em Modifie la position de la cible (parking / place / sortie) \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{class_voiture_a7e7e55f1b5cce5275e686bf40968c837}{set\+Angle}} (int new\+\_\+angle)
-\begin{DoxyCompactList}\small\item\em Modifie l\textquotesingle{}angle de la voiture. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_voiture_a7ef3b6df2eb2cdaf7df4061d6cff1a33}\label{class_voiture_a7ef3b6df2eb2cdaf7df4061d6cff1a33}} 
-const \mbox{\hyperlink{class_vec2}{Vec2}} \& \mbox{\hyperlink{class_voiture_a7ef3b6df2eb2cdaf7df4061d6cff1a33}{get\+Target\+Position}} () const
-\begin{DoxyCompactList}\small\item\em Renvoie la position de la cible (parking / place / sortie) \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_voiture_a83532646a006877af0bd081563b0314d}\label{class_voiture_a83532646a006877af0bd081563b0314d}} 
-const \mbox{\hyperlink{class_vec2}{Vec2}} \& \mbox{\hyperlink{class_voiture_a83532646a006877af0bd081563b0314d}{get\+\_\+position}} () const
-\begin{DoxyCompactList}\small\item\em Renvoie la position de la voiture. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_voiture_ac231d9b02d76f86312c130aa4a4a063f}\label{class_voiture_ac231d9b02d76f86312c130aa4a4a063f}} 
-const int \& \mbox{\hyperlink{class_voiture_ac231d9b02d76f86312c130aa4a4a063f}{get\+Angle}} () const
-\begin{DoxyCompactList}\small\item\em Renvoie l\textquotesingle{}angle de la voiture. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{class_voiture_a927287d61ec1f4d450ac05c09b128ee5}{set\+\_\+position}} (\mbox{\hyperlink{class_vec2}{Vec2}} new\+\_\+pos)
-\begin{DoxyCompactList}\small\item\em Modifie la position de la voiture. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{class_voiture_ad199ef6e94c132f0ac44093f25221443}{is\+Price\+Ok}} (double price, \mbox{\hyperlink{class_utilisateur}{Utilisateur}} User) const
-\begin{DoxyCompactList}\small\item\em vérifie qu\textquotesingle{}un prix donné est acceptable ou non, avec une marge arbitraire. Renvoie un booléen. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_voiture_a2ccb55d67bbaaabc6fd7b1ea3bb75f4b}\label{class_voiture_a2ccb55d67bbaaabc6fd7b1ea3bb75f4b}} 
 void \mbox{\hyperlink{class_voiture_a2ccb55d67bbaaabc6fd7b1ea3bb75f4b}{User\+Get\+Infos}} ()
 \begin{DoxyCompactList}\small\item\em Affiche les Infos du conducteur. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_voiture_a6ab502664aed159bf2eb4b06a794c17f}\label{class_voiture_a6ab502664aed159bf2eb4b06a794c17f}} 
-const float \& \mbox{\hyperlink{class_voiture_a6ab502664aed159bf2eb4b06a794c17f}{get\+Speed}} () const
-\begin{DoxyCompactList}\small\item\em renvoie la vitesse de la voiture \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_voiture_a649f3e63c7f00ebd7f55dee98a664b85}\label{class_voiture_a649f3e63c7f00ebd7f55dee98a664b85}} 
-const int \& {\bfseries get\+Nb\+Finished\+Conv} () const
-\item 
-\mbox{\Hypertarget{class_voiture_a9b49e476bcd54bf77ee8a399cad52057}\label{class_voiture_a9b49e476bcd54bf77ee8a399cad52057}} 
-void \mbox{\hyperlink{class_voiture_a9b49e476bcd54bf77ee8a399cad52057}{set\+Speed}} (float new\+\_\+speed)
-\begin{DoxyCompactList}\small\item\em Modifie la vitesse de la voiture. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_voiture_ab70bc9b7a613c761c297ebf9d25570d5}\label{class_voiture_ab70bc9b7a613c761c297ebf9d25570d5}} 
-const bool \& {\bfseries get\+Is\+\_\+in} () const
-\item 
-\mbox{\Hypertarget{class_voiture_a9bd505c2551a128ca296578b1027bb3e}\label{class_voiture_a9bd505c2551a128ca296578b1027bb3e}} 
-void {\bfseries set\+Is\+\_\+in} (bool new\+\_\+\+Is\+\_\+in)
-\item 
-\mbox{\Hypertarget{class_voiture_a6888fc2086f314982696d1b26259a0d1}\label{class_voiture_a6888fc2086f314982696d1b26259a0d1}} 
-void {\bfseries set\+Is\+\_\+parked} (bool new\+\_\+\+Is\+\_\+parked)
-\item 
-\mbox{\Hypertarget{class_voiture_aadc2f343e8028c211a6da9d8605859e1}\label{class_voiture_aadc2f343e8028c211a6da9d8605859e1}} 
-const bool \& {\bfseries get\+Is\+\_\+parked} () const
-\item 
-\mbox{\Hypertarget{class_voiture_a7989fb239e451c9ed538faf1525cb437}\label{class_voiture_a7989fb239e451c9ed538faf1525cb437}} 
-void {\bfseries set\+Is\+\_\+pathfind} (bool new\+\_\+\+Is\+\_\+pathfind)
-\item 
-\mbox{\Hypertarget{class_voiture_a06c69ec457be60cfe6ca8916f0c75596}\label{class_voiture_a06c69ec457be60cfe6ca8916f0c75596}} 
-const bool \& {\bfseries get\+Is\+\_\+pathfind} () const
-\item 
-\mbox{\Hypertarget{class_voiture_add4a1985d90531edef18d5865426f0ad}\label{class_voiture_add4a1985d90531edef18d5865426f0ad}} 
-void {\bfseries set\+Parking} (int new\+\_\+parking)
-\item 
-\mbox{\Hypertarget{class_voiture_afcaf603ac5d623751fe8c08a244f5c59}\label{class_voiture_afcaf603ac5d623751fe8c08a244f5c59}} 
-const int \& {\bfseries get\+Parking} () const
-\item 
-\mbox{\Hypertarget{class_voiture_a491ac3055dac34b88f9c66ca18cb138d}\label{class_voiture_a491ac3055dac34b88f9c66ca18cb138d}} 
-void {\bfseries set\+Place} (int new\+\_\+place)
-\item 
-\mbox{\Hypertarget{class_voiture_a896704185acef78fbb946424d76b2a9d}\label{class_voiture_a896704185acef78fbb946424d76b2a9d}} 
-const int \& {\bfseries get\+Place} () const
-\item 
-\mbox{\Hypertarget{class_voiture_a829eb2511c24eedf980fedd28e394cb6}\label{class_voiture_a829eb2511c24eedf980fedd28e394cb6}} 
-void {\bfseries setwidth} (int new\+\_\+width)
-\item 
-\mbox{\Hypertarget{class_voiture_a1f998484a28e31d1372540aa7177a161}\label{class_voiture_a1f998484a28e31d1372540aa7177a161}} 
-const int \& {\bfseries getwidth} () const
-\item 
-\mbox{\Hypertarget{class_voiture_ad5acc1ac9dedfd1d5d22ce6da010b057}\label{class_voiture_ad5acc1ac9dedfd1d5d22ce6da010b057}} 
-void {\bfseries setheight} (int new\+\_\+height)
-\item 
-\mbox{\Hypertarget{class_voiture_abf4185b3bd6c9c03d43e4777614cee08}\label{class_voiture_abf4185b3bd6c9c03d43e4777614cee08}} 
-const int \& {\bfseries getheight} () const
-\item 
-\mbox{\Hypertarget{class_voiture_a3fff7730d62f1ff421a3ff9423ebeb8b}\label{class_voiture_a3fff7730d62f1ff421a3ff9423ebeb8b}} 
-vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ \& {\bfseries getpath\+Tab} ()
-\item 
-\mbox{\Hypertarget{class_voiture_a06c1e3fc713859d08bba0b4fb12a2838}\label{class_voiture_a06c1e3fc713859d08bba0b4fb12a2838}} 
-float {\bfseries best\+Price} (vector$<$ float $>$ tab\+Price)
-\item 
 \mbox{\Hypertarget{class_voiture_acc2e14421808897b00e813c63cfd98c6}\label{class_voiture_acc2e14421808897b00e813c63cfd98c6}} 
 void \mbox{\hyperlink{class_voiture_acc2e14421808897b00e813c63cfd98c6}{test\+\_\+regresion}} ()
 \begin{DoxyCompactList}\small\item\em Test de regression la classe \mbox{\hyperlink{class_voiture}{Voiture}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Public Attributes}
+\doxysubsection*{Champs de données}
 \begin{DoxyCompactItemize}
-\item 
-\mbox{\Hypertarget{class_voiture_a8547af521f7dcc91dac0bf7f0a1f18ce}\label{class_voiture_a8547af521f7dcc91dac0bf7f0a1f18ce}} 
-vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ {\bfseries nodes}
 \item 
 \mbox{\Hypertarget{class_voiture_ad1062ce0f7b7a62fb60aec676ed7aa09}\label{class_voiture_ad1062ce0f7b7a62fb60aec676ed7aa09}} 
 \mbox{\hyperlink{class_utilisateur}{Utilisateur}} {\bfseries User}
 \item 
+\mbox{\Hypertarget{class_voiture_a8547af521f7dcc91dac0bf7f0a1f18ce}\label{class_voiture_a8547af521f7dcc91dac0bf7f0a1f18ce}} 
+vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ {\bfseries nodes}
+\item 
+\mbox{\Hypertarget{class_voiture_ab9521cb63cb94bcde2d0ec9816a7f52e}\label{class_voiture_ab9521cb63cb94bcde2d0ec9816a7f52e}} 
+vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ {\bfseries open\+List}
+\item 
+\mbox{\Hypertarget{class_voiture_a6dbdf2af49b131139d64c37a4c59d335}\label{class_voiture_a6dbdf2af49b131139d64c37a4c59d335}} 
+bool {\bfseries decrement}
+\item 
+\mbox{\Hypertarget{class_voiture_a0598290d6259f9a8583b4a303c821ca8}\label{class_voiture_a0598290d6259f9a8583b4a303c821ca8}} 
+bool {\bfseries reach\+Goal}
+\item 
+\mbox{\Hypertarget{class_voiture_a74ba0a6ea39b876d1da72d61a247e92e}\label{class_voiture_a74ba0a6ea39b876d1da72d61a247e92e}} 
+bool {\bfseries is\+Moving}
+\item 
+\mbox{\Hypertarget{class_voiture_a2b0894ecfc0e20d2f36c98a94f51607c}\label{class_voiture_a2b0894ecfc0e20d2f36c98a94f51607c}} 
+bool {\bfseries Change\+Traj\+To\+Exit}
+\item 
 \mbox{\Hypertarget{class_voiture_aa69d4b4b8279c5b10ad871d6f8bfbc82}\label{class_voiture_aa69d4b4b8279c5b10ad871d6f8bfbc82}} 
 int {\bfseries indice}
 \item 
-\mbox{\Hypertarget{class_voiture_a74ba0a6ea39b876d1da72d61a247e92e}\label{class_voiture_a74ba0a6ea39b876d1da72d61a247e92e}} 
-bool {\bfseries is\+Moving} = false
-\item 
-\mbox{\Hypertarget{class_voiture_a6ad60ed059a3886144c076f0bacb4fdc}\label{class_voiture_a6ad60ed059a3886144c076f0bacb4fdc}} 
-bool {\bfseries derement} = true
-\item 
-\mbox{\Hypertarget{class_voiture_a0598290d6259f9a8583b4a303c821ca8}\label{class_voiture_a0598290d6259f9a8583b4a303c821ca8}} 
-bool {\bfseries reach\+Goal} = false
-\item 
-\mbox{\Hypertarget{class_voiture_a512f125b1b907291514cdd13fd0acfbd}\label{class_voiture_a512f125b1b907291514cdd13fd0acfbd}} 
-float {\bfseries timer}
+\mbox{\Hypertarget{class_voiture_a4d41c3fa4eccaec502d1d93e5c3d126b}\label{class_voiture_a4d41c3fa4eccaec502d1d93e5c3d126b}} 
+int {\bfseries Exit}
 \item 
 \mbox{\Hypertarget{class_voiture_a66445303c82546d96e5f4b4019257ffb}\label{class_voiture_a66445303c82546d96e5f4b4019257ffb}} 
 float {\bfseries start\+Timer}
-\item 
-\mbox{\Hypertarget{class_voiture_a2b0894ecfc0e20d2f36c98a94f51607c}\label{class_voiture_a2b0894ecfc0e20d2f36c98a94f51607c}} 
-bool {\bfseries Change\+Traj\+To\+Exit} = false
-\item 
-\mbox{\Hypertarget{class_voiture_a2db49bc715f954d7c0f4a3d2f80cb32d}\label{class_voiture_a2db49bc715f954d7c0f4a3d2f80cb32d}} 
-unsigned int {\bfseries Exit}
-\item 
-\mbox{\Hypertarget{class_voiture_ae5a6dd894e3c5fa09896a7e8d1b0617d}\label{class_voiture_ae5a6dd894e3c5fa09896a7e8d1b0617d}} 
-unsigned int {\bfseries Car\+Color}
 \end{DoxyCompactItemize}
 
 
-\doxysubsection{Member Function Documentation}
+\doxysubsection{Documentation des constructeurs et destructeur}
+\mbox{\Hypertarget{class_voiture_ad118f57e0009cfb2162550d58933144b}\label{class_voiture_ad118f57e0009cfb2162550d58933144b}} 
+\index{Voiture@{Voiture}!Voiture@{Voiture}}
+\index{Voiture@{Voiture}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{Voiture()}{Voiture()}}
+{\footnotesize\ttfamily Voiture\+::\+Voiture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_utilisateur}{Utilisateur}}}]{User }\end{DoxyParamCaption})}
+
+
+
+Constructeur de \mbox{\hyperlink{class_voiture}{Voiture}} avec un \mbox{\hyperlink{class_utilisateur}{Utilisateur}}. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em User} & \+: \mbox{\hyperlink{class_utilisateur}{Utilisateur}} de la voiture \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Documentation des fonctions membres}
+\mbox{\Hypertarget{class_voiture_a06c1e3fc713859d08bba0b4fb12a2838}\label{class_voiture_a06c1e3fc713859d08bba0b4fb12a2838}} 
+\index{Voiture@{Voiture}!bestPrice@{bestPrice}}
+\index{bestPrice@{bestPrice}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{bestPrice()}{bestPrice()}}
+{\footnotesize\ttfamily float Voiture\+::best\+Price (\begin{DoxyParamCaption}\item[{vector$<$ float $>$}]{tab\+Price }\end{DoxyParamCaption})}
+
+
+
+Trouve le meilleur (minimum) prix dans un tableau de prix. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em tab\+Price} & vector de float \+: prix \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+float \+: meilleur prix 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_a57dba926d818f3bd01f2812b4e51fd0c}\label{class_voiture_a57dba926d818f3bd01f2812b4e51fd0c}} 
+\index{Voiture@{Voiture}!confirmConversation@{confirmConversation}}
+\index{confirmConversation@{confirmConversation}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{confirmConversation()}{confirmConversation()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_message}{Message}} Voiture\+::confirm\+Conversation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_message}{Message}} $\ast$}]{a\+Message,  }\item[{int}]{ind\+Pr\+OK }\end{DoxyParamCaption}) const}
+
+
+
+La voiture lit le message reçu (donné en paramètre) renvoie un message de type ACCEPT ou REJECT avec le nouveau prix si reject. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em message} & \+: message reçu \\
+\hline
+{\em ind\+Pr\+OK} & \+: indice du parkings que la voiture a choisi \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+message généré 
+\end{DoxyReturn}
+Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_voiture_a57dba926d818f3bd01f2812b4e51fd0c_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_voiture_ab14e45b67a90ce0956c435ed12c65c19}\label{class_voiture_ab14e45b67a90ce0956c435ed12c65c19}} 
+\index{Voiture@{Voiture}!extractIntFromString@{extractIntFromString}}
+\index{extractIntFromString@{extractIntFromString}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{extractIntFromString()}{extractIntFromString()}}
+{\footnotesize\ttfamily int Voiture\+::extract\+Int\+From\+String (\begin{DoxyParamCaption}\item[{string}]{a\+String }\end{DoxyParamCaption}) const}
+
+
+
+Extrait un ou plusieurs entier d\textquotesingle{}un String. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em a\+String} & \+: String à extraire \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+int \+: entier extrait 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_a83532646a006877af0bd081563b0314d}\label{class_voiture_a83532646a006877af0bd081563b0314d}} 
+\index{Voiture@{Voiture}!get\_position@{get\_position}}
+\index{get\_position@{get\_position}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{get\_position()}{get\_position()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_vec2}{Vec2}} \& Voiture\+::get\+\_\+position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter de la position de la voiture. 
+
+\begin{DoxyReturn}{Renvoie}
+\mbox{\hyperlink{class_vec2}{Vec2}} \+: position de la voiture 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_ac231d9b02d76f86312c130aa4a4a063f}\label{class_voiture_ac231d9b02d76f86312c130aa4a4a063f}} 
+\index{Voiture@{Voiture}!getAngle@{getAngle}}
+\index{getAngle@{getAngle}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getAngle()}{getAngle()}}
+{\footnotesize\ttfamily const int \& Voiture\+::get\+Angle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter de l\textquotesingle{}angle de la voiture. 
+
+\begin{DoxyReturn}{Renvoie}
+int \+: angle de la voiture 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_a43b9651c5cff8d160f47e1d5150de8dd}\label{class_voiture_a43b9651c5cff8d160f47e1d5150de8dd}} 
+\index{Voiture@{Voiture}!getCarColor@{getCarColor}}
+\index{getCarColor@{getCarColor}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getCarColor()}{getCarColor()}}
+{\footnotesize\ttfamily const int \& Voiture\+::get\+Car\+Color (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter de la couleur de la voiture. 
+
+\begin{DoxyReturn}{Renvoie}
+int \+: couleur de la voiture 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_abf4185b3bd6c9c03d43e4777614cee08}\label{class_voiture_abf4185b3bd6c9c03d43e4777614cee08}} 
+\index{Voiture@{Voiture}!getheight@{getheight}}
+\index{getheight@{getheight}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getheight()}{getheight()}}
+{\footnotesize\ttfamily const int \& Voiture\+::getheight (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter de la hauteur de la voiture. 
+
+\begin{DoxyReturn}{Renvoie}
+int \+: valeur de la hauteur de la voiture 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_ab70bc9b7a613c761c297ebf9d25570d5}\label{class_voiture_ab70bc9b7a613c761c297ebf9d25570d5}} 
+\index{Voiture@{Voiture}!getIs\_in@{getIs\_in}}
+\index{getIs\_in@{getIs\_in}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getIs\_in()}{getIs\_in()}}
+{\footnotesize\ttfamily const bool \& Voiture\+::get\+Is\+\_\+in (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter du booléen qui indique si la voiture est dans une place. 
+
+\begin{DoxyReturn}{Renvoie}
+bool \+: valeur du booléen 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_aadc2f343e8028c211a6da9d8605859e1}\label{class_voiture_aadc2f343e8028c211a6da9d8605859e1}} 
+\index{Voiture@{Voiture}!getIs\_parked@{getIs\_parked}}
+\index{getIs\_parked@{getIs\_parked}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getIs\_parked()}{getIs\_parked()}}
+{\footnotesize\ttfamily const bool \& Voiture\+::get\+Is\+\_\+parked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter du booléen qui indique si la voiture est garée. 
+
+\begin{DoxyReturn}{Renvoie}
+bool \+: valeur du booléen 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_a06c69ec457be60cfe6ca8916f0c75596}\label{class_voiture_a06c69ec457be60cfe6ca8916f0c75596}} 
+\index{Voiture@{Voiture}!getIs\_pathfind@{getIs\_pathfind}}
+\index{getIs\_pathfind@{getIs\_pathfind}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getIs\_pathfind()}{getIs\_pathfind()}}
+{\footnotesize\ttfamily const bool \& Voiture\+::get\+Is\+\_\+pathfind (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter du booléen qui indique si la voiture à generer son chemin. 
+
+\begin{DoxyReturn}{Renvoie}
+bool \+: valeur du booléen 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_a649f3e63c7f00ebd7f55dee98a664b85}\label{class_voiture_a649f3e63c7f00ebd7f55dee98a664b85}} 
+\index{Voiture@{Voiture}!getNbFinishedConv@{getNbFinishedConv}}
+\index{getNbFinishedConv@{getNbFinishedConv}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getNbFinishedConv()}{getNbFinishedConv()}}
+{\footnotesize\ttfamily const int \& Voiture\+::get\+Nb\+Finished\+Conv (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter du nombre de conversations finies. 
+
+\begin{DoxyReturn}{Renvoie}
+int \+: nombre de conversations finies 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_afcaf603ac5d623751fe8c08a244f5c59}\label{class_voiture_afcaf603ac5d623751fe8c08a244f5c59}} 
+\index{Voiture@{Voiture}!getParking@{getParking}}
+\index{getParking@{getParking}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getParking()}{getParking()}}
+{\footnotesize\ttfamily const int \& Voiture\+::get\+Parking (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter de l\textquotesingle{}indice du parking ou la voiture va / est. 
+
+\begin{DoxyReturn}{Renvoie}
+int \+: valeur de l\textquotesingle{}indice du parking 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_a3fff7730d62f1ff421a3ff9423ebeb8b}\label{class_voiture_a3fff7730d62f1ff421a3ff9423ebeb8b}} 
+\index{Voiture@{Voiture}!getpathTab@{getpathTab}}
+\index{getpathTab@{getpathTab}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getpathTab()}{getpathTab()}}
+{\footnotesize\ttfamily vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ \& Voiture\+::getpath\+Tab (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Getter du chemin que la voiture va parcourir. 
+
+\begin{DoxyReturn}{Renvoie}
+vector \+: chemin de la voiture 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_a896704185acef78fbb946424d76b2a9d}\label{class_voiture_a896704185acef78fbb946424d76b2a9d}} 
+\index{Voiture@{Voiture}!getPlace@{getPlace}}
+\index{getPlace@{getPlace}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getPlace()}{getPlace()}}
+{\footnotesize\ttfamily const int \& Voiture\+::get\+Place (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter de l\textquotesingle{}indice de la place ou la voiture va / est. 
+
+\begin{DoxyReturn}{Renvoie}
+int \+: valeur de l\textquotesingle{}indice de la place 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_aed042a668f24cc2a68031abe623e66d8}\label{class_voiture_aed042a668f24cc2a68031abe623e66d8}} 
+\index{Voiture@{Voiture}!getSpeed@{getSpeed}}
+\index{getSpeed@{getSpeed}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getSpeed()}{getSpeed()}}
+{\footnotesize\ttfamily const int \& Voiture\+::get\+Speed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter de la vitesse de la voiture. 
+
+\begin{DoxyReturn}{Renvoie}
+int \+: vitesse de la voiture 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_a7ef3b6df2eb2cdaf7df4061d6cff1a33}\label{class_voiture_a7ef3b6df2eb2cdaf7df4061d6cff1a33}} 
+\index{Voiture@{Voiture}!getTargetPosition@{getTargetPosition}}
+\index{getTargetPosition@{getTargetPosition}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getTargetPosition()}{getTargetPosition()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_vec2}{Vec2}} \& Voiture\+::get\+Target\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter de la position de la cible (parking / place / sortie) 
+
+\begin{DoxyReturn}{Renvoie}
+\mbox{\hyperlink{class_vec2}{Vec2}} \+: position de la cible (parking / place / sortie) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voiture_a1f998484a28e31d1372540aa7177a161}\label{class_voiture_a1f998484a28e31d1372540aa7177a161}} 
+\index{Voiture@{Voiture}!getwidth@{getwidth}}
+\index{getwidth@{getwidth}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{getwidth()}{getwidth()}}
+{\footnotesize\ttfamily const int \& Voiture\+::getwidth (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter de la largeur de la voiture. 
+
+\begin{DoxyReturn}{Renvoie}
+int \+: valeur de la largeur de la voiture 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_voiture_ad199ef6e94c132f0ac44093f25221443}\label{class_voiture_ad199ef6e94c132f0ac44093f25221443}} 
 \index{Voiture@{Voiture}!isPriceOk@{isPriceOk}}
 \index{isPriceOk@{isPriceOk}!Voiture@{Voiture}}
@@ -175,10 +420,23 @@ unsigned int {\bfseries Car\+Color}
 vérifie qu\textquotesingle{}un prix donné est acceptable ou non, avec une marge arbitraire. Renvoie un booléen. 
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Paramètres}
 {\em price} & prix à vérifier \\
 \hline
+{\em User} & utilisateur de la voiture \\
+\hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+bool \+: true si le prix est acceptable, false sinon 
+\end{DoxyReturn}
+Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_voiture_ad199ef6e94c132f0ac44093f25221443_cgraph}
+\end{center}
+\end{figure}
 \mbox{\Hypertarget{class_voiture_a91c2b4ceb7d960ad6eb016c9113ace95}\label{class_voiture_a91c2b4ceb7d960ad6eb016c9113ace95}} 
 \index{Voiture@{Voiture}!managingConversation@{managingConversation}}
 \index{managingConversation@{managingConversation}!Voiture@{Voiture}}
@@ -187,35 +445,25 @@ vérifie qu\textquotesingle{}un prix donné est acceptable ou non, avec une marg
 
 
 
-La voiture lit le message reçu (donné en paramètre) s\textquotesingle{}il y en a un. 
-
-(s\textquotesingle{}il n\textquotesingle{}y en a pas, le pointeur est nul),
-
-et en crée un nouveau (s\textquotesingle{}il s\textquotesingle{}agit d\textquotesingle{}une réponse, les données du nouveau
-
-message sont initialisées en fonction des données contenues dans le message reçu).
-
-Types de message générable \+:
+La voiture lit le message reçu (donné en paramètre) s\textquotesingle{}il y en a un (s\textquotesingle{}il n\textquotesingle{}y en a pas, le pointeur est nul),. 
 
 
-\begin{DoxyItemize}
-\item CALL
-\item COUNTER\+\_\+\+OFFER
-\item LAST\+\_\+\+OFFER
-\item ACCEPT
-\item REJECT
-\end{DoxyItemize}
-
-Types de message reçu pris en compte \+:
-
-
-\begin{DoxyItemize}
-\item OFFER
-\item COUNTER\+\_\+\+OFFER
-\item LAST\+\_\+\+OFFER
-\item ACCEPT
-\item REJECT 
-\end{DoxyItemize}\mbox{\Hypertarget{class_voiture_ad094067f2ce14be307bf49688a2bd1ee}\label{class_voiture_ad094067f2ce14be307bf49688a2bd1ee}} 
+\begin{DoxyParams}{Paramètres}
+{\em message} & \+: message reçu \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+message généré 
+\end{DoxyReturn}
+Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_voiture_a91c2b4ceb7d960ad6eb016c9113ace95_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_voiture_ad094067f2ce14be307bf49688a2bd1ee}\label{class_voiture_ad094067f2ce14be307bf49688a2bd1ee}} 
 \index{Voiture@{Voiture}!MoveToTargetPosition@{MoveToTargetPosition}}
 \index{MoveToTargetPosition@{MoveToTargetPosition}!Voiture@{Voiture}}
 \doxysubsubsection{\texorpdfstring{MoveToTargetPosition()}{MoveToTargetPosition()}}
@@ -225,9 +473,17 @@ Types de message reçu pris en compte \+:
 
 Déplace la voiture vers la position de la cible (parking / place / sortie) 
 
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{Renvoie}
 true si la voiture est arrivée à la position de la cible (parking / place / sortie) 
 \end{DoxyReturn}
+Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_voiture_ad094067f2ce14be307bf49688a2bd1ee_cgraph}
+\end{center}
+\end{figure}
 \mbox{\Hypertarget{class_voiture_a927287d61ec1f4d450ac05c09b128ee5}\label{class_voiture_a927287d61ec1f4d450ac05c09b128ee5}} 
 \index{Voiture@{Voiture}!set\_position@{set\_position}}
 \index{set\_position@{set\_position}!Voiture@{Voiture}}
@@ -239,7 +495,7 @@ true si la voiture est arrivée à la position de la cible (parking / place / so
 Modifie la position de la voiture. 
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Paramètres}
 {\em new\+\_\+pos} & nouvelle position de la voiture \\
 \hline
 \end{DoxyParams}
@@ -254,13 +510,163 @@ Modifie la position de la voiture.
 Modifie l\textquotesingle{}angle de la voiture. 
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Paramètres}
 {\em new\+\_\+angle} & \+: nouvel angle de la voiture \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_voiture_a15432e0bb6e84459f84beae1854c75a7}\label{class_voiture_a15432e0bb6e84459f84beae1854c75a7}} 
+\index{Voiture@{Voiture}!setCarColor@{setCarColor}}
+\index{setCarColor@{setCarColor}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{setCarColor()}{setCarColor()}}
+{\footnotesize\ttfamily void Voiture\+::set\+Car\+Color (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+\+Car\+Color }\end{DoxyParamCaption})}
+
+
+
+Setter de la couleur de la voiture. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em new\+\_\+\+Car\+Color} & \+: couleur de la voiture \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_voiture_ad5acc1ac9dedfd1d5d22ce6da010b057}\label{class_voiture_ad5acc1ac9dedfd1d5d22ce6da010b057}} 
+\index{Voiture@{Voiture}!setheight@{setheight}}
+\index{setheight@{setheight}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{setheight()}{setheight()}}
+{\footnotesize\ttfamily void Voiture\+::setheight (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+height }\end{DoxyParamCaption})}
+
+
+
+Modifier la valeurs de la hauteur de la voiture Sert a ce que quand la voiture rentre dans l\textquotesingle{}enceinte du parking, elle rattrécie sa hauteur. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em new\+\_\+height} & \+: nouvelle valeur de la hauteur de la voiture \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_voiture_a9bd505c2551a128ca296578b1027bb3e}\label{class_voiture_a9bd505c2551a128ca296578b1027bb3e}} 
+\index{Voiture@{Voiture}!setIs\_in@{setIs\_in}}
+\index{setIs\_in@{setIs\_in}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{setIs\_in()}{setIs\_in()}}
+{\footnotesize\ttfamily void Voiture\+::set\+Is\+\_\+in (\begin{DoxyParamCaption}\item[{bool}]{new\+\_\+\+Is\+\_\+in }\end{DoxyParamCaption})}
+
+
+
+Mofifie le booléen qui indique si la voiture est dans une place. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em new\+\_\+\+Is\+\_\+in} & \+: nouvelle valeur du booléen \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_voiture_a6888fc2086f314982696d1b26259a0d1}\label{class_voiture_a6888fc2086f314982696d1b26259a0d1}} 
+\index{Voiture@{Voiture}!setIs\_parked@{setIs\_parked}}
+\index{setIs\_parked@{setIs\_parked}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{setIs\_parked()}{setIs\_parked()}}
+{\footnotesize\ttfamily void Voiture\+::set\+Is\+\_\+parked (\begin{DoxyParamCaption}\item[{bool}]{new\+\_\+\+Is\+\_\+parked }\end{DoxyParamCaption})}
+
+
+
+Modifier le booléen qui indique si la voiture est garée. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em new\+\_\+\+Is\+\_\+parked} & \+: nouvelle valeur du booléen \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_voiture_a7989fb239e451c9ed538faf1525cb437}\label{class_voiture_a7989fb239e451c9ed538faf1525cb437}} 
+\index{Voiture@{Voiture}!setIs\_pathfind@{setIs\_pathfind}}
+\index{setIs\_pathfind@{setIs\_pathfind}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{setIs\_pathfind()}{setIs\_pathfind()}}
+{\footnotesize\ttfamily void Voiture\+::set\+Is\+\_\+pathfind (\begin{DoxyParamCaption}\item[{bool}]{new\+\_\+\+Is\+\_\+pathfind }\end{DoxyParamCaption})}
+
+
+
+Modifier le booléen qui indique si la voiture à generer son chemin. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em new\+\_\+\+Is\+\_\+pathfind} & \+: nouvelle valeur du booléen \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_voiture_add4a1985d90531edef18d5865426f0ad}\label{class_voiture_add4a1985d90531edef18d5865426f0ad}} 
+\index{Voiture@{Voiture}!setParking@{setParking}}
+\index{setParking@{setParking}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{setParking()}{setParking()}}
+{\footnotesize\ttfamily void Voiture\+::set\+Parking (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+parking }\end{DoxyParamCaption})}
+
+
+
+Modifier l\textquotesingle{}indice du parkings ou la voiture va / est. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em new\+\_\+parking} & \+: nouvelle valeur de l\textquotesingle{}indice du parking \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_voiture_a491ac3055dac34b88f9c66ca18cb138d}\label{class_voiture_a491ac3055dac34b88f9c66ca18cb138d}} 
+\index{Voiture@{Voiture}!setPlace@{setPlace}}
+\index{setPlace@{setPlace}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{setPlace()}{setPlace()}}
+{\footnotesize\ttfamily void Voiture\+::set\+Place (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+place }\end{DoxyParamCaption})}
+
+
+
+Modifier l\textquotesingle{}indice de la place ou la voiture va / est. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em new\+\_\+place} & \+: nouvelle valeur de l\textquotesingle{}indice de la place \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_voiture_aca46d6950983226bae12b9e6f1ce1992}\label{class_voiture_aca46d6950983226bae12b9e6f1ce1992}} 
+\index{Voiture@{Voiture}!setSpeed@{setSpeed}}
+\index{setSpeed@{setSpeed}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{setSpeed()}{setSpeed()}}
+{\footnotesize\ttfamily void Voiture\+::set\+Speed (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+speed }\end{DoxyParamCaption})}
+
+
+
+Modifie la vitesse de la voiture. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em new\+\_\+speed} & nouvelle vitesse de la voiture \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_voiture_abeaff0302f03e921eaed638ea3819d11}\label{class_voiture_abeaff0302f03e921eaed638ea3819d11}} 
+\index{Voiture@{Voiture}!setTargetPosition@{setTargetPosition}}
+\index{setTargetPosition@{setTargetPosition}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{setTargetPosition()}{setTargetPosition()}}
+{\footnotesize\ttfamily void Voiture\+::set\+Target\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vec2}{Vec2}}}]{new\+\_\+pos }\end{DoxyParamCaption})}
+
+
+
+Modifie la position de la cible (parking / place / sortie) 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em new\+\_\+pos} & \+: nouvelle position de la cible (parking / place / sortie) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_voiture_a829eb2511c24eedf980fedd28e394cb6}\label{class_voiture_a829eb2511c24eedf980fedd28e394cb6}} 
+\index{Voiture@{Voiture}!setwidth@{setwidth}}
+\index{setwidth@{setwidth}!Voiture@{Voiture}}
+\doxysubsubsection{\texorpdfstring{setwidth()}{setwidth()}}
+{\footnotesize\ttfamily void Voiture\+::setwidth (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+width }\end{DoxyParamCaption})}
+
+
+
+Modifier la valeurs de la largeur de la voiture Sert a ce que quand la voiture rentre dans l\textquotesingle{}enceinte du parking, elle rattrécie sa largeur. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em new\+\_\+width} & \+: nouvelle valeur de la largeur de la voiture \\
 \hline
 \end{DoxyParams}
 
 
-The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+La documentation de cette classe a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
 \item 
 src/Voiture.\+h\item 
 src/Voiture.\+cpp\end{DoxyCompactItemize}

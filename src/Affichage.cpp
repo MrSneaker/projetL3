@@ -402,7 +402,7 @@ int Affichage::AffichageUserCard(unsigned int Vind)
     AfficherTexte(font_UserCard, "", "", environnement.voitures[Vind].User.getAge(), User_Card.x + 155, User_Card.y + 70, 0, 0, 0, 255);
     // on affiche son temps de stationnement
     AfficherTexte(font_UserCardBold, "ParkTime: ", "", 0, User_Card.x + 125, User_Card.y + 90, 0, 0, 0, 255);
-    AfficherTexte(font_UserCard, "", "", environnement.voitures[Vind].User.getParkTime()*10, User_Card.x + 183, User_Card.y + 90, 0, 0, 0, 255);
+    AfficherTexte(font_UserCard, "", "", (environnement.voitures[Vind].User.getParkTime()*10) / 60, User_Card.x + 183, User_Card.y + 90, 0, 0, 0, 255);
     // on affiche son prix max
     AfficherTexte(font_UserCardBold, "PrixMax: ", "", 0, User_Card.x + 125, User_Card.y + 110, 0, 0, 0, 255);
     AfficherTexte(font_UserCard, "", "", environnement.voitures[Vind].User.getMaxPrice(), User_Card.x + 175, User_Card.y + 110, 0, 0, 0, 255);

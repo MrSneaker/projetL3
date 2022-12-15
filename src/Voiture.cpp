@@ -24,7 +24,7 @@ Voiture::Voiture(Utilisateur U)
     isMoving = true;
 
     //------------------- float -------------------
-    speed = 2;
+    speed = 1;
     startTimer = 0;
 
     //------------------- int ---------------------

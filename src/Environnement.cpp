@@ -23,7 +23,7 @@ Environnement::Environnement(double price1, double price2, double price3, double
     getMap();
     getUser();
     getNames_SurnamesFromFile();
-    initParkings(price1,price2,price3);
+    initParkings(price1, price2, price3);
     tpsAppVoiture = tpsAppVoiture_;
     userPrice = userPrice_;
     userPriceInf = userPriceInf_;
@@ -52,7 +52,7 @@ Environnement::Environnement()
     getMap();
     getUser();
     getNames_SurnamesFromFile();
-    initParkings(8,8,8);
+    initParkings(8, 8, 8);
     tpsAppVoiture = 5;
     userPrice = 10;
     userPriceInf = 4;
@@ -172,7 +172,7 @@ void Environnement::ClockTime()
     }
 }
 
- void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd, vector<Node *> &nodes)
+void Environnement::Astar(Voiture &v, unsigned int StartInd, unsigned int EndInd, vector<Node *> &nodes)
 {
     if (nodes.size() > 0)
     {
@@ -183,9 +183,9 @@ void Environnement::ClockTime()
     {
         for (int y = 0; y < DimWindowY / tailleCase; y++)
         {
-            Node* n = new Node;
-            if(n == nullptr)
-                cout<<"erreur lors de l'allocation"<<endl;
+            Node *n = new Node;
+            if (n == nullptr)
+                cout << "erreur lors de l'allocation" << endl;
             nodes.push_back(n);
         }
     }
@@ -231,7 +231,7 @@ void Environnement::ClockTime()
         {
             nodes[x + y * DimWindowX / tailleCase]->setisVisited(false);
 
-            for(int i =0;i<nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().size();i++)
+            for (int i = 0; i < nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours().size(); i++)
             {
                 delete nodes[x + y * DimWindowX / tailleCase]->getVecNeighbours()[i];
             }
@@ -248,8 +248,6 @@ void Environnement::ClockTime()
     Node *currentNode;
     Node *StartNode = nodes[StartInd];
     Node *EndNode = nodes[EndInd];
-
-
 
     for (int x = 0; x < DimWindowX / tailleCase; x++)
     {
@@ -471,21 +469,20 @@ float Environnement::randomParkTime()
     // On simule un pourcentage qui définie le temps de stationnement de l'utilisateur.
     float res = rand() % 100;
 
-    // Si le pourcentage est inferieur à 20, on met le temps de stationnement entre 15 minutes et 1 heure 15
+    // Si le pourcentage est inferieur à 20, on met le temps de stationnement entre 2 minutes 30 et 12 minutes 30
     if (res <= 20)
     {
         new_Parktime = 15 + (rand() % 60);
-        new_Parktime = new_Parktime / 60;
     }
-    // Si le pourcentage est inferieur à 50 et supperieur a 10, on met le temps de stationnement entre 1 et 5 heures
+    // Si le pourcentage est inferieur à 50 et supperieur a 10, on met le temps de stationnement entre 10 et 50 minutes
     else if (res <= 50)
     {
-        new_Parktime = 60 + (rand() % 240) / 60;
+        new_Parktime = 60 + (rand() % 240);
     }
-    // Si le pourcentage est supperieur a 50, on met le temps de stationnement entre 5 et 55 heures
+    // Si le pourcentage est supperieur a 50, on met le temps de stationnement entre 1h et + de 9 heures
     else
     {
-        new_Parktime = 300 + (rand() % 3000) / 60;
+        new_Parktime = 300 + (rand() % 3000);
     }
 
     return new_Parktime;
@@ -581,7 +578,7 @@ void Environnement::initUser(bool quitif)
     // Si tout les conducteurs enregistés ont été créer ou qu'il n'y a pas encore de conducteurs enregistrés
     else
     {
-        double price = (double)(random(userPriceInf*10, userPrice*10) / 10); // on simule des floats en divisants par 10.
+        double price = (double)(random(userPriceInf * 10, userPrice * 10) / 10); // on simule des floats en divisants par 10.
 
         int id = CreateRandomId(); // On crée un id aléatoire différent de ceux déjà utilisés
 
@@ -613,9 +610,9 @@ void Environnement::initParkings(double price1, double price2, double price3)
     // Parametre du constructeur : Vec2 position, int numberOfPlaces, (float minimumPrice, float maximumPrice) a revoir
 
     // Créer 3 parkings et les ajouter dans le tableau de parkings
-    Parking p0(Vec2(1, 1), 0.4*price1, price1, 44, 38, 0);   // p0
-    Parking p1(Vec2(57, 1), 0.4*price2, price2, 44, 38, 1);  // p1
-    Parking p2(Vec2(1, 52), 0.4*price3, price3, 100, 29, 2); // p2
+    Parking p0(Vec2(1, 1), 0.4 * price1, price1, 44, 38, 0);   // p0
+    Parking p1(Vec2(57, 1), 0.4 * price2, price2, 44, 38, 1);  // p1
+    Parking p2(Vec2(1, 52), 0.4 * price3, price3, 100, 29, 2); // p2
 
     parkings.push_back(p0);
     parkings.push_back(p1);
@@ -784,7 +781,7 @@ void Environnement::updateStateVoiture()
                     parkings[parkingInd].getPlacesTab()[placeInd].setIsReserved(false); // on met à jour l'état de la place
                     voitures[i].setIs_parked(false);                                    // on met à jour l'état de la voiture
                     parkings[parkingInd].incrementNbAvailablePlaces();                  // on incrémente le nombre de place disponible
-                    voitures[i].decrement = true;                                        // on met à jour le booléen
+                    voitures[i].decrement = true;                                       // on met à jour le booléen
                 }
             }
         }
@@ -942,8 +939,8 @@ const vector<pair<double, double>> Environnement::getDataFromFile(string fileNam
 int Environnement::createConv()
 {
     Conversation *newConv = new Conversation;
-    if(newConv == nullptr)
-        cout<<"erreur, pointeur non-alloué (createConv)"<<endl;
+    if (newConv == nullptr)
+        cout << "erreur, pointeur non-alloué (createConv)" << endl;
     conv.push_back(newConv);
     return conv.size() - 1;
 }
@@ -952,7 +949,7 @@ void Environnement::deleteConv(int ind)
 {
     conv.at(ind)->getConv().clear();
     delete conv.at(ind);
-    //conv.at(ind) = nullptr;
+    // conv.at(ind) = nullptr;
     conv.erase(conv.begin() + ind);
     conv.shrink_to_fit();
 }
@@ -1022,7 +1019,7 @@ void Environnement::changeTarget(Voiture &v, int indPr)
         v.setTargetPosition(Placepos * Vec2(10, 10) + Vec2(5, 5));             // on place la cible au milieu de la place.
         parkings[indPr].getPlacesTab()[v.getPlace()].setIsReserved(true);      // la place est réservée, pour pas qu'une autre voiture puisse y aller.
         if (v.decrement)
-            parkings[indPr].decrementNbAvailablePlaces();                                                                              // on décrémente le nombre de places disponibles.
+            parkings[indPr].decrementNbAvailablePlaces();                                             // on décrémente le nombre de places disponibles.
         Astar(v, GetNodeIndbyPos(v.get_position()), GetNodeIndbyPos(v.getTargetPosition()), v.nodes); // on change la cible de la voiture
     }
     else
@@ -1039,19 +1036,32 @@ void Environnement::removeLogs()
     if (std::filesystem::exists("data/logs/rmLogs"))
     {
         system("rm data/logs/*");
-        system("rm data/dataAvgSuccessPourcent.txt");
-        system("rm data/dataNbPlaceTaken0.txt");
-        system("rm data/dataNbPlaceTaken1.txt");
-        system("rm data/dataNbPlaceTaken2.txt");
-        system("rm data/dataProfit0.txt");
-        system("rm data/dataProfit1.txt");
-        system("rm data/dataProfit2.txt");
-        system("rm data/dataStartingPrice0.txt");
-        system("rm data/dataStartingPrice1.txt");
-        system("rm data/dataStartingPrice2.txt");
-        system("rm data/userData0.txt");
-        system("rm data/userData1.txt");
-        system("rm data/userData2.txt");
+        if (std::filesystem::exists("data/dataAvgSuccessPourcent.txt"))
+            system("rm data/dataAvgSuccessPourcent.txt");
+        if (std::filesystem::exists("data/dataNbPlaceTaken0.txt"))
+            system("rm data/dataNbPlaceTaken0.txt");
+        if (std::filesystem::exists("data/dataNbPlaceTaken1.txt"))
+            system("rm data/dataNbPlaceTaken1.txt");
+        if (std::filesystem::exists("data/dataNbPlaceTaken2.txt"))
+            system("rm data/dataNbPlaceTaken2.txt");
+        if (std::filesystem::exists("data/dataProfit0.txt"))
+            system("rm data/dataProfit0.txt");
+        if (std::filesystem::exists("data/dataProfit1.txt"))
+            system("rm data/dataProfit1.txt");
+        if (std::filesystem::exists("data/dataProfit2.txt"))
+            system("rm data/dataProfit2.txt");
+        if (std::filesystem::exists("data/dataStartingPrice0.txt"))
+            system("rm data/dataStartingPrice0.txt");
+        if (std::filesystem::exists("data/dataStartingPrice1.txt"))
+            system("rm data/dataStartingPrice1.txt");
+        if (std::filesystem::exists("data/dataStartingPrice2.txt"))
+            system("rm data/dataStartingPrice2.txt");
+        if (std::filesystem::exists("data/userData0.txt"))
+            system("rm data/userData0.txt");
+        if (std::filesystem::exists("data/userData1.txt"))
+            system("rm data/userData1.txt");
+        if (std::filesystem::exists("data/userData2.txt"))
+            system("rm data/userData2.txt");
     }
 }
 
@@ -1144,24 +1154,24 @@ void Environnement::test_regresion()
 
     for (int i = 0; i < 10; i++)
     {
-         E.AddVoiture();
-     }
-     assert(E.voitures.size() == 10);
-     E.RemoveVoiture(0);
-     assert(E.voitures.size() == 9);
+        E.AddVoiture();
+    }
+    assert(E.voitures.size() == 10);
+    E.RemoveVoiture(0);
+    assert(E.voitures.size() == 9);
 
-     cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
+    cout << "Test de regression de des fonction Add/RemoveVoiture (): OK" << endl;
 
-     int a = E.createConv();
-     assert(E.conv.size() == 1);
-     E.deleteConv(a);
-     assert(E.conv.size() == 0);
-     cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
+    int a = E.createConv();
+    assert(E.conv.size() == 1);
+    E.deleteConv(a);
+    assert(E.conv.size() == 0);
+    cout << "Test de regression de des fonction createConv/deleteConv: OK" << endl;
 
-     for (int i = 0; i < E.voitures.size(); i++)
-     {
+    for (int i = 0; i < E.voitures.size(); i++)
+    {
         E.conversation(E.voitures.at(i));
-     }
-     assert(E.conv.size() == 0);
-     cout << "Test de regression de la fonction conversation: OK" << endl;
+    }
+    assert(E.conv.size() == 0);
+    cout << "Test de regression de la fonction conversation: OK" << endl;
 }

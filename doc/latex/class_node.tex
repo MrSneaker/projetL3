@@ -1,6 +1,16 @@
-\hypertarget{class_node}{}\doxysection{Node Class Reference}
+\hypertarget{class_node}{}\doxysection{Référence de la classe Node}
 \label{class_node}\index{Node@{Node}}
-\doxysubsection*{Public Member Functions}
+
+
+Graphe de collaboration de Node\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=204pt]{class_node__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Fonctions membres publiques}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{class_node_ad7a34779cad45d997bfd6d3d8043c75f}\label{class_node_ad7a34779cad45d997bfd6d3d8043c75f}} 
@@ -29,7 +39,7 @@ void \mbox{\hyperlink{class_node_af2b017ac930c14d72394e7786bb9bb62}{set\+Nodepos
 \begin{DoxyCompactList}\small\item\em Fonction permettant de modifier la valeur de Nodepos. \end{DoxyCompactList}\item 
 const \mbox{\hyperlink{class_vec2}{Vec2}} \& \mbox{\hyperlink{class_node_a5cc7a15b015fdab5b5c6550dfecd940c}{get\+Nodepos}} () const
 \begin{DoxyCompactList}\small\item\em Fonction permettant de récupérer la valeur de Nodepos. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Public Attributes}
+\doxysubsection*{Champs de données}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{class_node_a0177f51a461940df18b7f5643ed4f93a}\label{class_node_a0177f51a461940df18b7f5643ed4f93a}} 
@@ -46,7 +56,7 @@ int {\bfseries indice}
 \end{DoxyCompactItemize}
 
 
-\doxysubsection{Member Function Documentation}
+\doxysubsection{Documentation des fonctions membres}
 \mbox{\Hypertarget{class_node_a77d905e5f6b6247d3c699674afb24a94}\label{class_node_a77d905e5f6b6247d3c699674afb24a94}} 
 \index{Node@{Node}!getisObstacle@{getisObstacle}}
 \index{getisObstacle@{getisObstacle}!Node@{Node}}
@@ -57,7 +67,7 @@ int {\bfseries indice}
 
 Fonction permettant de récupérer la valeur de is\+Obstacle. 
 
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{Renvoie}
 is\+Obstacle 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_node_ab84ed2dd54b6f09015cc59bd5c20b3fd}\label{class_node_ab84ed2dd54b6f09015cc59bd5c20b3fd}} 
@@ -70,7 +80,7 @@ is\+Obstacle
 
 Fonction permettant de récupérer la valeur de is\+Visited. 
 
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{Renvoie}
 is\+Visited 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_node_a5cc7a15b015fdab5b5c6550dfecd940c}\label{class_node_a5cc7a15b015fdab5b5c6550dfecd940c}} 
@@ -83,7 +93,7 @@ is\+Visited
 
 Fonction permettant de récupérer la valeur de Nodepos. 
 
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{Renvoie}
 Nodepos 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_node_a3cad655320d50751c43c5cec9356dcf3}\label{class_node_a3cad655320d50751c43c5cec9356dcf3}} 
@@ -96,7 +106,7 @@ Nodepos
 
 Fonction permettant de récupérer la valeur de parent. 
 
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{Renvoie}
 parent 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_node_aad3631098e115cdbe6d8f3eb9b02848b}\label{class_node_aad3631098e115cdbe6d8f3eb9b02848b}} 
@@ -109,7 +119,7 @@ parent
 
 Fonction permettant de récupérer la valeur de Vec\+Neighbours. 
 
-\begin{DoxyReturn}{Returns}
+\begin{DoxyReturn}{Renvoie}
 Vec\+Neighbours 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_node_a50e8e005aa9d5540a8c4fd2090aa7b27}\label{class_node_a50e8e005aa9d5540a8c4fd2090aa7b27}} 
@@ -123,7 +133,7 @@ Vec\+Neighbours
 Fonction permettant de modifier la valeur de is\+Obstacle. 
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Paramètres}
 {\em obstacle} & valeur booléenne \\
 \hline
 \end{DoxyParams}
@@ -138,7 +148,7 @@ Fonction permettant de modifier la valeur de is\+Obstacle.
 Fonction permettant de modifier la valeur de is\+Visited. 
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Paramètres}
 {\em visited} & valeur booléenne \\
 \hline
 \end{DoxyParams}
@@ -153,7 +163,7 @@ Fonction permettant de modifier la valeur de is\+Visited.
 Fonction permettant de modifier la valeur de Nodepos. 
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Paramètres}
 {\em pos} & vecteur 2D \\
 \hline
 \end{DoxyParams}
@@ -168,7 +178,7 @@ Fonction permettant de modifier la valeur de Nodepos.
 Fonction permettant de modifier la valeur de parent. 
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Paramètres}
 {\em parent} & pointeur sur un noeud \\
 \hline
 \end{DoxyParams}
@@ -183,13 +193,13 @@ Fonction permettant de modifier la valeur de parent.
 Fonction permettant de modifier la valeur de Vec\+Neighbours. 
 
 
-\begin{DoxyParams}{Parameters}
+\begin{DoxyParams}{Paramètres}
 {\em Vec\+Neighbours} & vecteur de pointeurs sur des nodes \\
 \hline
 \end{DoxyParams}
 
 
-The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+La documentation de cette classe a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
 \item 
 src/Node.\+h\item 
 src/Node.\+cpp\end{DoxyCompactItemize}

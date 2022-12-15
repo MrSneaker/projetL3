@@ -135,13 +135,8 @@ void Parking::incrementNbFinishedConv()
 void Parking::updateProfit(double aPrice, float parkTime)
 {
     float realParkTime = (parkTime * 10);
-    // cout<<"parTime : "<<parkTime<<endl;
-    // cout<<"realParkTime : "<<realParkTime<<endl;
-    double nbMinutesParked = (double)(realParkTime / 60);
-    // cout<<"aPrice : "<<aPrice<<endl;
-    // cout<<"nbMinutes : "<<nbMinutesParked<<endl;
-    profit += (aPrice * nbMinutesParked);
-    // cout<<profit<<endl;
+    double nbHoursParked = (double)(realParkTime / 120);
+    profit += (aPrice * nbHoursParked);
 }
 
 void Parking::updateSuccessPercentage()
@@ -379,10 +374,12 @@ Message Parking::managingConversation(Message *aMessage) const
             int nbMessage = aMessage->getMessageNumber();
             if (nbMessage > 5)
             {
-                if (proposedCarPrice < minPrice) {
+                if (proposedCarPrice < minPrice)
+                {
                     chosenPrice = minPrice;
                 }
-                else {
+                else
+                {
                     chosenPrice = proposedCarPrice;
                 }
                 responseType = "LAST_OFFER";
@@ -518,12 +515,6 @@ Message Parking::managingConversation(Message *aMessage) const
 
         unsigned int MessageNum = aMessage->getMessageNumber() + 1;
         Message newMessage(MessageNum, chosenPrice, responseType, senderString, recipientString);
-        if(responseType == "INVALID_TYPE")
-        {
-            cout<<"prix prop : "<<proposedCarPrice<<endl;
-            cout<<"prix min park : "<<minPrice<<endl;
-            cout<<"prix dep park : "<<startingPrice<<endl;
-        }
         return newMessage;
     }
 
@@ -566,35 +557,43 @@ Message Parking::confirmConversation(Message *aMessage)
 
 void Parking::reconsiderPrices()
 {
+    double nbPlDependance;
+    unsigned int nbPlacesTaken = (nbPlaces - nbAvailablePlaces);
+    if (nbPlacesTaken != 0)
+        nbPlDependance = (((double)(nbPlacesTaken * 100 / nbPlaces) + 1) / 100);
+    else
+        nbPlDependance = 0;
     if (successPercentageLastConv < 50)
     {
         bool limit = false;
-        double reductionStartPrice = (50 - successPercentage) / 100 * startingPrice;
-        if (startingPrice - reductionStartPrice >= minPrice)
+        bool plLimit = false;
+
+        if (nbPlDependance > 0.85)
+            plLimit = true;
+        
+        double reductionStartPrice = ((50 - successPercentage) / 100 * startingPrice);
+
+        if (nbPlDependance >= 0.5 && nbPlDependance < 0.8)
+            reductionStartPrice *= 0.5;
+        else if (nbPlDependance >= 0.8)
+            reductionStartPrice *= 0.2;
+        
+        if (startingPrice - reductionStartPrice >= minPrice && !plLimit)
             setStartingPrice(startingPrice - reductionStartPrice);
         else
             limit = true;
 
-        if (limit)
-        {
+        if (limit && !plLimit)
             setMinPrice(minPrice * 0.98);
-        }
     }
     else if (successPercentageLastConv > 70)
     {
-        double augNbPlDependance;
-        unsigned int nbPlacesTaken = (nbPlaces - nbAvailablePlaces);
-        if (nbPlacesTaken != 0)
-            augNbPlDependance = (((double)(nbPlacesTaken * 100 / nbPlaces) + 1) / 100);
-        else
-            augNbPlDependance = 1;
-
-        double augmentation = 1.2 + augNbPlDependance;
+        double augmentation = 1.2 + (nbPlDependance / 2);
         if (minPrice < 7)
         {
             setMinPrice(augmentation * minPrice);
-            setStartingPrice(augmentation * startingPrice);
         }
+        setStartingPrice(augmentation * startingPrice);
     }
 }
 

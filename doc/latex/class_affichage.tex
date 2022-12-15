@@ -1,41 +1,135 @@
-\hypertarget{class_affichage}{}\doxysection{Affichage Class Reference}
+\hypertarget{class_affichage}{}\doxysection{Référence de la classe Affichage}
 \label{class_affichage}\index{Affichage@{Affichage}}
-\doxysubsection*{Public Member Functions}
+
+
+Graphe de collaboration de Affichage\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{class_affichage__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Fonctions membres publiques}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_affichage_aaeb8a5edc5fa00bcfae2425ad9691d98}\label{class_affichage_aaeb8a5edc5fa00bcfae2425ad9691d98}} 
+\mbox{\hyperlink{class_affichage_a9ec0439537a85e46fb4d53fa66f43eb2}{Affichage}} (\mbox{\hyperlink{class_environnement}{Environnement}} env)
+\begin{DoxyCompactList}\small\item\em Constructeur de la classe \mbox{\hyperlink{class_affichage}{Affichage}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_affichage_ae6a4f4db7a0d8d2abc8bd44c1be674c0}\label{class_affichage_ae6a4f4db7a0d8d2abc8bd44c1be674c0}} 
+\mbox{\hyperlink{class_affichage_ae6a4f4db7a0d8d2abc8bd44c1be674c0}{$\sim$\+Affichage}} ()
+\begin{DoxyCompactList}\small\item\em Destructor de la classe \mbox{\hyperlink{class_affichage}{Affichage}}. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_affichage_aaeb8a5edc5fa00bcfae2425ad9691d98}{Afficher\+Texte}} (TTF\+\_\+\+Font $\ast$font, string Msg, string Msg\+With\+Valeur, float Valeur, int x, int y, unsigned char r, unsigned char g, unsigned char b, int a)
-\begin{DoxyCompactList}\small\item\em procédure d\textquotesingle{}affichage de texte en SDL. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Affiche du texte selon les différents paramètre. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_affichage_a91ae9162bd74bc2fde9f52e628c55ae4}\label{class_affichage_a91ae9162bd74bc2fde9f52e628c55ae4}} 
 void \mbox{\hyperlink{class_affichage_a91ae9162bd74bc2fde9f52e628c55ae4}{Init\+Affichage}} ()
-\begin{DoxyCompactList}\small\item\em procédure d\textquotesingle{}initialisation de l\textquotesingle{}affichage (initialisation des textures, renderer..). \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Initialise tout les composants graphique SDL (Window, Font, \mbox{\hyperlink{class_image}{Image}}, renderer) \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_affichage_a4c81b73be419ed9f3183fe2baf19f5e4}\label{class_affichage_a4c81b73be419ed9f3183fe2baf19f5e4}} 
 void \mbox{\hyperlink{class_affichage_a4c81b73be419ed9f3183fe2baf19f5e4}{Affichage\+Plateau}} ()
-\begin{DoxyCompactList}\small\item\em procédure d\textquotesingle{}affichage du plateau (parkings, places, routes). \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Affiche les composants graphique de la simulation. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_affichage_a938f35a225f02bddf0478ee88fcb12a0}\label{class_affichage_a938f35a225f02bddf0478ee88fcb12a0}} 
 void \mbox{\hyperlink{class_affichage_a938f35a225f02bddf0478ee88fcb12a0}{Affichage\+Menu}} ()
-\begin{DoxyCompactList}\small\item\em affichage du menu (pause, accelere, temps, boutton exit). \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_affichage_aa36d4e856932bc86009a1ac97ed1ecaa}\label{class_affichage_aa36d4e856932bc86009a1ac97ed1ecaa}} 
-int {\bfseries Affichage\+User\+Card} (unsigned int Vind)
-\item 
-\mbox{\Hypertarget{class_affichage_a9a75d45302bdb424d5e0f900c2ad624b}\label{class_affichage_a9a75d45302bdb424d5e0f900c2ad624b}} 
-int {\bfseries Affichage\+Parking\+Card} (unsigned int Parkind)
-\item 
+\begin{DoxyCompactList}\small\item\em Affiche les composants graphique du menu en bas. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_affichage_aa36d4e856932bc86009a1ac97ed1ecaa}{Affichage\+User\+Card}} (unsigned int Vind)
+\begin{DoxyCompactList}\small\item\em Affiche le permis de l\textquotesingle{}utilisateur de la voiture (Nom, Prenom, Age, Park\+Time, ID) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_affichage_a9a75d45302bdb424d5e0f900c2ad624b}{Affichage\+Parking\+Card}} (unsigned int Parkind)
+\begin{DoxyCompactList}\small\item\em Affiche les informations du parkings (Indice du parking, Prix de départ, Prix moyen, nombre de places dispo) \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_affichage_a25f164aac7a08711bc9f9cea96c2ec7f}\label{class_affichage_a25f164aac7a08711bc9f9cea96c2ec7f}} 
-int {\bfseries Affichage\+Graph\+Menu} ()
-\item 
+int \mbox{\hyperlink{class_affichage_a25f164aac7a08711bc9f9cea96c2ec7f}{Affichage\+Graph\+Menu}} ()
+\begin{DoxyCompactList}\small\item\em Affiche le menu pour choisir les différent graphique a afficher. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_affichage_a16880ee63ee771f5d0103994e3cd5d09}\label{class_affichage_a16880ee63ee771f5d0103994e3cd5d09}} 
 void \mbox{\hyperlink{class_affichage_a16880ee63ee771f5d0103994e3cd5d09}{Affichage\+Simulation}} ()
-\begin{DoxyCompactList}\small\item\em boucle d\textquotesingle{}affichage de l\textquotesingle{}application. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Public Attributes}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\Hypertarget{class_affichage_a245aa08584e05a99714ed266f29c449e}\label{class_affichage_a245aa08584e05a99714ed266f29c449e}} 
-vector$<$ SDL\+\_\+\+Rect $>$ {\bfseries Voitures\+Rect}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em boucle principal d\textquotesingle{}affichage de la simulation \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\doxysubsection{Documentation des constructeurs et destructeur}
+\mbox{\Hypertarget{class_affichage_a9ec0439537a85e46fb4d53fa66f43eb2}\label{class_affichage_a9ec0439537a85e46fb4d53fa66f43eb2}} 
+\index{Affichage@{Affichage}!Affichage@{Affichage}}
+\index{Affichage@{Affichage}!Affichage@{Affichage}}
+\doxysubsubsection{\texorpdfstring{Affichage()}{Affichage()}}
+{\footnotesize\ttfamily Affichage\+::\+Affichage (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_environnement}{Environnement}}}]{env }\end{DoxyParamCaption})}
+
+
+
+Constructeur de la classe \mbox{\hyperlink{class_affichage}{Affichage}}. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em env,l\textquotesingle{}environnement} & à afficher. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Documentation des fonctions membres}
+\mbox{\Hypertarget{class_affichage_a9a75d45302bdb424d5e0f900c2ad624b}\label{class_affichage_a9a75d45302bdb424d5e0f900c2ad624b}} 
+\index{Affichage@{Affichage}!AffichageParkingCard@{AffichageParkingCard}}
+\index{AffichageParkingCard@{AffichageParkingCard}!Affichage@{Affichage}}
+\doxysubsubsection{\texorpdfstring{AffichageParkingCard()}{AffichageParkingCard()}}
+{\footnotesize\ttfamily int Affichage\+::\+Affichage\+Parking\+Card (\begin{DoxyParamCaption}\item[{unsigned int}]{Parkind }\end{DoxyParamCaption})}
+
+
+
+Affiche les informations du parkings (Indice du parking, Prix de départ, Prix moyen, nombre de places dispo) 
+
+\begin{DoxyReturn}{Renvoie}
+int \+: Sert a savoir si on affiche ou non les infos ~\newline
+ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_affichage_aa36d4e856932bc86009a1ac97ed1ecaa}\label{class_affichage_aa36d4e856932bc86009a1ac97ed1ecaa}} 
+\index{Affichage@{Affichage}!AffichageUserCard@{AffichageUserCard}}
+\index{AffichageUserCard@{AffichageUserCard}!Affichage@{Affichage}}
+\doxysubsubsection{\texorpdfstring{AffichageUserCard()}{AffichageUserCard()}}
+{\footnotesize\ttfamily int Affichage\+::\+Affichage\+User\+Card (\begin{DoxyParamCaption}\item[{unsigned int}]{Vind }\end{DoxyParamCaption})}
+
+
+
+Affiche le permis de l\textquotesingle{}utilisateur de la voiture (Nom, Prenom, Age, Park\+Time, ID) 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em Vind} & Indice de la voiture sur lequel on a cliqué \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+int \+: Sert a savoir si on affiche ou non les infos 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_affichage_aaeb8a5edc5fa00bcfae2425ad9691d98}\label{class_affichage_aaeb8a5edc5fa00bcfae2425ad9691d98}} 
+\index{Affichage@{Affichage}!AfficherTexte@{AfficherTexte}}
+\index{AfficherTexte@{AfficherTexte}!Affichage@{Affichage}}
+\doxysubsubsection{\texorpdfstring{AfficherTexte()}{AfficherTexte()}}
+{\footnotesize\ttfamily void Affichage\+::\+Afficher\+Texte (\begin{DoxyParamCaption}\item[{TTF\+\_\+\+Font $\ast$}]{font,  }\item[{string}]{Msg,  }\item[{string}]{Msg\+With\+Valeur,  }\item[{float}]{Valeur,  }\item[{int}]{x,  }\item[{int}]{y,  }\item[{unsigned char}]{r,  }\item[{unsigned char}]{g,  }\item[{unsigned char}]{b,  }\item[{int}]{a }\end{DoxyParamCaption})}
+
+
+
+Affiche du texte selon les différents paramètre. 
+
+2 choix possible \+: 1 -\/ Afficher une simple ligne de texte ou 2 -\/ Afficher du texte + une valeur statique ou dynamique (qui change au fil du temps)
+
+Pour passer de du choix 1 a 2 il suffit de mettre juste un String vide ( \char`\"{}\char`\"{} ) sur le parametre Msg ex \+: Afficher\+Texte(---, \char`\"{}\+Son texte\char`\"{}, --- , ---, etc. ) -\/$>$ Affiche une simple ligne de texte. ex \+: Afficher\+Texte(---, \char`\"{}\char`\"{}, \char`\"{}\+Texte\char`\"{}, valeur, ---, etc.) -\/$>$ Affiche Texte + valeur 
+\begin{DoxyParams}{Paramètres}
+{\em font} & Police du texte \\
+\hline
+{\em Msg} & 1 -\/ Texte simple \\
+\hline
+{\em Msg\+With\+Valeur} & 2 -\/ Texte qui accompagne la valeur \\
+\hline
+{\em valeur} & Valeur que l\textquotesingle{}on veut afficher \\
+\hline
+{\em x} & Position en x du texte \\
+\hline
+{\em y} & Position en y du texte \\
+\hline
+{\em r} & Parametre R du RGBA -\/$>$ color rouge \\
+\hline
+{\em g} & Parametre G du RGBA -\/$>$ color vert \\
+\hline
+{\em b} & Parametre B du RGBA -\/$>$ color bleu \\
+\hline
+{\em a} & Parametre A du RGBA -\/$>$ transparance \\
+\hline
+\end{DoxyParams}
+
+
+La documentation de cette classe a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
 \item 
 src/Affichage.\+h\item 
 src/Affichage.\+cpp\end{DoxyCompactItemize}

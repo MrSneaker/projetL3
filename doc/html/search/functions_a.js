@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['parking_231',['Parking',['../class_parking.html#aa2e364bc236c496f3d3d215db3b40716',1,'Parking']]],
-  ['place_232',['Place',['../class_place.html#ab5ae86c31e3a4c91800fb396d38e7a2b',1,'Place::Place()'],['../class_place.html#ad9de061be2696fa05a9320ff4192fee7',1,'Place::Place(Vec2 pos, int indP)']]]
+  ['operator_21_3d_291',['operator!=',['../class_vec2.html#a55361ac8d6f5e4053a9b42b6edee4ecf',1,'Vec2']]],
+  ['operator_2a_292',['operator*',['../class_vec2.html#a3de6e417924a80be84f9fc4e0b696a6f',1,'Vec2::operator*(Vec2 New_vec)'],['../class_vec2.html#ad73af06ea4fe61e47282fddf3c3bc805',1,'Vec2::operator*(float New_float)']]],
+  ['operator_2b_293',['operator+',['../class_vec2.html#a594f6a1e659a50fd57ce65d912ce961d',1,'Vec2']]]
 ];

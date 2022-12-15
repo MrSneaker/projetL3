@@ -1,32 +1,97 @@
-\hypertarget{class_menu}{}\doxysection{Menu Class Reference}
+\hypertarget{class_menu}{}\doxysection{Référence de la classe Menu}
 \label{class_menu}\index{Menu@{Menu}}
-\doxysubsection*{Public Member Functions}
+
+
+Graphe de collaboration de Menu\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{class_menu__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Fonctions membres publiques}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\Hypertarget{class_menu_ad466dd83355124a6ed958430450bfe94}\label{class_menu_ad466dd83355124a6ed958430450bfe94}} 
+\mbox{\hyperlink{class_menu_ad466dd83355124a6ed958430450bfe94}{Menu}} ()
+\begin{DoxyCompactList}\small\item\em Constructeur du \mbox{\hyperlink{class_menu}{Menu}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_menu_a831387f51358cfb88cd018e1777bc980}\label{class_menu_a831387f51358cfb88cd018e1777bc980}} 
+\mbox{\hyperlink{class_menu_a831387f51358cfb88cd018e1777bc980}{$\sim$\+Menu}} ()
+\begin{DoxyCompactList}\small\item\em Destructeur du \mbox{\hyperlink{class_menu}{Menu}}. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_menu_aebc90f39203524becf5ad750269d5d82}\label{class_menu_aebc90f39203524becf5ad750269d5d82}} 
-void {\bfseries init\+Menu} ()
-\item 
+void \mbox{\hyperlink{class_menu_aebc90f39203524becf5ad750269d5d82}{init\+Menu}} ()
+\begin{DoxyCompactList}\small\item\em initialise le menu (initialisation de la SDL, des textures, des fonts). \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_menu_a9942654d15872ab5d5871e88bb4f6e8d}\label{class_menu_a9942654d15872ab5d5871e88bb4f6e8d}} 
-void {\bfseries init\+Font} ()
-\item 
+void \mbox{\hyperlink{class_menu_a9942654d15872ab5d5871e88bb4f6e8d}{init\+Font}} ()
+\begin{DoxyCompactList}\small\item\em initialise les fonts. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_menu_a096a163edbdc44d53fcf24a1380bfcb0}\label{class_menu_a096a163edbdc44d53fcf24a1380bfcb0}} 
-void {\bfseries init\+Texture} ()
-\item 
+void \mbox{\hyperlink{class_menu_a096a163edbdc44d53fcf24a1380bfcb0}{init\+Texture}} ()
+\begin{DoxyCompactList}\small\item\em initialise les textures. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_menu_a54e9d7fd91878272b51f3e0eaa9b42d6}\label{class_menu_a54e9d7fd91878272b51f3e0eaa9b42d6}} 
-void {\bfseries destruct\+Menu} ()
-\item 
-\mbox{\Hypertarget{class_menu_a5e385e13791ded5e0e8dac3dc4d88442}\label{class_menu_a5e385e13791ded5e0e8dac3dc4d88442}} 
-void {\bfseries afficher\+Menu} ()
-\item 
+void \mbox{\hyperlink{class_menu_a54e9d7fd91878272b51f3e0eaa9b42d6}{destruct\+Menu}} ()
+\begin{DoxyCompactList}\small\item\em Détruit le menu et libère l\textquotesingle{}espace alloué aux textures et fonts. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_menu_ab19f32f8deac0f6c6960f04be8612067}\label{class_menu_ab19f32f8deac0f6c6960f04be8612067}} 
+void \mbox{\hyperlink{class_menu_ab19f32f8deac0f6c6960f04be8612067}{show\+Menu}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_affichage}{Affichage}} du menu. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_menu_a42f76c8ae6efcba098bbf64876336bc4}\label{class_menu_a42f76c8ae6efcba098bbf64876336bc4}} 
-void {\bfseries launch\+Sim} ()
-\item 
+void \mbox{\hyperlink{class_menu_a42f76c8ae6efcba098bbf64876336bc4}{launch\+Sim}} ()
+\begin{DoxyCompactList}\small\item\em Lancement de la simulation. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_menu_ac666683647da2f9f23b8b33a0f56fc5a}\label{class_menu_ac666683647da2f9f23b8b33a0f56fc5a}} 
-void {\bfseries menu\+Loop} ()
-\end{DoxyCompactItemize}
+void \mbox{\hyperlink{class_menu_ac666683647da2f9f23b8b33a0f56fc5a}{menu\+Loop}} ()
+\begin{DoxyCompactList}\small\item\em Boucle d\textquotesingle{}affichage et de gestion des évènements. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_menu_ad2543a81c3a0e426f85272e2b8603a94}\label{class_menu_ad2543a81c3a0e426f85272e2b8603a94}} 
+void \mbox{\hyperlink{class_menu_ad2543a81c3a0e426f85272e2b8603a94}{show\+Settings}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_affichage}{Affichage}} des paramètres. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_menu_a9ef863248088d258f62359f0f9e65acc}\label{class_menu_a9ef863248088d258f62359f0f9e65acc}} 
+void \mbox{\hyperlink{class_menu_a9ef863248088d258f62359f0f9e65acc}{set\+To\+Def}} ()
+\begin{DoxyCompactList}\small\item\em Réinitialise les valeurs de simulation choisies aux valeurs par défaut. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_menu_a2d33ac29719f181426a78451b29778d8}\label{class_menu_a2d33ac29719f181426a78451b29778d8}} 
+void \mbox{\hyperlink{class_menu_a2d33ac29719f181426a78451b29778d8}{save\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Sauvegarde les valeurs de simulation choisies. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_menu_a70d62664186b6521facc10c342f5d879}{afficher\+Texte}} (TTF\+\_\+\+Font $\ast$font, string Msg, string Msg\+With\+Valeur, float Valeur, int x, int y, unsigned char r, unsigned char g, unsigned char b, int a)
+\begin{DoxyCompactList}\small\item\em Affiche du texte selon les différents paramètre. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\doxysubsection{Documentation des fonctions membres}
+\mbox{\Hypertarget{class_menu_a70d62664186b6521facc10c342f5d879}\label{class_menu_a70d62664186b6521facc10c342f5d879}} 
+\index{Menu@{Menu}!afficherTexte@{afficherTexte}}
+\index{afficherTexte@{afficherTexte}!Menu@{Menu}}
+\doxysubsubsection{\texorpdfstring{afficherTexte()}{afficherTexte()}}
+{\footnotesize\ttfamily void Menu\+::afficher\+Texte (\begin{DoxyParamCaption}\item[{TTF\+\_\+\+Font $\ast$}]{font,  }\item[{string}]{Msg,  }\item[{string}]{Msg\+With\+Valeur,  }\item[{float}]{Valeur,  }\item[{int}]{x,  }\item[{int}]{y,  }\item[{unsigned char}]{r,  }\item[{unsigned char}]{g,  }\item[{unsigned char}]{b,  }\item[{int}]{a }\end{DoxyParamCaption})}
+
+
+
+Affiche du texte selon les différents paramètre. 
+
+2 choix possible \+: 1 -\/ Afficher une simple ligne de texte ou 2 -\/ Afficher du texte + une valeur statique ou dynamique (qui change au fil du temps)
+
+Pour passer de du choix 1 a 2 il suffit de mettre juste un String vide ( \char`\"{}\char`\"{} ) sur le parametre Msg ex \+: Afficher\+Texte(---, \char`\"{}\+Son texte\char`\"{}, --- , ---, etc. ) -\/$>$ Affiche une simple ligne de texte. ex \+: Afficher\+Texte(---, \char`\"{}\char`\"{}, \char`\"{}\+Texte\char`\"{}, valeur, ---, etc.) -\/$>$ Affiche Texte + valeur 
+\begin{DoxyParams}{Paramètres}
+{\em font} & Police du texte \\
+\hline
+{\em Msg} & 1 -\/ Texte simple \\
+\hline
+{\em Msg\+With\+Valeur} & 2 -\/ Texte qui accompagne la valeur \\
+\hline
+{\em valeur} & Valeur que l\textquotesingle{}on veut afficher \\
+\hline
+{\em x} & Position en x du texte \\
+\hline
+{\em y} & Position en y du texte \\
+\hline
+{\em r} & Parametre R du RGBA -\/$>$ color rouge \\
+\hline
+{\em g} & Parametre G du RGBA -\/$>$ color vert \\
+\hline
+{\em b} & Parametre B du RGBA -\/$>$ color bleu \\
+\hline
+{\em a} & Parametre A du RGBA -\/$>$ transparance \\
+\hline
+\end{DoxyParams}
+
+
+La documentation de cette classe a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
 \item 
 src/Menu.\+h\item 
 src/Menu.\+cpp\end{DoxyCompactItemize}

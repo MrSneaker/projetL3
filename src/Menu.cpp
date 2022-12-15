@@ -378,9 +378,9 @@ void Menu::menuLoop()
             else if (xc > 710 && xc < 710 + 40 && yc > 275 && yc < 275 + 25)
             {
                 tpsAppVoiture -= 0.5;
-                if (tpsAppVoiture < 0.5)
+                if (tpsAppVoiture < 2)
                 {
-                    tpsAppVoiture = 0.5;
+                    tpsAppVoiture = 2;
                 }
                 xc = 0;
                 yc = 0;
