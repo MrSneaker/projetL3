@@ -2,17 +2,17 @@
 
 Projet LIFPROJET - Gestion intelligente de parkings dans un centre urbain (SA4).
 
-Réalisé par FERRER Raphael (p1908300), BOULET Benjamin (p2006010), MUNOZ Matéo (p2002495).
+Réalisé par FERRER Raphaël (p1908300), BOULET Benjamin (p2006010), MUNOZ Matéo (p2002495).
 
 # Installation
-Les installation nécessaire pour lancer l'application (sous linux uniquement):
+Les installations nécessaires pour lancer l'application (sous Linux uniquement) :
 >sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
 
 >sudo apt-get install libgnuplot-iostream-dev
 
 # Objectif
 
-L'objectif de cette application est de simuler la gestion d'un ou plusieurs parkings en utilisant des intelligences artificielles (IA) pour négocier le prix des places de parking avec les véhicules (elles aussi dotées d'IA). Le but est que les véhicules puissent choisir la meilleure offre et que les parkings s'adaptent pour atteindre un rendement optimal. En plus, l'application permet de paramétrer chaque simulation de manière détaillée et de visualiser clairement les données récoltées.
+L'objectif de cette application est de simuler la gestion d'un ou plusieurs parkings, en utilisant des intelligences artificielles (IA) pour négocier avec les véhicules (eux aussi dotés d'IA) le prix des places. Le but est que les véhicules puissent choisir la meilleure offre et que les parkings s'adaptent pour atteindre un rendement optimal. L'application permet également de paramétrer chaque simulation de manière détaillée et de visualiser clairement les données récoltées.
 # Lancement des exécutables et utilisation
 
 ## Application
@@ -21,30 +21,30 @@ Pour lancer l'application, vous devez la compiler en utilisant la commande make 
 
 Vous obtiendrez deux exécutables, bin/test et bin/app.
 
-L'executable bin/test execute tous les tests de régressions. Pour le lancer, tappez bin/test dans la console (dans le répertoire de l'application)
+L'exécutable bin/test exécute tous les tests de régression. Pour le lancer, tappez bin/test dans la console (dans le répertoire de l'application).
 >bin/test
 
 Pour lancer l'application, tappez bin/app dans la console (toujours dans le répertoire de l'application).
 >bin/app
 
-Ensuite, vous accéder à un menu avec 3 choix possibles : Start, Exit, et un bouton pour les paramètres de la simulation. Pour lancer la simulation avec les paramètres par défaut, appuyer directement sur Start. 
+Ensuite, vous accédez à un menu avec 3 choix possibles : Start, Exit, et un bouton pour les paramètres de la simulation. Pour lancer la simulation avec les paramètres par défaut, cliquez directement sur Start. 
 
-Si vous voulez tester une condiguration spécifique, paramètrez d'abord l'application en validant vos réglages avec OK, puis lancez là avec start. Pour plus de détails sur les paramètres modifiables, allez à la section "Paramètres modifiables de la simulation" de ce readMe.
+Si vous voulez tester une configuration spécifique, paramétrez d'abord l'application en validant vos réglages avec OK, puis lancez-la avec Start. Pour plus de détails sur les paramètres modifiables, allez à la section "Paramètres modifiables de la simulation" de ce README.
 
-Une fois dans l'application, vous pouvez utilisez les fonctionnalités suivantes :
+Une fois dans l'application, vous pouvez utiliser les fonctionnalités suivantes :
 ### Quand la simulation n'est pas en pause
-- Vous pouvez mettre la simulation en pause avec le bouton pause (situé dans la barre de menu en bas de l'écran, le bouton le plus à gauche).
-- Vous pouvez accélérer la simulation (le temps passe 5 fois plus vite) avec le bouton situé à coté du bouton pause. Notez que l'accélération n'est pas réinitialisée si vous stoper/relancer la simulation avec le bouton pause.
+- Vous pouvez mettre la simulation en pause avec le bouton de pause (situé dans la barre de menu en bas de l'écran, c'est le bouton le plus à gauche).
+- Vous pouvez accélérer la simulation (le temps passera alors 5 fois plus vite) avec le bouton situé à coté du bouton de pause. Notez que la vitesse de la simulation n'est pas réinitialisée si vous mettez celle-ci en pause. Notez également que l'accélération de la simulation ne modifie pas la vitesse des voitures.
 
 ### Quand la simulation est mise en pause
-- Vous pouvez relancer la simulation en appuyant à nouveau sur le bouton pause.
-- Vous pouvez cliquer sur n'importe quel voiture pour afficher les informations de l'utilisateur de celle-ci, dont les suivantes :
-    - id utilisateur.
-    - Noms, prénoms, âges (chaque utilisateur est un mix d'informations tirées au hasard dans des banques de données de noms et prénoms).
+- Vous pouvez la relancer en cliquant à nouveau sur le bouton de pause.
+- Vous pouvez cliquer sur n'importe quelle voiture pour afficher les informations de l'utilisateur de celle-ci, dont les suivantes :
+    - ID de l'utilisateur.
+    - Noms, prénoms, âges (chaque utilisateur est un mix d'informations tirées au hasard dans des banques de données de noms et de prénoms).
     - Temps de stationnement (en minutes).
     - Prix maximum que l'utilisateur est prêt à payer (en euros).
-- Vous pouvez voir la fiche d'informations de chaque parkings, en cliquant sur la petite fiche en bas à droite de chacun des parkings. Les informations affichées sont l'id du parking, le prix minimum accepté et le prix de départ pour ses négociations.
-- Vous pouvez afficher le menu des graphiques en appuyant sur la flèche situé en haut de l'écran au centre.
+- Vous pouvez voir les informations de chaque parking en cliquant sur la petite fiche située en bas à droite de chacun. Les informations affichées sont l'ID du parking, le prix minimum accepté et le prix de départ pour ses négociations.
+- Vous pouvez afficher le menu des graphiques en cliquant sur la flèche située en haut de l'écran, au milieu.
 ## Les graphiques
 Vous avez la possibilité d'afficher 4 graphiques différents, en déroulant le menu des graphiques :
 - L'évolution du profit de chaque parking au cour du temps.
@@ -60,7 +60,7 @@ Sur l'interface du graphique, vous avez la possibilité de l'exporter dans diff�
 
 La librairie utilisée pour générer les graphiques (gnuplot-iostream) cherche à utiliser un plugin qui n'est pas présent dans cette application (et pas nécessaire).
 
-## Paramètres modifiable de la simulation
+## Paramètres modifiables de la simulation
 Vous pouvez modifier plusieurs paramètres avant de lancer la simulation depuis le menu, dont les suivants (dans l'ordre) :
 - Les prix de départs des différents parkings (en euros).
 
