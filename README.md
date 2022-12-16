@@ -55,7 +55,7 @@ Vous avez la possibilité d'afficher 4 graphiques différents, en déroulant le 
 Pour afficher le graphique voulu, vous n'avez qu'à cliquer sur son nom dans le menu déroulant.
 Sur l'interface du graphique, vous avez la possibilité d'exporter ce dernier dans différents formats (en utilisant le bouton le plus à gauche de la barre d'outils).
 
-***ATTENTION***, il est normal de recevoir l'avertissement suivant à l'ouverture d'un graphique : 
+***ATTENTION***, il est possible et normal de recevoir l'avertissement suivant à l'ouverture d'un graphique : 
 >qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in ""
 
 La librairie utilisée pour générer les graphiques (gnuplot-iostream) cherche à utiliser un plugin qui n'est pas présent dans cette application (et pas nécessaire).
@@ -89,3 +89,6 @@ Par exemple, avec Firefox, la commande est la suivante :
 >firefox doc/html/index.html
 
 Vous avez accès au diagramme de classes du projet dans le répertoire "doc".
+
+# Démo vidéo
+Voici une démonstration vidéo chapitré de cette application : https://youtu.be/JPF5OE7hKS0 .
