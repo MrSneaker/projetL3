@@ -10,6 +10,8 @@ Les installations nécessaires pour lancer l'application (sous Linux uniquement)
 
 >sudo apt-get install libgnuplot-iostream-dev
 
+Sur les ordinateurs du batîment Nautibus, ces packages sont tous installés. Le projet est donc directement compilable et exécutable sur ces ordinateurs.
+
 # Objectif
 
 L'objectif de cette application est de simuler la gestion d'un ou plusieurs parkings, en utilisant des intelligences artificielles (IA) pour négocier avec les véhicules (eux aussi dotés d'IA) le prix des places. Le but est que les véhicules puissent choisir la meilleure offre et que les parkings s'adaptent pour atteindre un rendement optimal. L'application permet également de paramétrer chaque simulation de manière détaillée et de visualiser clairement les données récoltées.
