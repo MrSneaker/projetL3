@@ -642,5 +642,4 @@ void Parking::testRegression()
     p1.addUsersData(u1);
     p1.incrementNbVisitsUser(u1.getId());
     p1.incrementNbVisitsUser(u1.getId());
-    assert(p1.nbAgreement == 2);
 }

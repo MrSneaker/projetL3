@@ -39,5 +39,8 @@ int main()
     Environnement sim;
     sim.test_regresion();
 
+    cout<<endl;
+    cout<<"Tous les tests de régressions ont été réalisés !"<<endl;
+
     return 0;
 }

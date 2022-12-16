@@ -114,10 +114,6 @@ bool Environnement::checkId(int id, string filename)
 
         ret = true;
     }
-    else
-    {
-        cerr << "Impossible d'ouvrir le fichier !" << endl;
-    }
     return ret;
 }
 
@@ -367,10 +363,6 @@ void Environnement::saveUser()
 
         fichier.close();
     }
-    else
-    {
-        cerr << "Impossible d'ouvrir le fichier !" << endl;
-    }
 }
 
 void Environnement::getUser()
@@ -403,10 +395,6 @@ void Environnement::getUser()
 
         fichier.close();
     }
-    else
-    {
-        cerr << "Impossible d'ouvrir le fichier !" << endl;
-    }
 }
 
 void Environnement::getNames_SurnamesFromFile()
@@ -423,10 +411,6 @@ void Environnement::getNames_SurnamesFromFile()
 
         FemaleNamesFile.close();
     }
-    else
-    {
-        cerr << "Impossible d'ouvrir le fichier : <female.names> !" << endl;
-    }
 
     ifstream MaleNamesFile("resources/male.names", ios::in);
     if (MaleNamesFile)
@@ -440,10 +424,6 @@ void Environnement::getNames_SurnamesFromFile()
 
         MaleNamesFile.close();
     }
-    else
-    {
-        cerr << "Impossible d'ouvrir le fichier : <male.names> !" << endl;
-    }
 
     ifstream SurnamesFile("resources/sur.names", ios::in);
     if (SurnamesFile)
@@ -456,10 +436,6 @@ void Environnement::getNames_SurnamesFromFile()
         }
 
         SurnamesFile.close();
-    }
-    else
-    {
-        cerr << "Impossible d'ouvrir le fichier : <sur.names> !" << endl;
     }
 }
 
@@ -1136,7 +1112,8 @@ void Environnement::makeGraph(int choice)
             Graph(dataTab[0], dataTab[1], dataTab[2], "Nombres de places occupées parking ", 0, 0, realTime, searchMax(tabMaxPlace) + 1);
         break;
     case 3:
-        Graph(getDataFromFile("data/dataAvgSuccessPourcent.txt"), "Pourcentage de succes moyen", 0, 0, realTime, searchMaxInPair(getDataFromFile("data/dataAvgSuccessPourcent.txt")) + 1);
+        if (!getDataFromFile("data/dataAvgSuccessPourcent.txt").empty())
+            Graph(getDataFromFile("data/dataAvgSuccessPourcent.txt"), "Pourcentage de succes moyen", 0, 0, realTime, searchMaxInPair(getDataFromFile("data/dataAvgSuccessPourcent.txt")) + 1);
         break;
     default:
         break;
