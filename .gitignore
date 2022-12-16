@@ -4,6 +4,7 @@
 .vscode/settings.json
 
 bin/test
+bin/app
 
 obj/*.o
 
