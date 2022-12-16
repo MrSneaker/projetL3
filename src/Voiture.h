@@ -50,7 +50,7 @@ public:
     //! \param User : Utilisateur de la voiture
     Voiture(Utilisateur User);
 
-    //! \brief Destructor de la classe Voiture
+    //! \brief Destructeur de la classe Voiture
     ~Voiture();
 
     //---------------------------- Getter + Setter ---------------------------------
@@ -192,16 +192,43 @@ public:
 
     void deleteNode();
 
-    //! \brief La voiture lit le message reçu (donné en paramètre) s'il y en a un
-    //! (s'il n'y en a pas, le pointeur est nul),
-    //! \param message : message reçu
+    //! \brief 1e phase de la négociation côté voiture.
+    //! \brief Durant cette phase, la voiture et le parking
+    //! \brief négocient pour tenter de se mettre d'accord sur un prix.
+    //! \brief La voiture lit le message reçu (passé en paramètre) s'il y en a un
+    //! \brief (s'il n'y en a pas, le pointeur est nul), et en crée un nouveau
+    //! \brief (les données du nouveau message sont initialisées en fonction des
+    //! \brief données contenues dans le message reçu, s'il y en a un).
+    //! \brief Types de messages générables :
+    //! \brief  - CALL
+    //! \brief  - COUNTER_OFFER
+    //! \brief  - LAST_OFFER
+    //! \brief  - ACCEPT
+    //! \brief  - REJECT
+    //! \brief Types de messages reçus pris en compte :
+    //! \brief  - OFFER
+    //! \brief  - COUNTER_OFFER
+    //! \brief  - NO_MORE_SPOTS
+    //! \brief  - LAST_OFFER
+    //! \brief  - ACCEPT
+    //! \brief  - REJECT
+    //! \param aMessage : message reçu
     //! \return message généré
     Message managingConversation(Message *aMessage) const;
 
-    //! \brief La voiture lit le message reçu (donné en paramètre)
-    //! renvoie un message de type ACCEPT ou REJECT avec le nouveau prix si reject
-    //! \param message : message reçu
-    //! \param indPrOK : indice du parkings que la voiture a choisi
+    //! \brief 2e phase de la négociation côté voiture.
+    //! \brief Durant cette phase, la voiture informe le parking
+    //! \brief de sa venue ou de sa non-venue, selon si le parking
+    //! \brief en question est celui qu'elle a choisi ou non,
+    //! \brief après avoir comparé les prix.
+    //! \brief Types de messages générables :
+    //! \brief  - CONFIRM_ACCEPT
+    //! \brief  - RENOUNCE
+    //! \brief Types de messages reçus pris en compte :
+    //! \brief  - OK_TO_PARK
+    //! \brief  - ABORT
+    //! \param aMessage : message reçu
+    //! \param indPrOK : indice du parking que la voiture a choisi
     //! \return message généré
     Message confirmConversation(Message *aMessage, int indPrOK) const;
 

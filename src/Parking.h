@@ -97,10 +97,13 @@ private:
 public:
     // CONSTRUCTEURS et DESTRUCTEUR
 
-    //! \brief Constructeur parametre de la class parking
-    //! \param position position du parking (position du rectangle en haut a gauche)
-    //! \param minimumPrice Prix minimum d'acceptance par minutes que le  parking peut accepté -> A REVOIR
-    //! \param startPrice Prix max que le parking propose -> A REVOIR
+    //! \brief Constructeur à paramètres
+    //! \param position position du parking (position du coin en haut à gauche)
+    //! \param minimumPrice prix minimum que le parking peut accepter
+    //! \param startPrice prix maximum que le parking propose
+    //! \param DimX dimension horizontale du parking
+    //! \param DimY dimension verticale du parking
+    //! \param id ID du parking
     Parking(Vec2 position, float minimumPrice, float startPrice, int DimX, int DimY, int id);
 
     Parking();
@@ -111,7 +114,7 @@ public:
 
     vector<Place> &getPlacesTab();
 
-    //! \brief Retourne le nombre de places du parking
+    //! \brief Donne le nombre de places du parking
     int getNbPlaces() const;
 
     int getNbAvailablePlaces() const;
@@ -130,7 +133,7 @@ public:
 
     const vector<pair<double, double>> &getDataNbPlaceTaken() const;
 
-    //! \brief Donne la position (x,y) du parking - coin en haut a gauche
+    //! \brief Donne la position (x,y) du parking – coin en haut à gauche
     const Vec2 &getPos() const;
 
     //! \brief Donne la largeur du parking
@@ -139,10 +142,10 @@ public:
     //! \brief Donne la hauteur du parking
     const int &getDIMY() const;
 
-    //! \brief fonction qui renvoie le pourcentage de succes.
+    //! \brief Donne le pourcentage de succès du parking
     const double &getSuccessPourcentage() const;
 
-    //! \brief Fonction qui renvoie un entier, permet de savoir si le parking est plein ou non
+    //! \brief Met à jour la donnée membre isFull, puis retourne sa valeur
     bool IsFull();
 
     // MUTATEURS
@@ -153,71 +156,91 @@ public:
 
     void setNbAvailablePlaces(int nbAvailablePlaces);
 
-    //! \brief ajoute un utilisateur au tableau usersTab en vérifiant que celui-ci n'existe pas déjà dans le tableau.
-    //! \param unUtilisateur un utilisateur.
-    void addUsersData(Utilisateur unUtilisateur);
-
-    void addToData(double currentTime);
-
-    //! \brief incrémente le nombre de visites de l'utilisateur en paramètre de 1 à chaque appel.
-    //! \param unUtilisateur pointeur sur un utilisateur.
+    //! \brief Incrémente de 1 le nombre de visites de l'utilisateur passé en paramètre.
+    //! \param id ID d'un utilisateur.
     void incrementNbVisitsUser(unsigned int id);
 
-    //! \brief enleve une place au nombre de places dispo
+    //! \brief Enlève une place au nombre de places disponibles.
     void decrementNbAvailablePlaces();
 
-    //! \brief ajoute une place au nombre de places dispo
+    //! \brief Ajoute une place au nombre de places disponibles.
     void incrementNbAvailablePlaces();
 
-    //! \brief Incrémente le nombre de visites du parking
+    //! \brief Incrémente le nombre de visites du parking.
     void incrementNbAgreements();
 
     //! \brief Incrémente de 1 le nombre de négociations effectuées par le parking.
     void incrementNbFinishedConv();
 
-    //! \brief Ajoute au profit (du parking) la valeur
-    //! \brief (prix de la place louée à une voiture) passée en paramètre.
-    void updateProfit(double aPrice, float parkTime);
-
-    //! \brief Met à jour le pourcentage de réussite des négociations du Parking.
-    void updateSuccessPercentage();
-
     // AUTRES FONCTIONS
 
-    //! \brief initialisation de toutes les places de parkings (positions, etc..).
+    //! \brief Initialise toutes les places du parking (positions, etc.).
+    //! \param PcornerX position horizontale
+    //! \param PcornerY position verticale
     void initPlace(int PcornerX, int PcornerY);
 
-    //! \brief vérifie qu'un prix donné est acceptable ou non, avec une marge arbitraire. Renvoie un booléen.
+    //! \brief Vérifie qu'un prix donné est acceptable ou non, avec une marge arbitraire de tolérance.
     //! \param price prix à vérifier
+    //! \return vrai si le prix est acceptable, faux sinon
     bool isPriceOk(double price) const;
 
-    //! \brief Le parking lit le message reçu (donné en paramètre)
+    //! \brief 1e phase de la négociation côté parking.
+    //! \brief Durant cette phase, le parking et la voiture
+    //! \brief négocient pour tenter de se mettre d'accord sur un prix.
+    //! \brief Le parking lit le message reçu (passé en paramètre)
     //! \brief et en crée un nouveau (comme il s'agit forcément d'une réponse, les données du nouveau
     //! \brief message sont initialisées en fonction des données contenues dans le message reçu).
-    //! \brief Types de message générable :
+    //! \brief Types de messages générables :
     //! \brief  - OFFER
     //! \brief  - COUNTER_OFFER
+    //! \brief  - NO_MORE_SPOTS
     //! \brief  - LAST_OFFER
     //! \brief  - ACCEPT
     //! \brief  - REJECT
-    //! \brief Types de message reçu pris en compte :
+    //! \brief Types de messages reçus pris en compte :
     //! \brief  - CALL
     //! \brief  - COUNTER_OFFER
     //! \brief  - LAST_OFFER
     //! \brief  - ACCEPT
     //! \brief  - REJECT
-    Message managingConversation(Message *aMessage) const;
+    //! \param aMessage message reçu
+    //! \return un message
+    Message managingConversation(Message* aMessage) const;
 
-    //! \brief - Confirme la transaction ou non en fonction de la réponse de la voiture, fait les opérations en conséquence.
-    //! \brief - Cette fonction est appelée pour toute négociation, on y incrémente donc notamment le nombre de négociations
-    //! \brief effectuées par le parking.
-    Message confirmConversation(Message *aMessage);
+    //! \brief 2e phase de la négociation côté parking.
+    //! \brief Durant cette phase, la voiture informe le parking
+    //! \brief de sa venue ou de sa non-venue, selon si le parking
+    //! \brief en question est celui qu'elle a choisi ou non,
+    //! \brief après avoir comparé les prix.
+    //! \brief Types de messages générables :
+    //! \brief  - OK_TO_PARK
+    //! \brief  - ABORT
+    //! \brief Types de messages reçus pris en compte :
+    //! \brief  - CONFIRM_ACCEPT
+    //! \brief  - RENOUNCE
+    //! \param aMessage message reçu
+    //! \return un message
+    Message confirmConversation(Message* aMessage);
 
-    //! \brief Consideration de la donnée membre successPercentage
-    //! \brief puis modification éventuelle de minPrice et startingPrice en conséquence.
+    //! \brief Ajoute au profit du parking la valeur
+    //! \brief (prix de la place louée à une voiture) passée en paramètre multipliée
+    //! \brief par la durée de stationnement (convertie en heures simulation) passée en paramètre.
+    //! \param aPrice un prix
+    //! \param parkTime une durée de stationnement
+    void updateProfit(double aPrice, float parkTime);
+
+    //! \brief Met à jour le pourcentage de réussite des négociations du parking.
+    void updateSuccessPercentage();
+
+    //! \brief Considère la donnée membre successPercentageLastConv
+    //! \brief et modifie éventuellement minPrice et startingPrice en conséquence.
     void reconsiderPrices();
 
     int extractIntFromString(string aString) const;
+
+    void addUsersData(Utilisateur unUtilisateur);
+
+    void addToData(double currentTime);
 
     // TEST DE REGRESSION
 
