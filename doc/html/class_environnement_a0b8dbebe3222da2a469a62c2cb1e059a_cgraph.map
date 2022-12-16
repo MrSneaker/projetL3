@@ -1,9 +1,0 @@
-<map id="Environnement::changeTarget" name="Environnement::changeTarget">
-<area shape="rect" id="node1" title="Permet a une voiture de changer de trajectoire a tout moment." alt="" coords="5,132,221,159"/>
-<area shape="rect" id="node2" href="$class_voiture.html#a83532646a006877af0bd081563b0314d" title="Getter de la position de la voiture." alt="" coords="286,5,442,32"/>
-<area shape="rect" id="node3" href="$class_voiture.html#a896704185acef78fbb946424d76b2a9d" title="Getter de l&#39;indice de la place ou la voiture va / est." alt="" coords="298,56,430,83"/>
-<area shape="rect" id="node4" href="$class_voiture.html#a7ef3b6df2eb2cdaf7df4061d6cff1a33" title="Getter de la position de la cible (parking / place / sortie)" alt="" coords="269,107,459,133"/>
-<area shape="rect" id="node5" href="$class_voiture.html#add4a1985d90531edef18d5865426f0ad" title="Modifier l&#39;indice du parkings ou la voiture va / est." alt="" coords="292,157,436,184"/>
-<area shape="rect" id="node6" href="$class_voiture.html#a491ac3055dac34b88f9c66ca18cb138d" title="Modifier l&#39;indice de la place ou la voiture va / est." alt="" coords="299,208,429,235"/>
-<area shape="rect" id="node7" href="$class_voiture.html#abeaff0302f03e921eaed638ea3819d11" title="Modifie la position de la cible (parking / place / sortie)" alt="" coords="270,259,458,285"/>
-</map>

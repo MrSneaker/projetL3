@@ -1,26 +1,26 @@
-\hypertarget{class_parking}{}\doxysection{Référence de la classe Parking}
+\hypertarget{class_parking}{}\doxysection{Parking Class Reference}
 \label{class_parking}\index{Parking@{Parking}}
 
 
-Graphe de collaboration de Parking\+:
+Collaboration diagram for Parking\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=231pt]{class_parking__coll__graph}
+\includegraphics[width=133pt]{class_parking__coll__graph}
 \end{center}
 \end{figure}
-\doxysubsection*{Fonctions membres publiques}
+\doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{class_parking_aa2e364bc236c496f3d3d215db3b40716}{Parking}} (\mbox{\hyperlink{class_vec2}{Vec2}} position, float minimum\+Price, float start\+Price, int DimX, int DimY, int id)
-\begin{DoxyCompactList}\small\item\em Constructeur parametre de la class parking. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Constructeur à paramètres. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_parking_adc9cb9d39bf87a2f77eeace8455fe2ed}\label{class_parking_adc9cb9d39bf87a2f77eeace8455fe2ed}} 
 vector$<$ \mbox{\hyperlink{class_place}{Place}} $>$ \& {\bfseries get\+Places\+Tab} ()
 \item 
 \mbox{\Hypertarget{class_parking_aa41eb5aa5abbc95159a0176d26763b4b}\label{class_parking_aa41eb5aa5abbc95159a0176d26763b4b}} 
 int \mbox{\hyperlink{class_parking_aa41eb5aa5abbc95159a0176d26763b4b}{get\+Nb\+Places}} () const
-\begin{DoxyCompactList}\small\item\em Retourne le nombre de places du parking. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Donne le nombre de places du parking. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_parking_a4d99c0fa009f9249215243d7e464665f}\label{class_parking_a4d99c0fa009f9249215243d7e464665f}} 
 int {\bfseries get\+Nb\+Available\+Places} () const
 \item 
@@ -47,7 +47,7 @@ const vector$<$ pair$<$ double, double $>$ $>$ \& {\bfseries get\+Data\+Nb\+Plac
 \item 
 \mbox{\Hypertarget{class_parking_a8439001b3b77ac1b1d85a232edbfd9fd}\label{class_parking_a8439001b3b77ac1b1d85a232edbfd9fd}} 
 const \mbox{\hyperlink{class_vec2}{Vec2}} \& \mbox{\hyperlink{class_parking_a8439001b3b77ac1b1d85a232edbfd9fd}{get\+Pos}} () const
-\begin{DoxyCompactList}\small\item\em Donne la position (x,y) du parking -\/ coin en haut a gauche. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Donne la position (x,y) du parking – coin en haut à gauche. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_parking_a00c5a7384ced175d6e6f7d9571e05a55}\label{class_parking_a00c5a7384ced175d6e6f7d9571e05a55}} 
 const int \& \mbox{\hyperlink{class_parking_a00c5a7384ced175d6e6f7d9571e05a55}{get\+DIMX}} () const
 \begin{DoxyCompactList}\small\item\em Donne la largeur du parking. \end{DoxyCompactList}\item 
@@ -56,10 +56,10 @@ const int \& \mbox{\hyperlink{class_parking_ac3f84949fd28da7d12629ba0b39b95ae}{g
 \begin{DoxyCompactList}\small\item\em Donne la hauteur du parking. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_parking_a1e06b9bec7423df740da84dd016efa30}\label{class_parking_a1e06b9bec7423df740da84dd016efa30}} 
 const double \& \mbox{\hyperlink{class_parking_a1e06b9bec7423df740da84dd016efa30}{get\+Success\+Pourcentage}} () const
-\begin{DoxyCompactList}\small\item\em fonction qui renvoie le pourcentage de succes. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Donne le pourcentage de succès du parking. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_parking_a4ac446a3b0c42732fba3e420dfb7076a}\label{class_parking_a4ac446a3b0c42732fba3e420dfb7076a}} 
 bool \mbox{\hyperlink{class_parking_a4ac446a3b0c42732fba3e420dfb7076a}{Is\+Full}} ()
-\begin{DoxyCompactList}\small\item\em Fonction qui renvoie un entier, permet de savoir si le parking est plein ou non. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Met à jour la donnée membre is\+Full, puis retourne sa valeur. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_parking_af8e9be935800bb84d56da22a47a14ad7}\label{class_parking_af8e9be935800bb84d56da22a47a14ad7}} 
 void {\bfseries set\+Min\+Price} (float minimum\+Price)
 \item 
@@ -69,53 +69,104 @@ void {\bfseries set\+Starting\+Price} (float start\+Price)
 \mbox{\Hypertarget{class_parking_ad15968c83f5af0ac507dde30755ecd2b}\label{class_parking_ad15968c83f5af0ac507dde30755ecd2b}} 
 void {\bfseries set\+Nb\+Available\+Places} (int nb\+Available\+Places)
 \item 
-void \mbox{\hyperlink{class_parking_a8a1dc00c1a01ec642e28f071290140be}{add\+Users\+Data}} (\mbox{\hyperlink{class_utilisateur}{Utilisateur}} un\+Utilisateur)
-\begin{DoxyCompactList}\small\item\em ajoute un utilisateur au tableau users\+Tab en vérifiant que celui-\/ci n\textquotesingle{}existe pas déjà dans le tableau. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_parking_ae856b96adafa6c5cd4a934214521d9fd}\label{class_parking_ae856b96adafa6c5cd4a934214521d9fd}} 
-void {\bfseries add\+To\+Data} (double current\+Time)
-\item 
 void \mbox{\hyperlink{class_parking_a0566fd1cc4edff42eb4d0d8bb2210b74}{increment\+Nb\+Visits\+User}} (unsigned int id)
-\begin{DoxyCompactList}\small\item\em incrémente le nombre de visites de l\textquotesingle{}utilisateur en paramètre de 1 à chaque appel. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Incrémente de 1 le nombre de visites de l\textquotesingle{}utilisateur passé en paramètre. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_parking_a88870c099b39a741c75fa8fa8f5f8d56}\label{class_parking_a88870c099b39a741c75fa8fa8f5f8d56}} 
 void \mbox{\hyperlink{class_parking_a88870c099b39a741c75fa8fa8f5f8d56}{decrement\+Nb\+Available\+Places}} ()
-\begin{DoxyCompactList}\small\item\em enleve une place au nombre de places dispo \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Enlève une place au nombre de places disponibles. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_parking_a69a1fb182125146e7c72833d7f0fc48d}\label{class_parking_a69a1fb182125146e7c72833d7f0fc48d}} 
 void \mbox{\hyperlink{class_parking_a69a1fb182125146e7c72833d7f0fc48d}{increment\+Nb\+Available\+Places}} ()
-\begin{DoxyCompactList}\small\item\em ajoute une place au nombre de places dispo \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Ajoute une place au nombre de places disponibles. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_parking_a2fa9f4f03a206249001bf08d54fdbf70}\label{class_parking_a2fa9f4f03a206249001bf08d54fdbf70}} 
 void \mbox{\hyperlink{class_parking_a2fa9f4f03a206249001bf08d54fdbf70}{increment\+Nb\+Agreements}} ()
 \begin{DoxyCompactList}\small\item\em Incrémente le nombre de visites du parking. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_parking_a4f4b17f366811a8a6cda90a657fedbd1}\label{class_parking_a4f4b17f366811a8a6cda90a657fedbd1}} 
 void \mbox{\hyperlink{class_parking_a4f4b17f366811a8a6cda90a657fedbd1}{increment\+Nb\+Finished\+Conv}} ()
 \begin{DoxyCompactList}\small\item\em Incrémente de 1 le nombre de négociations effectuées par le parking. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_parking_a47b84d569d50f1981825870ecea23643}{init\+Place}} (int PcornerX, int PcornerY)
+\begin{DoxyCompactList}\small\item\em Initialise toutes les places du parking (positions, etc.). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_parking_aaa9fdc975f84bb1898d056d0069a3074}{is\+Price\+Ok}} (double price) const
+\begin{DoxyCompactList}\small\item\em Vérifie qu\textquotesingle{}un prix donné est acceptable ou non, avec une marge arbitraire de tolérance. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_message}{Message}} \mbox{\hyperlink{class_parking_abafe2125589f70a76fbb50ff91376f7e}{managing\+Conversation}} (\mbox{\hyperlink{class_message}{Message}} $\ast$a\+Message) const
+\begin{DoxyCompactList}\small\item\em 1e phase de la négociation côté parking. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_message}{Message}} \mbox{\hyperlink{class_parking_afdea964507b5b430f7f778c8c2d9bfc8}{confirm\+Conversation}} (\mbox{\hyperlink{class_message}{Message}} $\ast$a\+Message)
+\begin{DoxyCompactList}\small\item\em 2e phase de la négociation côté parking. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_parking_a2f08d621b56368bd5c933645660a85af}{update\+Profit}} (double a\+Price, float park\+Time)
-\begin{DoxyCompactList}\small\item\em Ajoute au profit (du parking) la valeur. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Ajoute au profit du parking la valeur. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_parking_a7c21cf68b9e2991ca581d8160621792c}\label{class_parking_a7c21cf68b9e2991ca581d8160621792c}} 
 void \mbox{\hyperlink{class_parking_a7c21cf68b9e2991ca581d8160621792c}{update\+Success\+Percentage}} ()
-\begin{DoxyCompactList}\small\item\em Met à jour le pourcentage de réussite des négociations du \mbox{\hyperlink{class_parking}{Parking}}. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_parking_a47b84d569d50f1981825870ecea23643}\label{class_parking_a47b84d569d50f1981825870ecea23643}} 
-void \mbox{\hyperlink{class_parking_a47b84d569d50f1981825870ecea23643}{init\+Place}} (int PcornerX, int PcornerY)
-\begin{DoxyCompactList}\small\item\em initialisation de toutes les places de parkings (positions, etc..). \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{class_parking_aaa9fdc975f84bb1898d056d0069a3074}{is\+Price\+Ok}} (double price) const
-\begin{DoxyCompactList}\small\item\em vérifie qu\textquotesingle{}un prix donné est acceptable ou non, avec une marge arbitraire. Renvoie un booléen. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{class_message}{Message}} \mbox{\hyperlink{class_parking_abafe2125589f70a76fbb50ff91376f7e}{managing\+Conversation}} (\mbox{\hyperlink{class_message}{Message}} $\ast$a\+Message) const
-\begin{DoxyCompactList}\small\item\em Le parking lit le message reçu (donné en paramètre) \end{DoxyCompactList}\item 
-\mbox{\hyperlink{class_message}{Message}} \mbox{\hyperlink{class_parking_afdea964507b5b430f7f778c8c2d9bfc8}{confirm\+Conversation}} (\mbox{\hyperlink{class_message}{Message}} $\ast$a\+Message)
-\begin{DoxyCompactList}\small\item\em 
-\begin{DoxyItemize}
-\item Confirme la transaction ou non en fonction de la réponse de la voiture, fait les opérations en conséquence. 
-\end{DoxyItemize}\end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Met à jour le pourcentage de réussite des négociations du parking. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_parking_a8fdfefa71659aa5a0b77bd44d867a30d}{reconsider\+Prices}} ()
-\begin{DoxyCompactList}\small\item\em Consideration de la donnée membre success\+Percentage. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Considère la donnée membre success\+Percentage\+Last\+Conv. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_parking_a0d0e83825f11d3f4634984dbb97a7e52}\label{class_parking_a0d0e83825f11d3f4634984dbb97a7e52}} 
 int {\bfseries extract\+Int\+From\+String} (string a\+String) const
+\item 
+\mbox{\Hypertarget{class_parking_a8a1dc00c1a01ec642e28f071290140be}\label{class_parking_a8a1dc00c1a01ec642e28f071290140be}} 
+void {\bfseries add\+Users\+Data} (\mbox{\hyperlink{class_utilisateur}{Utilisateur}} un\+Utilisateur)
+\item 
+\mbox{\Hypertarget{class_parking_ae856b96adafa6c5cd4a934214521d9fd}\label{class_parking_ae856b96adafa6c5cd4a934214521d9fd}} 
+void {\bfseries add\+To\+Data} (double current\+Time)
 \item 
 \mbox{\Hypertarget{class_parking_aa63f53db6e45ebcd91a96fa3566adbd3}\label{class_parking_aa63f53db6e45ebcd91a96fa3566adbd3}} 
 void {\bfseries test\+Regression} ()
 \end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_parking_aa686aabfcf372047a52d0d46c41ae206}\label{class_parking_aa686aabfcf372047a52d0d46c41ae206}} 
+vector$<$ \mbox{\hyperlink{class_place}{Place}} $>$ {\bfseries places\+Tab}
+\item 
+\mbox{\Hypertarget{class_parking_a5c0fc883fac1dba4052dc687b7f29f05}\label{class_parking_a5c0fc883fac1dba4052dc687b7f29f05}} 
+int {\bfseries nb\+Places}
+\item 
+\mbox{\Hypertarget{class_parking_a2d9915e65074d97e086b80d312a280b5}\label{class_parking_a2d9915e65074d97e086b80d312a280b5}} 
+int {\bfseries nb\+Available\+Places}
+\item 
+\mbox{\Hypertarget{class_parking_a5f7d06b6fbdf01d540dfbb192cbf422c}\label{class_parking_a5f7d06b6fbdf01d540dfbb192cbf422c}} 
+int {\bfseries DIMX}
+\item 
+\mbox{\Hypertarget{class_parking_a2e06d09ea72b2ed0da9ec8b4105f8a56}\label{class_parking_a2e06d09ea72b2ed0da9ec8b4105f8a56}} 
+int {\bfseries DIMY}
+\item 
+\mbox{\Hypertarget{class_parking_a1e501b88c6d17c766942f2998d0366ae}\label{class_parking_a1e501b88c6d17c766942f2998d0366ae}} 
+float {\bfseries min\+Price}
+\item 
+\mbox{\Hypertarget{class_parking_a5ff44a3abbb9b4eee0de58a73682b375}\label{class_parking_a5ff44a3abbb9b4eee0de58a73682b375}} 
+float {\bfseries starting\+Price}
+\item 
+\mbox{\Hypertarget{class_parking_adf30fcea50853ee9ad3bed7ac5da2d50}\label{class_parking_adf30fcea50853ee9ad3bed7ac5da2d50}} 
+int {\bfseries idP}
+\item 
+\mbox{\Hypertarget{class_parking_aaa4636239fc43ac93a8a1e1c2e44c4ec}\label{class_parking_aaa4636239fc43ac93a8a1e1c2e44c4ec}} 
+bool {\bfseries is\+Full}
+\item 
+\mbox{\Hypertarget{class_parking_af9b31ee0bc6cd677c4e1a2aadeeeb05b}\label{class_parking_af9b31ee0bc6cd677c4e1a2aadeeeb05b}} 
+\mbox{\hyperlink{class_vec2}{Vec2}} {\bfseries pos}
+\item 
+\mbox{\Hypertarget{class_parking_a86b26c58dd54f90dc9780ca5181e8350}\label{class_parking_a86b26c58dd54f90dc9780ca5181e8350}} 
+double {\bfseries success\+Percentage}
+\item 
+\mbox{\Hypertarget{class_parking_add210971311cc9aec1b3633268af3478}\label{class_parking_add210971311cc9aec1b3633268af3478}} 
+double {\bfseries success\+Percentage\+Last\+Conv}
+\item 
+\mbox{\Hypertarget{class_parking_a2c7ab1b29cc6eb618fd1fc32b8a2e68f}\label{class_parking_a2c7ab1b29cc6eb618fd1fc32b8a2e68f}} 
+double {\bfseries profit}
+\item 
+\mbox{\Hypertarget{class_parking_ac2ec55eff13215840764fd7fd848a059}\label{class_parking_ac2ec55eff13215840764fd7fd848a059}} 
+unsigned int {\bfseries nb\+Finished\+Conv}
+\item 
+\mbox{\Hypertarget{class_parking_a6273b08384c37e833b8f297f9b29e645}\label{class_parking_a6273b08384c37e833b8f297f9b29e645}} 
+unsigned int {\bfseries last\+Nb\+Finished\+Conv}
+\item 
+\mbox{\Hypertarget{class_parking_a33c2f7c42d2303006d6d3e413427b1b9}\label{class_parking_a33c2f7c42d2303006d6d3e413427b1b9}} 
+unsigned int {\bfseries last\+Nb\+Agreements}
+\item 
+\mbox{\Hypertarget{class_parking_aebf14d5efccea4a3c373ad7d066fbe6b}\label{class_parking_aebf14d5efccea4a3c373ad7d066fbe6b}} 
+unsigned int {\bfseries nb\+Agreement}
+\end{DoxyCompactItemize}
 
 
-\doxysubsection{Documentation des constructeurs et destructeur}
+\doxysubsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{class_parking_aa2e364bc236c496f3d3d215db3b40716}\label{class_parking_aa2e364bc236c496f3d3d215db3b40716}} 
 \index{Parking@{Parking}!Parking@{Parking}}
 \index{Parking@{Parking}!Parking@{Parking}}
@@ -124,51 +175,26 @@ void {\bfseries test\+Regression} ()
 
 
 
-Constructeur parametre de la class parking. 
+Constructeur à paramètres. 
 
 
-\begin{DoxyParams}{Paramètres}
-{\em position} & position du parking (position du rectangle en haut a gauche) \\
+\begin{DoxyParams}{Parameters}
+{\em position} & position du parking (position du coin en haut à gauche) \\
 \hline
-{\em minimum\+Price} & Prix minimum d\textquotesingle{}acceptance par minutes que le parking peut accepté -\/$>$ A REVOIR \\
+{\em minimum\+Price} & prix minimum que le parking peut accepter \\
 \hline
-{\em start\+Price} & Prix max que le parking propose -\/$>$ A REVOIR \\
+{\em start\+Price} & prix maximum que le parking propose \\
 \hline
-\end{DoxyParams}
-Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=312pt]{class_parking_aa2e364bc236c496f3d3d215db3b40716_cgraph}
-\end{center}
-\end{figure}
-
-
-\doxysubsection{Documentation des fonctions membres}
-\mbox{\Hypertarget{class_parking_a8a1dc00c1a01ec642e28f071290140be}\label{class_parking_a8a1dc00c1a01ec642e28f071290140be}} 
-\index{Parking@{Parking}!addUsersData@{addUsersData}}
-\index{addUsersData@{addUsersData}!Parking@{Parking}}
-\doxysubsubsection{\texorpdfstring{addUsersData()}{addUsersData()}}
-{\footnotesize\ttfamily void Parking\+::add\+Users\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_utilisateur}{Utilisateur}}}]{un\+Utilisateur }\end{DoxyParamCaption})}
-
-
-
-ajoute un utilisateur au tableau users\+Tab en vérifiant que celui-\/ci n\textquotesingle{}existe pas déjà dans le tableau. 
-
-
-\begin{DoxyParams}{Paramètres}
-{\em un\+Utilisateur} & un utilisateur. \\
+{\em DimX} & dimension horizontale du parking \\
+\hline
+{\em DimY} & dimension verticale du parking \\
+\hline
+{\em id} & ID du parking \\
 \hline
 \end{DoxyParams}
-Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_parking_a8a1dc00c1a01ec642e28f071290140be_cgraph}
-\end{center}
-\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_parking_afdea964507b5b430f7f778c8c2d9bfc8}\label{class_parking_afdea964507b5b430f7f778c8c2d9bfc8}} 
 \index{Parking@{Parking}!confirmConversation@{confirmConversation}}
 \index{confirmConversation@{confirmConversation}!Parking@{Parking}}
@@ -177,25 +203,39 @@ Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
 
 
 
+2e phase de la négociation côté parking. 
+
+Durant cette phase, la voiture informe le parking
+
+de sa venue ou de sa non-\/venue, selon si le parking
+
+en question est celui qu\textquotesingle{}elle a choisi ou non,
+
+après avoir comparé les prix.
+
+Types de messages générables \+:
+
 
 \begin{DoxyItemize}
-\item Confirme la transaction ou non en fonction de la réponse de la voiture, fait les opérations en conséquence. 
+\item OK\+\_\+\+TO\+\_\+\+PARK
+\item ABORT
 \end{DoxyItemize}
+
+Types de messages reçus pris en compte \+:
 
 
 \begin{DoxyItemize}
-\item Cette fonction est appelée pour toute négociation, on y incrémente donc notamment le nombre de négociations
-\end{DoxyItemize}
+\item CONFIRM\+\_\+\+ACCEPT
+\item RENOUNCE 
+\begin{DoxyParams}{Parameters}
+{\em a\+Message} & message reçu \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+un message 
+\end{DoxyReturn}
 
-effectuées par le parking. Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_parking_afdea964507b5b430f7f778c8c2d9bfc8_cgraph}
-\end{center}
-\end{figure}
-\mbox{\Hypertarget{class_parking_a0566fd1cc4edff42eb4d0d8bb2210b74}\label{class_parking_a0566fd1cc4edff42eb4d0d8bb2210b74}} 
+\end{DoxyItemize}\mbox{\Hypertarget{class_parking_a0566fd1cc4edff42eb4d0d8bb2210b74}\label{class_parking_a0566fd1cc4edff42eb4d0d8bb2210b74}} 
 \index{Parking@{Parking}!incrementNbVisitsUser@{incrementNbVisitsUser}}
 \index{incrementNbVisitsUser@{incrementNbVisitsUser}!Parking@{Parking}}
 \doxysubsubsection{\texorpdfstring{incrementNbVisitsUser()}{incrementNbVisitsUser()}}
@@ -203,11 +243,28 @@ effectuées par le parking. Voici le graphe d\textquotesingle{}appel pour cette 
 
 
 
-incrémente le nombre de visites de l\textquotesingle{}utilisateur en paramètre de 1 à chaque appel. 
+Incrémente de 1 le nombre de visites de l\textquotesingle{}utilisateur passé en paramètre. 
 
 
-\begin{DoxyParams}{Paramètres}
-{\em un\+Utilisateur} & pointeur sur un utilisateur. \\
+\begin{DoxyParams}{Parameters}
+{\em id} & ID d\textquotesingle{}un utilisateur. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_parking_a47b84d569d50f1981825870ecea23643}\label{class_parking_a47b84d569d50f1981825870ecea23643}} 
+\index{Parking@{Parking}!initPlace@{initPlace}}
+\index{initPlace@{initPlace}!Parking@{Parking}}
+\doxysubsubsection{\texorpdfstring{initPlace()}{initPlace()}}
+{\footnotesize\ttfamily void Parking\+::init\+Place (\begin{DoxyParamCaption}\item[{int}]{PcornerX,  }\item[{int}]{PcornerY }\end{DoxyParamCaption})}
+
+
+
+Initialise toutes les places du parking (positions, etc.). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em PcornerX} & position horizontale \\
+\hline
+{\em PcornerY} & position verticale \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{class_parking_aaa9fdc975f84bb1898d056d0069a3074}\label{class_parking_aaa9fdc975f84bb1898d056d0069a3074}} 
@@ -218,13 +275,16 @@ incrémente le nombre de visites de l\textquotesingle{}utilisateur en paramètre
 
 
 
-vérifie qu\textquotesingle{}un prix donné est acceptable ou non, avec une marge arbitraire. Renvoie un booléen. 
+Vérifie qu\textquotesingle{}un prix donné est acceptable ou non, avec une marge arbitraire de tolérance. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em price} & prix à vérifier \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vrai si le prix est acceptable, faux sinon 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_parking_abafe2125589f70a76fbb50ff91376f7e}\label{class_parking_abafe2125589f70a76fbb50ff91376f7e}} 
 \index{Parking@{Parking}!managingConversation@{managingConversation}}
 \index{managingConversation@{managingConversation}!Parking@{Parking}}
@@ -233,24 +293,31 @@ vérifie qu\textquotesingle{}un prix donné est acceptable ou non, avec une marg
 
 
 
-Le parking lit le message reçu (donné en paramètre) 
+1e phase de la négociation côté parking. 
+
+Durant cette phase, le parking et la voiture
+
+négocient pour tenter de se mettre d\textquotesingle{}accord sur un prix.
+
+Le parking lit le message reçu (passé en paramètre)
 
 et en crée un nouveau (comme il s\textquotesingle{}agit forcément d\textquotesingle{}une réponse, les données du nouveau
 
 message sont initialisées en fonction des données contenues dans le message reçu).
 
-Types de message générable \+:
+Types de messages générables \+:
 
 
 \begin{DoxyItemize}
 \item OFFER
 \item COUNTER\+\_\+\+OFFER
+\item NO\+\_\+\+MORE\+\_\+\+SPOTS
 \item LAST\+\_\+\+OFFER
 \item ACCEPT
 \item REJECT
 \end{DoxyItemize}
 
-Types de message reçu pris en compte \+:
+Types de messages reçus pris en compte \+:
 
 
 \begin{DoxyItemize}
@@ -259,15 +326,15 @@ Types de message reçu pris en compte \+:
 \item LAST\+\_\+\+OFFER
 \item ACCEPT
 \item REJECT 
-\end{DoxyItemize}Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_parking_abafe2125589f70a76fbb50ff91376f7e_cgraph}
-\end{center}
-\end{figure}
-\mbox{\Hypertarget{class_parking_a8fdfefa71659aa5a0b77bd44d867a30d}\label{class_parking_a8fdfefa71659aa5a0b77bd44d867a30d}} 
+\begin{DoxyParams}{Parameters}
+{\em a\+Message} & message reçu \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+un message 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\mbox{\Hypertarget{class_parking_a8fdfefa71659aa5a0b77bd44d867a30d}\label{class_parking_a8fdfefa71659aa5a0b77bd44d867a30d}} 
 \index{Parking@{Parking}!reconsiderPrices@{reconsiderPrices}}
 \index{reconsiderPrices@{reconsiderPrices}!Parking@{Parking}}
 \doxysubsubsection{\texorpdfstring{reconsiderPrices()}{reconsiderPrices()}}
@@ -275,9 +342,9 @@ Types de message reçu pris en compte \+:
 
 
 
-Consideration de la donnée membre success\+Percentage. 
+Considère la donnée membre success\+Percentage\+Last\+Conv. 
 
-puis modification éventuelle de min\+Price et starting\+Price en conséquence. \mbox{\Hypertarget{class_parking_a2f08d621b56368bd5c933645660a85af}\label{class_parking_a2f08d621b56368bd5c933645660a85af}} 
+et modifie éventuellement min\+Price et starting\+Price en conséquence. \mbox{\Hypertarget{class_parking_a2f08d621b56368bd5c933645660a85af}\label{class_parking_a2f08d621b56368bd5c933645660a85af}} 
 \index{Parking@{Parking}!updateProfit@{updateProfit}}
 \index{updateProfit@{updateProfit}!Parking@{Parking}}
 \doxysubsubsection{\texorpdfstring{updateProfit()}{updateProfit()}}
@@ -285,11 +352,20 @@ puis modification éventuelle de min\+Price et starting\+Price en conséquence. 
 
 
 
-Ajoute au profit (du parking) la valeur. 
+Ajoute au profit du parking la valeur. 
 
-(prix de la place louée à une voiture) passée en paramètre. 
+(prix de la place louée à une voiture) passée en paramètre multipliée
 
-La documentation de cette classe a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
+par la durée de stationnement (convertie en heures simulation) passée en paramètre. 
+\begin{DoxyParams}{Parameters}
+{\em a\+Price} & un prix \\
+\hline
+{\em park\+Time} & une durée de stationnement \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-src/Parking.\+h\item 
-src/Parking.\+cpp\end{DoxyCompactItemize}
+/home/mateo/\+COURS/\+L3/\+LIFPROJET/\+LIFP7-\/park/src/Parking.\+h\item 
+/home/mateo/\+COURS/\+L3/\+LIFPROJET/\+LIFP7-\/park/src/Parking.\+cpp\end{DoxyCompactItemize}

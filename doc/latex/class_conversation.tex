@@ -1,16 +1,6 @@
-\hypertarget{class_conversation}{}\doxysection{Référence de la classe Conversation}
+\hypertarget{class_conversation}{}\doxysection{Conversation Class Reference}
 \label{class_conversation}\index{Conversation@{Conversation}}
-
-
-Graphe de collaboration de Conversation\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=260pt]{class_conversation__coll__graph}
-\end{center}
-\end{figure}
-\doxysubsection*{Fonctions membres publiques}
+\doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{class_conversation_aef6cde38cb587ab72c687512302ad3a0}\label{class_conversation_aef6cde38cb587ab72c687512302ad3a0}} 
@@ -44,9 +34,27 @@ bool \mbox{\hyperlink{class_conversation_aae0c4e86c0da3d85e98be1a982605b34}{stoc
 \mbox{\Hypertarget{class_conversation_a2de2535975a3405826d2888b16569f60}\label{class_conversation_a2de2535975a3405826d2888b16569f60}} 
 void \mbox{\hyperlink{class_conversation_a2de2535975a3405826d2888b16569f60}{test\+Regression}} ()
 \begin{DoxyCompactList}\small\item\em Test de régression de la classe \mbox{\hyperlink{class_conversation}{Conversation}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_conversation_ac7122b9a15677280757013367ba25421}\label{class_conversation_ac7122b9a15677280757013367ba25421}} 
+thread {\bfseries voiture}
+\item 
+\mbox{\Hypertarget{class_conversation_a9f4c15f21fe545354c7161d8fbb09eed}\label{class_conversation_a9f4c15f21fe545354c7161d8fbb09eed}} 
+thread {\bfseries parking}
+\item 
+\mbox{\Hypertarget{class_conversation_ac2d8acc5007683751edccf62f38e8a38}\label{class_conversation_ac2d8acc5007683751edccf62f38e8a38}} 
+vector$<$ \mbox{\hyperlink{class_message}{Message}} $>$ {\bfseries conv}
+\item 
+\mbox{\Hypertarget{class_conversation_ae374acec0ac51a1fefc4cd4c0f64e40a}\label{class_conversation_ae374acec0ac51a1fefc4cd4c0f64e40a}} 
+bool {\bfseries conv\+OK}
+\item 
+\mbox{\Hypertarget{class_conversation_acd05bc4d19aaed12fd8a329bfa1de280}\label{class_conversation_acd05bc4d19aaed12fd8a329bfa1de280}} 
+mutex {\bfseries conv\+\_\+mutex}
+\end{DoxyCompactItemize}
 
 
-\doxysubsection{Documentation des fonctions membres}
+\doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_conversation_affad0b12a5c84e72ee3cf3033df6d1e5}\label{class_conversation_affad0b12a5c84e72ee3cf3033df6d1e5}} 
 \index{Conversation@{Conversation}!getConv@{getConv}}
 \index{getConv@{getConv}!Conversation@{Conversation}}
@@ -57,7 +65,7 @@ void \mbox{\hyperlink{class_conversation_a2de2535975a3405826d2888b16569f60}{test
 
 Renvoie le vecteur de \mbox{\hyperlink{class_message}{Message}} conv. 
 
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 un vecteur de \mbox{\hyperlink{class_message}{Message}}. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_conversation_a2a256e3bedce1c7e4f15b5749c25b710}\label{class_conversation_a2a256e3bedce1c7e4f15b5749c25b710}} 
@@ -71,23 +79,15 @@ un vecteur de \mbox{\hyperlink{class_message}{Message}}.
 Démarre une conversation entre deux entités en paramètres. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em p} & un parking, \\
 \hline
 {\em v} & une voiture. \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 un booléen \+: true si la conversation s\textquotesingle{}est déroulée sans erreur, false sinon. 
 \end{DoxyReturn}
-Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_conversation_a2a256e3bedce1c7e4f15b5749c25b710_cgraph}
-\end{center}
-\end{figure}
 \mbox{\Hypertarget{class_conversation_a9f236786edf3cd767c0ee7b65b04a7b8}\label{class_conversation_a9f236786edf3cd767c0ee7b65b04a7b8}} 
 \index{Conversation@{Conversation}!sendMessageParking@{sendMessageParking}}
 \index{sendMessageParking@{sendMessageParking}!Conversation@{Conversation}}
@@ -99,18 +99,10 @@ Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
 Fait appel à manage\+Conversation dans \mbox{\hyperlink{class_parking}{Parking}} pour écrire un message approprié à l\textquotesingle{}état de la conversation. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em p} & un parking. \\
 \hline
 \end{DoxyParams}
-Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_conversation_a9f236786edf3cd767c0ee7b65b04a7b8_cgraph}
-\end{center}
-\end{figure}
 \mbox{\Hypertarget{class_conversation_a0fcf8bafd26d83f8d11bc7892c1ab013}\label{class_conversation_a0fcf8bafd26d83f8d11bc7892c1ab013}} 
 \index{Conversation@{Conversation}!sendMessageVoiture@{sendMessageVoiture}}
 \index{sendMessageVoiture@{sendMessageVoiture}!Conversation@{Conversation}}
@@ -122,18 +114,10 @@ Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
 Fait appel à manage\+Conversation dans \mbox{\hyperlink{class_voiture}{Voiture}} pour écrire un message approprié à l\textquotesingle{}état de la conversation. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em v} & une voiture. \\
 \hline
 \end{DoxyParams}
-Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_conversation_a0fcf8bafd26d83f8d11bc7892c1ab013_cgraph}
-\end{center}
-\end{figure}
 \mbox{\Hypertarget{class_conversation_a8242eb7f32910df3e9d0e7e721838edb}\label{class_conversation_a8242eb7f32910df3e9d0e7e721838edb}} 
 \index{Conversation@{Conversation}!updateStateCarParkAfterConv@{updateStateCarParkAfterConv}}
 \index{updateStateCarParkAfterConv@{updateStateCarParkAfterConv}!Conversation@{Conversation}}
@@ -145,21 +129,13 @@ Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
 Met à jour les données membres last\+Nb\+Agreements,. 
 
 nb\+Agreement et profit d\textquotesingle{}un parking. 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em p} & le parking qu\textquotesingle{}on met à jour \\
 \hline
 \end{DoxyParams}
-Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_conversation_a8242eb7f32910df3e9d0e7e721838edb_cgraph}
-\end{center}
-\end{figure}
 
 
-La documentation de cette classe a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-src/Conversation.\+h\item 
-src/Conversation.\+cpp\end{DoxyCompactItemize}
+/home/mateo/\+COURS/\+L3/\+LIFPROJET/\+LIFP7-\/park/src/Conversation.\+h\item 
+/home/mateo/\+COURS/\+L3/\+LIFPROJET/\+LIFP7-\/park/src/Conversation.\+cpp\end{DoxyCompactItemize}

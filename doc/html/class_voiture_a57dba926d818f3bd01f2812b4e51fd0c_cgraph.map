@@ -1,8 +1,0 @@
-<map id="Voiture::confirmConversation" name="Voiture::confirmConversation">
-<area shape="rect" id="node1" title="La voiture lit le message reçu (donné en paramètre) renvoie un message de type ACCEPT ou REJECT avec ..." alt="" coords="5,107,216,133"/>
-<area shape="rect" id="node2" href="$class_voiture.html#ab14e45b67a90ce0956c435ed12c65c19" title="Extrait un ou plusieurs entier d&#39;un String." alt="" coords="268,5,479,32"/>
-<area shape="rect" id="node3" href="$class_utilisateur.html#ac2f497f75d6a1d549582634327990b4a" title="renvoie l&#39;id de l&#39;utilisateur, qui sera unique." alt="" coords="308,56,439,83"/>
-<area shape="rect" id="node4" href="$class_message.html#a89b2412b588785c6a8c68fae94e01a21" title="procédure de récupération du numéro du message" alt="" coords="264,107,483,133"/>
-<area shape="rect" id="node5" href="$class_message.html#a4cace77594aed492d616a61444b8e061" title="procédure de récupération du tarif indiqué dans le message" alt="" coords="303,157,444,184"/>
-<area shape="rect" id="node6" href="$class_message.html#af57f62e5c0cef22c45d69f1e9b5e7397" title="procédure de récupération de l&#39;expéditeur du message" alt="" coords="296,208,451,235"/>
-</map>

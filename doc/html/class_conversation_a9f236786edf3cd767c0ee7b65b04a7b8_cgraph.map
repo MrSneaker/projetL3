@@ -1,9 +1,0 @@
-<map id="Conversation::sendMessageParking" name="Conversation::sendMessageParking">
-<area shape="rect" id="node1" title="Fait appel à manageConversation dans Parking pour écrire un message approprié à l&#39;état de la conversa..." alt="" coords="5,49,211,90"/>
-<area shape="rect" id="node2" href="$class_message.html#aa51eced8dbbf907cb6fe8e854899adc6" title="procédure de récupération de l&#39;objet du message" alt="" coords="567,5,724,32"/>
-<area shape="rect" id="node3" href="$class_parking.html#abafe2125589f70a76fbb50ff91376f7e" title="Le parking lit le message reçu (donné en paramètre)" alt="" coords="259,81,488,108"/>
-<area shape="rect" id="node4" href="$class_message.html#a89b2412b588785c6a8c68fae94e01a21" title="procédure de récupération du numéro du message" alt="" coords="536,56,755,83"/>
-<area shape="rect" id="node5" href="$class_message.html#a4cace77594aed492d616a61444b8e061" title="procédure de récupération du tarif indiqué dans le message" alt="" coords="575,107,716,133"/>
-<area shape="rect" id="node6" href="$class_message.html#af57f62e5c0cef22c45d69f1e9b5e7397" title="procédure de récupération de l&#39;expéditeur du message" alt="" coords="568,157,723,184"/>
-<area shape="rect" id="node7" href="$class_parking.html#aaa9fdc975f84bb1898d056d0069a3074" title="vérifie qu&#39;un prix donné est acceptable ou non, avec une marge arbitraire. Renvoie un booléen." alt="" coords="576,208,715,235"/>
-</map>

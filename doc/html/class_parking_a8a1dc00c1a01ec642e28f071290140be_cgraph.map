@@ -1,5 +1,0 @@
-<map id="Parking::addUsersData" name="Parking::addUsersData">
-<area shape="rect" id="node1" title="ajoute un utilisateur au tableau usersTab en vérifiant que celui&#45;ci n&#39;existe pas déjà dans le tableau..." alt="" coords="5,31,176,57"/>
-<area shape="rect" id="node2" href="$class_utilisateur.html#ac2f497f75d6a1d549582634327990b4a" title="renvoie l&#39;id de l&#39;utilisateur, qui sera unique." alt="" coords="249,5,379,32"/>
-<area shape="rect" id="node3" href="$class_utilisateur.html#a9cfaf74bc454e364cba070aaf01364e7" title="renvoie le temps de stationnement de l&#39;utilisateur." alt="" coords="224,56,404,83"/>
-</map>

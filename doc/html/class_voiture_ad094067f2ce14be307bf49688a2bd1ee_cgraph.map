@@ -1,9 +1,0 @@
-<map id="Voiture::MoveToTargetPosition" name="Voiture::MoveToTargetPosition">
-<area shape="rect" id="node1" title="Déplace la voiture vers la position de la cible (parking / place / sortie)" alt="" coords="5,107,224,133"/>
-<area shape="rect" id="node2" href="$class_node.html#a5cc7a15b015fdab5b5c6550dfecd940c" title="Fonction permettant de récupérer la valeur de Nodepos." alt="" coords="275,5,418,32"/>
-<area shape="rect" id="node3" href="$class_voiture.html#a06985f4d1179ef2d1763709453b52130" title="Déplace la voiture vers le bas." alt="" coords="272,56,421,83"/>
-<area shape="rect" id="node5" href="$class_voiture.html#a490135089983ded4a02f70ec41f6d6c0" title="Déplace la voiture vers la gauche." alt="" coords="279,107,415,133"/>
-<area shape="rect" id="node6" href="$class_voiture.html#a606eda18cc4c12acb6e6267fbc8ebe17" title="Déplace la voiture vers la droite." alt="" coords="273,157,420,184"/>
-<area shape="rect" id="node7" href="$class_voiture.html#a1daf720ffada5797bdc039efd2a332bb" title="Déplace la voiture vers le haut." alt="" coords="281,208,412,235"/>
-<area shape="rect" id="node4" href="$class_voiture.html#a7e7e55f1b5cce5275e686bf40968c837" title="Modifie l&#39;angle de la voiture." alt="" coords="469,132,603,159"/>
-</map>

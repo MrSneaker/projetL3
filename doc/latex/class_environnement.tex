@@ -1,16 +1,6 @@
-\hypertarget{class_environnement}{}\doxysection{Référence de la classe Environnement}
+\hypertarget{class_environnement}{}\doxysection{Environnement Class Reference}
 \label{class_environnement}\index{Environnement@{Environnement}}
-
-
-Graphe de collaboration de Environnement\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=217pt]{class_environnement__coll__graph}
-\end{center}
-\end{figure}
-\doxysubsection*{Fonctions membres publiques}
+\doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{class_environnement_a6202dabb73c1aea5af60993be9446b87}{Environnement}} (double price1, double price2, double price3, double user\+Price, double user\+Price\+Inf, double tps\+App\+Voiture)
@@ -101,7 +91,7 @@ string \mbox{\hyperlink{class_environnement_aa4280f014be9d5d4951340a9a5ade424}{g
 \mbox{\Hypertarget{class_environnement_a1fa19aa3ff936701ea3bafa240f5331f}\label{class_environnement_a1fa19aa3ff936701ea3bafa240f5331f}} 
 void \mbox{\hyperlink{class_environnement_a1fa19aa3ff936701ea3bafa240f5331f}{test\+\_\+regresion}} ()
 \begin{DoxyCompactList}\small\item\em Test de regression de la classe \mbox{\hyperlink{class_environnement}{Environnement}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Champs de données}
+\doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{class_environnement_ae761b3f73ac32c63fa3e8eae0272f4c5}\label{class_environnement_ae761b3f73ac32c63fa3e8eae0272f4c5}} 
@@ -146,9 +136,72 @@ int {\bfseries Jours}
 \mbox{\Hypertarget{class_environnement_a73c49ff62f33dea532ab2198a19feb87}\label{class_environnement_a73c49ff62f33dea532ab2198a19feb87}} 
 int {\bfseries Mois}
 \end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_environnement_ab70a886c6436b2a9991c77ac5175d8a2}\label{class_environnement_ab70a886c6436b2a9991c77ac5175d8a2}} 
+float {\bfseries frames}
+\item 
+\mbox{\Hypertarget{class_environnement_aa2aecf3e25d0724f52284801be89c66e}\label{class_environnement_aa2aecf3e25d0724f52284801be89c66e}} 
+float {\bfseries frame\+Park\+Time}
+\item 
+\mbox{\Hypertarget{class_environnement_ac1f97b47806cbc22cd982b711740cc4a}\label{class_environnement_ac1f97b47806cbc22cd982b711740cc4a}} 
+float {\bfseries prevtime}
+\item 
+\mbox{\Hypertarget{class_environnement_ac353c14a34694fc13c5c9d3ffd5acfc1}\label{class_environnement_ac353c14a34694fc13c5c9d3ffd5acfc1}} 
+float {\bfseries current\+Time}
+\item 
+\mbox{\Hypertarget{class_environnement_ac31ccb9885af9f7170a5e00ba005e903}\label{class_environnement_ac31ccb9885af9f7170a5e00ba005e903}} 
+float {\bfseries real\+Time}
+\item 
+\mbox{\Hypertarget{class_environnement_a3520bcd56668996972830335b118e82b}\label{class_environnement_a3520bcd56668996972830335b118e82b}} 
+float {\bfseries delta\+Time}
+\item 
+\mbox{\Hypertarget{class_environnement_a4b98058f4aa36d7b5fb07a5926bbd9e1}\label{class_environnement_a4b98058f4aa36d7b5fb07a5926bbd9e1}} 
+float {\bfseries frametime}
+\item 
+\mbox{\Hypertarget{class_environnement_aa0a8309772a4a22e8852bca022aaa226}\label{class_environnement_aa0a8309772a4a22e8852bca022aaa226}} 
+float {\bfseries tps\+App\+Voiture}
+\item 
+\mbox{\Hypertarget{class_environnement_afe03a054eb33325cf7b6baf7d6f69026}\label{class_environnement_afe03a054eb33325cf7b6baf7d6f69026}} 
+double {\bfseries user\+Price}
+\item 
+\mbox{\Hypertarget{class_environnement_a8ea8f106283971071a69cc0852d52c06}\label{class_environnement_a8ea8f106283971071a69cc0852d52c06}} 
+double {\bfseries user\+Price\+Inf}
+\item 
+\mbox{\Hypertarget{class_environnement_a6309dca44465dc376be98ad1832a32f2}\label{class_environnement_a6309dca44465dc376be98ad1832a32f2}} 
+vector$<$ \mbox{\hyperlink{class_conversation}{Conversation}} $\ast$ $>$ {\bfseries conv}
+\item 
+\mbox{\Hypertarget{class_environnement_a357135744ea941a11c34f40e182e738b}\label{class_environnement_a357135744ea941a11c34f40e182e738b}} 
+unsigned int {\bfseries nb\+Conv}
+\item 
+\mbox{\Hypertarget{class_environnement_ab5147dbcdc0e67ce0f46b3aae665a4da}\label{class_environnement_ab5147dbcdc0e67ce0f46b3aae665a4da}} 
+vector$<$ \mbox{\hyperlink{class_utilisateur}{Utilisateur}} $>$ {\bfseries Simu\+Conducteurs}
+\item 
+\mbox{\Hypertarget{class_environnement_aef56ef97e930f3af26cc37ce9e00db61}\label{class_environnement_aef56ef97e930f3af26cc37ce9e00db61}} 
+vector$<$ \mbox{\hyperlink{class_utilisateur}{Utilisateur}} $>$ {\bfseries tmpsaved\+Conducteurs}
+\item 
+\mbox{\Hypertarget{class_environnement_a38be47e712b5357c16ce712f124c4fda}\label{class_environnement_a38be47e712b5357c16ce712f124c4fda}} 
+vector$<$ \mbox{\hyperlink{class_utilisateur}{Utilisateur}} $>$ {\bfseries saved\+Conducteurs}
+\item 
+\mbox{\Hypertarget{class_environnement_a3c6caa03c40d4d21971a34ac9e5337e4}\label{class_environnement_a3c6caa03c40d4d21971a34ac9e5337e4}} 
+unsigned int {\bfseries nb\+User\+Created}
+\item 
+\mbox{\Hypertarget{class_environnement_a6483a1495de27566c12d57cd39d3f161}\label{class_environnement_a6483a1495de27566c12d57cd39d3f161}} 
+unsigned int {\bfseries nb\+User\+Saved}
+\item 
+\mbox{\Hypertarget{class_environnement_a64c6f1f601a507dca136804454901a66}\label{class_environnement_a64c6f1f601a507dca136804454901a66}} 
+vector$<$ string $>$ {\bfseries m\+\_\+\+Name\+List}
+\item 
+\mbox{\Hypertarget{class_environnement_ae39ef3cc6a44912e3f222b204bc43490}\label{class_environnement_ae39ef3cc6a44912e3f222b204bc43490}} 
+vector$<$ string $>$ {\bfseries f\+\_\+\+Name\+List}
+\item 
+\mbox{\Hypertarget{class_environnement_a990b4d6ff6ff38969cc44d35104127a9}\label{class_environnement_a990b4d6ff6ff38969cc44d35104127a9}} 
+vector$<$ string $>$ {\bfseries Surname\+List}
+\end{DoxyCompactItemize}
 
 
-\doxysubsection{Documentation des constructeurs et destructeur}
+\doxysubsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{class_environnement_a6202dabb73c1aea5af60993be9446b87}\label{class_environnement_a6202dabb73c1aea5af60993be9446b87}} 
 \index{Environnement@{Environnement}!Environnement@{Environnement}}
 \index{Environnement@{Environnement}!Environnement@{Environnement}}
@@ -160,7 +213,7 @@ int {\bfseries Mois}
 Constructeur d\textquotesingle{}environnement par paramètre. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em price1} & prix du parking 1. \\
 \hline
 {\em price2} & prix du parking 2. \\
@@ -174,7 +227,7 @@ Constructeur d\textquotesingle{}environnement par paramètre.
 \end{DoxyParams}
 
 
-\doxysubsection{Documentation des fonctions membres}
+\doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_environnement_a0b8dbebe3222da2a469a62c2cb1e059a}\label{class_environnement_a0b8dbebe3222da2a469a62c2cb1e059a}} 
 \index{Environnement@{Environnement}!changeTarget@{changeTarget}}
 \index{changeTarget@{changeTarget}!Environnement@{Environnement}}
@@ -186,20 +239,12 @@ Constructeur d\textquotesingle{}environnement par paramètre.
 Permet a une voiture de changer de trajectoire a tout moment. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em v} & \mbox{\hyperlink{class_voiture}{Voiture}} qui change de trajectoire \\
 \hline
 {\em ind\+Pr} & Indice du parkings \\
 \hline
 \end{DoxyParams}
-Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_environnement_a0b8dbebe3222da2a469a62c2cb1e059a_cgraph}
-\end{center}
-\end{figure}
 \mbox{\Hypertarget{class_environnement_ab8e8ea9af63a2b5a0deaa52281658e47}\label{class_environnement_ab8e8ea9af63a2b5a0deaa52281658e47}} 
 \index{Environnement@{Environnement}!checkId@{checkId}}
 \index{checkId@{checkId}!Environnement@{Environnement}}
@@ -211,13 +256,13 @@ Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
 Fonction qui verifie qu\textquotesingle{}il ny\textquotesingle{}a pas de doublons d\textquotesingle{}id dans le fichier user.\+txt. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em id} & id a verifier \\
 \hline
 {\em filename} & nom du fichier \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 booléen qui permet de savoir si il y a des doublons ou non 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_environnement_a2ba97c0070d088e35e9be7290fd01c71}\label{class_environnement_a2ba97c0070d088e35e9be7290fd01c71}} 
@@ -231,23 +276,15 @@ booléen qui permet de savoir si il y a des doublons ou non
 Choisit le meilleur parking pour une voiture. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em conv} & Vecteur de conversation qui contient toutes les conversations \\
 \hline
 {\em v} & \mbox{\hyperlink{class_voiture}{Voiture}} qui a communiqué \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 entier correspondant à l\textquotesingle{}id du parking choisit (si -\/1 alors pas de parking) 
 \end{DoxyReturn}
-Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_environnement_a2ba97c0070d088e35e9be7290fd01c71_cgraph}
-\end{center}
-\end{figure}
 \mbox{\Hypertarget{class_environnement_a619556cab6e46af0c5c860d547628a79}\label{class_environnement_a619556cab6e46af0c5c860d547628a79}} 
 \index{Environnement@{Environnement}!conversation@{conversation}}
 \index{conversation@{conversation}!Environnement@{Environnement}}
@@ -259,18 +296,10 @@ Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
 pour réaliser la conversation. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em v} & \mbox{\hyperlink{class_voiture}{Voiture}} qui a communiqué \\
 \hline
 \end{DoxyParams}
-Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_environnement_a619556cab6e46af0c5c860d547628a79_cgraph}
-\end{center}
-\end{figure}
 \mbox{\Hypertarget{class_environnement_acbb1169ef3043a859884476095b1d306}\label{class_environnement_acbb1169ef3043a859884476095b1d306}} 
 \index{Environnement@{Environnement}!CreateRandomId@{CreateRandomId}}
 \index{CreateRandomId@{CreateRandomId}!Environnement@{Environnement}}
@@ -281,7 +310,7 @@ Voici le graphe d\textquotesingle{}appel pour cette fonction \+:
 
 Fonction permettant de créer un id aléatoire pour un utilisateur sans qu\textquotesingle{}il y ait de doublons. 
 
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 Un entier correspondant à l\textquotesingle{}id de l\textquotesingle{}utilisateur 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_environnement_a2b905ef8196d46fb80d7cbd764584340}\label{class_environnement_a2b905ef8196d46fb80d7cbd764584340}} 
@@ -295,7 +324,7 @@ Un entier correspondant à l\textquotesingle{}id de l\textquotesingle{}utilisate
 pour suppr une conv après utilisation 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em ind} & indice de la conv à supprimer \\
 \hline
 \end{DoxyParams}
@@ -310,11 +339,11 @@ pour suppr une conv après utilisation
 Récupère les données pour les graphiques dans un fichier. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em file\+Name} & vecteur de pair de double contenant les données x et y du graphique \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 vecteur de pair de double contenant les données x et y du graphique 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_environnement_a4bc06e855b576eced9dbfe31a120ae34}\label{class_environnement_a4bc06e855b576eced9dbfe31a120ae34}} 
@@ -327,7 +356,7 @@ vecteur de pair de double contenant les données x et y du graphique
 
 Fonction permettant de retourner l\textquotesingle{}indice du noeud d\textquotesingle{}une des 3 entrées. 
 
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 Un entier correspondant à l\textquotesingle{}indice du noeud 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_environnement_a5989ac69ed106f675b152edc4c442be2}\label{class_environnement_a5989ac69ed106f675b152edc4c442be2}} 
@@ -340,7 +369,7 @@ Un entier correspondant à l\textquotesingle{}indice du noeud
 
 Fonction permettant de retourner l\textquotesingle{}indice du noeud d\textquotesingle{}une des 3 sorties. 
 
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 Un entier correspondant à l\textquotesingle{}indice du noeud 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_environnement_a1c358cb887aafef6a66732dcd6930549}\label{class_environnement_a1c358cb887aafef6a66732dcd6930549}} 
@@ -364,11 +393,11 @@ récupère les valeurs contenue dans le fichier map.\+txt qui contient un platea
 Fonction qui retourne un nom aléatoire. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em gender} & \char`\"{}m\char`\"{} = male $\vert$ \char`\"{}f\char`\"{} = female $\vert$ \mbox{[}vide\mbox{]} = aleatoire \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 string correspondant au nom 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_environnement_a0b343611b0263a1b3a6f49d7ced7ea36}\label{class_environnement_a0b343611b0263a1b3a6f49d7ced7ea36}} 
@@ -382,11 +411,11 @@ string correspondant au nom
 Fonction permettant de retourner l\textquotesingle{}indice d\textquotesingle{}une case a partir de sa position. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em pos} & position de la case \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 Entier correspondant a l\textquotesingle{}indice de la case 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_environnement_a640ba3f5d0f91c87d652d9d64da52e62}\label{class_environnement_a640ba3f5d0f91c87d652d9d64da52e62}} 
@@ -400,11 +429,11 @@ Entier correspondant a l\textquotesingle{}indice de la case
 Fonction qui permet de revoyer l\textquotesingle{}indice d\textquotesingle{}une place d\textquotesingle{}un des 3 parkings sauf si celui-\/ci est plein et que la place est prise. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em parking} & parking dans lequel on cherche une place \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 entier correspondant à l\textquotesingle{}indice de la place 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_environnement_aa92f54d5923bc8ec613e26fcb8fb6fdc}\label{class_environnement_aa92f54d5923bc8ec613e26fcb8fb6fdc}} 
@@ -418,11 +447,11 @@ entier correspondant à l\textquotesingle{}indice de la place
 Fonction permettant de retourner la position d\textquotesingle{}une case a partir de son indice. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em indice} & indice de la case \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 la position de la case 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_environnement_aa4280f014be9d5d4951340a9a5ade424}\label{class_environnement_aa4280f014be9d5d4951340a9a5ade424}} 
@@ -435,7 +464,7 @@ la position de la case
 
 Fonction qui retourne un prénom aléatoire. 
 
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 string correspondant au prénom 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_environnement_a3d5a30e0b7d6815b49c8d4e47fe218d7}\label{class_environnement_a3d5a30e0b7d6815b49c8d4e47fe218d7}} 
@@ -449,7 +478,7 @@ string correspondant au prénom
 Initialisation des parkings. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em price1} & prix du parking 1. \\
 \hline
 {\em price2} & prix du parking 2. \\
@@ -468,7 +497,7 @@ Initialisation des parkings.
 Initialisation d\textquotesingle{}un utilisateur, puis ajout dans le tableau de conducteurs. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em quitif} & booleéan qui permet de faire réapparaitre un conducteur si il est déjà apparrut dans la simu \\
 \hline
 {\em user\+Price} & borne maximum des prix utilisateurs. \\
@@ -485,7 +514,7 @@ Initialisation d\textquotesingle{}un utilisateur, puis ajout dans le tableau de 
 Fonction qui fait un graphique. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em choice} & choix du graphique (0 \+: profit, 1 \+: evolution du starting price, 2 \+: nombre de place occupé, 3 \+: Succès moyen des parkings) \\
 \hline
 \end{DoxyParams}
@@ -500,7 +529,7 @@ Fonction qui fait un graphique.
 Fonction revoyant un nombre aléatoire en deux valeurs. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em min} & valeur minimale \\
 \hline
 {\em max} & valeur maximale \\
@@ -517,7 +546,7 @@ Fonction revoyant un nombre aléatoire en deux valeurs.
 Enleve une voiture du tableau de voitures et le conducteur de la voiture du tableau de conducteurs. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em num\+Voiture} & numéro de la voiture à enlever. \\
 \hline
 \end{DoxyParams}
@@ -532,11 +561,11 @@ Enleve une voiture du tableau de voitures et le conducteur de la voiture du tabl
 Trouve le maximum d\textquotesingle{}un vecteur de double. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em tab} & vecteur de double \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 double correspondant au maximum du vecteur 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_environnement_a7e4924950dea85e5d149f7d957f01ea2}\label{class_environnement_a7e4924950dea85e5d149f7d957f01ea2}} 
@@ -550,16 +579,16 @@ double correspondant au maximum du vecteur
 Trouve le maximum d\textquotesingle{}un vecteur de pair de double. 
 
 
-\begin{DoxyParams}{Paramètres}
+\begin{DoxyParams}{Parameters}
 {\em tab} & vecteur de pair de double \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Renvoie}
+\begin{DoxyReturn}{Returns}
 double correspondant au maximum du vecteur 
 \end{DoxyReturn}
 
 
-La documentation de cette classe a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-src/Environnement.\+h\item 
-src/Environnement.\+cpp\end{DoxyCompactItemize}
+/home/mateo/\+COURS/\+L3/\+LIFPROJET/\+LIFP7-\/park/src/Environnement.\+h\item 
+/home/mateo/\+COURS/\+L3/\+LIFPROJET/\+LIFP7-\/park/src/Environnement.\+cpp\end{DoxyCompactItemize}
