@@ -10,7 +10,7 @@ Les installations nécessaires pour lancer l'application (sous Linux uniquement)
 
 >sudo apt-get install libgnuplot-iostream-dev
 
-Sur les ordinateurs du batîment Nautibus, ces packages sont tous installés. Le projet est donc directement compilable et exécutable sur ces ordinateurs.
+Sur les ordinateurs du batîment Nautibus, ces packages sont tous installés. Le projet y est donc directement compilable et exécutable.
 
 # Objectif
 
