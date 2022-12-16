@@ -906,7 +906,7 @@ void Environnement::Environnement_play()
 
 void Environnement::getMap()
 {
-    ifstream MaMap("map.txt", ios::in);
+    ifstream MaMap("data/map.txt", ios::in);
     int i = 0;
     if (MaMap)
     {
