@@ -1,6 +1,7 @@
 # **Gestion intelligente de parkings dans un centre urbain**
 
-Projet LIFPROJET - Gestion intelligente de parkings dans un centre urbain (SA4). 
+Projet LIFPROJET - Gestion intelligente de parkings dans un centre urbain (SA4).
+
 Réalisé par FERRER Raphael (p1908300), BOULET Benjamin (p2006010), MUNOZ Matéo (p2002495).
 
 # Installation
@@ -54,7 +55,7 @@ Vous avez la possibilité d'afficher 4 graphiques différents, en déroulant le 
 Pour afficher le graphique voulu, vous n'avez qu'à cliquer sur le nom de celui-ci dans le menu déroulant.
 Sur l'interface du graphique, vous avez la possibilité de l'exporter dans différent format (en utilisant le bouton le plus à gauche de la barre d'outils).
 
-***ATTENTION***, il est normal de recevoir l'erreur suivante à l'ouverture d'un graphique : 
+***ATTENTION***, il est normal de recevoir l'avertissement suivant à l'ouverture d'un graphique : 
 >qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in ""
 
 La librairie utilisée pour générer les graphiques (gnuplot-iostream) cherche à utiliser un plugin qui n'est pas présent dans cette application (et pas nécessaire).
@@ -86,3 +87,5 @@ Pour accéder à la documentation du code, vous devez tapper dans la console (da
 
 Par exemple, avec firefox la commande est la suivante:
 >firefox doc/html/index.html
+
+Vous avez accès à un diagramme de classe du projet dans le répertoire "doc".
