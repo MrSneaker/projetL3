@@ -1,6 +1,7 @@
 # **Gestion intelligente de parkings dans un centre urbain**
 
-Projet LIFPROJET - Gestion intelligente de parkings dans un centre urbain (SA4)
+Projet LIFPROJET - Gestion intelligente de parkings dans un centre urbain (SA4). 
+Réalisé par FERRER Raphael (p1908300), BOULET Benjamin (p2006010), MUNOZ Matéo (p2002495).
 
 # Installation
 Les installation nécessaire pour lancer l'application (sous linux uniquement):
@@ -14,11 +15,18 @@ L'objectif de cette application est de simuler la gestion d'un ou plusieurs park
 # Lancement des exécutables et utilisation
 
 ## Application
-Pour lancer l'application, vous devez la compiler en utilisant la commande make dans le répertoire contenant le Makefile. Vous obtiendrez deux exécutables, bin/test et bin/app.
+Pour lancer l'application, vous devez la compiler en utilisant la commande make dans le répertoire contenant le Makefile.
+>make
+
+Vous obtiendrez deux exécutables, bin/test et bin/app.
 
 L'executable bin/test execute tous les tests de régressions. Pour le lancer, tappez bin/test dans la console (dans le répertoire de l'application)
+>bin/test
 
-Pour lancer l'application, tappez bin/app dans la console (toujours dans le répertoire de l'application). Ensuite, vous accéder à un menu avec 3 choix possibles : Start, Exit, et un bouton pour les paramètres de la simulation. Pour lancer la simulation avec les paramètres par défaut, appuyer directement sur Start. 
+Pour lancer l'application, tappez bin/app dans la console (toujours dans le répertoire de l'application).
+>bin/app
+
+Ensuite, vous accéder à un menu avec 3 choix possibles : Start, Exit, et un bouton pour les paramètres de la simulation. Pour lancer la simulation avec les paramètres par défaut, appuyer directement sur Start. 
 
 Si vous voulez tester une condiguration spécifique, paramètrez d'abord l'application en validant vos réglages avec OK, puis lancez là avec start. Pour plus de détails sur les paramètres modifiables, allez à la section "Paramètres modifiables de la simulation" de ce readMe.
 
