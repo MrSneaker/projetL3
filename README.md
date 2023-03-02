@@ -4,6 +4,8 @@ Projet LIFPROJET - Gestion intelligente de parkings dans un centre urbain (SA4).
 
 Réalisé par FERRER Raphaël (p1908300), BOULET Benjamin (p2006010), MUNOZ Matéo (p2002495).
 
+Note obtenu par le groupe : 16/20 - 8ème sur 51.  
+
 # Installation
 Les installations nécessaires pour lancer l'application (sous Linux uniquement) :
 >sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
